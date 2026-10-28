@@ -1,0 +1,56 @@
+<!-- 12 · BRING-UP: tuyến sáu ga -->
+<section class="slide" id="s12" data-sec="3">
+  <div class="hd"><span class="k">04 · Kết quả — bring-up</span><span class="pg"></span></div>
+  <h2 class="t">Sáu sự cố và cách xử lý</h2>
+  <div class="body">
+    <div class="mline">
+      <i class="rail"></i><i class="rail done"></i><i class="bump"></i>
+      <svg class="train" viewBox="0 0 64 30" aria-hidden="true">
+        <path d="M3 4h46l12 12v10H3z" fill="#d9432b" stroke="#1c1b19" stroke-width="2.5" stroke-linejoin="round"/>
+        <rect x="9" y="9" width="10" height="8" fill="#f6f1e7" stroke="#1c1b19" stroke-width="1.5"/>
+        <rect x="24" y="9" width="10" height="8" fill="#f6f1e7" stroke="#1c1b19" stroke-width="1.5"/>
+        <path d="M40 9h6l6 7h-12z" fill="#f6f1e7" stroke="#1c1b19" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="3" y="21" width="58" height="3" fill="#1c1b19"/>
+      </svg>
+      <ol class="stns">
+        <li class="stn"><span class="dot">1</span><div class="bd">
+          <span class="lab">Sự cố</span><h3>Root treo khi khởi động</h3>
+          <div class="dt st" data-s="1"><span class="lab r">Nguyên nhân</span><p>Firmware bắt buộc PSRAM, board không có</p></div>
+          <div class="dt fx st" data-s="1"><span class="lab g">Xử lý</span><p>Cấp phát trong SRAM nội</p></div>
+        </div></li>
+        <li class="stn"><span class="dot">2</span><div class="bd">
+          <span class="lab">Sự cố</span><h3>Middleware bỏ nhiều byte</h3>
+          <div class="dt st" data-s="2"><span class="lab r">Nguyên nhân</span><p>Log văn bản chèn vào UART nhị phân</p></div>
+          <div class="dt fx st" data-s="2"><span class="lab g">Xử lý</span><p>Hạ mức log</p></div>
+        </div></li>
+        <li class="stn"><span class="dot">3</span><div class="bd">
+          <span class="lab">Sự cố</span><h3>Leaf gửi thất bại 100 %</h3>
+          <div class="dt st" data-s="3"><span class="lab r">Nguyên nhân</span><p>Lỗi ngừng quét của painlessMesh gốc</p></div>
+          <div class="dt fx st" data-s="3"><span class="lab g">Xử lý</span><p>Chuyển sang fork Alteriom</p></div>
+        </div></li>
+        <li class="stn"><span class="dot">4</span><div class="bd">
+          <span class="lab">Sự cố</span><h3>Leaf mất kết nối liên tục</h3>
+          <div class="dt st" data-s="4"><span class="lab r">Nguyên nhân</span><p>Root nối WiFi nhà, tranh chấp radio</p></div>
+          <div class="dt fx st" data-s="4"><span class="lab g">Xử lý</span><p>Tắt station của Root</p></div>
+        </div></li>
+        <li class="stn"><span class="dot">5</span><div class="bd">
+          <span class="lab">Sự cố</span><h3>Heap Leaf giảm 154 → 72 KB</h3>
+          <div class="dt st" data-s="5"><span class="lab r">Nguyên nhân</span><p>Cáp/cổng USB không đủ dòng đỉnh</p></div>
+          <div class="dt fx st" data-s="5"><span class="lab g">Xử lý</span><p>Đổi cáp, sau đó dùng pin</p></div>
+        </div></li>
+        <li class="stn"><span class="dot">6</span><div class="bd">
+          <span class="lab">Sự cố</span><h3>Hai Leaf đổi cha liên tục</h3>
+          <div class="dt st" data-s="6"><span class="lab r">Nguyên nhân</span><p>Hai radio cách vài cm tranh chấp kênh</p></div>
+          <div class="dt fx st" data-s="6"><span class="lab g">Xử lý</span><p>Tách các Leaf ra xa</p></div>
+        </div></li>
+      </ol>
+    </div>
+    <div class="stats ru st" data-s="7">
+      <div class="stat g"><div class="n"><span class="cnt" data-to="1306" data-d="0">1306</span><small>khung OK</small></div><p>1 Leaf, giai đoạn bring-up</p></div>
+      <div class="stat"><div class="n">~<span class="cnt" data-to="0.5" data-d="1">0,5</span><small>%</small></div><p>6 khung hủy (bring-up)</p></div>
+      <div class="stat g"><div class="n"><span class="cnt" data-to="0" data-d="0">0</span><small>sai CRC</small></div><p>khung UART</p></div>
+    </div>
+  </div>
+  <span class="src">chuong4.tex, Bảng 4.1</span>
+  <aside><b>Lưu ý:</b> báo cáo ghi MAX_FRAME_SIZE 24 KB/24 chunk; mã hiện tại 12 KB/12 chunk (4 slot). Cả hai đều lớn hơn ảnh QVGA ~4,6 KB. Mã Root trong repo là 10-01c/UART 8 KB, chưa có bản 10-06a. Nhiều lỗi nhìn như lỗi phần mềm nhưng gốc là nguồn điện hoặc nhiễu radio — đây là bài học đo đạc.</aside>
+</section>

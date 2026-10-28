@@ -1,0 +1,26 @@
+#s13 .nt{padding-top:10px}
+#s13 .nt h3{font-size:22px;line-height:1.2;margin:0 0 8px}
+#s13 .g1{display:grid;grid-template-columns:1fr auto;grid-template-areas:"a b" "c c";column-gap:20px;row-gap:6px;align-items:center;font-size:17px;line-height:1.45}
+#s13 .ga{grid-area:a}
+#s13 .gb{grid-area:b;font:700 36px/1 var(--serif);color:var(--red);letter-spacing:-.01em;white-space:nowrap}
+#s13 .gc{grid-area:c}
+#s13 .g2{display:flex;flex-wrap:wrap;column-gap:.4em;align-items:baseline;font-size:17px;line-height:1.45}
+#s13 .x1{color:var(--red);font-weight:700}
+#s13 .x2{color:var(--blue);font-weight:700;font-size:16px}
+#s13 .mech{flex:1;min-height:0;position:relative}
+#s13 .mech .fig{position:absolute;inset:0}
+#s13 .fig-wrap .fig{position:absolute;inset:0}
+#s13 .ax{fill:var(--muted)}
+#s13 svg text.vl.bad{fill:var(--red)}
+#s13 .bar{transform-origin:0 353px}
+#s13 .bar.a{animation:s13g .7s cubic-bezier(.2,.8,.2,1) .05s both}
+#s13 .bar.b{transform:scaleY(0);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+#s13 .up .bar.b{transform:none}
+#s13 .va{animation:s13f .3s .5s both}
+#s13 .vb{opacity:0;transition:opacity .3s}
+#s13 .up .vb{opacity:1;transition-delay:.45s}
+@keyframes s13g{from{transform:scaleY(0)}to{transform:none}}
+@keyframes s13f{from{opacity:0}to{opacity:1}}
+.static #s13 .bar.a,.static #s13 .va{animation:none}
+.static #s13 .bar.b{transform:none;transition:none}
+.static #s13 .vb{opacity:1;transition:none}

@@ -1,0 +1,12 @@
+#s14 .fig-wrap .fig{position:absolute;inset:0}
+#s14 .th{font-size:21px;line-height:1.2;margin-bottom:4px;color:var(--ink)}
+#s14 .tb th{padding:6px 10px 6px 0;font-size:13px}
+#s14 .tb td{font-size:17px;padding:4px 10px 4px 0;line-height:1.35}
+#s14 .tb td.n,#s14 .tb th.n{padding-right:0}
+#s14 .t1{table-layout:fixed}
+#s14 .t1 th:first-child,#s14 .t1 td:first-child{width:52px}
+#s14 .t1 th:nth-child(2),#s14 .t1 td:nth-child(2){width:148px;white-space:nowrap;padding-right:18px}
+#s14 .t2 td:first-child{width:200px}
+#s14 .tb tr.hl td{padding-left:6px}
+#s14 .tb tr.hl td:first-child{padding-left:6px}
+#s14 .warnbox{font-size:17px;padding:9px 14px;flex:0 0 auto}

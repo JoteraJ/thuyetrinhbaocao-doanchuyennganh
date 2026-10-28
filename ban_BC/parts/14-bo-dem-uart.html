@@ -1,0 +1,39 @@
+<!-- 14 · CHU KỲ 600 ms + BỘ ĐỆM UART -->
+<section class="slide" id="s14" data-sec="3">
+  <div class="hd"><span class="k">04 · Kết quả 2</span><span class="pg"></span></div>
+  <h2 class="t">Chu kỳ 600 ms và bộ đệm UART 16 KB</h2>
+  <div class="body">
+    <div class="row grow" style="gap:36px">
+      <div class="col" style="flex:0 0 520px;gap:14px">
+        <div>
+          <h3 class="th">Chu kỳ 600 ms</h3>
+          <table class="tb t1">
+            <tr><th>Leaf</th><th class="n">FPS tổng</th><th>Ghi chú</th></tr>
+            <tr><td>1</td><td class="n">1,67 ± 0,40</td><td>7,8 KB/s; hủy 0 %; heap 111–113 KB</td></tr>
+            <tr><td>2</td><td class="n">≈ 3,3</td><td>Ổn định ~4 phút</td></tr>
+            <tr><td>3</td><td class="n">4,85 ± 0,96</td><td>~1,6 FPS/Leaf; 31 chunk/s; ~2 phút</td></tr>
+          </table>
+        </div>
+        <div>
+          <h3 class="th">Bộ đệm UART TX (06/10, 3 Leaf, 1 chặng)</h3>
+          <table class="tb t2">
+            <tr><th>Chỉ tiêu</th><th class="n">test19</th><th class="n">test21</th></tr>
+            <tr><td>Firmware Root</td><td class="n">10-01c</td><td class="n">10-06a</td></tr>
+            <tr><td>Bộ đệm UART TX</td><td class="n">8 KB</td><td class="n">16 KB</td></tr>
+            <tr><td>Thời lượng</td><td class="n">15 ph</td><td class="n">20 ph</td></tr>
+            <tr><td>FPS tổng TB</td><td class="n">5,0</td><td class="n">5,0</td></tr>
+            <tr><td>Thông lượng TB</td><td class="n">22,0 KB/s</td><td class="n">25,6 KB/s</td></tr>
+            <tr class="hl"><td><b>Độ trễ TB</b></td><td class="n">280 ms</td><td class="n"><b class="good">199 ms</b></td></tr>
+            <tr class="hl"><td><b>uartDrop</b></td><td class="n">137 → 480</td><td class="n"><b class="good">0</b></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="col f1" style="gap:12px;min-width:0">
+        <div class="fig-wrap"><svg class="fig" id="s14fig" viewBox="0 0 580 340" role="img" aria-label="Hai bộ đệm UART như hai bể chứa: bể 8 KB tràn, chunk bị rơi (uartDrop); bể 16 KB không tràn"></svg></div>
+        <p class="warnbox st" data-s="2"><b>Thận trọng:</b> mỗi cấu hình đo 1 lần, thời lượng khác nhau, hai firmware còn khác ở chỗ khác — chỉ nói "trong hai phép đo này", không khẳng định chung.</p>
+      </div>
+    </div>
+  </div>
+  <span class="src">chuong4.tex, Bảng 4.2, 4.4</span>
+  <aside>uartDrop về 0 và độ trễ giảm từ 280 xuống 199 ms. Nhưng đây là so sánh một lần đo, em không khẳng định chung.</aside>
+</section>

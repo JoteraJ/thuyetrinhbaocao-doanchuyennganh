@@ -12,9 +12,7 @@ const extract = () => {
     const pieces = [];
     const walk = el => {
       if (el.tagName === 'ASIDE' || el.classList.contains('src') || el.classList.contains('pn') || el.classList.contains('pg')) return;
-      let own = '';
-      el.childNodes.forEach(n => { if (n.nodeType === 3) own += n.textContent; });
-      if (own.trim()) pieces.push(own.replace(/\s+/g, ' ').trim());
+      el.childNodes.forEach(n => { if (n.nodeType === 3 && n.textContent.trim()) pieces.push(n.textContent.replace(/\s+/g, ' ').trim()); });
       Array.from(el.children).forEach(walk);
     };
     walk(sec);

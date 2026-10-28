@@ -1,0 +1,75 @@
+<!-- 13 · HAI NÚT THẮT -->
+<section class="slide" id="s13" data-sec="3">
+  <div class="hd"><span class="k">04 · Kết quả 1</span><span class="pg"></span></div>
+  <h2 class="t">Hai nút thắt được xác định bằng đo đạc</h2>
+  <div class="body">
+    <div class="row grow" style="gap:36px">
+      <div class="col" style="flex:0 0 590px;gap:14px">
+        <div class="nt ru r">
+          <h3>Nút thắt 1 — số slot ghép tại Root (17/09)</h3>
+          <div class="g1 st" data-s="1">
+            <p class="ga">2 Leaf, Root chỉ 1 slot → 111 OK / 496 hủy →</p>
+            <p class="gc">(1 Leaf: 0,5 %). Leaf B chiếm slot đang ghép dở của Leaf A. Sửa: <b>4 slot</b> + <code>sendSingle</code>.</p>
+            <b class="gb">hủy ~82 %</b>
+          </div>
+        </div>
+        <div class="nt ru r">
+          <h3>Nút thắt 2 — tải ghi UART tại Root (28–29/09)</h3>
+          <div class="g2 st" data-s="2">
+            <p style="order:1;flex-basis:100%">Chu kỳ 300 ms: FPS tổng 3,5 → 7 → 10 với 1/2/3 Leaf.</p>
+            <p style="order:2">Nhưng 3 Leaf:</p>
+            <p style="order:4">heap Root 90 → 57 KB.</p>
+            <p style="order:5">~47 KB/s ảnh so với giới hạn ~92 KB/s → ghi UART chặn →</p>
+            <p style="order:7;flex-basis:100%">gọi thưa. Giảm tải ~40 % (600 ms): hết ngừng, FPS ~10 → ~5.</p>
+            <b class="x1" style="order:3">toàn mạng ngừng sau 6–26 s,</b>
+            <code class="x2" style="order:6">mesh.update()</code>
+          </div>
+        </div>
+        <div class="mech st" data-s="2">
+          <svg class="fig" id="s13mech" viewBox="0 0 590 128" role="img" aria-label="Cơ chế nút thắt 2: ghi UART chặn khiến mesh.update() được gọi thưa">
+            <text class="mo" x="0" y="14" font-size="14" font-weight="500" fill="#1f4e9c">~47 KB/s ảnh</text>
+            <text class="mo" x="590" y="14" font-size="14" font-weight="500" text-anchor="end">giới hạn ~92 KB/s</text>
+            <text class="mo" x="0" y="57" font-size="14" font-weight="500" fill="#1f4e9c">ghi UART chặn</text>
+            <text class="mo" x="0" y="99" font-size="14" font-weight="500" fill="#d9432b">mesh.update()</text>
+            <text class="mo" x="0" y="99" font-size="14" font-weight="500" fill="#d9432b" id="s13thua">gọi thưa</text>
+          </svg>
+        </div>
+      </div>
+      <div class="col f1" style="gap:6px;min-width:0">
+        <h3>FPS tổng theo số Leaf</h3>
+        <div class="fig-wrap">
+<svg class="fig" id="s13fig" viewBox="0 0 500 450" role="img" aria-label="Biểu đồ cột FPS tổng theo số Leaf, trục 0 đến 10; chu kỳ 300 ms so với 600 ms">
+<defs><pattern id="s13h" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="9" fill="rgba(255,255,255,.38)"/></pattern></defs>
+<line x1="44" y1="353.0" x2="496" y2="353.0" stroke="#1c1b19" stroke-opacity="0.5" stroke-width="2"/>
+<text class="mo ax" x="36" y="358.0" text-anchor="end" font-size="15">0</text>
+<line x1="44" y1="279.2" x2="496" y2="279.2" stroke="#1c1b19" stroke-opacity="0.09" stroke-width="1"/>
+<line x1="44" y1="205.5" x2="496" y2="205.5" stroke="#1c1b19" stroke-opacity="0.22" stroke-width="1"/>
+<text class="mo ax" x="36" y="210.5" text-anchor="end" font-size="15">5</text>
+<line x1="44" y1="131.8" x2="496" y2="131.8" stroke="#1c1b19" stroke-opacity="0.09" stroke-width="1"/>
+<line x1="44" y1="58.0" x2="496" y2="58.0" stroke="#1c1b19" stroke-opacity="0.22" stroke-width="1"/>
+<text class="mo ax" x="36" y="63.0" text-anchor="end" font-size="15">10</text>
+<g class="bar a" data-v="3.5"><rect x="57" y="249.75" width="56" height="103.25" fill="#d9432b" stroke="#1c1b19" stroke-width="1.2"/><polygon points="57,249.75 66,243.75 122,243.75 113,249.75" fill="#ee8a76" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="113,249.75 122,243.75 122,347.00 113,353.00" fill="#a8301c" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="1.67"><rect x="125" y="303.74" width="56" height="49.27" fill="#1b7f5c" stroke="#1c1b19" stroke-width="1.2"/><polygon points="125,303.74 134,297.74 190,297.74 181,303.74" fill="#58b394" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="181,303.74 190,297.74 190,347.00 181,353.00" fill="#125a40" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<text class="vl va" x="89.5" y="234.8" text-anchor="middle" font-size="19" font-weight="700">3,5</text>
+<text class="vl vb" x="157.5" y="288.7" text-anchor="middle" font-size="19" font-weight="700">1,67</text>
+<g class="bar a" data-v="7"><rect x="207" y="146.50" width="56" height="206.50" fill="#d9432b" stroke="#1c1b19" stroke-width="1.2"/><polygon points="207,146.50 216,140.50 272,140.50 263,146.50" fill="#ee8a76" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="263,146.50 272,140.50 272,347.00 263,353.00" fill="#a8301c" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="3.3"><rect x="275" y="255.65" width="56" height="97.35" fill="#1b7f5c" stroke="#1c1b19" stroke-width="1.2"/><polygon points="275,255.65 284,249.65 340,249.65 331,255.65" fill="#58b394" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="331,255.65 340,249.65 340,347.00 331,353.00" fill="#125a40" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<text class="vl va" x="239.5" y="131.5" text-anchor="middle" font-size="19" font-weight="700">7</text>
+<text class="vl vb" x="307.5" y="240.7" text-anchor="middle" font-size="19" font-weight="700">3,3</text>
+<g class="bar a" data-v="10"><rect x="357" y="58.00" width="56" height="295.00" fill="#d9432b" stroke="#1c1b19" stroke-width="1.2"/><rect x="357" y="58.00" width="56" height="295.00" fill="url(#s13h)"/><polygon points="357,58.00 366,52.00 422,52.00 413,58.00" fill="#ee8a76" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="413,58.00 422,52.00 422,347.00 413,353.00" fill="#a8301c" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="4.85"><rect x="425" y="209.93" width="56" height="143.07" fill="#1b7f5c" stroke="#1c1b19" stroke-width="1.2"/><polygon points="425,209.93 434,203.93 490,203.93 481,209.93" fill="#58b394" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="481,209.93 490,203.93 490,347.00 481,353.00" fill="#125a40" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<text class="vl va bad" x="389.5" y="43.0" text-anchor="middle" font-size="19" font-weight="700">10 ✕</text>
+<text class="vl vb" x="457.5" y="194.9" text-anchor="middle" font-size="19" font-weight="700">4,85</text>
+<text class="mo" x="123" y="379" text-anchor="middle" font-size="17" font-weight="500">1 Leaf</text>
+<text class="mo" x="273" y="379" text-anchor="middle" font-size="17" font-weight="500">2 Leaf</text>
+<text class="mo" x="423" y="379" text-anchor="middle" font-size="17" font-weight="500">3 Leaf</text>
+<rect x="46" y="398.0" width="14" height="14" fill="#d9432b" stroke="#1c1b19" stroke-width="1.2"/><text x="68" y="411.0" font-size="16">300 ms (3 Leaf: ngừng truyền)</text>
+<rect x="46" y="423.0" width="14" height="14" fill="#1b7f5c" stroke="#1c1b19" stroke-width="1.2"/><text x="68" y="436.0" font-size="16">600 ms (ổn định)</text>
+</svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="src">chuong4.tex, mục 4.4</span>
+  <aside>Hai nút thắt đều tìm ra bằng số đo, không phải đoán. Nút thắt 2: Root dành gần nửa thời gian ghi UART chặn nên mesh.update bị gọi thưa, dữ liệu dồn trong TCP. Đánh đổi: giảm tải thì FPS tổng giảm từ ~10 xuống ~5.</aside>
+</section>

@@ -1,0 +1,31 @@
+<!-- 5 · LÝ THUYẾT -->
+<section class="slide" id="s5" data-sec="1">
+  <div class="hd"><span class="k">02 · Cơ sở lý thuyết trọng tâm</span><span class="pg"></span></div>
+  <h2 class="t">Bốn nền tảng của <em>hệ thống</em></h2>
+  <div class="body">
+    <div class="grid4">
+      <div class="nf ru">
+        <h3>Mạng mesh và FANET</h3>
+        <svg class="fg" id="s5a" viewBox="0 0 552 118" role="img" aria-label="FANET: nhiều UAV nối ad-hoc thành chuỗi, gói tin chuyển từng chặng về trạm mặt đất"></svg>
+        <p class="st" data-s="1">FANET đúng nghĩa khi nhiều UAV liên lạc ad-hoc với nhau (Bekmezci, 2013). Đề tài gần nhất với kịch bản "mở rộng vùng hoạt động".</p>
+      </div>
+      <div class="nf ru b">
+        <h3>Giao thức định tuyến</h3>
+        <svg class="fg" id="s5b" viewBox="0 0 552 118" role="img" aria-label="Các giao thức định tuyến cho Linux/tầng IP không chuyển sang được ESP32; ESP32 dùng painlessMesh"></svg>
+        <p class="st" data-s="2">AODV, OLSR/DSDV, B.A.T.M.A.N đều cho Linux/tầng IP, không có bản cho ESP32 → dùng cơ chế sẵn của painlessMesh.</p>
+      </div>
+      <div class="nf ru r">
+        <h3>painlessMesh</h3>
+        <svg class="fg" id="s5c" viewBox="0 0 552 118" role="img" aria-label="painlessMesh: cây động; Leaf di chuyển thì tự đổi node cha, mỗi node chỉ một đường lên Root"></svg>
+        <p class="st" data-s="3">Mạng cây tự tổ chức, bản tin JSON qua TCP, chuyển tiếp từng cạnh, ~1400 byte/bản tin. <b>Là cây động, không phải full mesh.</b></p>
+      </div>
+      <div class="nf ru g">
+        <h3>FreeRTOS</h3>
+        <svg class="fg" id="s5d" viewBox="0 0 552 118" role="img" aria-label="Dòng thời gian của loopTask: khi loop() bị chặn, mesh.update() được gọi thưa"></svg>
+        <p class="st" data-s="4">painlessMesh chạy trong <code>loopTask</code>; nếu <code>loop()</code> bị chặn thì <code>mesh.update()</code> bị gọi thưa. Giải thích hiện tượng mạng ngừng truyền ở phần kết quả.</p>
+      </div>
+    </div>
+  </div>
+  <span class="src">chuong2.tex</span>
+  <aside>Điểm cần nhớ: painlessMesh là cây động. Và FreeRTOS là chìa khóa để giải thích nút thắt UART ở slide 13.</aside>
+</section>

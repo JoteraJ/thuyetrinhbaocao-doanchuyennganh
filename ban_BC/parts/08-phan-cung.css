@@ -1,0 +1,16 @@
+#s8 .top{flex:1;min-height:0;gap:36px;align-items:flex-start}
+#s8 .hw{flex:0 0 640px;width:640px}
+#s8 .hw th:nth-child(1){width:92px}
+#s8 .hw th:nth-child(2){width:176px}
+#s8 .hw td{padding:5px 12px 5px 0;font-size:18px;line-height:1.35}
+#s8 .hw td.mono{font-size:18px}
+#s8 .cds{flex:1;gap:14px}
+#s8 .cd{padding-top:8px;transition:background .3s}
+#s8 .cd h3{font-size:22px;margin:0 0 3px}
+#s8 .cd p{font-size:17px;line-height:1.4}
+#s8 .cd.on{background:var(--paper2)}
+#s8 .strip{position:relative;flex:none;height:262px}
+#s8 .strip .fig{position:absolute;inset:0}
+#s8 .pw{position:absolute;inset:0;pointer-events:none}
+#s8 .pw span{position:absolute;white-space:nowrap;font:500 17px/1.25 var(--sans);text-align:center;transform:translateX(-50%)}
+#s8 .pw .lg0{transform:none;left:0;top:-10px;text-align:left}
