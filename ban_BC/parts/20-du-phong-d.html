@@ -1,0 +1,17 @@
+<!-- DỰ PHÒNG D -->
+<section class="slide" id="b4" data-backup>
+  <div class="hd"><span class="k w">Dự phòng D</span><span class="pg"></span></div>
+  <h2 class="t">Cơ chế ghép ảnh khi mất chunk</h2>
+  <div class="body">
+    <div class="row grow" style="gap:36px">
+      <ul class="l bk" style="flex:0 0 470px">
+        <li class="fl" data-s="1"><span style="order:1">Bitmap đánh dấu chunk đã nhận; quá</span><b style="order:2">2 s</b><span style="order:3">chưa đủ → hủy khung.</span></li>
+        <li data-s="2">Khung mới cùng node tới → hủy khung cũ (supersede, vì Leaf gửi tuần tự).</li>
+        <li data-s="3">Hết slot → LRU.</li>
+        <li data-s="4">Hướng cải tiến: NACK gộp, một bản tin/khung, tránh bão ACK.</li>
+      </ul>
+      <div class="fig-wrap f1"><svg class="fig" id="b4fig" viewBox="0 0 630 450" role="img" aria-label="Bốn slot ghép ở Root; mỗi slot có bitmap các chunk đã nhận và đồng hồ 2 s. Mất chunk: hủy khung; khung mới cùng node: hủy khung cũ; hết slot: bỏ slot ít dùng nhất; hướng cải tiến: NACK gộp"></svg></div>
+    </div>
+  </div>
+  <aside>Phím D. Hiện chưa gửi lại — là hạn chế đã nêu.</aside>
+</section>

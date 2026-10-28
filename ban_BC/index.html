@@ -238,14 +238,96 @@
     </div>
     <div class="fig-wrap"><svg class="fig" id="s9fig" viewBox="0 0 1136 240" role="img" aria-label="Sơ đồ: một khung JPEG bị cắt thành các chunk, mỗi chunk gắn header 16 byte, đi qua mesh tới Root và được ghép lại"></svg></div>
     <ul class="l g4">
-      <li class="st" data-s="1">Payload tối đa <b>1024 B</b>; (16 + 1024) B mã hóa Base64 → tối đa <b>1388 ký tự</b>, vừa giới hạn ~1400 B của painlessMesh.</li>
-      <li class="st" data-s="2">Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</li>
-      <li class="st" data-s="3"><code>capture_us</code> thêm ngày 30/09 để đo độ trễ (trước đó header 12 B).</li>
-      <li class="st" data-s="4">Phân mảnh tự viết ở tầng ứng dụng, khác IP fragmentation ở tầng Network.</li>
+      <li><span class="st" data-s="1">Payload tối đa <b>1024 B</b>; (16 + 1024) B mã hóa Base64 → tối đa <b>1388 ký tự</b>, vừa giới hạn ~1400 B của painlessMesh.</span></li>
+      <li><span class="st" data-s="2">Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</span></li>
+      <li><span class="st" data-s="3"><code>capture_us</code> thêm ngày 30/09 để đo độ trễ (trước đó header 12 B).</span></li>
+      <li><span class="st" data-s="4">Phân mảnh tự viết ở tầng ứng dụng, khác IP fragmentation ở tầng Network.</span></li>
     </ul>
   </div>
   <span class="src">chuong3.tex, Bảng 3.3</span>
   <aside>1388 ký tự vừa dưới giới hạn 1400 byte. Trường capture_us là thứ cho phép đo độ trễ đầu cuối.</aside>
+</section>
+
+<!-- 10 · FIRMWARE -->
+<section class="slide" id="s10" data-sec="2">
+  <div class="hd"><span class="k">03 · Firmware</span><span class="pg"></span></div>
+  <h2 class="t m">Leaf chụp và gửi lệch pha, Root ghép bằng 4 slot</h2>
+  <div class="body">
+    <div class="row cols">
+      <div class="col f1 lf">
+        <h3>Leaf <code>node_camera.ino</code></h3>
+        <div class="scn">
+          <svg class="fb" id="s10b" viewBox="0 0 230 205" role="img" aria-label="Đồng hồ watchdog: mất beacon thì mức dâng lên, mốc 8 giây học lại Root, mốc 30 giây khởi động lại"></svg>
+          <svg class="fa" id="s10a" viewBox="0 0 316 205" role="img" aria-label="Ba Leaf gửi lệch pha: mỗi Leaf một khe 200 ms trong chu kỳ 600 ms"></svg>
+        </div>
+        <ul class="l">
+          <li>QVGA 320×240, JPEG quality 12, chu kỳ <b>600 ms</b></li>
+          <li>Học ID Root qua beacon <code>#ROOT</code> (2 s), gửi <code>sendSingle</code> thẳng tới Root</li>
+          <li>Gửi lệch pha: 3 khe × 200 ms, mỗi Leaf một khe</li>
+          <li>Watchdog: mất beacon &gt; 8 s học lại Root; &gt; 30 s khởi động lại</li>
+          <li class="st" data-s="1"><code>#NSTAT</code> mỗi 2 s: RSSI, heap, firmware, lý do reset</li>
+          <li class="st" data-s="1"><code>#</code> không thuộc bảng Base64 → không nhầm với gói ảnh</li>
+        </ul>
+      </div>
+      <div class="col f1 rt">
+        <h3>Root <code>node_root.ino</code></h3>
+        <div class="scn">
+          <svg class="fc" id="s10c" viewBox="0 0 552 205" role="img" aria-label="Root có 4 slot ghép: mỗi slot có bitmap các chunk đã nhận và cầu chì timeout; supersede hủy khung cũ khi có khung mới của cùng node"></svg>
+        </div>
+        <ul class="l">
+          <li>4 slot ghép, mỗi slot có bitmap + timeout <b>2 s</b></li>
+          <li><b>Supersede:</b> khung mới của cùng node → hủy khung cũ chưa xong</li>
+          <li>Hết slot → loại khung cũ nhất (LRU)</li>
+          <li class="st" data-s="1">Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</li>
+          <li class="st" data-s="1">Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="src">chuong3.tex, mục 3.3.2–3.3.3</span>
+  <aside>Bản đầu dùng sendBroadcast nên mọi Leaf nhận thừa; sau đổi sang sendSingle tới Root. Gửi lệch pha giảm đụng độ giữa các Leaf.</aside>
+</section>
+
+<!-- 11 · UART / MIDDLEWARE / DASHBOARD -->
+<section class="slide" id="s11" data-sec="2">
+  <div class="hd"><span class="k">03 · UART, Middleware, Dashboard</span><span class="pg"></span></div>
+  <h2 class="t m">Khung nhị phân có CRC, dashboard dùng dữ liệu thật</h2>
+  <div class="body">
+    <div class="row cols">
+      <div class="col lc">
+        <div class="blk a">
+          <h3>Khung UART</h3>
+          <div class="frm">
+            <code class="c0">AA 55</code>
+            <span class="c1">TYPE</span>
+            <span class="c1n">(01 ảnh, 02 telemetry, 03 log)</span>
+            <span class="c2">LEN 4 B LE</span>
+            <span class="c3">PAYLOAD</span>
+            <span class="c4">CRC16/<wbr>CCITT-FALSE</span>
+          </div>
+          <p class="sn st" data-s="1">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</p>
+        </div>
+        <div class="blk b">
+          <h3>Middleware Node.js</h3>
+          <div class="scn">
+            <svg class="fig" id="s11fig" viewBox="0 0 734 150" role="img" aria-label="Bộ đệm UART ở Root bỏ khung ảnh khi còn dưới một nửa; khung đi qua cáp UART tới middleware, qua ba cổng kiểm MAGIC, LEN, CRC rồi Socket.IO tới dashboard"></svg>
+            <p class="gl"><span class="g1">Tìm MAGIC</span><span class="g2">kiểm LEN (≤&nbsp;131072)</span><span class="g3">kiểm CRC</span><span class="g4">Socket.IO</span></p>
+          </div>
+          <p class="bt st" data-s="2">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.<span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
+        </div>
+        <div class="blk c st" data-s="3">
+          <h3>Dashboard (React 18 + Tailwind)</h3>
+          <p>Tab Live: ảnh từng Leaf, cây topology theo RSSI. Tab So sánh: FPS, thông lượng, tỉ lệ hủy, heap, tự phục hồi; xuất CSV.</p>
+        </div>
+      </div>
+      <div class="col rc">
+        <figure class="shot"><img src="assets/dashboardtab1.png" alt="Dashboard tab Live"><figcaption>Tab Live</figcaption></figure>
+        <figure class="shot"><img src="assets/dashboardtab2.png" alt="Dashboard tab So sánh"><figcaption>Tab So sánh</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <span class="src">chuong3.tex, mục 3.4</span>
+  <aside><b>Lưu ý:</b> báo cáo ghi ngưỡng bỏ khung là &lt; ½ bộ đệm; mã mới (commit 7d68445) bỏ khi bộ đệm không đủ chỗ cho cả khung. Nếu được hỏi, nói rõ bản nào dùng cho phép đo. Log văn bản chèn vào luồng nhị phân làm middleware mất đồng bộ, nên em hạ log painlessMesh xuống mức lỗi. Dashboard không dùng dữ liệu giả lập.</aside>
 </section>
 
 <!-- 12 · BRING-UP: tuyến sáu ga -->
@@ -419,6 +501,162 @@
   </div>
   <span class="src">chuong4.tex, Bảng 4.2, 4.4</span>
   <aside>uartDrop về 0 và độ trễ giảm từ 280 xuống 199 ms. Nhưng đây là so sánh một lần đo, em không khẳng định chung.</aside>
+</section>
+
+<!-- 15 · TEST22: mỗi chặng cộng ~200 ms -->
+<section class="slide" id="s15" data-sec="3">
+  <div class="hd"><span class="k">04 · Kết quả 3 · test22 (09/10) <span class="tg w">bổ sung sau khi nộp báo cáo</span></span><span class="pg"></span></div>
+  <h2 class="t">Mỗi chặng cộng thêm ~200 ms độ trễ</h2>
+  <div class="body">
+    <div class="row grow" style="gap:36px">
+      <div class="col" style="flex:0 0 612px;gap:6px">
+        <div class="cap"><h3>Độ trễ trung vị theo số chặng (ms)</h3><span class="lab">trung vị; RSSI trung bình</span></div>
+        <div class="fig-wrap"><svg class="fig" id="s15fig" viewBox="0 0 612 440" role="img" aria-label="Chuỗi ba chặng: Root, ba Leaf nối tiếp; chunk đi lần lượt qua từng chặng, cột cao tỉ lệ với độ trễ trung vị 148, 350, 576 ms">
+          <text class="v" id="s15v1" font-size="30" font-weight="700">148</text>
+          <text class="v" id="s15v2" font-size="30" font-weight="700">350</text>
+          <text class="v" id="s15v3" font-size="30" font-weight="700">576</text>
+          <text class="n" id="s15n0" font-size="19" font-weight="700">Root</text>
+          <text class="n" id="s15n1" font-size="19" font-weight="700">…449329</text>
+          <text class="n" id="s15n2" font-size="19" font-weight="700">…433521</text>
+          <text class="n" id="s15n3" font-size="19" font-weight="700">…369673</text>
+          <text class="mo h" id="s15h1" font-size="13.5" font-weight="500">Hop 1 · −45,8 dBm</text>
+          <text class="mo h" id="s15h2" font-size="13.5" font-weight="500">Hop 2 · −54,5</text>
+          <text class="mo h" id="s15h3" font-size="13.5" font-weight="500">Hop 3 · −67,3</text>
+        </svg></div>
+      </div>
+      <div class="col f1" style="gap:14px;min-width:0">
+        <p class="sm muted">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16 phút (490 mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</p>
+        <div class="stats">
+          <div class="stat"><div class="n">4,94</div><p>FPS tổng</p></div>
+          <div class="stat"><div class="n">20,6<small>KB/s</small></div><p>thông lượng</p></div>
+          <div class="stat g"><div class="n">0,56<small>%</small></div><p>hủy; uartDrop 0</p></div>
+        </div>
+        <ul class="l b3">
+          <li class="fl st" data-s="1"><span style="order:1;flex-basis:100%">FPS gần như không đổi so với test21:</span><span style="order:2">tải bị giới hạn bởi chu kỳ chụp,</span><span style="order:4;flex-basis:100%">→ chưa đo suy giảm thông lượng theo hop</span><b style="order:3">chưa ép tới bão hòa</b></li>
+          <li class="st" data-s="2">~6,5 % mẫu trễ &gt; 1 s, cao nhất 4,3 s</li>
+          <li class="st" data-s="3"><b>Tự phục hồi:</b> 5 sự kiện, 1530–23225 ms; node mới gia nhập làm toàn mạng gián đoạn ~16 s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="src">Nhật ký đo đạc 09/10/2026 (test22)</span>
+  <aside><b>Lưu ý:</b> số liệu này có trong nhật ký đo 09/10 nhưng báo cáo LaTeX hiện ghi "chưa có số liệu ở hai hoặc ba chặng". Nếu báo cáo chưa cập nhật, nói đây là kết quả bổ sung sau khi nộp. Trung vị +~200 ms mỗi chặng; RSSI giảm dần theo chặng.</aside>
+</section>
+
+<!-- 16 · KẾT LUẬN -->
+<section class="slide" id="s16" data-sec="4">
+  <div class="hd"><span class="k">05 · Kết luận, hạn chế, hướng phát triển</span><span class="pg"></span></div>
+  <div class="body">
+    <div class="cols">
+      <i class="rail"></i>
+      <div class="cl c1">
+        <span class="dot"></span>
+        <h3 class="good">Đạt được</h3>
+        <ul class="l g">
+          <li>Chuỗi hoàn chỉnh trên phần cứng thật: chụp → phân mảnh → mesh → ghép → UART CRC → middleware → dashboard</li>
+          <li>Xác định bằng đo đạc 2 nút thắt: số slot ghép, tải ghi UART</li>
+          <li>Watchdog, bảo vệ heap, theo dõi node im lặng, ghi UART không chặn, gửi lệch pha, đo độ trễ và tự phục hồi</li>
+        </ul>
+      </div>
+      <div class="cl c2">
+        <span class="dot"></span>
+        <h3 class="wc">Hạn chế (nói trước)</h3>
+        <ul class="l a lim st" data-s="1">
+          <li>Chưa gửi lại: mất 1 chunk là mất cả khung</li>
+          <li>Tự phục hồi phân tán (885–32528 ms; test22: 1530–23225 ms, cách đo mới), chưa đủ mẫu từng kịch bản</li>
+          <li>Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</li>
+          <li>Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 +33 %) không thiết kế cho nhiều luồng ảnh</li>
+        </ul>
+      </div>
+      <div class="cl c3">
+        <span class="dot"></span>
+        <h3>Hướng phát triển</h3>
+        <ul class="l b st" data-s="2">
+          <li><b>Ngắn hạn:</b> ghi UART sang task FreeRTOS riêng; đo tự phục hồi 5–10 lần; đo bão hòa 1/2/3 chặng và dòng Leaf; NACK gộp</li>
+          <li><b>Dài hạn:</b> ESP-WIFI-MESH (đã dựng một phần); định tuyến theo vị trí (GPS/UWB); ESP-NOW</li>
+        </ul>
+      </div>
+    </div>
+    <p class="thx st" data-s="3">Cảm ơn Hội đồng đã lắng nghe — em xin sẵn sàng trả lời câu hỏi.</p>
+  </div>
+  <span class="src">chuong5.tex</span>
+  <aside>Nói thẳng hạn chế trước khi hội đồng hỏi. Nhấn phím B để mở slide dự phòng A–D khi cần.</aside>
+</section>
+
+<!-- DỰ PHÒNG A -->
+<section class="slide" id="b1" data-backup>
+  <div class="hd"><span class="k w">Dự phòng A</span><span class="pg"></span></div>
+  <h2 class="t m">Vì sao chọn painlessMesh, không chọn ESP-WIFI-MESH?</h2>
+  <div class="body">
+    <div class="row grow" style="gap:44px">
+      <ul class="l bk" style="flex:0 0 650px">
+        <li class="st" data-s="1">Danh sách nhiệm vụ đề tài đã chỉ định painlessMesh; chốt ngày 29/09/2026.</li>
+        <li class="st" data-s="2">Chạy trên Arduino, nhanh dựng mẫu; gói board esp32 hạ từ 3.3.11 về 2.0.17 theo khuyến nghị thư viện; dùng fork Alteriom/painlessMesh 2.0.3.</li>
+        <li class="fl st" data-s="3"><span style="order:1">Bản ESP-IDF được giữ trong</span><span style="order:3">đưa vào hướng phát triển.</span><code style="order:2">data/esp_idf_migration/,</code></li>
+      </ul>
+      <div class="fig-wrap f1"><svg class="fig" id="b1fig" viewBox="0 0 492 440" role="img" aria-label="Hiện tại: painlessMesh trên Arduino. Hướng phát triển: ESP-WIFI-MESH trên ESP-IDF, bản đã dựng một phần giữ trong thư mục lưu trữ">
+        <text class="mo t1" id="b1t1" font-size="15.5" font-weight="500">Arduino</text>
+        <text class="mo t1" id="b1t2" font-size="15.5" font-weight="500">ESP-IDF</text>
+        <text class="n" id="b1n1" font-size="22" font-weight="700">painlessMesh</text>
+        <text class="n" id="b1n2" font-size="22" font-weight="700">ESP-WIFI-MESH</text>
+      </svg></div>
+    </div>
+  </div>
+  <aside><b>Cần kiểm lại:</b> phiên bản fork 2.0.3 và ngày chốt 29/09 chưa tìm thấy trong chương báo cáo. Phím A. Quay lại bằng phím ←.</aside>
+</section>
+
+<!-- DỰ PHÒNG B -->
+<section class="slide" id="b2" data-backup>
+  <div class="hd"><span class="k w">Dự phòng B</span><span class="pg"></span></div>
+  <h2 class="t">Vì sao UART 921600 bps?</h2>
+  <div class="body">
+    <ul class="l bk">
+      <li class="st" data-s="1">115200 bps ≈ 11,5 KB/s (tính toán) — chưa đủ cho 2 Leaf (≈ 15,6 KB/s ở chu kỳ 600 ms) → UART thành nút thắt, làm sai số đo mesh.</li>
+      <li class="st" data-s="2">921600 bps ≈ 92 KB/s lý thuyết; thực tế đã chạm giới hạn ở 3 Leaf × 300 ms (~47 KB/s ảnh + ghi chặn) → bằng chứng cho thấy cần chọn tốc độ cao.</li>
+    </ul>
+    <div class="fig-wrap"><svg class="fig" id="b2fig" viewBox="0 0 1136 320" role="img" aria-label="Hai thanh dài tỉ lệ đúng: 115200 bps ≈ 11,5 KB/s và 921600 bps ≈ 92 KB/s, cùng hai mốc tải 15,6 KB/s (2 Leaf, 600 ms) và 47 KB/s (3 Leaf, 300 ms)">
+      <text class="mo" id="b2l1" font-size="15" font-weight="500">115200 bps ≈ 11,5 KB/s</text>
+      <text class="mo" id="b2l2" font-size="15" font-weight="500">921600 bps ≈ 92 KB/s</text>
+      <text class="mo" id="b2m1" font-size="15" font-weight="700">≈ 15,6 KB/s</text>
+      <text class="mo" id="b2m2" font-size="15" font-weight="700">~47 KB/s ảnh</text>
+    </svg></div>
+  </div>
+  <aside>Phím B.</aside>
+</section>
+
+<!-- DỰ PHÒNG C -->
+<section class="slide" id="b3" data-backup>
+  <div class="hd"><span class="k w">Dự phòng C</span><span class="pg"></span></div>
+  <h2 class="t">Vì sao WebSocket (Socket.IO), không MQTT?</h2>
+  <div class="body">
+    <div class="row grow" style="gap:40px">
+      <ul class="l bk" style="flex:0 0 440px">
+        <li class="st" data-s="1">Kiến trúc 1 Root – 1 middleware – 1 dashboard, không cần broker trung gian.</li>
+        <li class="st" data-s="2">Ít thành phần, độ trễ thấp hơn, triển khai nhanh.</li>
+        <li class="st" data-s="3">MQTT hợp lý khi mở rộng nhiều Root / nhiều dashboard.</li>
+      </ul>
+      <div class="fig-wrap f1"><svg class="fig" id="b3fig" viewBox="0 0 656 450" role="img" aria-label="Trên: Root, middleware, dashboard nối thẳng bằng WebSocket, không cần broker. Dưới: nhiều Root và nhiều dashboard qua broker MQTT khi mở rộng"></svg></div>
+    </div>
+  </div>
+  <aside>Phím C.</aside>
+</section>
+
+<!-- DỰ PHÒNG D -->
+<section class="slide" id="b4" data-backup>
+  <div class="hd"><span class="k w">Dự phòng D</span><span class="pg"></span></div>
+  <h2 class="t">Cơ chế ghép ảnh khi mất chunk</h2>
+  <div class="body">
+    <div class="row grow" style="gap:36px">
+      <ul class="l bk" style="flex:0 0 470px">
+        <li class="fl" data-s="1"><span style="order:1">Bitmap đánh dấu chunk đã nhận; quá</span><b style="order:2">2 s</b><span style="order:3">chưa đủ → hủy khung.</span></li>
+        <li data-s="2">Khung mới cùng node tới → hủy khung cũ (supersede, vì Leaf gửi tuần tự).</li>
+        <li data-s="3">Hết slot → LRU.</li>
+        <li data-s="4">Hướng cải tiến: NACK gộp, một bản tin/khung, tránh bão ACK.</li>
+      </ul>
+      <div class="fig-wrap f1"><svg class="fig" id="b4fig" viewBox="0 0 630 450" role="img" aria-label="Bốn slot ghép ở Root; mỗi slot có bitmap các chunk đã nhận và đồng hồ 2 s. Mất chunk: hủy khung; khung mới cùng node: hủy khung cũ; hết slot: bỏ slot ít dùng nhất; hướng cải tiến: NACK gộp"></svg></div>
+    </div>
+  </div>
+  <aside>Phím D. Hiện chưa gửi lại — là hạn chế đã nêu.</aside>
 </section>
 
 </div>

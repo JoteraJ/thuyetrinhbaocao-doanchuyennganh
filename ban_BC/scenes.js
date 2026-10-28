@@ -999,8 +999,8 @@ Deck.frames.s8 = frame;
    Lưu ý: các lát cắt vẽ theo thứ tự đọc của ảnh (chunk 0 = phần đầu của khung). */
 var svg = document.getElementById('s9fig'), I = window.Iso, T = I.T;
 var H = 287;
-var sc = I.scene(svg, { az: 8, el: 30, rect: [4, 8, 1128, H - 52],
-  pts: [[-20, -66, -8], [925, -66, -8], [-20, 66, -8], [925, 66, -8], [880, 0, 66], [40, 0, 66]] });
+var sc = I.scene(svg, { az: 6, el: 40, rect: [4, 4, 1128, H - 36],
+  pts: [[-20, -60, -8], [682, -60, -8], [-20, 60, -8], [682, 60, -8], [640, 0, 66], [40, 0, 66]] });
 var P = sc.pt, S = sc.S, C = sc.C;
 function tx(g, x, y, str, size, w, anchor, fill, cls) { var e = sc.text(g, x, y, str, size, w, anchor, fill, cls); e.style.fill = fill; return e; }
 var plateG = sc.g(), objG = sc.g(), linkG = sc.g(), dyn = sc.g(), lbG = sc.g();
@@ -1015,7 +1015,7 @@ Deck.steps.s9 = function (n) {
 
 /* ---- cảnh tĩnh ---- */
 var AMBER = { top: '#f2b24a', y: '#c98a1c', x: '#a06b10' };
-sc.box(plateG, -20, -66, -8, 945, 132, 8, T.plate);
+sc.box(plateG, -20, -60, -8, 702, 120, 8, T.plate);
 /* Leaf (nguồn khung) */
 sc.box(objG, 0, -30, 0, 76, 60, 6, T.pcb);
 sc.box(objG, 6, -22, 6, 22, 18, 3, T.chip);
@@ -1024,20 +1024,21 @@ I.el('polyline', { points: zz.map(function (a) { return a[0].toFixed(1) + ',' + 
 sc.cyl(objG, 54, 0, 6, 12, 14, '#3b3a35', '#6d6b62', '#8b887c');
 sc.cyl(objG, 54, 0, 18, 2.4, 9.5, '#222', '#444', '#101010');
 sc.box(objG, 70, -3, 6, 3, 3, 14, T.dark);                             /* cột ăng-ten */
-/* khay chụp (nơi khung hiện ra) */
+/* ray của lưỡi cắt + khay chụp (nơi khung hiện ra) */
+sc.box(objG, 90, -62, 0, 176, 4, 3, T.dark); sc.box(objG, 90, 58, 0, 176, 4, 3, T.dark);
 sc.box(objG, 96, -52, 0, 160, 104, .8, T.stone);
 /* Root: bo mạch + khay ghép 5 ô */
-sc.box(objG, 690, -66, 0, 222, 132, 10, T.pcb);
-sc.box(objG, 696, -26, 10, 14, 30, 4, T.chip);
-sc.box(objG, 716, -54, 10, 178, 108, 3, T.stone);
-sc.box(objG, 730, -48, 13, 150, 96, 1.2, T.dark);
-for (var s0 = 1; s0 < 5; s0++) sc.line(objG, [730 + 30 * s0, -48, 14.4], [730 + 30 * s0, 48, 14.4], 'rgba(240,230,205,.35)', 1);
-sc.box(objG, 902, -12, 10, 14, 24, 9, T.chip);                           /* cổng USB */
-sc.box(objG, 700, 52, 10, 5, 5, 3, { top: '#4a4a44', y: '#34342f', x: '#26261f' });   /* đèn báo đủ khung (tắt) */
-sc.box(objG, 706, -4, 10, 3, 3, 14, T.dark);                           /* cột ăng-ten Root */
+sc.box(objG, 440, -60, 0, 222, 120, 10, T.pcb);
+sc.box(objG, 446, -26, 10, 14, 30, 4, T.chip);
+sc.box(objG, 466, -54, 10, 178, 108, 3, T.stone);
+sc.box(objG, 480, -48, 13, 150, 96, 1.2, T.dark);
+for (var s0 = 1; s0 < 5; s0++) sc.line(objG, [480 + 30 * s0, -48, 14.4], [480 + 30 * s0, 48, 14.4], 'rgba(240,230,205,.35)', 1);
+sc.box(objG, 652, -12, 10, 14, 24, 9, T.chip);                           /* cổng USB */
+sc.box(objG, 450, 50, 10, 5, 5, 3, { top: '#4a4a44', y: '#34342f', x: '#26261f' });   /* đèn báo đủ khung (tắt) */
+sc.box(objG, 456, -4, 10, 3, 3, 14, T.dark);                           /* cột ăng-ten Root */
 /* nhãn tên node */
 (function () {
-  var a = P(38, 66, -8), b = P(800, 66, -8);
+  var a = P(38, 60, -8), b = P(550, 60, -8);
   tx(lbG, a[0], a[1] + 22, 'Leaf', 22, 700, 'middle', '#1c1b19', 'sf');
   tx(lbG, b[0], b[1] + 22, 'Root', 22, 700, 'middle', '#1c1b19', 'sf');
 })();
@@ -1077,7 +1078,7 @@ function header(g, x, z, glow) {                          /* header 16 B: 6 ô t
 /* ---- mô hình thời gian (chu kỳ 12 s) ---- */
 var PER = 12, CUT = [1.0, 1.6, 2.2, 2.8, 3.2], DUR = [3.0, 3.0, 3.9, 3.0, 3.0], ZF = [36, 36, 36, 52, 36];
 var X0 = [], SLOT = [];
-for (var kk = 0; kk < NS; kk++) { X0.push(XP - W * (kk + 1)); SLOT.push(880 - W * (kk + 1)); }
+for (var kk = 0; kk < NS; kk++) { X0.push(XP - W * (kk + 1)); SLOT.push(630 - W * (kk + 1)); }
 function launch(k) { return CUT[k] + .8; }
 function arrive(k) { return launch(k) + DUR[k]; }
 function ease(u) { u = I.clamp(u); return u * u * (3 - 2 * u); }
@@ -1099,7 +1100,7 @@ function frame(t) {
   var landed = 0, cruise = [];
 
   /* liên kết mesh (đường đứt) */
-  var lp = [[68, 0, 20], [96, 0, 27], [300, 0, 28], [600, 0, 28], [700, 0, 22], [708, 0, 17]];
+  var lp = [[68, 0, 20], [96, 0, 27], [250, 0, 28], [400, 0, 28], [450, 0, 22], [458, 0, 17]];
   var lk = sc.path(linkG, lp, 0, step === 2 ? '#d9432b' : 'rgba(217,67,43,.75)', step === 2 ? 3 : 1.8); lk.setAttribute('stroke-dasharray', '5 5'); lk.setAttribute('stroke-dashoffset', (-t * 22) % 10);
 
   for (var k = 0; k < NS; k++) {
@@ -1127,33 +1128,449 @@ function frame(t) {
   dr.sort(function (a, b) { return a.key - b.key; });
   dr.forEach(function (o) { var g = I.el('g', {}, dyn); if (o.op < 1) g.setAttribute('opacity', o.op.toFixed(2)); o.fn(g); });
 
-  /* lưỡi cắt: cổng nhỏ chạy trên khay (đỏ ở bước 4: phân mảnh ở tầng ứng dụng) */
+  /* lưỡi cắt: cổng trượt trên hai ray (xanh lá ở bước 4: phân mảnh tự viết ở tầng ứng dụng) */
   if (t < 5.2) {
-    var bx = bladeX(t), bc = step === 4 ? '#d9432b' : '#1c1b19', bo = I.clamp(1 - (t - 4.6) / .6);
-    var gb = I.el('g', { opacity: (t < .5 ? fin : bo).toFixed(2) }, dyn);
-    sc.poly(gb, [P(bx, -56, 0), P(bx, 56, 0), P(bx, 56, 40), P(bx, -56, 40)], step === 4 ? 'rgba(217,67,43,.16)' : 'rgba(28,27,25,.10)', bc, 1.3);
-    sc.box(gb, bx - 2, -58, 0, 4, 4, 42, step === 4 ? { top: '#ff8a70', y: '#d9432b', x: '#a8321f' } : T.dark);
-    sc.box(gb, bx - 2, 54, 0, 4, 4, 42, step === 4 ? { top: '#ff8a70', y: '#d9432b', x: '#a8321f' } : T.dark);
-    sc.box(gb, bx - 2, -58, 40, 4, 116, 4, step === 4 ? { top: '#ff8a70', y: '#d9432b', x: '#a8321f' } : T.dark);
+    var bx = bladeX(t), g4 = step === 4, bt = g4 ? { top: '#6fcf9f', y: '#1b7f5c', x: '#12583f' } : T.dark;
+    var gb = I.el('g', { opacity: (t < .5 ? fin : I.clamp(1 - (t - 4.6) / .6)).toFixed(2) }, dyn);
+    sc.box(gb, bx - 3, -60, 3, 6, 6, 40, bt);
+    sc.poly(gb, [P(bx, -54, 3), P(bx, 54, 3), P(bx, 54, 36), P(bx, -54, 36)], g4 ? 'rgba(27,127,92,.22)' : 'rgba(28,27,25,.14)', g4 ? '#1b7f5c' : '#1c1b19', 1.2);
+    sc.box(gb, bx - 3, 54, 3, 6, 6, 40, bt);
+    sc.box(gb, bx - 3, -60, 41, 6, 120, 4, bt);
   }
 
   /* đèn báo Root: sáng khi đủ khung */
-  if (landed === NS && t < 11.3) sc.box(dyn, 700, 52, 10, 5, 5, 3, { top: '#e9ffe9', y: '#7ee0a8', x: '#4fb77f' });
+  if (landed === NS && t < 11.3) sc.box(dyn, 450, 50, 10, 5, 5, 3, { top: '#e9ffe9', y: '#7ee0a8', x: '#4fb77f' });
 
   /* nhãn header/payload đi theo chunk đang bay gần giữa đường */
   if (cruise.length) {
-    cruise.sort(function (a, b) { return Math.abs(a.x - 430) - Math.abs(b.x - 430); });
+    cruise.sort(function (a, b) { return Math.abs(a.x - 330) - Math.abs(b.x - 330); });
     var c = cruise[0], pp = P(c.x + W / 2, 0, c.z + PT), hp = P(c.x + W + HL / 2, 0, c.z + PT);
     function lab(px, py, dx, dy, s) {
-      I.el('line', { x1: px.toFixed(1), y1: (py - 3).toFixed(1), x2: (px + dx).toFixed(1), y2: (py + dy + 4).toFixed(1), stroke: '#1c1b19', 'stroke-width': 1 }, dyn);
+      I.el('line', { x1: px.toFixed(1), y1: (py - 3).toFixed(1), x2: (px + dx).toFixed(1), y2: (py + dy + 6).toFixed(1), stroke: '#1c1b19', 'stroke-width': 1 }, dyn);
       I.el('circle', { cx: px.toFixed(1), cy: py.toFixed(1), r: 2.4, fill: '#1c1b19' }, dyn);
       tx(dyn, px + dx, py + dy, s, 14, 500, 'middle', '#1c1b19', 'mo');
     }
-    lab(pp[0], pp[1], -24, -30, 'payload');
-    lab(hp[0], hp[1], 22, -46, 'header');
+    lab(pp[0], pp[1], -28, -30, 'payload');
+    lab(hp[0], hp[1], 26, -48, 'header');
   }
 }
 Deck.frames.s9 = frame;
+
+})();
+/* 10-firmware.js */
+;(function(){
+/* Slide 10: firmware.
+   A (Leaf): gửi lệch pha — 3 khe × 200 ms trong chu kỳ 600 ms, mỗi Leaf một khe; con trỏ thời gian quét qua 3 khe.
+   B (Leaf): watchdog — mất beacon #ROOT: mức dâng, mốc 8 s học lại Root, mốc 30 s khởi động lại (vẽ đúng tỉ lệ 8:30).
+   C (Root): 4 slot ghép — bitmap chunk, cầu chì timeout 2 s, supersede, LRU.
+   Thời gian trong A và C được kéo dài 3 lần so với thực tế để nhìn được (cùng một đồng hồ); B chạy nhanh hơn thực tế. */
+var I = window.Iso, T = I.T, LEAF = I.LEAF;
+function txt(g, x, y, s, size, w, anchor, fill, cls) {
+  var e = I.el('text', { x: x.toFixed(1), y: y.toFixed(1), 'font-size': size, 'font-weight': w || 400, 'text-anchor': anchor || 'middle', class: cls || '' }, g);
+  e.style.fill = fill; e.textContent = s; return e;
+}
+var cur = 0;
+function ST() { return (Deck.still && !/[?&]step=/.test(location.search)) ? 9 : cur; }
+Deck.steps.s10 = function (n) { cur = n; };
+var AMB = { top: '#f2b24a', y: '#c98a1c', x: '#a06b10' };
+var RED = { top: '#ff9a82', y: '#d9432b', x: '#a8321f' };
+var GRY = { top: '#a5a190', y: '#85816f', x: '#6c6859' };
+var CZ = [LEAF[0], LEAF[1], LEAF[2]], CZC = ['#ee5f12', '#3f78c4', '#7c9a28'];
+
+/* ======================== mô hình dùng chung (A và C) ======================== */
+var CYC = 1.8, ZONE = .6, CK = .12, TFA = .6, TFC = .5, LOOP = 28, FUSE = 6, SHIPW = .2, SHIPD = .8;
+var FR = [];
+(function () {
+  var n, i, f, k, byLeaf = [[], [], []];
+  for (n = 0; n < 14; n++) for (i = 0; i < 3; i++) {
+    if (i === 2 && n >= 7 && n <= 10) continue;                                   /* Leaf 3 im lặng vài chu kỳ */
+    var lost = (i === 1 && n === 3) ? 3 : (i === 2 && n === 6) ? 2 : -1;          /* chunk bị mất */
+    f = { leaf: i, n: n, T0: CYC * n + ZONE * i, lost: lost, arr: [] };
+    for (k = 0; k < 5; k++) f.arr.push(k === lost ? null : f.T0 + CK * k + TFA + TFC);
+    byLeaf[i].push(f); FR.push(f);
+  }
+  FR.forEach(function (f) {
+    var got = f.arr.filter(function (a) { return a != null; });
+    f.first = got[0]; f.last = Math.max.apply(null, got);
+    if (f.lost < 0) { f.type = 'ok'; f.shipT = f.last + SHIPW; f.endT = f.shipT + SHIPD; }
+    else {
+      var nx = byLeaf[f.leaf].filter(function (g) { return g.n === f.n + 1; })[0];
+      if (nx && nx.first < f.last + FUSE) { f.type = 'sup'; f.endT = nx.first; nx.pred = f; }
+      else { f.type = 'to'; f.endT = f.last + FUSE; }
+    }
+  });
+  var busy = [-1, -1, -1, -1], ptr = 0;
+  FR.sort(function (a, b) { return a.first - b.first; });
+  FR.forEach(function (f) {
+    if (f.pred) { f.bin = f.pred.bin; busy[f.bin] = f.endT; return; }
+    for (var q = 0; q < 4; q++) { var b = (ptr + q) % 4; if (busy[b] <= f.first - .05) { f.bin = b; ptr = (b + 1) % 4; busy[b] = f.endT; return; } }
+    f.bin = ptr;
+  });
+})();
+function sending(i, t) { var n = Math.floor(t / CYC); return FR.some(function (f) { return f.leaf === i && f.n === n; }); }
+
+/* ============================ A: gửi lệch pha ============================ */
+var svgA = document.getElementById('s10a');
+var sA = I.scene(svgA, { az: 10, el: 38, rect: [2, 4, 312, 138], pts: [[-16, -66, -8], [304, -66, -8], [-16, 66, -8], [304, 66, -8], [150, -38, 44]] });
+var A_pl = sA.g(), A_ob = sA.g(), A_dy = sA.g(), A_tx = sA.g();
+var ZW = 96, XB = [48, 144, 240], YB = -36;
+sA.box(A_pl, -16, -66, -8, 320, 132, 8, T.plate);
+function boardA(i) {
+  var cx = XB[i], cy = YB;
+  sA.box(A_ob, cx - 32, cy - 24, 0, 64, 48, 6, T.pcb);
+  sA.box(A_ob, cx - 26, cy - 16, 6, 20, 16, 3, T.chip);
+  sA.cyl(A_ob, cx + 16, cy, 6, 10, 12, '#3b3a35', '#6d6b62', '#8b887c');
+  sA.cyl(A_ob, cx + 16, cy, 16, 2, 8, '#222', '#444', '#101010');
+  sA.box(A_ob, cx - 30, cy + 14, 6, 8, 8, 2.5, CZ[i]);                           /* màu của Leaf */
+}
+[0, 1, 2].forEach(boardA);
+[0, 1, 2].forEach(function (i) { sA.box(A_ob, i * ZW, 26, 0, ZW, 24, 3, CZ[i]); });  /* thước thời gian: 3 khe, mỗi Leaf một khe */
+for (var zq = 1; zq < 3; zq++) sA.line(A_ob, [zq * ZW, 26, 3.2], [zq * ZW, 50, 3.2], '#1c1b19', 1.6);
+(function () {
+  var q, a = sA.pt(2, 66, -8), b = sA.pt(ZW * 3 - 2, 66, -8);
+  [0, 1, 2].forEach(function (i) { q = sA.pt(ZW * (i + .5), 66, -8); txt(A_tx, q[0], q[1] + 17, '200 ms', 14, 500, 'middle', '#1c1b19', 'mo'); });
+  var d = 'M' + a[0].toFixed(1) + ',' + (a[1] + 26) + 'V' + (a[1] + 32) + 'L' + b[0].toFixed(1) + ',' + (b[1] + 32) + 'V' + (b[1] + 26);
+  I.el('path', { d: d, fill: 'none', stroke: '#d9432b', 'stroke-width': 1.6, 'stroke-linejoin': 'round' }, A_tx);
+  var m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2 + 32];
+  txt(A_tx, m[0], m[1] + 18, 'chu kỳ 600 ms', 14, 700, 'middle', '#d9432b', 'mo');
+})();
+
+function frameA(t) {
+  sA.clear(A_dy);
+  var items = [], i, k, cyc = ((t % CYC) + CYC) % CYC, cx = ZW * 3 * cyc / CYC, act = Math.floor(cyc / ZONE);
+  /* khe đang tới lượt sáng lên */
+  var z0 = act * ZW, P = sA.pt;
+  sA.poly(A_dy, [P(z0, 26, 3.15), P(z0 + ZW, 26, 3.15), P(z0 + ZW, 50, 3.15), P(z0, 50, 3.15)], 'rgba(255,255,255,.38)', 'none', 0);
+  /* con trỏ thời gian */
+  items.push({ x: cx - 1.5, y: 22, z: 3, w: 3, d: 32, h: 16, t: T.dark });
+  items.push({ x: cx - 4, y: 22, z: 19, w: 8, d: 32, h: 3, t: T.dark });
+  /* Leaf đang tới lượt phát: vòng sóng + chunk bay đi */
+  for (i = 0; i < 3; i++) {
+    if (act === i && sending(i, t)) {
+      for (k = 0; k < 3; k++) {
+        var u = (((cyc - ZONE * i) / ZONE) * 1.6 - k * .45); u = u - Math.floor(u);
+        var c = sA.circle(A_dy, XB[i] + 16, YB, 26, 6 + 24 * u, 28, 'none', CZC[i], 1.8); c.setAttribute('stroke-opacity', (.9 * (1 - u)).toFixed(2));
+      }
+    }
+  }
+  FR.forEach(function (f) {
+    for (k = 0; k < 5; k++) {
+      var lt = t - (f.T0 + CK * k);
+      if (lt >= 0 && lt < TFA) {
+        var pos = I.along([[XB[f.leaf] + 16, YB, 20], [XB[f.leaf] + 16, YB, 44], [330, YB, 44]], lt / TFA);
+        items.push({ x: pos[0] - 4.5, y: pos[1] - 4.5, z: pos[2], w: 9, d: 9, h: 9, t: CZ[f.leaf] });
+      }
+    }
+  });
+  sA.items(A_dy, items);
+}
+
+/* ============================== B: watchdog ============================== */
+var svgB = document.getElementById('s10b');
+var sB = I.scene(svgB, { az: 22, el: 32, rect: [4, 14, 100, 150], pts: [[-28, -28, 0], [28, 28, 0], [0, 0, 162], [-36, 20, 0]] });
+var B_ob = sB.g(), B_dy = sB.g(), B_tx = sB.g();
+var ZS = 5, Z0 = 6;                                         /* 5 đơn vị z cho mỗi giây: mốc 8 s và 30 s đúng tỉ lệ */
+function zB(s) { return Z0 + s * ZS; }
+sB.box(B_ob, -28, -28, 0, 56, 56, Z0, T.stone);
+[[-9, -9], [6, -9], [-9, 6], [6, 6]].forEach(function (p) { sB.box(B_ob, p[0], p[1], Z0, 3, 3, 150, T.dark); });
+sB.box(B_ob, -11, -11, Z0 + 150, 22, 22, 3, T.dark);
+sB.box(B_ob, 30, -4, 0, 5, 5, 16, T.dark);                  /* cột đèn beacon */
+[[0, '0'], [8, '8 s'], [30, '30 s']].forEach(function (m) {   /* thước: vạch và số */
+  var a = sB.pt(-12, 12, zB(m[0])), b = sB.pt(-20, 12, zB(m[0]));
+  I.el('line', { x1: a[0].toFixed(1), y1: a[1].toFixed(1), x2: b[0].toFixed(1), y2: b[1].toFixed(1), stroke: '#1c1b19', 'stroke-width': 1.6 }, B_tx);
+  txt(B_tx, b[0] - 4, b[1] + 5, m[1], 14, 700, 'end', '#1c1b19', 'mo');
+});
+(function () {
+  var q = sB.pt(0, 28, 0); txt(B_tx, q[0] + 24, q[1] + 22, '#ROOT', 14, 700, 'middle', '#1c1b19', 'mo');
+})();
+var LG = 20;
+function frameB(t) {
+  sB.clear(B_dy);
+  var g = ((t % LG) + LG) % LG, s = 0, alive = true, boot = 0, k;
+  if (g < 4) { s = 0; }
+  else if (g < 16) { s = (g - 4) * 2.5; alive = false; }
+  else if (g < 18) { s = 30; alive = false; boot = (g - 16) / 2; }
+  else { s = 0; }
+  if (g >= 16 && g < 18) s = 30;
+  var lvC = s >= 30 ? RED : s >= 8 ? AMB : T.green;
+  if (s > 0) sB.box(B_dy, -6, -6, Z0, 12, 12, s * ZS, lvC);
+  /* cờ ở hai mốc (sáng khi mức chạm mốc) */
+  var f1 = s >= 8, f2 = s >= 30;
+  sB.box(B_dy, 8, -8, zB(8) - 1.5, 22, 16, 3, f1 ? AMB : { top: '#e4dcc7', y: '#cfc7b0', x: '#bdb59d' });
+  sB.box(B_dy, 8, -8, zB(30) - 1.5, 22, 16, 3, f2 ? RED : { top: '#e4dcc7', y: '#cfc7b0', x: '#bdb59d' });
+  var a = sB.pt(32, 0, zB(8) + 4), b = sB.pt(32, 0, zB(30) + 4);
+  txt(B_dy, a[0] + 4, a[1] + 5, 'học lại Root', 14, f1 ? 700 : 500, 'start', f1 ? '#b86a00' : '#645f52', 'mo');
+  txt(B_dy, b[0] + 4, b[1] + 5, 'khởi động lại', 14, f2 ? 700 : 500, 'start', f2 ? '#d9432b' : '#645f52', 'mo');
+  /* đèn beacon #ROOT: nháy khi còn beacon; tắt khi mất */
+  var lamp = sB.pt(32.5, -1.5, 18);
+  var on = alive && (g % 1) < .35;
+  sB.box(B_dy, 29.5, -5, 16, 6, 6, 4, on ? { top: '#e9ffe9', y: '#7ee0a8', x: '#4fb77f' } : { top: '#4a4a44', y: '#34342f', x: '#26261f' });
+  if (alive && (g % 1) < .6) { var u = (g % 1) / .6, c = sB.circle(B_dy, 32.5, -1.5, 18, 6 + 22 * u, 24, 'none', '#d9432b', 1.8); c.setAttribute('stroke-opacity', (.9 * (1 - u)).toFixed(2)); }
+  if (!alive) {                                          /* mất beacon: dấu gạch chéo */
+    var x1 = sB.pt(32.5, -1.5, 30), r = 8;
+    I.el('path', { d: 'M' + (x1[0] - r) + ',' + (x1[1] - r) + 'L' + (x1[0] + r) + ',' + (x1[1] + r) + 'M' + (x1[0] + r) + ',' + (x1[1] - r) + 'L' + (x1[0] - r) + ',' + (x1[1] + r), stroke: '#d9432b', 'stroke-width': 3, 'stroke-linecap': 'round' }, B_dy);
+  }
+  if (boot > 0 && boot < .5) { var cc = sB.circle(B_dy, 0, 0, Z0 + 150, 20 + 40 * boot * 2, 28, 'none', '#d9432b', 2.5); cc.setAttribute('stroke-opacity', (1 - boot * 2).toFixed(2)); }
+}
+
+/* ============================ C: 4 slot ghép ============================ */
+var svgC = document.getElementById('s10c');
+var sC = I.scene(svgC, { az: 8, el: 38, rect: [4, 6, 544, 190], pts: [[-84, -86, -8], [262, -86, -8], [-84, 86, -8], [262, 86, -8], [10, 0, 52], [40, -80, 36]] });
+var C_pl = sC.g(), C_ob = sC.g(), C_dy = sC.g(), C_tx = sC.g();
+var Y0 = [-68, -32, 4, 40], BH = 28, CXS = [34, 58, 82, 106, 130];
+sC.box(C_pl, -84, -86, -8, 346, 172, 8, T.plate);
+sC.box(C_ob, 0, -78, 0, 192, 156, 8, T.pcb);
+for (var bi = 0; bi < 4; bi++) {
+  sC.box(C_ob, 24, Y0[bi] - 2, 8, 138, BH + 6, 5, T.stone);
+  sC.box(C_ob, 28, Y0[bi] + 1, 13, 130, BH, 0.8, T.dark);
+}
+sC.box(C_ob, 8, -6, 8, 6, 6, 30, T.dark);                              /* cột ăng-ten Root */
+sC.box(C_ob, 192, -14, 8, 16, 28, 9, T.chip);                         /* cổng UART: khung đủ sẽ đi lên PC */
+sC.box(C_ob, 208, -2, 0, 50, 4, 1, T.dark);
+function slotY(b) { return Y0[b] + 1 + BH / 2; }
+var TGX = null;
+function frameC(t) {
+  sC.clear(C_dy); sC.clear(C_tx);
+  var items = [], occ = [], P = sC.pt, tags = [], i, k;
+  FR.forEach(function (f) {
+    var b = f.bin, y0 = Y0[b] + 1, last = -1, c, k2;
+    var inProg = t >= f.first && t < f.endT;
+    if (inProg) occ.push(f);
+    /* chunk đang bay vào */
+    for (k = 0; k < 5; k++) {
+      var lt = t - (f.T0 + CK * k) - TFA;
+      if (lt >= 0 && lt < TFC && !(k === f.lost && lt > .3)) {
+        var pos = I.along([[-150, 0, 44], [CXS[k] + 9, y0 + BH / 2, 44], [CXS[k] + 9, y0 + BH / 2, 18]], lt / TFC);
+        items.push({ x: pos[0] - 4.5, y: pos[1] - 4.5, z: pos[2], w: 9, d: 9, h: 9, t: CZ[f.leaf] });
+      }
+      if (k === f.lost && lt > .3 && lt < .8) tags.push({ kind: 'x', p: P(-150 + (CXS[k] + 159) * .6, y0 + BH / 2, 44), a: 1 - (lt - .3) / .5 });
+    }
+    if (!(t >= f.first - .01 && t < f.endT + 1.6)) return;
+    /* ô bitmap */
+    var done = f.type === 'ok' && t >= f.last, sh = f.type === 'ok' && t >= f.shipT;
+    for (k = 0; k < 5; k++) {
+      var a = f.arr[k]; if (a == null || t < a || t >= f.endT) continue;
+      var col = CZ[f.leaf], x = CXS[k], z = 13.8, w = 20;
+      if (done && !sh) col = (t - f.last) < .15 ? T.white : col;
+      if (sh) { var u = I.clamp((t - f.shipT) / SHIPD), e = u * u * (3 - 2 * u); z = 13.8 + 22 * Math.min(1, u * 2.5); x = CXS[k] + 150 * e; }
+      items.push({ x: x, y: y0 + 3, z: z, w: w, d: BH - 6, h: 4, t: col });
+    }
+    /* cầu chì timeout: đầy khi vừa nhận chunk, cháy dần khi im lặng */
+    if (f.type !== 'ok' && t >= f.first && t < f.endT || (f.type === 'ok' && t >= f.first && t < f.last + .02)) {
+      for (k = 0; k < 5; k++) if (f.arr[k] != null && f.arr[k] <= t) last = Math.max(last, f.arr[k]);
+      var fr = I.clamp(1 - (t - last) / FUSE), fc = fr > .5 ? T.green : fr > .25 ? AMB : RED;
+      if (fr > .01) items.push({ x: 28, y: y0 + BH + 2.5, z: 8.5, w: 130 * fr, d: 1.8, h: 3.4, t: fc });
+    }
+    /* hủy khung: supersede / timeout */
+    if (f.type !== 'ok' && t >= f.endT && t < f.endT + 1.6) tags.push({ kind: f.type, b: b, a: 1 - (t - f.endT) / 1.6, tt: t - f.endT });
+  });
+  sC.items(C_dy, items);
+  /* nhãn */
+  tags.forEach(function (g) {
+    if (g.kind === 'x') {
+      var r = 7; I.el('path', { d: 'M' + (g.p[0] - r) + ',' + (g.p[1] - r) + 'L' + (g.p[0] + r) + ',' + (g.p[1] + r) + 'M' + (g.p[0] + r) + ',' + (g.p[1] - r) + 'L' + (g.p[0] - r) + ',' + (g.p[1] + r), stroke: '#d9432b', 'stroke-width': 3, 'stroke-linecap': 'round', opacity: g.a.toFixed(2) }, C_dy);
+      return;
+    }
+    var y0 = Y0[g.b] + 1, e = I.el('g', { opacity: Math.min(1, g.a * 1.6).toFixed(2) }, C_tx);
+    var rc = sC.path(e, [[24, y0 - 3], [162, y0 - 3], [162, y0 + BH + 4], [24, y0 + BH + 4], [24, y0 - 3]], 13.9, '#d9432b', 2.6);
+    var q = P(22, y0 + BH / 2, 14);
+    txt(e, q[0] - 16, q[1] + 5, g.kind === 'sup' ? 'Supersede' : 'timeout 2 s', 14, 700, 'end', '#d9432b', 'mo');
+  });
+  /* LRU: khung cũ nhất bị loại đầu tiên khi hết slot — đánh dấu khi có ≥ 3 khung đang ghép */
+  var used = {};
+  tags.forEach(function (g) { if (g.kind !== 'x') used[g.b] = 1; });
+  if (occ.length >= 3) {
+    occ.sort(function (a, b) { return a.first - b.first; });
+    var o = occ[0], q2 = P(22, Y0[o.bin] + 1 + BH / 2, 14);
+    if (!used[o.bin]) { txt(C_tx, q2[0] - 16, q2[1] + 5, 'LRU', 14, 700, 'end', '#645f52', 'mo'); used[o.bin] = 1; }
+  }
+  /* "bitmap": nhãn tĩnh cạnh hàng ô (nhường chỗ cho nhãn sự kiện) */
+  if (!used[3]) { var bq = P(22, Y0[3] + 1 + BH / 2, 14); txt(C_tx, bq[0] - 16, bq[1] + 5, 'bitmap', 14, 500, 'end', '#645f52', 'mo'); }
+}
+
+Deck.frames.s10 = function (t) {
+  t = ((t % LOOP) + LOOP) % LOOP;
+  frameA(t); frameB(t); frameC(t);
+};
+
+})();
+/* 11-uart-dashboard.js */
+;(function(){
+/* Slide 11: bộ đệm UART ở Root (bỏ khung ảnh nếu còn < ½, telemetry/log không bao giờ bị bỏ)
+   -> cáp UART -> middleware: MAGIC -> LEN (≤ 131072) -> CRC -> Socket.IO -> dashboard.
+   Lỗi chỉ bỏ phần hỏng: rác trước MAGIC bị quét đi, khung quá dài bị chặn ở cổng LEN, khung sai CRC bị loại ở cổng CRC. */
+var svg = document.getElementById('s11fig'), I = window.Iso, T = I.T, LEAF = I.LEAF;
+var sc = I.scene(svg, { az: 5, el: 36, rect: [2, 2, 730, 118],
+  pts: [[-34, -38, -6], [596, -38, -6], [-34, 38, -6], [596, 38, -6], [30, 0, 72], [-34, -14, 74], [550, 0, 80]] });
+var P = sc.pt, S = sc.S, C = sc.C;
+function tx(g, x, y, str, size, w, anchor, fill, cls) { var e = sc.text(g, x, y, str, size, w, anchor, fill, cls); e.style.fill = fill; return e; }
+var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g();
+var cur = 0;
+function ST() { return (Deck.still && !/[?&]step=/.test(location.search)) ? 9 : cur; }
+Deck.steps.s11 = function (n) { cur = n; };
+var BLUE = T.blue, GRN = T.green, TEL = { top: '#9dbfee', y: '#3f78c4', x: '#2d5a99' }, LOG = { top: '#bdb8a8', y: '#8c8878', x: '#6c6859' };
+var RED = { top: '#ff9a82', y: '#d9432b', x: '#a8321f' }, AMB = { top: '#f2b24a', y: '#c98a1c', x: '#a06b10' };
+
+/* ---------- cảnh tĩnh ---------- */
+var X_START = 74, BELT0 = 114, BELT1 = 420, GX = [165, 265, 365], MX = 470;
+sc.box(plateG, -34, -38, -6, 630, 76, 6, T.plate);
+/* Root: bo mạch ESP32 + bộ đệm */
+sc.box(objG, 0, -30, 0, 72, 60, 5, T.pcb);
+sc.box(objG, 46, -22, 5, 20, 18, 3, T.chip);
+sc.box(objG, 50, -16, 8, 12, 10, 1, T.dark);
+sc.box(objG, 4, 22, 5, 5, 5, 2, { top: '#7ee0a8', y: '#2f9f64', x: '#23794c' });
+/* cáp UART (xanh dương = lớp 2) */
+sc.box(objG, 72, -5, 0, 44, 10, 3, BLUE);
+sc.box(objG, 70, -8, 0, 8, 16, 7, T.dark); sc.box(objG, 110, -8, 0, 8, 16, 7, T.dark);
+/* middleware: băng chuyền + 3 cổng */
+sc.box(objG, BELT0, -20, 0, BELT1 - BELT0, 40, 4, T.stone);
+sc.box(objG, BELT0, -22, 4, BELT1 - BELT0, 2, 3, T.dark); sc.box(objG, BELT0, 20, 4, BELT1 - BELT0, 2, 3, T.dark);
+GX.forEach(function (gx, i) {
+  sc.box(objG, gx - 3, -28, 0, 6, 6, 36, T.dark); sc.box(objG, gx - 3, 22, 0, 6, 6, 36, T.dark);
+  sc.box(objG, gx - 3, -28, i === 1 ? 14 : 36, 6, 56, 4, T.dark);                   /* xà ngang: cổng LEN thấp hơn = giới hạn kích thước */
+});
+/* Socket.IO (xanh lá = lớp 3) -> dashboard */
+sc.box(objG, BELT1 + 2, -7, 0, 6, 14, 12, T.dark);
+var TUBE = [[BELT1 + 8, 0, 8], [BELT1 + 26, 0, 16], [MX - 4, 0, 16]];
+sc.path(objG, TUBE, 0, '#1b7f5c', 7);
+sc.path(objG, TUBE, 0, '#6fcf9f', 2);
+sc.box(objG, MX + 24, -26, 0, 60, 52, 5, T.stone);
+sc.box(objG, MX + 47, -6, 5, 14, 12, 20, T.stone);
+sc.box(objG, MX, -5, 24, 100, 10, 52, T.dark);
+var SCRM = sc.faceMatrix(MX, 5, 24);
+/* nhãn: ½ ở vạch giữa bộ đệm; vị trí chú thích cổng */
+(function () {
+  var q = P(30 - 17, 15, 6 + 22); var hf = tx(lbG, q[0] - 6, q[1] + 5, '½', 16, 700, 'end', '#d9432b', 'mo'); hf.style.stroke = '#f6f1e7'; hf.style.strokeWidth = '3px'; hf.style.paintOrder = 'stroke';
+  var strip = svg.parentNode;
+  [['.g1', GX[0]], ['.g2', GX[1]], ['.g3', GX[2]], ['.g4', BELT1 + 34]].forEach(function (a) {
+    var el = strip.querySelector(a[0]), p = P(a[1], 38, -6);
+    el.style.left = p[0].toFixed(1) + 'px'; el.style.top = (p[1] + 4).toFixed(1) + 'px';
+  });
+})();
+
+/* ---------- mô hình: bộ đệm UART ở Root ---------- */
+var LOOP = 22, RATE = .08, V = 105, TV = .9;
+var SZ = { img: .3, tel: .05, log: .05 };
+var ARR = [];
+(function () {
+  var imgs = [.8, 2.2, 3.6, 5.0, 6.4, 7.8, 11.4, 13.8, 16.2], tel = [1.5, 4.3, 7.1, 9.0, 11.0, 13.0, 15.2, 17.5], lg = [2.9, 5.7, 8.4, 12.2, 14.4, 18.6];
+  imgs.forEach(function (t, i) { ARR.push({ t: t, kind: 'img', leaf: i % 3 }); });
+  tel.forEach(function (t) { ARR.push({ t: t, kind: 'tel' }); });
+  lg.forEach(function (t) { ARR.push({ t: t, kind: 'log' }); });
+  ARR.sort(function (a, b) { return a.t - b.t; });
+  var acc = [], nImg = 0, nTel = 0;
+  function level(t) { return acc.reduce(function (s, f) { var u = I.clamp((t - f.xs) / (f.xe - f.xs)); return t < f.t ? s : s + SZ[f.kind] * (1 - u); }, 0); }
+  var tail = 0;
+  ARR.forEach(function (a) {
+    var lv = level(a.t);
+    a.level = lv;
+    if (a.kind === 'img' && lv > .5) { a.drop = true; return; }                 /* còn < ½ chỗ trống: bỏ khung ảnh */
+    a.xs = Math.max(a.t + .3, tail); a.xe = a.xs + SZ[a.kind] / RATE; tail = a.xe; /* xả FIFO với tốc độ cố định */
+    a.exit = a.xe;
+    a.fate = 'ok';
+    if (a.kind === 'img') { nImg++; if (nImg === 3) a.fate = 'len'; else if (nImg === 5) a.fate = 'crc'; }
+    if (a.kind === 'tel') { nTel++; if (nTel === 3) a.fate = 'crc'; }
+    acc.push(a);
+  });
+  /* rác trước một khung: cho khung đầu tiên đi qua băng chuyền sau t = 9 */
+  var tgt = acc.filter(function (f) { return f.exit > 9; })[0];
+  if (tgt) tgt.noise = true;
+})();
+function levelAt(t) {
+  var s = 0;
+  ARR.forEach(function (f) {
+    if (f.drop || t < f.t) return;
+    var u = I.clamp((t - f.xs) / (f.xe - f.xs)), a = I.clamp((t - f.t) / .3);
+    s += SZ[f.kind] * (1 - u) * (a * a * (3 - 2 * a));
+  });
+  return s;
+}
+function body(kind, leaf, big) {                                       /* kích thước và màu khối theo loại khung */
+  if (kind === 'img') return { w: 38, d: 22, h: big ? 24 : 8, t: LEAF[leaf] };
+  return { w: 14, d: 14, h: 8, t: kind === 'tel' ? TEL : LOG };
+}
+var ZTOP = 6, TH = 44, FZ = 62;                                          /* cột bộ đệm: 44 đơn vị cao */
+var GATEPOS = [GX[0], GX[1], GX[2]];
+var lastShown = { leaf: -1, tel: -9, log: -9 }, MON = { img: -9, leaf: 0, tel: -9, log: -9 };
+
+function frame(t) {
+  t = ((t % LOOP) + LOOP) % LOOP;
+  sc.clear(dyn); MON = { img: -9, leaf: 0, tel: -9, log: -9 };
+  var items = [], lv = levelAt(t), over = lv > .5, tags = [];
+  /* cột bộ đệm: 4 trụ + mức dâng + mốc ½ */
+  [[-15, -15], [12, -15], [-15, 12], [12, 12]].forEach(function (p) { items.push({ x: 30 + p[0] - 1.5, y: p[1] - 1.5, z: ZTOP, w: 3, d: 3, h: TH, t: T.dark }); });
+  items.push({ x: 30 - 18, y: -18, z: 0, w: 36, d: 36, h: ZTOP, t: T.stone });
+  if (lv > .005) items.push({ x: 30 - 10, y: -10, z: ZTOP, w: 20, d: 20, h: Math.min(1, lv) * TH, t: over ? AMB : BLUE });
+  items.push({ x: 30 - 17, y: 13, z: ZTOP + TH / 2 - 1, w: 34, d: 3, h: 2, t: RED });                 /* vạch ½ */
+  items.push({ x: 30 - 3, y: 14, z: ZTOP + TH + 1, w: 6, d: 5, h: 4, t: over ? RED : { top: '#e9ffe9', y: '#7ee0a8', x: '#4fb77f' } });   /* đèn: nhận/chặn khung ảnh */
+  /* khung tới bộ đệm */
+  ARR.forEach(function (f) {
+    var b = body(f.kind, f.leaf || 0, false), x, y = 0, z, u, pos;
+    var tin = f.t - TV;
+    if (t >= tin && t < f.t + .4 + (f.drop ? .7 : 0)) {
+      if (f.drop) {
+        if (t < f.t) { pos = I.along([[-34, 0, FZ], [-6, 0, FZ]], (t - tin) / TV); }
+        else { var rr = (t - f.t) / .7; pos = I.along([[-6, 0, FZ], [-34, 0, FZ]], I.clamp(rr)); if (rr < .45) tags.push({ p: P(-6, 0, FZ), a: 1 - rr / .45 }); }
+        items.push({ x: pos[0] - b.w / 2, y: pos[1] - b.d / 2, z: pos[2], w: b.w, d: b.d, h: b.h, t: b.t });
+      } else if (t < f.t) {
+        pos = I.along([[-34, 0, FZ], [30, 0, FZ]], (t - tin) / TV);
+        items.push({ x: pos[0] - b.w / 2, y: -b.d / 2, z: pos[2], w: b.w, d: b.d, h: b.h, t: b.t });
+      } else {
+        u = I.clamp((t - f.t) / .4); var s2 = 1 - u * .8;
+        items.push({ x: 30 - b.w * s2 / 2, y: -b.d * s2 / 2, z: FZ - u * 12, w: b.w * s2, d: b.d * s2, h: b.h * s2, t: b.t });
+      }
+    }
+  });
+  /* khung ra khỏi bộ đệm, chạy theo cáp UART rồi qua 3 cổng của middleware */
+  var curImg = MON.img, curLeaf = MON.leaf, tel = -9, lg = -9, passed = [];
+  ARR.forEach(function (f) {
+    if (f.drop || t < f.exit) return;
+    var big = f.fate === 'len', b = body(f.kind, f.leaf || 0, big), x = X_START + V * (t - f.exit), z = 4, y = 0, a = 1, ejected = false;
+    var tg = [ [GX[0] - 8, 'noise'], [GX[1] - 22, 'len'], [GX[2] - 10, 'crc'] ];
+        if (f.fate === 'len' && x > tg[1][0]) {
+      var u = (x - tg[1][0]) / 46; if (u < .6) { x = tg[1][0] + u * 4; } else { var w = I.clamp((u - .6) / .8); x = tg[1][0] + 2.4; y = 34 * w; z = 4 - 4 * w; a = 1 - w; }
+      if (u > 1.5) return;
+      if (u >= .55 && u < 1.1) tags.push({ p: P(GX[1], 0, 22), a: 1 - (u - .55) / .55 });
+    } else if (f.fate === 'crc' && x > tg[2][0]) {
+      var u2 = (x - tg[2][0]) / 40; var w2 = I.clamp(u2 / .8); y = -34 * w2; z = 4 - 4 * w2; a = 1 - w2; x = tg[2][0] + u2 * 6;
+      if (u2 > 1.2) return;
+      if (u2 < .7) tags.push({ p: P(GX[2], 0, 22), a: 1 - u2 / .7 });
+    } else if (x > BELT1 - 10) {                                                 /* qua Socket.IO tới dashboard */
+      var path = [[BELT1 - 10, 0, 6], [BELT1 + 8, 0, 10], [BELT1 + 30, 0, 18], [MX - 4, 0, 18], [MX + 40, 0, 18]];
+      var s = (x - (BELT1 - 10)) / 100; if (s >= 1) { if (f.kind === 'img') { MON.img = f.t; MON.leaf = f.leaf; } else MON[f.kind] = f.exit; return; }
+      var q = I.along(path, s); x = q[0]; z = q[2]; var shr = 1 - .5 * s; b = { w: b.w * shr, d: b.d * shr, h: b.h * shr, t: b.t };
+    }
+    if (x > MX + 60) return;
+    if (a > .02) items.push({ x: x - b.w / 2, y: y - b.d / 2, z: z, w: b.w, d: b.d, h: b.h * (a < 1 ? Math.max(.3, a) : 1), t: b.t });
+    /* đầu khung "AA 55" (tối) ở phía trước */
+    if (a > .5 && x < BELT1 - 10 && f.kind === 'img') items.push({ x: x + b.w / 2 - 2, y: y - b.d / 2, z: z, w: 4, d: b.d, h: b.h + .5, t: T.dark });
+  });
+  /* rác trước MAGIC: bị quét khỏi băng chuyền ở cổng 1 */
+  ARR.forEach(function (f) {
+    if (!f.noise) return;
+    for (var k = 0; k < 4; k++) {
+      var x = BELT0 + V * (t - f.exit + .55 + k * .09), y = 0, z = 4, a = 1;
+      if (t < f.exit - .55 || x < BELT0) continue;
+      if (x > GX[0] - 6) { var w = I.clamp((x - (GX[0] - 6)) / 26); y = (k % 2 ? 1 : -1) * 40 * w; z = 4 - 3 * w; a = 1 - w; x = GX[0] - 6 + 10 * w; }
+      if (a > .05 && x < BELT1 - 10) items.push({ x: x - 3, y: y - 3 + (k % 2 ? 4 : -4) * (x < GX[0] - 6 ? 1 : 0), z: z, w: 6, d: 6, h: 6 * Math.max(.4, a), t: T.dark });
+    }
+  });
+  sc.items(dyn, items);
+  /* dấu "x" đỏ ở chỗ khung bị chặn */
+  tags.forEach(function (g) {
+    var r = 7; I.el('path', { d: 'M' + (g.p[0] - r) + ',' + (g.p[1] - r) + 'L' + (g.p[0] + r) + ',' + (g.p[1] + r) + 'M' + (g.p[0] + r) + ',' + (g.p[1] - r) + 'L' + (g.p[0] - r) + ',' + (g.p[1] + r), stroke: '#d9432b', 'stroke-width': 3, 'stroke-linecap': 'round', opacity: Math.max(0, g.a).toFixed(2) }, dyn);
+  });
+  /* đèn trên 3 cổng: nhấp nháy khi có khung đi qua */
+  GX.forEach(function (gx, i) { sc.box(dyn, gx - 3, -3, i === 1 ? 18 : 40, 6, 6, 3, T.chip); });
+  /* màn hình dashboard: ảnh của Leaf mới nhất + cột telemetry */
+  var g = I.el('g', { transform: SCRM + ' translate(0,52) scale(1,-1)' }, dyn);
+  I.el('rect', { x: 4, y: 4, width: 92, height: 44, fill: '#1d2a25' }, g);
+  var since = t - MON.img, ia = I.clamp(1 - since / 6);
+  I.el('rect', { x: 8, y: 8, width: 44, height: 36, fill: ['#ffb27a', '#9dbfee', '#c3dc7a'][MON.leaf], opacity: MON.img < -5 ? .25 : .45 + .55 * ia }, g);
+  for (var k2 = 0; k2 < 4; k2++) I.el('rect', { x: 8, y: 12 + k2 * 8, width: 44, height: 1.5, fill: '#1d2a25', opacity: .35 }, g);
+  [[58, 24], [68, 18], [78, 30], [88, 14]].forEach(function (b, n) { I.el('rect', { x: b[0], y: 8, width: 6, height: b[1] * (.6 + .4 * Math.sin(t * 2 + n)), fill: '#7fd4a8' }, g); });
+}
+Deck.frames.s11 = frame;
 
 })();
 /* 12-bring-up.js */
@@ -1385,6 +1802,356 @@ Deck.frames.s14 = function (t) {
     drawStrip(R, p);
     var o = I.clamp(p * 2 - .6); R.latL.setAttribute('opacity', o); R.latV.setAttribute('opacity', o);
   });
+};
+
+})();
+/* 15-test22.js */
+;(function(){
+/* Slide 15: chuỗi 3 chặng (1 Root + 3 Leaf; Leaf cũng là node chuyển tiếp, không thêm node).
+   Chunk từ mỗi Leaf đi lần lượt qua từng chặng về Root; cột sau mỗi Leaf cao tỉ lệ ĐÚNG với độ trễ trung vị 148 / 350 / 576 ms,
+   thanh trên sàn dài tỉ lệ với |RSSI| 45,8 / 54,5 / 67,3 dBm. Thời gian cảnh tỉ lệ với trung vị (1 ms = 0,008 s). */
+var svg = document.getElementById('s15fig'), I = window.Iso, T = I.T;
+var HZ = 176, MSMAX = 576;                         /* cột 576 ms cao 176 đơn vị -> 1 ms = 176/576 đơn vị */
+var NODES = [{ x: 0 }, { x: 165, ms: 148, rssi: 45.8 }, { x: 330, ms: 350, rssi: 54.5 }, { x: 495, ms: 576, rssi: 67.3 }];
+var sc = I.scene(svg, { az: 14, el: 34, rect: [0, 12, 612, 388],
+  pts: [[-60, -72, -10], [560, -72, -10], [-60, 92, -10], [560, 92, -10], [-60, -72, 190], [560, -72, 190], [-60, 92, -52], [495, 92, -52]] });
+var P = sc.pt, S = sc.S, C = sc.C;
+var TS = .008, T0 = .3, PER = 7.2, YB = 28;         /* TS: giây cảnh cho mỗi ms đo; YB: đường chuỗi */
+var wallG = sc.g(), plateG = sc.g(), gridG = sc.g(), pillG = [sc.g(), sc.g(), sc.g()], objG = sc.g(), linkG = sc.g(), dyn = sc.g();
+sc.box(plateG, -60, -72, -10, 620, 164, 10, T.plate);
+[[-50, -62], [550, -62], [-50, 82], [550, 82]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#8c8470' }, plateG); });
+/* tường sau: lưới mỗi 200 ms (không nhãn) để thấy tỉ lệ */
+sc.poly(wallG, [P(-60, -70, 0), P(560, -70, 0), P(560, -70, 188), P(-60, -70, 188)], 'rgba(255,255,255,.42)', 'rgba(45,38,28,.35)', .9);
+[0, 200, 400, 600].forEach(function (m) { var z = HZ * m / MSMAX, l = sc.line(gridG, [-60, -69.5, z], [560, -69.5, z], m ? 'rgba(28,27,25,.32)' : 'rgba(28,27,25,.6)', m ? 1 : 1.6); if (m) l.setAttribute('stroke-dasharray', '5 4'); });
+/* bo mạch */
+function leafBoard(cx, i) {
+  var y = YB;
+  sc.box(objG, cx - 32, y - 25, 0, 64, 50, 8, T.pcb); sc.box(objG, cx - 26, y - 17, 8, 20, 16, 3, T.chip);
+  sc.cyl(objG, cx + 20, y, 8, 10, 13, '#3b3a35', '#6d6b62', '#8b887c'); sc.cyl(objG, cx + 20, y, 18, 2, 9, '#222', '#444', '#101010');
+  sc.box(objG, cx - 26, y + 12, 8, 12, 8, 4, I.LEAF[i - 1]);
+}
+function rootBoard(cx) {
+  var y = YB;
+  sc.box(objG, cx - 42, y - 32, 0, 84, 64, 10, T.pcb); sc.box(objG, cx - 8, y - 14, 10, 30, 30, 7, T.chip);
+  sc.box(objG, cx - 36, y - 26, 10, 14, 16, 8, T.dark);
+  sc.cyl(objG, cx + 26, y + 18, 10, 16, 5, '#3b3a35', '#6d6b62', '#8b887c');
+}
+/* cột độ trễ + thanh RSSI (tĩnh), vẽ từ xa tới gần */
+rootBoard(0); [1, 2, 3].forEach(function (i) { leafBoard(NODES[i].x, i); });
+[1, 2, 3].forEach(function (i) {
+  var n = NODES[i], len = n.rssi * 1.05, q = [P(n.x - 30, 74, .2), P(n.x - 30 + len, 74, .2), P(n.x - 30 + len, 85, .2), P(n.x - 30, 85, .2)];
+  sc.poly(plateG, q, '#d9432b', 'rgba(45,38,28,.6)', 1);
+});
+/* nhãn */
+function place(id, x, y, z, dx, dy, anchor, fill) { var t = document.getElementById(id), q = P(x, y, z); t.setAttribute('x', (q[0] + dx).toFixed(1)); t.setAttribute('y', (q[1] + dy).toFixed(1)); t.setAttribute('text-anchor', anchor || 'start'); if (fill) t.setAttribute('fill', fill); svg.appendChild(t); return t; }
+place('s15n0', 0, 92, 0, 0, 28, 'middle');
+[1, 2, 3].forEach(function (i) {
+  var n = NODES[i];
+  place('s15n' + i, n.x, 92, 0, 0, 28, 'middle');
+  place('s15h' + i, n.x, 92, 0, 0, 48, 'middle');
+});
+var vEl = [1, 2, 3].map(function (i) { var t = document.getElementById('s15v' + i); svg.appendChild(t); t.setAttribute('text-anchor', 'middle'); return t; });
+
+/* ---- động ---- */
+var TD = [0, NODES[1].ms * TS, NODES[2].ms * TS, NODES[3].ms * TS];   /* thời gian đi hết chuỗi của chunk Leaf i */
+function ease(x) { x = I.clamp(x); return x * x * (3 - 2 * x); }
+function pathOf(i) { var p = []; for (var k = i; k >= 0; k--) p.push([NODES[k].x, YB, 0]); return p; }   /* Leaf i -> ... -> Root */
+function posOn(i, s) {                      /* s = giây kể từ lúc rời Leaf; mỗi chặng mất TD/i giây */
+  var per = TD[i] / i, e = Math.min(i - 1, Math.floor(s / per)), f = I.clamp((s - e * per) / per);
+  var a = NODES[i - e].x, b = NODES[i - e - 1].x;
+  return [I.lerp(a, b, ease(f)), YB, 24 + 12 * Math.sin(Math.PI * f)];
+}
+function frame(t) {
+  var tau = t % PER;
+  sc.clear(dyn); sc.clear(linkG);
+  for (var i = 1; i <= 3; i++) {                                    /* liên kết mesh giữa hai bo kề nhau */
+    var a = NODES[i - 1].x, b = NODES[i].x, pp = [];
+    for (var u = 0; u <= 14; u++) { var f = u / 14; pp.push([I.lerp(a, b, f), YB, 14 + 12 * Math.sin(Math.PI * f)]); }
+    var e = sc.path(linkG, pp, 0, '#d9432b', 1.6); e.setAttribute('stroke-dasharray', '4 4'); e.setAttribute('stroke-dashoffset', (-t * 14) % 16);
+  }
+  var items = [], reset = I.clamp((tau - 6.3) / .5), k;
+  for (k = 1; k <= 3; k++) {
+    var s = tau - T0, full = HZ * NODES[k].ms / MSMAX, p = I.clamp(s / TD[k]), h = full * p * (1 - ease(reset));
+    sc.clear(pillG[k - 1]);
+    if (h > .3) sc.box(pillG[k - 1], NODES[k].x - 19, -62, 0, 38, 38, h, I.LEAF[k - 1]);
+    var done = tau >= T0 + TD[k] && tau < 6.3, al = done ? ease((tau - T0 - TD[k]) / .3) : 0;
+    vEl[k - 1].setAttribute('opacity', (Deck.still || document.documentElement.classList.contains('static')) ? 1 : al.toFixed(2));
+    var q = P(NODES[k].x, -43, full + 12); vEl[k - 1].setAttribute('x', q[0].toFixed(1)); vEl[k - 1].setAttribute('y', q[1].toFixed(1));
+    if (s >= 0 && s < TD[k]) { var c = posOn(k, s); items.push({ x: c[0] - 7, y: c[1] - 7, z: c[2], w: 14, d: 14, h: 14, t: I.LEAF[k - 1] }); }
+  }
+  sc.items(dyn, items);
+}
+Deck.frames.s15 = frame;
+
+})();
+/* 16-ket-luan.js */
+;(function(){
+/* Slide 16: chỉ làm sáng từng "ga" theo bước (Đạt được, Hạn chế, Hướng phát triển); nội dung là chữ tĩnh. */
+var sl = document.getElementById('s16'), dots = sl.querySelectorAll('.cl');
+Deck.steps.s16 = function (s) {
+  var all = document.documentElement.classList.contains('static');
+  Array.prototype.forEach.call(dots, function (c, i) { c.style.setProperty('--on', (all || s >= i) ? 1 : .35); c.querySelector('.dot').style.opacity = (all || s >= i) ? 1 : .35; });
+};
+
+})();
+/* 17-du-phong-a.js */
+;(function(){
+/* Dự phòng A: hiện tại = painlessMesh (Arduino); hướng phát triển = ESP-WIFI-MESH (ESP-IDF), bản đã dựng một phần nằm trong thư mục lưu trữ. */
+var svg = document.getElementById('b1fig'), I = window.Iso, T = I.T;
+var sc = I.scene(svg, { az: 20, el: 32, rect: [0, 40, 492, 330], pts: [[-20, -110, -10], [330, -110, -10], [-20, 110, -10], [330, 110, -10], [60, 0, 70], [250, -40, 70], [250, 110, -50]] });
+var P = sc.pt;
+var plateG = sc.g(), objG = sc.g(), ghostG = sc.g(), dyn = sc.g();
+sc.box(plateG, -20, -110, -10, 350, 220, 10, T.plate);
+/* hiện tại: bo mạch thật (ESP32 + chip + anten) */
+sc.box(objG, 20, -38, 0, 100, 76, 12, T.pcb); sc.box(objG, 30, -26, 12, 34, 28, 5, T.chip);
+sc.cyl(objG, 96, 0, 12, 14, 16, '#3b3a35', '#6d6b62', '#8b887c'); sc.cyl(objG, 96, 0, 26, 2, 11, '#222', '#444', '#101010');
+sc.box(objG, 30, 14, 12, 20, 10, 4, T.red);
+/* hướng phát triển: bản "bóng" (chỉ có nét) + hộp lưu trữ đã dựng một phần */
+function ghostBox(g, x, y, z, w, d, h) {
+  var a = [[x, y], [x + w, y], [x + w, y + d], [x, y + d]], k;
+  [0, h].forEach(function (zz) { var l = sc.path(g, a.concat([a[0]]), zz + z, '#645f52', 1.6); l.setAttribute('stroke-dasharray', '5 4'); });
+  a.forEach(function (c) { var l = sc.line(g, [c[0], c[1], z], [c[0], c[1], z + h], '#645f52', 1.6); l.setAttribute('stroke-dasharray', '5 4'); });
+}
+ghostBox(ghostG, 200, -90, 0, 100, 76, 12);
+sc.cyl(ghostG, 276, -52, 12, 0.1, 16, '#ccc', '#ddd', 'rgba(0,0,0,0)');
+sc.box(objG, 205, 30, 0, 90, 60, 36, T.stone);
+for (var g2 = 0; g2 < 4; g2++) sc.line(objG, [209, 90.2, 7 + g2 * 8], [291, 90.2, 7 + g2 * 8], 'rgba(60,52,38,.45)', 1);
+sc.box(objG, 205, 30, 36, 90, 60, 4, T.white);
+/* nhãn (chữ có sẵn trong HTML, chỉ đặt vị trí) */
+function place(id, x, y, z, dx, dy, anchor) { var t = document.getElementById(id), q = P(x, y, z); t.setAttribute('x', (q[0] + dx).toFixed(1)); t.setAttribute('y', (q[1] + dy).toFixed(1)); t.setAttribute('text-anchor', anchor || 'middle'); svg.appendChild(t); }
+place('b1t1', 70, 0, 12, 0, -62); place('b1n1', 70, 110, -10, 0, 30);
+place('b1t2', 250, -52, 12, 0, -52); place('b1n2', 250, 110, -10, 0, 30);
+document.getElementById('b1n2').setAttribute('fill', '#645f52');
+/* dòng chảy: hiện tại -> hướng phát triển */
+Deck.frames.b1 = function (t) {
+  sc.clear(dyn);
+  var a = P(125, 0, 14), b = P(195, -40, 14);
+  var l = sc.line(dyn, [125, 0, 14], [195, -40, 14], '#d9432b', 1.8); l.setAttribute('stroke-dasharray', '5 5'); l.setAttribute('stroke-dashoffset', (-t * 18) % 20);
+  var items = [];
+  for (var k = 0; k < 3; k++) { var s = ((t * .5 + k / 3) % 1), q = [I.lerp(125, 195, s), I.lerp(0, -40, s), 20 + 8 * Math.sin(Math.PI * s)]; items.push({ x: q[0] - 5, y: q[1] - 5, z: q[2], w: 10, d: 10, h: 10, t: I.LEAF[k] }); }
+  sc.items(dyn, items);
+};
+
+})();
+/* 18-du-phong-b.js */
+;(function(){
+/* Dự phòng B: hai thanh tốc độ UART vẽ đúng tỉ lệ (1 KB/s = 5,6 đơn vị dài): 11,5 : 92 = 1 : 8; hai mốc tải: 15,6 và 47 KB/s. */
+var svg = document.getElementById('b2fig'), I = window.Iso, T = I.T;
+var U = 5.6, V1 = 11.5, V2 = 92, M1 = 15.6, M2 = 47;
+var sc = I.scene(svg, { az: 6, el: 28, rect: [0, 8, 1136, 304], pts: [[-135, -56, -10], [V2 * U + 50, -56, -10], [-135, 110, -10], [V2 * U + 50, 110, -10], [M2 * U, -46, 78], [0, 0, 52], [0, 80, 52]] });
+var P = sc.pt;
+var plateG = sc.g(), barsG = sc.g(), gateG = sc.g(), dyn = sc.g();
+sc.box(plateG, -135, -56, -10, V2 * U + 185, 166, 10, T.plate);
+/* thang chia 0..92 KB/s (vạch không nhãn, mỗi ~11,5 KB/s) để thấy tỉ lệ */
+for (var i = 0; i <= 8; i++) sc.line(plateG, [i * V2 / 8 * U, -50, 0.2], [i * V2 / 8 * U, 104, 0.2], 'rgba(28,27,25,.16)', 1);
+var BY = [0, 80], BD = 26, BH = 22;
+function place(id, x, y, z, dx, dy, anchor, fill) { var t = document.getElementById(id), q = P(x, y, z); t.setAttribute('x', (q[0] + dx).toFixed(1)); t.setAttribute('y', (q[1] + dy).toFixed(1)); t.setAttribute('text-anchor', anchor || 'start'); if (fill) t.setAttribute('fill', fill); svg.appendChild(t); }
+place('b2l1', -10, BY[0], 0, 0, 2, 'end', '#1f4e9c');
+place('b2l2', -10, BY[1], 0, 0, 2, 'end', '#1f4e9c');
+place('b2m1', M1 * U, -46, 52, 0, -4, 'middle', '#d9432b');
+place('b2m2', M2 * U, -46, 52, 0, -4, 'middle', '#d9432b');
+var cur = 0, at = [-1, -1, -1];
+function allOn() { return document.documentElement.classList.contains('static'); }
+Deck.steps.b2 = function (s) { cur = s; for (var k = 1; k <= 2; k++) { if (s >= k && at[k] < 0) at[k] = performance.now(); if (s < k) at[k] = -1; } };
+Deck.shows.b2 = function () { at = [-1, -1, -1]; };
+function ease(x) { x = I.clamp(x); return 1 - Math.pow(1 - x, 3); }
+function gate(m, a) {                    /* mốc tải: vạch đứt nối tới cột cờ ở mép sau */
+  var l = sc.line(gateG, [m * U, 104, 0.3], [m * U, -46, 0.3], 'rgba(217,67,43,' + a.toFixed(2) + ')', 2); l.setAttribute('stroke-dasharray', '6 4');
+  sc.box(gateG, m * U - 2, -48, 0, 4, 4, 44 * a, T.red);
+}
+Deck.frames.b2 = function (t) {
+  var still = Deck.still || allOn(), s = still ? 3 : cur, k, p = [0, 0, 0];
+  for (k = 1; k <= 2; k++) p[k] = (s >= k) ? (still ? 1 : ease((performance.now() - at[k]) / 900)) : 0;
+  sc.clear(barsG); sc.clear(gateG); sc.clear(dyn);
+  var l1 = V1 * U * p[1], l2 = V2 * U * p[2];
+  if (l1 > .5) sc.box(barsG, 0, BY[0] - BD / 2, 0, l1, BD, BH, T.blue);
+  if (l2 > .5) sc.box(barsG, 0, BY[1] - BD / 2, 0, l2, BD, BH, T.blue);
+  /* gói chạy trên thanh khi đã mọc */
+  var items = [], j;
+  if (p[1] >= 1) for (j = 0; j < 3; j++) { var x = ((t * 26 + j * 21) % (V1 * U)); items.push({ x: x - 7, y: BY[0] - 7, z: BH, w: 14, d: 14, h: 14, t: I.LEAF[j] }); }
+  if (p[2] >= 1) for (j = 0; j < 8; j++) { var x2 = ((t * 120 + j * 66) % (V2 * U)); items.push({ x: x2 - 7, y: BY[1] - 7, z: BH, w: 14, d: 14, h: 14, t: I.LEAF[j % 3] }); }
+  sc.items(dyn, items);
+  if (p[1] > 0) gate(M1, p[1]);
+  if (p[2] > 0) gate(M2, p[2]);
+  ['b2m1', 'b2m2'].forEach(function (id, n) { document.getElementById(id).setAttribute('opacity', p[n + 1]); });
+  ['b2l1', 'b2l2'].forEach(function (id, n) { document.getElementById(id).setAttribute('opacity', p[n + 1]); });
+};
+
+})();
+/* 19-du-phong-c.js */
+;(function(){
+/* Dự phòng C: trên = kiến trúc hiện tại (Root - middleware - dashboard nối thẳng bằng WebSocket, không cần broker);
+   dưới = khi mở rộng nhiều Root / nhiều dashboard thì MQTT (qua broker) hợp lý. Làn dưới sáng lên ở bước 3. */
+var svg = document.getElementById('b3fig'), I = window.Iso, T = I.T;
+var sc = I.scene(svg, { az: 12, el: 30, rect: [0, 20, 656, 420], pts: [[-20, -160, -10], [350, -160, -10], [-20, 175, -10], [350, 175, -10], [200, -110, 90], [150, 175, -40]] });
+var P = sc.pt, tx = sc.text;
+var YA = -100, YB = 92;
+var lanes = [
+  { y: YA, plate: sc.g(), obj: sc.g(), dyn: sc.g() },
+  { y: YB, plate: sc.g(), obj: sc.g(), dyn: sc.g() }
+];
+function stand(g, x, y) {                       /* màn hình dashboard: mặt màn quay về phía người xem */
+  sc.box(g, x, y - 10, 0, 34, 20, 4, T.stone); sc.box(g, x + 14, y - 3, 4, 6, 6, 14, T.stone); sc.box(g, x, y - 3, 18, 34, 6, 26, T.dark);
+  sc.poly(g, [P(x + 3, y + 3.2, 21), P(x + 31, y + 3.2, 21), P(x + 31, y + 3.2, 41), P(x + 3, y + 3.2, 41)], '#1d2a25', 'none', 0);
+  [[6, 10], [13, 16], [20, 8], [26, 13]].forEach(function (b) { sc.poly(g, [P(x + b[0], y + 3.4, 23), P(x + b[0] + 4, y + 3.4, 23), P(x + b[0] + 4, y + 3.4, 23 + b[1]), P(x + b[0], y + 3.4, 23 + b[1])], '#7fd4a8', 'none', 0); });
+}
+function pcb(g, x, y) { sc.box(g, x, y - 22, 0, 46, 44, 8, T.pcb); sc.box(g, x + 4, y - 15, 8, 16, 14, 3, T.chip); sc.cyl(g, x + 34, y, 8, 9, 8, '#3b3a35', '#6d6b62', '#8b887c'); sc.cyl(g, x + 34, y, 17, 2, 6, '#222', '#444', '#101010'); }
+function ghostBox(g, x, y, z, w, d, h) {
+  var a = [[x, y], [x + w, y], [x + w, y + d], [x, y + d]];
+  [z, z + h].forEach(function (zz) { var l = sc.path(g, a.concat([a[0]]), zz, '#645f52', 1.6); l.setAttribute('stroke-dasharray', '5 4'); });
+  a.forEach(function (c) { var l = sc.line(g, [c[0], c[1], z], [c[0], c[1], z + h], '#645f52', 1.6); l.setAttribute('stroke-dasharray', '5 4'); });
+}
+/* làn trên */
+var L0 = lanes[0], y0 = YA;
+sc.box(L0.plate, -20, y0 - 62, -10, 370, 124, 10, T.plate);
+pcb(L0.obj, 0, y0);
+sc.box(L0.obj, 46, y0 - 6, 0, 76, 12, 3, T.blue);
+sc.box(L0.obj, 120, y0 - 26, 0, 56, 52, 38, T.stone); for (var g2 = 0; g2 < 4; g2++) sc.line(L0.obj, [124, y0 + 26.2, 7 + g2 * 7], [172, y0 + 26.2, 7 + g2 * 7], 'rgba(60,52,38,.45)', 1);
+sc.box(L0.obj, 176, y0 - 6, 0, 122, 12, 3, T.blue);
+stand(L0.obj, 298, y0);
+ghostBox(L0.obj, 196, y0 - 56, 0, 70, 40, 26);                 /* broker: không cần */
+sc.line(L0.obj, [196, y0 - 16, 0], [266, y0 - 16, 26], '#d9432b', 1.8); sc.line(L0.obj, [266, y0 - 16, 0], [196, y0 - 16, 26], '#d9432b', 1.8);
+/* làn dưới */
+var L1 = lanes[1], y1 = YB;
+sc.box(L1.plate, -20, y1 - 78, -10, 370, 156, 10, T.plate);
+pcb(L1.obj, 0, y1 - 40); pcb(L1.obj, 0, y1 + 40);
+sc.box(L1.obj, 46, y1 - 46, 0, 60, 12, 3, T.blue); sc.box(L1.obj, 46, y1 + 34, 0, 60, 12, 3, T.blue);
+sc.box(L1.obj, 108, y1 - 46, 0, 12, 92, 3, T.blue);
+sc.box(L1.obj, 120, y1 - 30, 0, 70, 60, 26, T.stone); for (var g3 = 0; g3 < 3; g3++) sc.line(L1.obj, [124, y1 + 30.2, 6 + g3 * 7], [186, y1 + 30.2, 6 + g3 * 7], 'rgba(60,52,38,.45)', 1);
+sc.box(L1.obj, 190, y1 - 6, 0, 40, 12, 3, T.blue);
+sc.box(L1.obj, 228, y1 - 46, 0, 12, 92, 3, T.blue);
+sc.box(L1.obj, 240, y1 - 46, 0, 52, 12, 3, T.blue); sc.box(L1.obj, 240, y1 + 34, 0, 52, 12, 3, T.blue);
+stand(L1.obj, 292, y1 - 40); stand(L1.obj, 292, y1 + 40);
+/* nhãn */
+function lab(s, x, y, z, dx, dy, size, w, anchor, fill, cls) { var q = P(x, y, z); return tx(svg, q[0] + dx, q[1] + dy, s, size, w, anchor || 'middle', fill || '#26231c', cls || 'sf'); }
+lab('Root', 22, y0, 24, 0, -14, 19, 700); lab('middleware', 148, y0, 42, 0, -12, 19, 700); lab('dashboard', 315, y0, 46, 0, -12, 19, 700);
+lab('broker', 231, y0 - 56, 26, 0, -10, 15, 500, 'middle', '#645f52', 'mo');
+var lb2 = [lab('Root', 22, y1 + 78, -10, 0, 22, 19, 700), lab('broker', 155, y1 + 78, -10, 0, 22, 19, 700), lab('dashboard', 315, y1 + 78, -10, 0, 22, 19, 700), lab('MQTT', 155, y1 - 30, 26, 0, -12, 15, 500, 'middle', '#1f4e9c', 'mo')];
+/* động */
+var cur = 0;
+function allOn() { return document.documentElement.classList.contains('static'); }
+Deck.steps.b3 = function (s) { cur = s; };
+function run(g, pts, t, n, per, sp) {            /* các gói chạy dọc đường pts (3D) */
+  var items = [], k;
+  for (k = 0; k < n; k++) { var f = ((t * sp + k / n) % 1), q = I.along(pts, f); items.push({ x: q[0] - 5, y: q[1] - 5, z: q[2], w: 10, d: 10, h: 10, t: I.LEAF[(k + per) % 3] }); }
+  return items;
+}
+Deck.frames.b3 = function (t) {
+  var still = Deck.still || allOn(), on = still || cur >= 3;
+  var a = [], b = [];
+  sc.clear(L0.dyn); sc.clear(L1.dyn);
+  a = a.concat(run(L0.dyn, [[24, y0, 14], [120, y0, 14]], t, 2, 0, .45), run(L0.dyn, [[176, y0, 5], [298, y0, 5]], t, 3, 1, .5));
+  sc.items(L0.dyn, a);
+  b = b.concat(run(L1.dyn, [[24, y1 - 40, 14], [114, y1 - 40, 14], [114, y1, 14], [150, y1, 14]], t, 2, 0, .4), run(L1.dyn, [[24, y1 + 40, 14], [114, y1 + 40, 14], [114, y1, 14], [150, y1, 14]], t + .6, 2, 1, .4),
+    run(L1.dyn, [[190, y1, 5], [234, y1, 5], [234, y1 - 40, 5], [296, y1 - 40, 5]], t, 2, 2, .4), run(L1.dyn, [[190, y1, 5], [234, y1, 5], [234, y1 + 40, 5], [296, y1 + 40, 5]], t + .5, 2, 0, .4));
+  sc.items(L1.dyn, b);
+  var o = on ? 1 : .22;
+  [L1.plate, L1.obj, L1.dyn].forEach(function (g) { g.setAttribute('opacity', o); });
+  lb2.forEach(function (e) { e.setAttribute('opacity', o); });
+};
+
+})();
+/* 20-du-phong-d.js */
+;(function(){
+/* Dự phòng D: Root có 4 slot ghép; mỗi slot có bitmap (các ô = chunk đã nhận) và đồng hồ 2 s.
+   Bốn pha ứng với bốn gạch đầu dòng: (1) quá 2 s chưa đủ -> hủy khung; (2) khung mới cùng node -> hủy khung cũ (supersede);
+   (3) hết slot -> LRU (slot dùng lâu nhất bị thay); (4) hướng cải tiến (nét đứt): NACK gộp, một bản tin/khung.
+   Số ô trên hình chỉ minh họa, không phải số liệu. */
+var svg = document.getElementById('b4fig'), I = window.Iso, T = I.T;
+var sc = I.scene(svg, { az: 18, el: 34, rect: [0, 20, 630, 410], pts: [[-30, -135, -10], [320, -135, -10], [-30, 135, -10], [320, 135, -10], [30, 0, 50], [200, -90, 40]] });
+var P = sc.pt, S = sc.S, C = sc.C;
+var SY = [-90, -30, 30, 90], CX = function (i) { return 118 + i * 30; }, NC = 6, SRC = [26, 0, 24];
+var COL = [T.red, T.blue, T.green, T.chip], DEAD = { top: '#f3b9ad', y: '#d9432b', x: '#a8301c' }, GLOW = T.green;
+var plateG = sc.g(), objG = sc.g(), dyn = sc.g();
+sc.box(plateG, -30, -135, -10, 350, 270, 10, T.plate);
+/* Root (nơi chunk tới từ mesh) */
+sc.box(objG, -8, -26, 0, 60, 52, 9, T.pcb); sc.box(objG, -2, -16, 9, 22, 18, 3, T.chip);
+sc.cyl(objG, 36, 0, 9, 12, 11, '#3b3a35', '#6d6b62', '#8b887c'); sc.cyl(objG, 36, 0, 21, 2, 8, '#222', '#444', '#101010');
+/* 4 slot: khay đá, mỗi ô là một chỗ lõm */
+SY.forEach(function (y) {
+  sc.box(objG, 108, y - 20, 0, 192, 40, 5, T.stone);
+  for (var i = 0; i < NC; i++) sc.box(objG, CX(i) - 1, y - 14, 5, 28, 28, .6, T.dark);
+});
+/* ---- kịch bản bốn pha: ô (slot,i) có các đoạn {on, off, col, fl} ; chunk bay tới ô ; đồng hồ ---- */
+var PD = [4.2, 5.0, 4.0, 5.8], seg = function (on, off, col, fl) { return { on: on, off: off, col: col, fl: fl }; };
+function phase1() {
+  var cells = {}, fl = [], arr = [[0, .5], [1, .9], [2, 1.3], [4, 1.7], [5, 2.1]];                      /* thiếu ô số 3 */
+  arr.forEach(function (a) { cells['0,' + a[0]] = [seg(a[1], 3.3, 0, 2.5)]; fl.push({ s: 0, i: a[0], t: a[1], col: 0 }); });
+  return { cells: cells, fl: fl, timers: [{ s: 0, from: .5, to: 2.5 }], nack: null };
+}
+function phase2() {
+  var cells = {}, fl = [], k;
+  [[0, .3], [1, .6], [2, .9]].forEach(function (a) { cells['0,' + a[0]] = [seg(a[1], 2.7, 0, 2.1)]; fl.push({ s: 0, i: a[0], t: a[1], col: 0 }); });
+  [[0, 2.1], [1, 2.5], [2, 2.9], [3, 3.3]].forEach(function (a) { cells['0,' + a[0]] = (cells['0,' + a[0]] || []).concat([seg(a[1], 99, 0, 999)]); fl.push({ s: 0, i: a[0], t: a[1], col: 0 }); });
+  return { cells: cells, fl: fl, timers: [{ s: 0, from: .3, to: 2.1, stop: true }, { s: 0, from: 2.1, to: 4.1 }], nack: null };
+}
+function phase3() {
+  var cells = {}, fl = [], init = [[0, [0, 1], 0], [1, [0, 1, 2], 1], [2, [0, 1, 2, 3], 2], [3, [0, 1], 0]];
+  init.forEach(function (r) { r[1].forEach(function (i) { cells[r[0] + ',' + i] = [seg(-9, r[0] === 0 ? 2.0 : 99, r[2], r[0] === 0 ? 1.3 : 999)]; }); });
+  [[0, 2.0], [1, 2.45]].forEach(function (a) { cells['0,' + a[0]] = (cells['0,' + a[0]] || []).concat([seg(a[1], 99, 3, 999)]); fl.push({ s: 0, i: a[0], t: a[1], col: 3 }); });
+  return { cells: cells, fl: fl, timers: [{ s: 0, fix: .86, to: 1.3 }, { s: 1, fix: .62 }, { s: 2, fix: .42 }, { s: 3, fix: .22 }, { s: 0, from: 2.0, to: 4.0 }], nack: null };
+}
+function phase4() {
+  var cells = {}, fl = [];
+  [0, 1, 2, 4, 5].forEach(function (i) { cells['0,' + i] = [seg(-9, 4.7, 0, 4.4)]; });
+  cells['0,3'] = [seg(2.9, 4.7, 0, 4.4)]; fl.push({ s: 0, i: 3, t: 2.9, col: 0 });
+  return { cells: cells, fl: fl, timers: [{ s: 0, fix: .5, to: 2.9 }], nack: { from: 1.0, to: 2.1 }, glow: [3.0, 4.4] };
+}
+var PHASES = [phase1(), phase2(), phase3(), phase4()];
+function ease(x) { x = I.clamp(x); return x * x * (3 - 2 * x); }
+function tileColor(sg, tau, glow) {
+  if (tau >= sg.fl) return DEAD;
+  if (glow && tau >= glow[0] && tau < glow[1]) return GLOW;
+  return COL[sg.col];
+}
+function drawPhase(ph, tau) {
+  var items = [], k, key, s, i;
+  /* ô đã nhận (bitmap) */
+  for (key in ph.cells) {
+    ph.cells[key].forEach(function (sg) {
+      if (tau < sg.on || tau >= sg.off) return;
+      var p = key.split(','), s0 = +p[0], i0 = +p[1], h = 5;
+      if (tau >= sg.off - .3) h = 5 * (sg.off - tau) / .3;
+      if (tau < sg.on + .12) h = 5 * ease((tau - sg.on) / .12) + 0;
+      items.push({ x: CX(i0), y: SY[s0] - 13, z: 5.6, w: 26, d: 26, h: Math.max(.4, h), t: tileColor(sg, tau, ph.glow) });
+    });
+  }
+  /* chunk đang bay từ Root tới ô */
+  ph.fl.forEach(function (f) {
+    var u = (tau - (f.t - .55)) / .55; if (u < 0 || u >= 1) return;
+    var tx = CX(f.i) + 13, ty = SY[f.s], x = I.lerp(SRC[0], tx, ease(u)), y = I.lerp(SRC[1], ty, ease(u)), z = I.lerp(SRC[2], 12, u) + 30 * Math.sin(Math.PI * u);
+    items.push({ x: x - 7, y: y - 7, z: z, w: 14, d: 14, h: 14, t: COL[f.col] });
+  });
+  /* NACK gộp: một gói nét đứt chạy ngược về Root */
+  if (ph.nack && tau >= ph.nack.from && tau < ph.nack.to + .0) {
+    var u2 = (tau - ph.nack.from) / (ph.nack.to - ph.nack.from), x2 = I.lerp(CX(3) + 13, SRC[0], u2), y2 = I.lerp(SY[0], SRC[1], u2), z2 = 16 + 26 * Math.sin(Math.PI * u2);
+    items.push({ x: x2 - 5, y: y2 - 5, z: z2, w: 10, d: 10, h: 10, t: T.white });
+  }
+  sc.items(dyn, items);
+  /* đồng hồ 2 s (thanh vàng ở mép trước khay) */
+  ph.timers.forEach(function (tm) {
+    var f;
+    if (tm.fix != null) { f = tm.fix; if (tm.to != null && tau >= tm.to) return; if (tm.from != null) return; }
+    else { if (tau < tm.from) return; if (tm.stop && tau >= tm.to) return; f = I.clamp((tau - tm.from) / (tm.to - tm.from)); if (!tm.stop && tau > tm.to + .8) return; }
+    var y = SY[tm.s] + 24, x0 = 108, w = 192;
+    sc.poly(dyn, [P(x0, y, .3), P(x0 + w, y, .3), P(x0 + w, y + 7, .3), P(x0, y + 7, .3)], '#ece5d4', 'rgba(28,27,25,.7)', 1);
+    if (f > .01) sc.poly(dyn, [P(x0, y, .5), P(x0 + w * f, y, .5), P(x0 + w * f, y + 7, .5), P(x0, y + 7, .5)], f > .98 ? '#d9432b' : '#b86a00', 'none', 0);
+  });
+  /* đường NACK nét đứt */
+  if (ph.nack) { var l = sc.line(dyn, [CX(3) + 13, SY[0], 16], [SRC[0], SRC[1], 16], '#645f52', 1.4); l.setAttribute('stroke-dasharray', '4 4'); l.setAttribute('opacity', tau >= ph.nack.from - .3 ? 1 : 0); }
+}
+var cur = 0, bul = document.querySelectorAll('#b4 ul.bk li'), ul = document.querySelector('#b4 ul.bk');
+function allOn() { return document.documentElement.classList.contains('static'); }
+Deck.steps.b4 = function (s) {
+  cur = s; ul.classList.toggle('has', s > 0 && !allOn());
+  Array.prototype.forEach.call(bul, function (li) { li.classList.toggle('act', +li.getAttribute('data-s') === s && !allOn()); });
+};
+Deck.frames.b4 = function (t) {
+  var ph, tau, tot = PD[0] + PD[1] + PD[2] + PD[3];
+  if (cur > 0 && !allOn()) { ph = cur - 1; tau = t % PD[ph]; }
+  else { var u = t % tot; ph = 0; while (u >= PD[ph]) { u -= PD[ph]; ph++; } tau = u; }
+  sc.clear(dyn);
+  drawPhase(PHASES[ph], tau);
 };
 
 })();

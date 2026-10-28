@@ -1,0 +1,41 @@
+<!-- 11 · UART / MIDDLEWARE / DASHBOARD -->
+<section class="slide" id="s11" data-sec="2">
+  <div class="hd"><span class="k">03 · UART, Middleware, Dashboard</span><span class="pg"></span></div>
+  <h2 class="t m">Khung nhị phân có CRC, dashboard dùng dữ liệu thật</h2>
+  <div class="body">
+    <div class="row cols">
+      <div class="col lc">
+        <div class="blk a">
+          <h3>Khung UART</h3>
+          <div class="frm">
+            <code class="c0">AA 55</code>
+            <span class="c1">TYPE</span>
+            <span class="c1n">(01 ảnh, 02 telemetry, 03 log)</span>
+            <span class="c2">LEN 4 B LE</span>
+            <span class="c3">PAYLOAD</span>
+            <span class="c4">CRC16/<wbr>CCITT-FALSE</span>
+          </div>
+          <p class="sn st" data-s="1">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</p>
+        </div>
+        <div class="blk b">
+          <h3>Middleware Node.js</h3>
+          <div class="scn">
+            <svg class="fig" id="s11fig" viewBox="0 0 734 150" role="img" aria-label="Bộ đệm UART ở Root bỏ khung ảnh khi còn dưới một nửa; khung đi qua cáp UART tới middleware, qua ba cổng kiểm MAGIC, LEN, CRC rồi Socket.IO tới dashboard"></svg>
+            <p class="gl"><span class="g1">Tìm MAGIC</span><span class="g2">kiểm LEN (≤&nbsp;131072)</span><span class="g3">kiểm CRC</span><span class="g4">Socket.IO</span></p>
+          </div>
+          <p class="bt st" data-s="2">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.<span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
+        </div>
+        <div class="blk c st" data-s="3">
+          <h3>Dashboard (React 18 + Tailwind)</h3>
+          <p>Tab Live: ảnh từng Leaf, cây topology theo RSSI. Tab So sánh: FPS, thông lượng, tỉ lệ hủy, heap, tự phục hồi; xuất CSV.</p>
+        </div>
+      </div>
+      <div class="col rc">
+        <figure class="shot"><img src="assets/dashboardtab1.png" alt="Dashboard tab Live"><figcaption>Tab Live</figcaption></figure>
+        <figure class="shot"><img src="assets/dashboardtab2.png" alt="Dashboard tab So sánh"><figcaption>Tab So sánh</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <span class="src">chuong3.tex, mục 3.4</span>
+  <aside><b>Lưu ý:</b> báo cáo ghi ngưỡng bỏ khung là &lt; ½ bộ đệm; mã mới (commit 7d68445) bỏ khi bộ đệm không đủ chỗ cho cả khung. Nếu được hỏi, nói rõ bản nào dùng cho phép đo. Log văn bản chèn vào luồng nhị phân làm middleware mất đồng bộ, nên em hạ log painlessMesh xuống mức lỗi. Dashboard không dùng dữ liệu giả lập.</aside>
+</section>

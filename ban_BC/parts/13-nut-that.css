@@ -24,3 +24,4 @@
 .static #s13 .bar.a,.static #s13 .va{animation:none}
 .static #s13 .bar.b{transform:none;transition:none}
 .static #s13 .vb{opacity:1;transition:none}
+#s13 .src{font-size:13px}

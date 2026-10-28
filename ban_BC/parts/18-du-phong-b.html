@@ -1,0 +1,18 @@
+<!-- DỰ PHÒNG B -->
+<section class="slide" id="b2" data-backup>
+  <div class="hd"><span class="k w">Dự phòng B</span><span class="pg"></span></div>
+  <h2 class="t">Vì sao UART 921600 bps?</h2>
+  <div class="body">
+    <ul class="l bk">
+      <li class="st" data-s="1">115200 bps ≈ 11,5 KB/s (tính toán) — chưa đủ cho 2 Leaf (≈ 15,6 KB/s ở chu kỳ 600 ms) → UART thành nút thắt, làm sai số đo mesh.</li>
+      <li class="st" data-s="2">921600 bps ≈ 92 KB/s lý thuyết; thực tế đã chạm giới hạn ở 3 Leaf × 300 ms (~47 KB/s ảnh + ghi chặn) → bằng chứng cho thấy cần chọn tốc độ cao.</li>
+    </ul>
+    <div class="fig-wrap"><svg class="fig" id="b2fig" viewBox="0 0 1136 320" role="img" aria-label="Hai thanh dài tỉ lệ đúng: 115200 bps ≈ 11,5 KB/s và 921600 bps ≈ 92 KB/s, cùng hai mốc tải 15,6 KB/s (2 Leaf, 600 ms) và 47 KB/s (3 Leaf, 300 ms)">
+      <text class="mo" id="b2l1" font-size="15" font-weight="500">115200 bps ≈ 11,5 KB/s</text>
+      <text class="mo" id="b2l2" font-size="15" font-weight="500">921600 bps ≈ 92 KB/s</text>
+      <text class="mo" id="b2m1" font-size="15" font-weight="700">≈ 15,6 KB/s</text>
+      <text class="mo" id="b2m2" font-size="15" font-weight="700">~47 KB/s ảnh</text>
+    </svg></div>
+  </div>
+  <aside>Phím B.</aside>
+</section>

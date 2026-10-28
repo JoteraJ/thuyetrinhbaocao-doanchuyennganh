@@ -1,0 +1,4 @@
+#b3 ul.l.bk{display:flex;flex-direction:column;justify-content:center;gap:34px;font-size:25px;line-height:1.45}
+#b3 ul.l.bk li{padding-left:28px}
+#b3 ul.l.bk li::before{top:.66em;width:10px;height:10px}
+#b3 .fig-wrap .fig{position:absolute;inset:0}

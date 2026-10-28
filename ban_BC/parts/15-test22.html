@@ -1,0 +1,39 @@
+<!-- 15 · TEST22: mỗi chặng cộng ~200 ms -->
+<section class="slide" id="s15" data-sec="3">
+  <div class="hd"><span class="k">04 · Kết quả 3 · test22 (09/10) <span class="tg w">bổ sung sau khi nộp báo cáo</span></span><span class="pg"></span></div>
+  <h2 class="t">Mỗi chặng cộng thêm ~200 ms độ trễ</h2>
+  <div class="body">
+    <div class="row grow" style="gap:36px">
+      <div class="col" style="flex:0 0 612px;gap:6px">
+        <div class="cap"><h3>Độ trễ trung vị theo số chặng (ms)</h3><span class="lab">trung vị; RSSI trung bình</span></div>
+        <div class="fig-wrap"><svg class="fig" id="s15fig" viewBox="0 0 612 440" role="img" aria-label="Chuỗi ba chặng: Root, ba Leaf nối tiếp; chunk đi lần lượt qua từng chặng, cột cao tỉ lệ với độ trễ trung vị 148, 350, 576 ms">
+          <text class="v" id="s15v1" font-size="30" font-weight="700">148</text>
+          <text class="v" id="s15v2" font-size="30" font-weight="700">350</text>
+          <text class="v" id="s15v3" font-size="30" font-weight="700">576</text>
+          <text class="n" id="s15n0" font-size="19" font-weight="700">Root</text>
+          <text class="n" id="s15n1" font-size="19" font-weight="700">…449329</text>
+          <text class="n" id="s15n2" font-size="19" font-weight="700">…433521</text>
+          <text class="n" id="s15n3" font-size="19" font-weight="700">…369673</text>
+          <text class="mo h" id="s15h1" font-size="13.5" font-weight="500">Hop 1 · −45,8 dBm</text>
+          <text class="mo h" id="s15h2" font-size="13.5" font-weight="500">Hop 2 · −54,5</text>
+          <text class="mo h" id="s15h3" font-size="13.5" font-weight="500">Hop 3 · −67,3</text>
+        </svg></div>
+      </div>
+      <div class="col f1" style="gap:14px;min-width:0">
+        <p class="sm muted">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16 phút (490 mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</p>
+        <div class="stats">
+          <div class="stat"><div class="n">4,94</div><p>FPS tổng</p></div>
+          <div class="stat"><div class="n">20,6<small>KB/s</small></div><p>thông lượng</p></div>
+          <div class="stat g"><div class="n">0,56<small>%</small></div><p>hủy; uartDrop 0</p></div>
+        </div>
+        <ul class="l b3">
+          <li class="fl st" data-s="1"><span style="order:1;flex-basis:100%">FPS gần như không đổi so với test21:</span><span style="order:2">tải bị giới hạn bởi chu kỳ chụp,</span><span style="order:4;flex-basis:100%">→ chưa đo suy giảm thông lượng theo hop</span><b style="order:3">chưa ép tới bão hòa</b></li>
+          <li class="st" data-s="2">~6,5 % mẫu trễ &gt; 1 s, cao nhất 4,3 s</li>
+          <li class="st" data-s="3"><b>Tự phục hồi:</b> 5 sự kiện, 1530–23225 ms; node mới gia nhập làm toàn mạng gián đoạn ~16 s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="src">Nhật ký đo đạc 09/10/2026 (test22)</span>
+  <aside><b>Lưu ý:</b> số liệu này có trong nhật ký đo 09/10 nhưng báo cáo LaTeX hiện ghi "chưa có số liệu ở hai hoặc ba chặng". Nếu báo cáo chưa cập nhật, nói đây là kết quả bổ sung sau khi nộp. Trung vị +~200 ms mỗi chặng; RSSI giảm dần theo chặng.</aside>
+</section>

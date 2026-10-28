@@ -1,0 +1,14 @@
+#s10 .cols{flex:1;min-height:0;gap:32px}
+#s10 .col{gap:6px}
+#s10 h3{margin:0}
+#s10 h3 code{font-size:.8em}
+#s10 .lf h3{border-top:2px solid var(--red);padding-top:6px}
+#s10 .rt h3{border-top:2px solid var(--blue);padding-top:6px}
+#s10 .scn{display:flex;gap:6px;height:205px;flex:none}
+#s10 .scn svg{display:block;height:205px}
+#s10 .fb{width:230px;flex:none}
+#s10 .fa{width:316px;flex:none}
+#s10 .fc{width:552px;flex:none}
+#s10 ul.l{font-size:17px;line-height:1.4;gap:5px;margin-top:6px}
+#s10 ul.l li::before{top:.58em}
+#s10 ul.l code{font-size:.9em}

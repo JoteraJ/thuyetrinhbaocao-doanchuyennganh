@@ -1,0 +1,39 @@
+<!-- 16 · KẾT LUẬN -->
+<section class="slide" id="s16" data-sec="4">
+  <div class="hd"><span class="k">05 · Kết luận, hạn chế, hướng phát triển</span><span class="pg"></span></div>
+  <div class="body">
+    <div class="cols">
+      <i class="rail"></i>
+      <div class="cl c1">
+        <span class="dot"></span>
+        <h3 class="good">Đạt được</h3>
+        <ul class="l g">
+          <li>Chuỗi hoàn chỉnh trên phần cứng thật: chụp → phân mảnh → mesh → ghép → UART CRC → middleware → dashboard</li>
+          <li>Xác định bằng đo đạc 2 nút thắt: số slot ghép, tải ghi UART</li>
+          <li>Watchdog, bảo vệ heap, theo dõi node im lặng, ghi UART không chặn, gửi lệch pha, đo độ trễ và tự phục hồi</li>
+        </ul>
+      </div>
+      <div class="cl c2">
+        <span class="dot"></span>
+        <h3 class="wc">Hạn chế (nói trước)</h3>
+        <ul class="l a lim st" data-s="1">
+          <li>Chưa gửi lại: mất 1 chunk là mất cả khung</li>
+          <li>Tự phục hồi phân tán (885–32528 ms; test22: 1530–23225 ms, cách đo mới), chưa đủ mẫu từng kịch bản</li>
+          <li>Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</li>
+          <li>Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 +33 %) không thiết kế cho nhiều luồng ảnh</li>
+        </ul>
+      </div>
+      <div class="cl c3">
+        <span class="dot"></span>
+        <h3>Hướng phát triển</h3>
+        <ul class="l b st" data-s="2">
+          <li><b>Ngắn hạn:</b> ghi UART sang task FreeRTOS riêng; đo tự phục hồi 5–10 lần; đo bão hòa 1/2/3 chặng và dòng Leaf; NACK gộp</li>
+          <li><b>Dài hạn:</b> ESP-WIFI-MESH (đã dựng một phần); định tuyến theo vị trí (GPS/UWB); ESP-NOW</li>
+        </ul>
+      </div>
+    </div>
+    <p class="thx st" data-s="3">Cảm ơn Hội đồng đã lắng nghe — em xin sẵn sàng trả lời câu hỏi.</p>
+  </div>
+  <span class="src">chuong5.tex</span>
+  <aside>Nói thẳng hạn chế trước khi hội đồng hỏi. Nhấn phím B để mở slide dự phòng A–D khi cần.</aside>
+</section>
