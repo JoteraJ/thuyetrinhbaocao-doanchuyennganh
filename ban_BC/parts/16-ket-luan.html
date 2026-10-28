@@ -36,14 +36,14 @@
           <li><span class="kw">Chưa gửi lại, mất cả khung</span><span class="fl">Chưa gửi lại: mất 1&nbsp;chunk là mất cả khung</span></li>
           <li><span class="kw">Tự phục hồi phân tán, chưa đủ mẫu</span><span class="fl">Tự phục hồi phân tán (<span class="nw">885–32528&nbsp;ms</span>; test22: <span class="nw">1530–23225&nbsp;ms</span>, cách đo mới), chưa đủ mẫu từng kịch bản</span></li>
           <li><span class="kw">Chưa đo bão hòa, dòng tiêu thụ</span><span class="fl">Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</span></li>
-          <li><span class="kw">Node đặt tĩnh; Base64 <span class="nw">+33&nbsp;%</span></span><span class="fl">Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 <span class="nw">+33&nbsp;%</span>) không thiết kế cho nhiều luồng ảnh</span></li>
+          <li><span class="kw">Node đặt tĩnh; không thiết kế cho nhiều luồng ảnh</span><span class="fl">Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 <span class="nw">+33&nbsp;%</span>) không thiết kế cho nhiều luồng ảnh</span></li>
         </ul>
       </div>
       <div class="cl c3">
         <span class="dot"></span>
         <h3>Hướng phát triển</h3>
         <ul class="l b st" data-s="2">
-          <li><b>Ngắn hạn:</b> <span class="kw">task FreeRTOS riêng; NACK gộp</span><span class="fl">ghi UART sang task FreeRTOS riêng; đo tự phục hồi <span class="nw">5–10&nbsp;lần</span>; đo bão hòa <span class="nw">1/2/3&nbsp;chặng</span> và dòng Leaf; NACK gộp</span></li>
+          <li><b>Ngắn hạn:</b> <span class="kw">ghi UART task FreeRTOS riêng; đo bão hòa; NACK gộp</span><span class="fl">ghi UART sang task FreeRTOS riêng; đo tự phục hồi <span class="nw">5–10&nbsp;lần</span>; đo bão hòa <span class="nw">1/2/3&nbsp;chặng</span> và dòng Leaf; NACK gộp</span></li>
           <li><b>Dài hạn:</b> <span class="kw"><span class="nw">ESP-WIFI-MESH</span>, <span class="nw">GPS/UWB</span>, <span class="nw">ESP-NOW</span></span><span class="fl"><span class="nw">ESP-WIFI-MESH</span> (đã dựng một phần); định tuyến theo vị trí <span class="nw">(GPS/UWB)</span>; <span class="nw">ESP-NOW</span></span></li>
         </ul>
       </div>

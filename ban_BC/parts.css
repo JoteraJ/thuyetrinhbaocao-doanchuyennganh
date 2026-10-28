@@ -323,12 +323,17 @@ html.static #s11 .blk.b{row-gap:4px}
 
 /* --- hai bước cuối: từng ảnh dashboard phủ TOÀN KHUNG 1280×720 (trên màn 1080p = đúng cỡ gốc 1920×1080, rõ nhất) --- */
 #s11 .fsv{position:absolute;inset:0;z-index:5;background:#161a1f;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s linear .5s}
-#s11 .fsv.vis{opacity:1;visibility:visible;transition:opacity .5s ease}
+#s11 .fsv.vis{opacity:var(--fade,1);visibility:visible;transition:opacity .5s ease}
+.xf #s11 .fsv{transition:none}
 #s11 .fsv.f2{z-index:6}
 #s11 .fsv img{width:100%;height:100%;object-fit:contain;display:block}
-#s11 .fsv .cap{position:absolute;left:18px;top:14px;font:600 15px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#e7f2ec;background:rgba(10,32,56,.88);padding:7px 12px;border:1.5px solid rgba(231,242,236,.6)}
+#s11 .fsv .cap{position:absolute;right:18px;bottom:14px;font:600 15px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#e7f2ec;background:rgba(10,32,56,.88);padding:7px 12px;border:1.5px solid rgba(231,242,236,.6)}
 html.static #s11 .fsv,.is-print #s11 .fsv{display:none}
 @media print{#s11 .fsv{display:none!important}}
+/* bước cuối: ảnh Tab So sánh đã phủ kín nên ẩn ảnh Tab Live bên dưới (sau khi ảnh trên đã hiện xong), tránh hai lớp mờ chồng nhau khi chuyển slide */
+#s11:has(.fsv.f2.vis) .fsv.f1{visibility:hidden;transition:opacity .5s ease,visibility 0s linear .5s}
+/* khi ảnh phủ kín khung đã hiện thì nội dung bên dưới (vốn đã bị che) tắt hẳn, để lúc chuyển sang slide sau chỉ còn một ảnh mờ dần, không rối */
+#s11:has(.fsv.vis)>*:not(.fsv){opacity:0!important;transition:opacity 0s linear .5s}
 
 #s12 .body{gap:14px}
 #s12 .mline{position:relative;padding-top:38px;flex:0 0 auto}

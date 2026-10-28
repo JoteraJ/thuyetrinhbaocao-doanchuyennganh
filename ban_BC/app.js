@@ -2,7 +2,7 @@
    · mode-scroll (index.html): cuộn dọc; mỗi lần cuộn hiện một ý, rồi slide chuyển sang slide kế kiểu "Morph"
    · mode-deck  (trinh-chieu.html): slide 16:9, phím ← → hoặc click
    Chuyển slide kiểu Morph: tiêu đề trượt từ vị trí/cỡ này sang vị trí/cỡ kia (từ trùng nhau bay thẳng sang chỗ mới, từ khác mờ dần/hiện dần),
-   nền, đường kẻ đầu slide và dải tiến độ đổi màu liền mạch, nội dung cũ mờ đi trong khi nội dung mới hiện lên. */
+   nền, đường kẻ đầu slide và dải tiến độ đổi màu liền mạch, nội dung cũ mờ đi trong khi nội dung mới hiện lên (hai lớp mờ chồng nhau, không để khung trống). */
 (function () {
   'use strict';
   var root = document.documentElement, stage = document.getElementById('stage');
@@ -81,7 +81,7 @@
       t.textContent = (i + 1) + ' · ' + n;
     });
     var tr = mk('g', { class: 'tr', id: 'metro-tr' });
-    mk('rect', { x: -10, y: 4, width: 20, height: 20, fill: '#d9432b', stroke: '#1c1b19', 'stroke-width': 2.5 }, tr);
+    mk('rect', { x: -10, y: 4, width: 20, height: 20, 'stroke-width': 2.5 }, tr);
     metro.appendChild(svg);
   })();
   var metroSec = -2;
@@ -122,6 +122,8 @@
       if (wb.key.length < 2) return;
       for (var ia = last + 1; ia < A.length; ia++) if (!used[ia] && A[ia].key === wb.key) { used[ia] = 1; last = ia; out.push([ia, jb]); break; }
     });
+    var set = {}; out.forEach(function (p) { set[p[0] + ',' + p[1]] = 1; });
+    out = out.filter(function (p) { return set[(p[0] - 1) + ',' + (p[1] - 1)] || set[(p[0] + 1) + ',' + (p[1] + 1)]; });
     return (pairCache[key] = out);
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measured = false; measure(); });
@@ -160,7 +162,7 @@
   function show(i, atEnd, st) {               /* hiện đúng một slide, không chuyển động */
     i = Math.max(0, Math.min(slides.length - 1, i));
     measure(); clearMorph();
-    var changed = i !== cur || active.length !== 1;
+    var wasActive = active.indexOf(i) >= 0, changed = !wasActive;
     slides.forEach(function (s, j) { s.classList.toggle('on', j === i); });
     cur = -1; setCurrent(i);
     var s = slides[i];
@@ -180,8 +182,8 @@
     root.classList.add('xf');
     slides.forEach(function (s, j) { s.classList.toggle('on', j === a || j === b); });
     slides[a].style.zIndex = 1; slides[b].style.zIndex = 2;
-    slides[a].style.setProperty('--fade', (1 - clamp(e / .55)).toFixed(3)); slides[a].style.setProperty('--ty', (-d * 46 * e).toFixed(1) + 'px');
-    slides[b].style.setProperty('--fade', clamp((e - .45) / .55).toFixed(3)); slides[b].style.setProperty('--ty', (d * 46 * (1 - e)).toFixed(1) + 'px');
+    slides[a].style.setProperty('--fade', (1 - clamp(e / .7)).toFixed(3)); slides[a].style.setProperty('--ty', (-d * 46 * e).toFixed(1) + 'px');
+    slides[b].style.setProperty('--fade', clamp((e - .3) / .7).toFixed(3)); slides[b].style.setProperty('--ty', (d * 46 * (1 - e)).toFixed(1) + 'px');
     /* nền, đường kẻ */
     var bg = A.bg.map(function (v, k) { return lerp(v, B.bg[k], e); });
     stage.style.background = 'rgb(' + bg.map(Math.round).join(',') + ')';
@@ -219,7 +221,7 @@
       if (f) f(n); if (g) g(Deck.stillT || 6, n);
     });
   }
-  window.addEventListener('beforeprint', function () { root.classList.add('static'); renderAll(); });
+  window.addEventListener('beforeprint', function () { clearMorph(); root.classList.add('static'); renderAll(); });
   window.addEventListener('afterprint', function () { if (!(still && forced == null)) root.classList.remove('static'); applyStep(); });
   var lastDraw = 0;
   function loop(now) {
@@ -232,12 +234,12 @@
   }
 
   /* ---- chế độ cuộn: mỗi slide chiếm một đoạn cuộn; mỗi bước hiện dần 0,6 màn hình; cuối đoạn là vùng chuyển slide ---- */
-  var segs = [], beats = [], track = null, BEAT = .6, XF = .6, TAIL = .5;
+  var segs = [], beats = [], track = null, BEAT = .6, XF = .6, TAIL = .5, HOLDX = .22;   /* HOLDX: quãng giữ yên sau bước cuối trước khi chuyển slide */
   function buildTrack() {
     var vh = window.innerHeight, y = 0;
     segs = []; beats = [];
     slides.slice(0, main).forEach(function (s, i) {
-      var n = maxStep(s), hold = y + (n + 1) * BEAT * vh, last = i === main - 1;
+      var n = maxStep(s), hold = y + n * BEAT * vh + HOLDX * vh, last = i === main - 1;
       segs.push({ start: y, n: n, hold: hold, xf: last ? 0 : XF * vh });
       for (var k = 0; k <= n; k++) beats.push({ y: y + k * BEAT * vh, i: i, k: k });
       y = hold + (last ? TAIL * vh : XF * vh);
@@ -271,7 +273,7 @@
     stopAnim();
     var from = window.scrollY, dist = Math.abs(to - from), vh = window.innerHeight;
     if (instant || dist > 3.2 * vh || dist < 2) { window.scrollTo(0, to); renderScroll(); return; }
-    var dur = Math.max(560, Math.min(1150, 480 + dist / vh * 520)), t0 = performance.now();
+    var dur = Math.max(420, Math.min(950, 330 + dist / vh * 430)), t0 = performance.now();
     (function f(now) {
       var u = clamp((now - t0) / dur);
       window.scrollTo(0, from + (to - from) * ease(u));
@@ -283,7 +285,9 @@
     var base = (goal >= 0 && performance.now() - goalT < 1200) ? goal : beatIndex();
     var n = Math.max(0, Math.min(beats.length - 1, base + d));
     goal = n; goalT = performance.now();
-    animateScroll(beats[n].y + 2);
+    var b = beats[n];                                   /* hiện ý mới NGAY khi bắt đầu cuộn, không đợi cuộn xong */
+    if (b.i === cur && !backup && active.length === 1 && b.k !== step) { step = b.k; applyStep(); }
+    animateScroll(b.y + 2);
   }
   function goBeatOf(i, k, instant) {
     for (var j = 0; j < beats.length; j++) if (beats[j].i === i && beats[j].k === Math.min(k, segs[i].n)) { animateScroll(beats[j].y + 2, instant); return; }

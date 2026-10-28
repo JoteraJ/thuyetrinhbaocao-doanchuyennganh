@@ -1,4 +1,4 @@
-# Bản trình bày B+C (nhận diện "men ngọc – chàm – son – vàng thếp") — Phản biện đồ án WiFi Mesh Drone và Robot
+# Bản trình bày B+C (nhận diện "xanh lá nhạt – chàm – son – vàng") — Phản biện đồ án WiFi Mesh Drone và Robot
 
 Slide 16:9 (1280×720, tự co theo màn hình). **Nội dung giữ đúng bản gốc `../ban_slide_16x9/index.html`**, chỉ đổi cách trình bày:
 khung tạp chí (C: giấy kem, chữ serif, dải tàu điện tiến độ) + sơ đồ cơ cấu isometric có chuyển động (B).
@@ -20,7 +20,7 @@ kiem_tra_noi_dung.js   so từng slide với bản gốc (xem dưới)
 chup_slide.js    chụp một slide để xem
 ```
 ## Nhận diện (đã đổi so với bản đầu)
-Nền men ngọc, mực chàm, chữ Bricolage Grotesque (tiêu đề, số lớn, biến `--serif` — tên cũ, không còn là chữ serif) + Onest (thân) + IBM Plex Mono (nhãn), đều có tiếng Việt. Nền phẳng, đơn giản, không họa tiết. Bìa nền đêm xanh chàm + vàng, có sóng vô tuyến vàng lan từ Root.
+Nền xanh lá nhạt, mực chàm, chữ Bricolage Grotesque (tiêu đề, số lớn, biến `--serif` — tên cũ, không còn là chữ serif) + Onest (thân) + IBM Plex Mono (nhãn), đều có tiếng Việt. Nền phẳng, đơn giản, không họa tiết. Bìa nền đêm xanh chàm + vàng, có sóng vô tuyến vàng lan từ Root.
 **Màu viết trong `parts/*` vẫn là bảng màu cũ (kem/đen); `build.js` tự đổi sang bảng mới qua `theme.js`** (nên cứ dùng `var(--ink)`, `var(--red)`… hoặc hex cũ). `style.css` và `iso.js` đã là màu mới. Chữ nghiêng chỉ dùng cho công thức (`var(--math)`); Bricolage không có nghiêng thật, đừng dùng `font-style:italic` cho tiêu đề.
 Hình động làm chậm so với thực tế phải có chú thích ngắn trong hình (`.slow`: "hình động làm chậm").
 

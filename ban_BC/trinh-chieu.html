@@ -80,7 +80,7 @@
       <span class="cx">thiên tai, hầm mỏ, rừng núi.</span>
       <b class="l2">Hai thách thức:</b>
       <span class="c1"><span class="kw"><span class="no">(1)</span> định tuyến đa chặng</span></span>
-      <span class="c2"><span class="kw"><span class="no">(2)</span> truyền ảnh lớn, <b>~1400 byte</b></span></span>
+      <span class="c2"><span class="kw"><span class="no">(2)</span> ảnh lớn, bản tin <b>~1400 byte</b></span></span>
       <span class="fl fx"><span class="no">(1)</span> định tuyến đa chặng khi topology đổi; <span class="no">(2)</span> truyền ảnh lớn khi mỗi bản tin painlessMesh chỉ mang <b>~1400 byte</b>.</span>
     </div>
   </div>
@@ -117,7 +117,7 @@
         <svg class="sp" id="s4d" viewBox="0 0 330 96" role="img" aria-label="Một Root và ba Leaf nối thành cây trên mặt đất"></svg>
         <ul class="l a st" data-s="2">
           <li><span class="kw"><b>1 Root + 3 Leaf</b></span><span class="fl"><b>1 Root + 3 Leaf</b>, đặt trên mặt đất hoặc cầm tay</span></li>
-          <li><span class="kw">Không drone, không xe RC</span><span class="fl">Không chế tạo drone, không dùng xe RC; anten PCB tích hợp</span></li>
+          <li><span class="kw">Không chế tạo drone, không dùng xe RC</span><span class="fl">Không chế tạo drone, không dùng xe RC; anten PCB tích hợp</span></li>
           <li><span class="kw">Chuyển tiếp theo vị trí và RSSI</span><span class="fl">Vai trò chuyển tiếp do mạng tự hình thành theo vị trí và RSSI</span></li>
           <li class="wb"><span class="kw"><b class="wc">chưa thử trên drone đang bay</b></span><span class="fl">Mô hình truyền thông đa chặng theo hướng FANET — <b class="wc">chưa thử trên drone đang bay</b></span></li>
         </ul>
@@ -137,7 +137,7 @@
       <div class="nf ru">
         <h3>Mạng mesh và FANET</h3>
         <svg class="fg" id="s5a" viewBox="0 0 552 118" role="img" aria-label="FANET: nhiều UAV nối ad-hoc thành chuỗi, gói tin chuyển từng chặng về trạm mặt đất"></svg>
-        <p class="st" data-s="1"><span class="kw">UAV liên lạc ad-hoc (Bekmezci, 2013)</span><span class="kw">kịch bản "mở rộng vùng hoạt động"</span><span class="fl">FANET đúng nghĩa khi nhiều UAV liên lạc ad-hoc với nhau (Bekmezci, 2013). Đề tài gần nhất với kịch bản "mở rộng vùng hoạt động".</span></p>
+        <p class="st" data-s="1"><span class="kw">UAV liên lạc ad-hoc (Bekmezci, 2013)</span><span class="kw">Đề tài gần nhất: "mở rộng vùng hoạt động"</span><span class="fl">FANET đúng nghĩa khi nhiều UAV liên lạc ad-hoc với nhau (Bekmezci, 2013). Đề tài gần nhất với kịch bản "mở rộng vùng hoạt động".</span></p>
       </div>
       <div class="nf ru b">
         <h3>Giao thức định tuyến</h3>
@@ -178,7 +178,7 @@
     </div>
     <div class="nt">
       <p class="st r kwp" data-s="1"><span class="kw">Đồng hồ painlessMesh, không cần NTP</span></p>
-      <p class="st b kwp" data-s="2"><span class="kw">Đo theo gói, không theo topology</span></p>
+      <p class="st b kwp" data-s="2"><span class="kw">Tự phục hồi: theo gói, không theo topology</span></p>
       <p class="fl st r" data-s="1">Độ trễ dùng đồng hồ do painlessMesh đồng bộ, không cần NTP.</p> <p class="fl st b" data-s="2">Tự phục hồi đo theo gói phân mảnh cuối cùng nhận được và gói đầu tiên nhận lại, không theo sự kiện topology của thư viện.</p>
     </div>
   </div>
@@ -219,7 +219,7 @@
         <tr><td>Leaf</td><td class="mono">1207449329</td></tr>
       </table>
       <div class="col cds">
-        <div class="cd ru r" data-s="1"><h3>Tăng áp, không dùng LM2596</h3><p><span class="kw">1 cell 18650 ≈ 3,7 V &lt; 5 V</span><span class="fl">1 cell 18650 ≈ 3,7 V &lt; 5 V nên mạch hạ áp không hoạt động.</span></p></div>
+        <div class="cd ru r" data-s="1"><h3>Tăng áp, không dùng LM2596</h3><p><span class="kw">1 cell 18650 ≈ 3,7 V &lt; 5 V → hạ áp không hoạt động</span><span class="fl">1 cell 18650 ≈ 3,7 V &lt; 5 V nên mạch hạ áp không hoạt động.</span></p></div>
         <div class="cd ru a" data-s="2"><h3>Tụ 470 µF</h3><p><span class="kw">dòng đỉnh lớn → sụt áp → reset giả</span><span class="fl">ESP32 phát WiFi có dòng đỉnh lớn; sụt áp gây reset giả, dễ nhầm là lỗi phần mềm.</span></p></div>
       </div>
     </div>
@@ -252,7 +252,7 @@
     <div class="fig-wrap"><svg class="fig" id="s9fig" viewBox="0 0 1136 240" role="img" aria-label="Sơ đồ: một khung JPEG bị cắt thành các chunk, mỗi chunk gắn header 16 byte, đi qua mesh tới Root và được ghép lại"></svg><span class="slow">hình động làm chậm</span><span class="slow ns">không theo tỉ lệ so với payload</span></div>
     <ul class="l g4">
       <li><span class="st" data-s="1"><span class="kw">Payload <b>1024 B</b> → <b>1388 ký tự</b></span><span class="fl">Payload tối đa <b>1024 B</b>; (16 + 1024) B mã hóa Base64 → tối đa <b>1388 ký tự</b>, vừa giới hạn ~1400 B của painlessMesh.</span></span></li>
-      <li><span class="st" data-s="2"><span class="kw">Nhỏ hơn 1024: chỉ tăng overhead</span><span class="fl">Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</span></span></li>
+      <li><span class="st" data-s="2"><span class="kw">Nhỏ hơn 1024: không giảm đụng độ</span><span class="fl">Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</span></span></li>
       <li><span class="st" data-s="3"><span class="kw"><code>capture_us</code> thêm 30/09, đo độ trễ</span><span class="fl"><code>capture_us</code> thêm ngày 30/09 để đo độ trễ (trước đó header 12 B).</span></span></li>
       <li><span class="st" data-s="4"><span class="kw">Tầng ứng dụng, khác IP fragmentation</span><span class="fl">Phân mảnh tự viết ở tầng ứng dụng, khác IP fragmentation ở tầng Network.</span></span></li>
     </ul>
@@ -304,8 +304,8 @@
         </div>
         <div class="gp st" data-s="2"><span class="gl">Giám sát</span>
           <ul class="l">
-            <li><span class="kw">Telemetry mỗi 2 s: heap, RSSI</span><span class="fl">Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</span></li>
-            <li><span class="kw">Node im lặng &gt; 10 s</span><span class="fl">Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</span></li>
+            <li><span class="kw">Telemetry mỗi 2 s: khung OK/hủy, độ trễ, topology</span><span class="fl">Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</span></li>
+            <li><span class="kw">Node im lặng &gt; 10 s bị đánh dấu</span><span class="fl">Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</span></li>
             <li class="k2"><span class="kw">heap &lt; 40 KB → tự reset</span></li>
           </ul>
         </div>
@@ -333,7 +333,7 @@
             <span class="c3">PAYLOAD</span>
             <span class="c4">CRC16/<wbr>CCITT-FALSE</span>
           </div>
-          <p class="sn"><span class="fl">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</span><span class="kw">Bỏ khung ảnh nếu &lt; ½</span><span class="kw">telemetry, log không bị bỏ</span></p>
+          <p class="sn"><span class="fl">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</span><span class="kw">Bộ đệm còn &lt; ½ → bỏ khung ảnh</span><span class="kw">telemetry, log không bị bỏ</span></p>
         </div>
         <div class="blk b">
           <h3>Middleware Node.js</h3>
@@ -435,7 +435,7 @@
         </div>
         <div class="nt ru r">
           <h3>Nút thắt 2 — tải ghi UART tại Root (28–29/09)</h3>
-          <p class="g2 st" data-s="2"><span class="kw"><span class="ln">3&nbsp;Leaf: <b class="x1">toàn mạng ngừng sau 6–26&nbsp;s</b></span> <span class="ln">ghi UART chặn → <code class="x2">mesh.update()</code> gọi&nbsp;thưa</span> <span class="ln">Giảm tải ~40&nbsp;%: hết ngừng</span></span><span class="fl">Chu kỳ 300&nbsp;ms: FPS tổng 3,5 → 7 → 10 với 1/2/3&nbsp;Leaf. Nhưng 3&nbsp;Leaf: <b class="x1">toàn mạng ngừng sau 6–26&nbsp;s</b>, heap Root 90 → 57&nbsp;KB. ~47&nbsp;KB/s ảnh so với giới hạn ~92&nbsp;KB/s → ghi UART chặn → <span class="nw"><code class="x2">mesh.update()</code> gọi&nbsp;thưa.</span> Giảm tải ~40&nbsp;% (600&nbsp;ms): hết ngừng, FPS ~10 → ~5.</span></p>
+          <p class="g2 st" data-s="2"><span class="kw"><span class="ln">3&nbsp;Leaf: <b class="x1">toàn mạng ngừng sau 6–26&nbsp;s</b></span> <span class="ln">ghi UART chặn → <code class="x2">mesh.update()</code> gọi&nbsp;thưa</span> <span class="ln">Giảm tải ~40&nbsp;% (600&nbsp;ms): FPS ~10 → ~5</span></span><span class="fl">Chu kỳ 300&nbsp;ms: FPS tổng 3,5 → 7 → 10 với 1/2/3&nbsp;Leaf. Nhưng 3&nbsp;Leaf: <b class="x1">toàn mạng ngừng sau 6–26&nbsp;s</b>, heap Root 90 → 57&nbsp;KB. ~47&nbsp;KB/s ảnh so với giới hạn ~92&nbsp;KB/s → ghi UART chặn → <span class="nw"><code class="x2">mesh.update()</code> gọi&nbsp;thưa.</span> Giảm tải ~40&nbsp;% (600&nbsp;ms): hết ngừng, FPS ~10 → ~5.</span></p>
         </div>
         <div class="mech st" data-s="2">
           <svg class="fig" id="s13mech" viewBox="0 0 590 128" role="img" aria-label="Cơ chế nút thắt 2: ghi UART chặn khiến mesh.update() được gọi thưa">
@@ -558,7 +558,7 @@
         <ul class="l b3">
           <li class="st" data-s="1"><span class="kw">FPS không đổi, <b class="rd">chưa ép tới <span class="nw">bão hòa</span></b></span><span class="fl">FPS gần như không đổi so với test21: tải bị giới hạn bởi chu kỳ chụp, <b class="rd">chưa ép tới bão hòa</b> → chưa đo suy giảm thông lượng theo hop</span></li>
           <li class="st" data-s="2">~6,5&nbsp;% mẫu trễ &gt; 1&nbsp;s, <span class="nw">cao nhất 4,3&nbsp;s</span></li>
-          <li class="st" data-s="3"><b>Tự phục hồi:</b> <span class="kw">5 sự kiện, <span class="nw">1530–23225&nbsp;ms</span></span><span class="fl">5 sự kiện, 1530–23225&nbsp;ms; node mới gia nhập làm toàn mạng gián đoạn ~16&nbsp;s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</span></li>
+          <li class="st" data-s="3"><b>Tự phục hồi:</b> <span class="kw">5 sự kiện, <span class="nw">1530–23225&nbsp;ms</span>; node mới gia nhập: gián đoạn <span class="nw">~16&nbsp;s</span></span><span class="fl">5 sự kiện, 1530–23225&nbsp;ms; node mới gia nhập làm toàn mạng gián đoạn ~16&nbsp;s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</span></li>
         </ul>
       </div>
     </div>
@@ -605,14 +605,14 @@
           <li><span class="kw">Chưa gửi lại, mất cả khung</span><span class="fl">Chưa gửi lại: mất 1&nbsp;chunk là mất cả khung</span></li>
           <li><span class="kw">Tự phục hồi phân tán, chưa đủ mẫu</span><span class="fl">Tự phục hồi phân tán (<span class="nw">885–32528&nbsp;ms</span>; test22: <span class="nw">1530–23225&nbsp;ms</span>, cách đo mới), chưa đủ mẫu từng kịch bản</span></li>
           <li><span class="kw">Chưa đo bão hòa, dòng tiêu thụ</span><span class="fl">Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</span></li>
-          <li><span class="kw">Node đặt tĩnh; Base64 <span class="nw">+33&nbsp;%</span></span><span class="fl">Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 <span class="nw">+33&nbsp;%</span>) không thiết kế cho nhiều luồng ảnh</span></li>
+          <li><span class="kw">Node đặt tĩnh; không thiết kế cho nhiều luồng ảnh</span><span class="fl">Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 <span class="nw">+33&nbsp;%</span>) không thiết kế cho nhiều luồng ảnh</span></li>
         </ul>
       </div>
       <div class="cl c3">
         <span class="dot"></span>
         <h3>Hướng phát triển</h3>
         <ul class="l b st" data-s="2">
-          <li><b>Ngắn hạn:</b> <span class="kw">task FreeRTOS riêng; NACK gộp</span><span class="fl">ghi UART sang task FreeRTOS riêng; đo tự phục hồi <span class="nw">5–10&nbsp;lần</span>; đo bão hòa <span class="nw">1/2/3&nbsp;chặng</span> và dòng Leaf; NACK gộp</span></li>
+          <li><b>Ngắn hạn:</b> <span class="kw">ghi UART task FreeRTOS riêng; đo bão hòa; NACK gộp</span><span class="fl">ghi UART sang task FreeRTOS riêng; đo tự phục hồi <span class="nw">5–10&nbsp;lần</span>; đo bão hòa <span class="nw">1/2/3&nbsp;chặng</span> và dòng Leaf; NACK gộp</span></li>
           <li><b>Dài hạn:</b> <span class="kw"><span class="nw">ESP-WIFI-MESH</span>, <span class="nw">GPS/UWB</span>, <span class="nw">ESP-NOW</span></span><span class="fl"><span class="nw">ESP-WIFI-MESH</span> (đã dựng một phần); định tuyến theo vị trí <span class="nw">(GPS/UWB)</span>; <span class="nw">ESP-NOW</span></span></li>
         </ul>
       </div>
@@ -652,7 +652,7 @@
   <div class="body">
     <ul class="l bk">
       <li class="st" data-s="1"><span class="kw">115200 bps: UART thành nút thắt</span><span class="fl">115200 bps ≈ 11,5 KB/s (tính toán) — chưa đủ cho 2 Leaf (≈ 15,6 KB/s ở chu kỳ 600 ms) → UART thành nút thắt, làm sai số đo mesh.</span></li>
-      <li class="st" data-s="2"><span class="kw">921600 bps: cần chọn tốc độ cao</span><span class="fl">921600 bps ≈ 92 KB/s lý thuyết; thực tế đã chạm giới hạn ở 3 Leaf × 300 ms (~47 KB/s ảnh + ghi chặn) → bằng chứng cho thấy cần chọn tốc độ cao.</span></li>
+      <li class="st" data-s="2"><span class="kw">921600 bps ≈ 92 KB/s, đã chạm giới hạn</span><span class="fl">921600 bps ≈ 92 KB/s lý thuyết; thực tế đã chạm giới hạn ở 3 Leaf × 300 ms (~47 KB/s ảnh + ghi chặn) → bằng chứng cho thấy cần chọn tốc độ cao.</span></li>
     </ul>
     <div class="fig-wrap"><svg class="fig" id="b2fig" viewBox="0 0 1136 380" role="img" aria-label="Hai thanh dài tỉ lệ đúng: 115200 bps ≈ 11,5 KB/s và 921600 bps ≈ 92 KB/s, cùng hai mốc tải 15,6 KB/s (2 Leaf, 600 ms) và 47 KB/s (3 Leaf, 300 ms)">
       <text class="mo" id="b2l1" font-size="18" font-weight="500">115200 bps ≈ 11,5 KB/s</text>
