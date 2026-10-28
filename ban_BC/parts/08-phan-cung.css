@@ -17,11 +17,11 @@
 #s8 .slow{position:absolute;transform:translateX(-50%);white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px}
 /* chữ từ khóa (mặc định): to hơn, ít chữ; chế độ chi tiết (K) giữ cỡ cũ ở trên */
 html:not(.detail) #s8 .top{gap:36px}
-html:not(.detail) #s8 .hw{flex:0 0 700px;width:700px}
+html:not(.detail) #s8 .hw{flex:0 0 650px;width:650px}
 html:not(.detail) #s8 .hw th{font-size:14px}
 html:not(.detail) #s8 .hw th:nth-child(1){width:92px}
 html:not(.detail) #s8 .hw th:nth-child(2){width:172px}
-html:not(.detail) #s8 .hw td{font-size:22px;line-height:1.25;padding:9px 10px 9px 0}
+html:not(.detail) #s8 .hw td{font-size:22px;line-height:1.25;padding:6px 10px 6px 0}
 html:not(.detail) #s8 .hw td.mono{font-size:21px}
 html:not(.detail) #s8 .kw{font:600 24px/1.25 var(--serif);font-variation-settings:'wdth' 92,'opsz' 28}
 html:not(.detail) #s8 .hw .kw{font-size:23px}
@@ -31,3 +31,4 @@ html:not(.detail) #s8 .cd p .kw{font-size:27px;line-height:1.25}
 html:not(.detail) #s8 .pw span{font-size:20px}
 html:not(.detail) #s8 .pw .lg0{font-size:16px;top:-8px}
 html:not(.detail) #s8 .pw .kw{font:600 21px/1.2 var(--serif)}
+#s8 .pw .lg .kw,#s8 .pw .lg .fl{position:static;transform:none;white-space:normal}
