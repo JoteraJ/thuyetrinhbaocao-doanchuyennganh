@@ -8,29 +8,43 @@
         <h3>Leaf <code>node_camera.ino</code></h3>
         <div class="scn">
           <svg class="fb" id="s10b" viewBox="0 0 230 205" role="img" aria-label="Đồng hồ watchdog: mất beacon thì mức dâng lên, mốc 8 giây học lại Root, mốc 30 giây khởi động lại"></svg>
+          <span class="slow sb">hình động tua nhanh</span><span class="slow sa">hình động làm chậm</span>
           <svg class="fa" id="s10a" viewBox="0 0 316 205" role="img" aria-label="Ba Leaf gửi lệch pha: mỗi Leaf một khe 200 ms trong chu kỳ 600 ms"></svg>
         </div>
-        <ul class="l">
-          <li>QVGA 320×240, JPEG quality 12, chu kỳ <b>600 ms</b></li>
-          <li>Học ID Root qua beacon <code>#ROOT</code> (2 s), gửi <code>sendSingle</code> thẳng tới Root</li>
-          <li>Gửi lệch pha: 3 khe × 200 ms, mỗi Leaf một khe</li>
-          <li>Watchdog: mất beacon &gt; 8 s học lại Root; &gt; 30 s khởi động lại</li>
-          <li class="st" data-s="1"><code>#NSTAT</code> mỗi 2 s: RSSI, heap, firmware, lý do reset</li>
-          <li class="st" data-s="1"><code>#</code> không thuộc bảng Base64 → không nhầm với gói ảnh</li>
-        </ul>
+        <div class="gp"><span class="gl">Chụp và gửi</span>
+          <ul class="l">
+            <li>QVGA 320×240, JPEG quality 12, chu kỳ <b>600 ms</b></li>
+            <li>Học ID Root qua beacon <code>#ROOT</code> (2 s), gửi <code>sendSingle</code> thẳng tới Root</li>
+            <li>Gửi lệch pha: 3 khe × 200 ms, mỗi Leaf một khe</li>
+          </ul>
+        </div>
+        <div class="gp"><span class="gl">Giám sát</span>
+          <ul class="l">
+            <li>Watchdog: mất beacon &gt; 8 s học lại Root; &gt; 30 s khởi động lại</li>
+            <li class="st" data-s="2"><code>#NSTAT</code> mỗi 2 s: RSSI, heap, firmware, lý do reset</li>
+            <li class="st" data-s="2"><code>#</code> không thuộc bảng Base64 → không nhầm với gói ảnh</li>
+          </ul>
+        </div>
       </div>
       <div class="col f1 rt">
         <h3>Root <code>node_root.ino</code></h3>
         <div class="scn">
           <svg class="fc" id="s10c" viewBox="0 0 552 205" role="img" aria-label="Root có 4 slot ghép: mỗi slot có bitmap các chunk đã nhận và cầu chì timeout; supersede hủy khung cũ khi có khung mới của cùng node"></svg>
+          <span class="slow lru" hidden>minh họa</span><span class="slow sc">hình động làm chậm</span>
         </div>
-        <ul class="l">
-          <li>4 slot ghép, mỗi slot có bitmap + timeout <b>2 s</b></li>
-          <li><b>Supersede:</b> khung mới của cùng node → hủy khung cũ chưa xong</li>
-          <li>Hết slot → loại khung cũ nhất (LRU)</li>
-          <li class="st" data-s="1">Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</li>
-          <li class="st" data-s="1">Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</li>
-        </ul>
+        <div class="gp"><span class="gl">Ghép khung</span>
+          <ul class="l">
+            <li>4 slot ghép, mỗi slot có bitmap + timeout <b>2 s</b></li>
+            <li><b>Supersede:</b> khung mới của cùng node → hủy khung cũ chưa xong</li>
+            <li class="st" data-s="1">Hết slot → loại khung cũ nhất (LRU)</li>
+          </ul>
+        </div>
+        <div class="gp st" data-s="2"><span class="gl">Giám sát</span>
+          <ul class="l">
+            <li>Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</li>
+            <li>Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

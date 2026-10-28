@@ -29,6 +29,7 @@
 #s11 .bt{font-size:17px;line-height:1.45;margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 #s11 .lamps{display:inline-flex;gap:4px;margin-left:10px}
 #s11 .lamps i{display:block;width:12px;height:12px;background:var(--green);border:1.5px solid var(--ink)}
-#s11 .bd{position:absolute;right:0;top:-35px;display:flex;gap:8px;pointer-events:none}
+#s11 .blk.b{position:relative}
+#s11 .bd{position:absolute;right:0;top:12px;display:flex;gap:8px;pointer-events:none}
 #s11 .slow{white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px;background:var(--paper)}
 #s11 .blk.c p{font-size:17px;line-height:1.45}

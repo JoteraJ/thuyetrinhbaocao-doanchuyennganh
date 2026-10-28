@@ -1196,7 +1196,11 @@ Deck.frames.s9 = frame;
    A (Leaf): gửi lệch pha — 3 khe × 200 ms trong chu kỳ 600 ms, mỗi Leaf một khe; con trỏ thời gian quét qua 3 khe.
    B (Leaf): watchdog — mất beacon #ROOT: mức dâng, mốc 8 s học lại Root, mốc 30 s khởi động lại (vẽ đúng tỉ lệ 8:30).
    C (Root): 4 slot ghép — bitmap chunk, cầu chì timeout 2 s, supersede, LRU.
-   Thời gian trong A và C được kéo dài 3 lần so với thực tế để nhìn được (cùng một đồng hồ); B chạy nhanh hơn thực tế. */
+   Thời gian trong A và C được kéo dài 3 lần so với thực tế để nhìn được (cùng một đồng hồ): chú thích "hình động làm chậm";
+   B chạy nhanh hơn thực tế (30 s mất beacon diễn ra trong ~12 s): chú thích "hình động tua nhanh".
+   C chạy thường: 3 Leaf + supersede nên 4 slot không bao giờ đầy, không có LRU.
+   Ở bước "Hết slot → loại khung cũ nhất (LRU)", C chuyển sang một trạng thái MINH HỌA riêng: 4 slot đều đầy khung dở dang,
+   một khung mới tới, khung cũ nhất bị đẩy ra và nhãn LRU hiện đúng lúc đó. */
 var I = window.Iso, T = I.T, LEAF = I.LEAF;
 function txt(g, x, y, s, size, w, anchor, fill, cls) {
   var e = I.el('text', { x: x.toFixed(1), y: y.toFixed(1), 'font-size': size, 'font-weight': w || 400, 'text-anchor': anchor || 'middle', class: cls || '' }, g);
@@ -1204,7 +1208,12 @@ function txt(g, x, y, s, size, w, anchor, fill, cls) {
 }
 var cur = 0;
 function ST() { return (Deck.still && !/[?&]step=/.test(location.search)) ? 9 : cur; }
-Deck.steps.s10 = function (n) { cur = n; };
+var lruRef = null;
+function lruOn() { var q = ST(); return q === 1 || q === 9; }            /* bước 1 (hoặc hiện đủ) = trạng thái minh họa LRU */
+Deck.steps.s10 = function (n) {
+  cur = n; lruRef = null;
+  var b = document.querySelector('#s10 .slow.lru'); if (b) b.hidden = !lruOn();
+};
 var AMB = { top: '#f2b24a', y: '#c98a1c', x: '#a06b10' };
 var RED = { top: '#ff9a82', y: '#d8402b', x: '#a8321f' };
 var GRY = { top: '#8da8a5', y: '#667b8e', x: '#536472' };
@@ -1222,9 +1231,11 @@ var FR = [];
     for (k = 0; k < 5; k++) f.arr.push(k === lost ? null : f.T0 + CK * k + TFA + TFC);
     byLeaf[i].push(f); FR.push(f);
   }
-  FR.forEach(function (f) {
+  FR.forEach(function (f) {                                                      /* lượt 1: thời điểm chunk đầu/cuối */
     var got = f.arr.filter(function (a) { return a != null; });
     f.first = got[0]; f.last = Math.max.apply(null, got);
+  });
+  FR.forEach(function (f) {                                                      /* lượt 2: số phận khung (cần f.first của khung kế) */
     if (f.lost < 0) { f.type = 'ok'; f.shipT = f.last + SHIPW; f.endT = f.shipT + SHIPD; }
     else {
       var nx = byLeaf[f.leaf].filter(function (g) { return g.n === f.n + 1; })[0];
@@ -1362,13 +1373,12 @@ sC.box(C_ob, 192, -14, 8, 16, 28, 9, T.chip);                         /* cổng 
 sC.box(C_ob, 208, -2, 0, 50, 4, 1, T.dark);
 function slotY(b) { return Y0[b] + 1 + BH / 2; }
 var TGX = null;
+function lab(g, x, y, str, w, fill) { var e = txt(g, x, y, str, 14, w, 'end', fill, 'mo'); e.style.stroke = '#bfcecd'; e.style.strokeWidth = '3px'; e.style.paintOrder = 'stroke'; return e; }
 function frameC(t) {
   sC.clear(C_dy); sC.clear(C_tx);
-  var items = [], occ = [], P = sC.pt, tags = [], i, k;
+  var items = [], P = sC.pt, tags = [], i, k;
   FR.forEach(function (f) {
     var b = f.bin, y0 = Y0[b] + 1, last = -1, c, k2;
-    var inProg = t >= f.first && t < f.endT;
-    if (inProg) occ.push(f);
     /* chunk đang bay vào */
     for (k = 0; k < 5; k++) {
       var lt = t - (f.T0 + CK * k) - TFA;
@@ -1409,21 +1419,72 @@ function frameC(t) {
     var q = P(22, y0 + BH / 2, 14);
     txt(e, q[0] - 16, q[1] + 5, g.kind === 'sup' ? 'Supersede' : 'timeout 2 s', 14, 700, 'end', '#d8402b', 'mo');
   });
-  /* LRU: khung cũ nhất bị loại đầu tiên khi hết slot — đánh dấu khi có ≥ 3 khung đang ghép */
-  var used = {};
-  tags.forEach(function (g) { if (g.kind !== 'x') used[g.b] = 1; });
-  if (occ.length >= 3) {
-    occ.sort(function (a, b) { return a.first - b.first; });
-    var o = occ[0], q2 = P(22, Y0[o.bin] + 1 + BH / 2, 14);
-    if (!used[o.bin]) { txt(C_tx, q2[0] - 16, q2[1] + 5, 'LRU', 14, 700, 'end', '#456470', 'mo'); used[o.bin] = 1; }
-  }
   /* "bitmap": nhãn tĩnh cạnh hàng ô (nhường chỗ cho nhãn sự kiện) */
-  if (!used[3]) { var bq = P(22, Y0[3] + 1 + BH / 2, 14); txt(C_tx, bq[0] - 16, bq[1] + 5, 'bitmap', 14, 500, 'end', '#456470', 'mo'); }
+  var used = {}; tags.forEach(function (g) { if (g.kind !== 'x') used[g.b] = 1; });
+  if (!used[3]) { var bq = P(22, Y0[3] + 1 + BH / 2, 14); lab(C_tx, bq[0] - 24, bq[1] + 5, 'bitmap', 500, '#456470'); }
+}
+
+/* ===== C ở bước LRU: trạng thái minh họa — hết slot thì loại khung cũ nhất ===== */
+var LRUP = 9.6, OLD = [[0, 1, 2], [0, 1], [0, 1, 3, 4], [0, 3]], AGEF = [.3, .5, .72, .92];   /* slot 0 = khung cũ nhất (cầu chì ngắn nhất) */
+var T_HOV = 2.0, T_EV = 3.0, T_EJ = 1.1, NEWT = [4.5, 5.2, 5.9, 6.6], BGC = '#bfcecd';
+function sm(u) { u = I.clamp(u); return u * u * (3 - 2 * u); }
+function fadeT(tt, u) { return { top: I.mix(tt.top, BGC, u), y: I.mix(tt.y, BGC, u), x: I.mix(tt.x, BGC, u) }; }
+function frameCL(tau) {
+  sC.clear(C_dy); sC.clear(C_tx);
+  var items = [], P = sC.pt, s2, j, k, gfade = I.clamp((LRUP - tau) / .7), ev = tau >= T_EV;
+  C_dy.setAttribute('opacity', gfade.toFixed(2)); C_tx.setAttribute('opacity', gfade.toFixed(2));
+  for (s2 = 0; s2 < 4; s2++) {
+    var y0 = Y0[s2] + 1;
+    OLD[s2].forEach(function (kc, idx) {
+      if (tau < .12 * (s2 * 2 + idx)) return;
+      var x = CXS[kc], z = 13.8, tt = T.chip;
+      if (s2 === 0 && ev) {                               /* khung cũ nhất bị đẩy ra: đỏ rồi nhấc lên, trượt sang trái, mờ dần */
+        var u = I.clamp((tau - T_EV) / T_EJ);
+        if (u >= 1) return;
+        z = 13.8 + 24 * sm(u * 1.6); x = CXS[kc] - 80 * sm(u); tt = fadeT(RED, I.clamp((u - .35) / .65));
+      }
+      items.push({ x: x, y: y0 + 3, z: z, w: 20, d: BH - 6, h: 4, t: tt });
+    });
+    if (!(s2 === 0 && ev)) {                              /* cầu chì: độ dài = tuổi khung, slot 0 ngắn nhất */
+      var fr = AGEF[s2], fc = fr > .5 ? T.green : fr > .25 ? AMB : RED;
+      items.push({ x: 28, y: y0 + BH + 2.5, z: 8.5, w: 130 * fr, d: 1.8, h: 3.4, t: fc });
+    }
+  }
+  /* khung mới: chunk đầu bay tới, chờ trước cửa vì hết slot, rồi vào slot vừa trống; các chunk sau theo sau */
+  var cy = slotY(0), pos, newc = [];
+  if (tau >= 1.0 && tau < NEWT[0]) {
+    if (tau < T_HOV) pos = I.along([[-150, 0, 44], [4, cy, 44]], sm((tau - 1.0) / (T_HOV - 1.0)));
+    else if (tau < NEWT[0] - .5) pos = [4, cy, 44 + 2 * Math.sin(tau * 9)];
+    else pos = I.along([[4, cy, 44], [CXS[0] + 9, cy, 44], [CXS[0] + 9, cy, 18]], (tau - (NEWT[0] - .5)) / .5);
+    newc.push(pos);
+  }
+  for (k = 1; k < 4; k++) {
+    var lt = tau - (NEWT[k] - .5);
+    if (lt >= 0 && lt < .5) newc.push(I.along([[-150, 0, 44], [CXS[k] + 9, cy, 44], [CXS[k] + 9, cy, 18]], lt / .5));
+  }
+  newc.forEach(function (q) { items.push({ x: q[0] - 4.5, y: q[1] - 4.5, z: q[2], w: 9, d: 9, h: 9, t: AMB }); });
+  for (k = 0; k < 4; k++) if (tau >= NEWT[k]) items.push({ x: CXS[k], y: Y0[0] + 4, z: 13.8, w: 20, d: BH - 6, h: 4, t: AMB });
+  if (tau >= NEWT[0]) items.push({ x: 28, y: Y0[0] + 1 + BH + 2.5, z: 8.5, w: 130 * I.clamp(1 - (tau - NEWT[3]) / 6), d: 1.8, h: 3.4, t: T.green });
+  sC.items(C_dy, items);
+  /* hết slot: viền cả 4 slot nhấp nháy hổ phách trước khi loại */
+  if (tau >= T_HOV && tau < T_EV + .6) for (s2 = 0; s2 < 4; s2++) {
+    var yy = Y0[s2] + 1, e = sC.path(C_tx, [[24, yy - 3], [162, yy - 3], [162, yy + BH + 4], [24, yy + BH + 4], [24, yy - 3]], 13.9, s2 === 0 && ev ? '#d8402b' : '#a86300', s2 === 0 && ev ? 2.6 : 1.6);
+    e.setAttribute('opacity', (s2 === 0 && ev ? 1 : .55 + .45 * Math.sin(tau * 7)).toFixed(2));
+  }
+  /* nhãn LRU hiện đúng lúc khung cũ nhất bị đẩy ra */
+  var q2 = P(22, slotY(0), 14);
+  if (ev && tau < LRUP - 1.2) lab(C_tx, q2[0] - 16, q2[1] + 5, 'LRU', 700, '#d8402b');
+  var bq = P(22, Y0[3] + 1 + BH / 2, 14); lab(C_tx, bq[0] - 24, bq[1] + 5, 'bitmap', 500, '#456470');
 }
 
 Deck.frames.s10 = function (t) {
-  t = ((t % LOOP) + LOOP) % LOOP;
-  frameA(t); frameB(t); frameC(t);
+  var tr = t; t = ((t % LOOP) + LOOP) % LOOP;
+  frameA(t); frameB(t);
+  C_dy.removeAttribute('opacity'); C_tx.removeAttribute('opacity');
+  if (lruOn()) {
+    var tau; if (Deck.still) tau = tr % LRUP; else { if (lruRef === null) lruRef = tr; tau = (tr - lruRef) % LRUP; }
+    frameCL(tau);
+  } else frameC(t);
 };
 
 })();
@@ -2139,26 +2200,27 @@ Deck.frames.b3 = function (t) {
 /* Dự phòng D: Root có 4 slot ghép; mỗi slot có bitmap (các ô = chunk đã nhận) và đồng hồ 2 s.
    Bốn pha ứng với bốn gạch đầu dòng: (1) quá 2 s chưa đủ -> hủy khung; (2) khung mới cùng node -> hủy khung cũ (supersede);
    (3) hết slot -> LRU (slot dùng lâu nhất bị thay); (4) hướng cải tiến (nét đứt): NACK gộp, một bản tin/khung.
-   Số ô trên hình chỉ minh họa, không phải số liệu. */
+   Số ô trên hình chỉ minh họa, không phải số liệu (mỗi slot 5 ô, như slide 10).
+   Nhãn trong hình chỉ dùng chữ có sẵn trong bốn gạch đầu dòng: bitmap, 2 s, hủy khung, supersede, LRU, NACK gộp. */
 var svg = document.getElementById('b4fig'), I = window.Iso, T = I.T;
-var sc = I.scene(svg, { az: 18, el: 34, rect: [0, 20, 630, 410], pts: [[-30, -135, -10], [320, -135, -10], [-30, 135, -10], [320, 135, -10], [30, 0, 50], [200, -90, 40]] });
+var sc = I.scene(svg, { az: 18, el: 34, rect: [0, 20, 630, 410], pts: [[-30, -135, -10], [340, -135, -10], [-30, 135, -10], [340, 135, -10], [30, 0, 50], [200, -90, 40]] });
 var P = sc.pt, S = sc.S, C = sc.C;
-var SY = [-90, -30, 30, 90], CX = function (i) { return 118 + i * 30; }, NC = 6, SRC = [26, 0, 24];
+var SY = [-90, -30, 30, 90], CX = function (i) { return 118 + i * 30; }, NC = 5, TW = 164, SRC = [26, 0, 24];
 var COL = [T.red, T.blue, T.green, T.chip], DEAD = { top: '#f3b9ad', y: '#d8402b', x: '#a8301c' }, GLOW = T.green;
-var plateG = sc.g(), objG = sc.g(), dyn = sc.g();
-sc.box(plateG, -30, -135, -10, 350, 270, 10, T.plate);
+var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g(), lbOn = {};
+sc.box(plateG, -30, -135, -10, 370, 270, 10, T.plate);
 /* Root (nơi chunk tới từ mesh) */
 sc.box(objG, -8, -26, 0, 60, 52, 9, T.pcb); sc.box(objG, -2, -16, 9, 22, 18, 3, T.chip);
 sc.cyl(objG, 36, 0, 9, 12, 11, '#2f3941', '#576978', '#739491'); sc.cyl(objG, 36, 0, 21, 2, 8, '#1d2227', '#39454f', '#0d1013');
 /* 4 slot: khay đá, mỗi ô là một chỗ lõm */
 SY.forEach(function (y) {
-  sc.box(objG, 108, y - 20, 0, 192, 40, 5, T.stone);
+  sc.box(objG, 108, y - 20, 0, TW, 40, 5, T.stone);
   for (var i = 0; i < NC; i++) sc.box(objG, CX(i) - 1, y - 14, 5, 28, 28, .6, T.dark);
 });
 /* ---- kịch bản bốn pha: ô (slot,i) có các đoạn {on, off, col, fl} ; chunk bay tới ô ; đồng hồ ---- */
 var PD = [4.2, 5.0, 4.0, 5.8], seg = function (on, off, col, fl) { return { on: on, off: off, col: col, fl: fl }; };
 function phase1() {
-  var cells = {}, fl = [], arr = [[0, .5], [1, .9], [2, 1.3], [4, 1.7], [5, 2.1]];                      /* thiếu ô số 3 */
+  var cells = {}, fl = [], arr = [[0, .5], [1, .9], [2, 1.3], [4, 1.7]];                      /* thiếu ô số 3 */
   arr.forEach(function (a) { cells['0,' + a[0]] = [seg(a[1], 3.3, 0, 2.5)]; fl.push({ s: 0, i: a[0], t: a[1], col: 0 }); });
   return { cells: cells, fl: fl, timers: [{ s: 0, from: .5, to: 2.5 }], nack: null };
 }
@@ -2176,7 +2238,7 @@ function phase3() {
 }
 function phase4() {
   var cells = {}, fl = [];
-  [0, 1, 2, 4, 5].forEach(function (i) { cells['0,' + i] = [seg(-9, 4.7, 0, 4.4)]; });
+  [0, 1, 2, 4].forEach(function (i) { cells['0,' + i] = [seg(-9, 4.7, 0, 4.4)]; });
   cells['0,3'] = [seg(2.9, 4.7, 0, 4.4)]; fl.push({ s: 0, i: 3, t: 2.9, col: 0 });
   return { cells: cells, fl: fl, timers: [{ s: 0, fix: .5, to: 2.9 }], nack: { from: 1.0, to: 2.1 }, glow: [3.0, 4.4] };
 }
@@ -2216,12 +2278,26 @@ function drawPhase(ph, tau) {
     var f;
     if (tm.fix != null) { f = tm.fix; if (tm.to != null && tau >= tm.to) return; if (tm.from != null) return; }
     else { if (tau < tm.from) return; if (tm.stop && tau >= tm.to) return; f = I.clamp((tau - tm.from) / (tm.to - tm.from)); if (!tm.stop && tau > tm.to + .8) return; }
-    var y = SY[tm.s] + 24, x0 = 108, w = 192;
+    var y = SY[tm.s] + 24, x0 = 108, w = TW; if (tm.s === 0) lbOn.t2 = 1;
     sc.poly(dyn, [P(x0, y, .3), P(x0 + w, y, .3), P(x0 + w, y + 7, .3), P(x0, y + 7, .3)], '#c5dccf', 'rgba(12,42,68,.7)', 1);
     if (f > .01) sc.poly(dyn, [P(x0, y, .5), P(x0 + w * f, y, .5), P(x0 + w * f, y + 7, .5), P(x0, y + 7, .5)], f > .98 ? '#d8402b' : '#a86300', 'none', 0);
   });
   /* đường NACK nét đứt */
   if (ph.nack) { var l = sc.line(dyn, [CX(3) + 13, SY[0], 16], [SRC[0], SRC[1], 16], '#456470', 1.4); l.setAttribute('stroke-dasharray', '4 4'); l.setAttribute('opacity', tau >= ph.nack.from - .3 ? 1 : 0); }
+}
+/* nhãn trong hình (chữ có sẵn trong gạch đầu dòng); hiện/ẩn theo pha */
+function mkLabel(s, x, y, z, fill, anchor, dy) { var q = P(x, y, z), t = sc.text(lbG, q[0], q[1] + (dy || 0), s, 15, 700, anchor || 'start', fill, 'mo lb'); t.setAttribute('opacity', 0); return t; }
+var LB = {
+  bitmap: mkLabel('bitmap', 108, SY[0] - 36, 0, '#0c2a44'),
+  t2: mkLabel('2 s', 108 + TW + 8, SY[0] + 30, 0, '#a86300'),
+  huy: mkLabel('hủy khung', 108 + TW + 8, SY[0] - 2, 6, '#d8402b'),
+  sup: mkLabel('supersede', 108 + TW + 8, SY[0] - 2, 6, '#d8402b'),
+  lru: mkLabel('LRU', 108 + TW + 8, SY[0] - 2, 6, '#a86300'),
+  nack: mkLabel('NACK gộp', 60, -78, 12, '#0c2a44', 'middle')
+};
+function setLabels(ph, tau) {
+  var v = { bitmap: 1, t2: lbOn.t2 ? 1 : 0, huy: ph === 0 && tau >= 2.5 && tau < 3.9 ? 1 : 0, sup: ph === 1 && tau >= 2.1 ? 1 : 0, lru: ph === 2 && tau >= 2.0 ? 1 : 0, nack: ph === 3 && tau >= 1.0 ? 1 : 0 };
+  for (var k in LB) LB[k].setAttribute('opacity', v[k]);
 }
 var cur = 0, bul = document.querySelectorAll('#b4 ul.bk li'), ul = document.querySelector('#b4 ul.bk');
 function allOn() { return document.documentElement.classList.contains('static'); }
@@ -2233,8 +2309,8 @@ Deck.frames.b4 = function (t) {
   var ph, tau, tot = PD[0] + PD[1] + PD[2] + PD[3];
   if (cur > 0 && !allOn()) { ph = cur - 1; tau = t % PD[ph]; }
   else { var u = t % tot; ph = 0; while (u >= PD[ph]) { u -= PD[ph]; ph++; } tau = u; }
-  sc.clear(dyn);
-  drawPhase(PHASES[ph], tau);
+  sc.clear(dyn); lbOn = {};
+  drawPhase(PHASES[ph], tau); setLabels(ph, tau);
 };
 
 })();

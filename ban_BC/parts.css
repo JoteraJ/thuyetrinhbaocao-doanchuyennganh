@@ -131,14 +131,23 @@
 #s10 h3 code{font-size:.8em}
 #s10 .lf h3{border-top:2px solid var(--red);padding-top:6px}
 #s10 .rt h3{border-top:2px solid var(--blue);padding-top:6px}
-#s10 .scn{display:flex;gap:6px;height:205px;flex:none}
+#s10 .scn{display:flex;gap:6px;height:205px;flex:none;position:relative}
 #s10 .scn svg{display:block;height:205px}
 #s10 .fb{width:230px;flex:none}
 #s10 .fa{width:316px;flex:none}
 #s10 .fc{width:552px;flex:none}
-#s10 ul.l{font-size:17px;line-height:1.4;gap:5px;margin-top:6px}
+#s10 ul.l{font-size:17px;line-height:1.4;gap:5px}
 #s10 ul.l li::before{top:.58em}
 #s10 ul.l code{font-size:.9em}
+#s10 .gp{position:relative;margin-top:12px;padding-top:7px;border-top:1px solid var(--rule)}
+#s10 .scn+.gp{margin-top:16px}
+#s10 .gp .gl{position:absolute;top:-9px;left:0;background:var(--paper);padding-right:10px;font:500 13px/16px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#s10 .slow{position:absolute;bottom:0;white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px;background:var(--paper);z-index:2}
+#s10 .slow[hidden]{display:none}
+#s10 .slow.sb{left:0}
+#s10 .slow.sa{right:0}
+#s10 .slow.sc{right:0}
+#s10 .slow.lru{right:176px}
 
 #s11 .cols{flex:1;min-height:0;gap:32px}
 #s11 .lc{flex:0 0 704px;width:704px;gap:14px}
@@ -171,7 +180,8 @@
 #s11 .bt{font-size:17px;line-height:1.45;margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 #s11 .lamps{display:inline-flex;gap:4px;margin-left:10px}
 #s11 .lamps i{display:block;width:12px;height:12px;background:var(--green);border:1.5px solid var(--ink)}
-#s11 .bd{position:absolute;right:0;top:-35px;display:flex;gap:8px;pointer-events:none}
+#s11 .blk.b{position:relative}
+#s11 .bd{position:absolute;right:0;top:12px;display:flex;gap:8px;pointer-events:none}
 #s11 .slow{white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px;background:var(--paper)}
 #s11 .blk.c p{font-size:17px;line-height:1.45}
 
@@ -304,6 +314,6 @@
 #b4 ul.l.bk li::before{top:.62em;width:10px;height:10px}
 #b4 ul.l.bk.has li:not(.act){opacity:.42}
 #b4 ul.l.bk li.act{opacity:1}
-#b4 .fl{display:flex;flex-wrap:wrap;column-gap:.3em;align-items:baseline}
-#b4 .fl b{color:var(--red)}
+#b4 ul.l.bk li b{color:var(--red)}
+#b4 svg text.lb{font-family:var(--mono);font-weight:700;transition:opacity .25s}
 #b4 .fig-wrap .fig{position:absolute;inset:0}

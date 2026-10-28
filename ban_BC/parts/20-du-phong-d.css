@@ -3,6 +3,6 @@
 #b4 ul.l.bk li::before{top:.62em;width:10px;height:10px}
 #b4 ul.l.bk.has li:not(.act){opacity:.42}
 #b4 ul.l.bk li.act{opacity:1}
-#b4 .fl{display:flex;flex-wrap:wrap;column-gap:.3em;align-items:baseline}
-#b4 .fl b{color:var(--red)}
+#b4 ul.l.bk li b{color:var(--red)}
+#b4 svg text.lb{font-family:var(--mono);font-weight:700;transition:opacity .25s}
 #b4 .fig-wrap .fig{position:absolute;inset:0}

@@ -4,11 +4,20 @@
 #s10 h3 code{font-size:.8em}
 #s10 .lf h3{border-top:2px solid var(--red);padding-top:6px}
 #s10 .rt h3{border-top:2px solid var(--blue);padding-top:6px}
-#s10 .scn{display:flex;gap:6px;height:205px;flex:none}
+#s10 .scn{display:flex;gap:6px;height:205px;flex:none;position:relative}
 #s10 .scn svg{display:block;height:205px}
 #s10 .fb{width:230px;flex:none}
 #s10 .fa{width:316px;flex:none}
 #s10 .fc{width:552px;flex:none}
-#s10 ul.l{font-size:17px;line-height:1.4;gap:5px;margin-top:6px}
+#s10 ul.l{font-size:17px;line-height:1.4;gap:5px}
 #s10 ul.l li::before{top:.58em}
 #s10 ul.l code{font-size:.9em}
+#s10 .gp{position:relative;margin-top:12px;padding-top:7px;border-top:1px solid var(--rule)}
+#s10 .scn+.gp{margin-top:16px}
+#s10 .gp .gl{position:absolute;top:-9px;left:0;background:var(--paper);padding-right:10px;font:500 13px/16px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#s10 .slow{position:absolute;bottom:0;white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px;background:var(--paper);z-index:2}
+#s10 .slow[hidden]{display:none}
+#s10 .slow.sb{left:0}
+#s10 .slow.sa{right:0}
+#s10 .slow.sc{right:0}
+#s10 .slow.lru{right:176px}
