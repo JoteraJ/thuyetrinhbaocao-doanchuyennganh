@@ -1,11 +1,9 @@
 #s13 .nt{padding-top:10px}
 #s13 .nt h3{font-size:22px;line-height:1.2;margin:0 0 8px}
-#s13 .g1{display:grid;grid-template-columns:1fr auto;grid-template-areas:"a b" "c c";column-gap:20px;row-gap:6px;align-items:center;font-size:17px;line-height:1.45}
-#s13 .ga{grid-area:a}
-#s13 .gb{grid-area:b;font:700 36px/1 var(--serif);color:var(--red);letter-spacing:-.01em;white-space:nowrap}
-#s13 .gc{grid-area:c}
-#s13 .g2{display:flex;flex-wrap:wrap;column-gap:.4em;align-items:baseline;font-size:17px;line-height:1.45}
+#s13 .g1,#s13 .g2{font-size:17px;line-height:1.5}
+#s13 .gb{display:inline-block;font:700 34px/1 var(--serif);color:var(--red);letter-spacing:-.01em;white-space:nowrap;margin:0 .1em;vertical-align:-.12em}
 #s13 .x1{color:var(--red);font-weight:700}
+#s13 .nw{white-space:nowrap}
 #s13 .x2{color:var(--blue);font-weight:700;font-size:16px}
 #s13 .mech{flex:1;min-height:0;position:relative}
 #s13 .mech .fig{position:absolute;inset:0}
@@ -25,3 +23,4 @@
 .static #s13 .bar.b{transform:none;transition:none}
 .static #s13 .vb{opacity:1;transition:none}
 #s13 .src{font-size:13px}
+#s13 svg text.slow{fill:var(--muted);font-style:normal}

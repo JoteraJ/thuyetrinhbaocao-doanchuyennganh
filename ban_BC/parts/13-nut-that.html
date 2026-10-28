@@ -7,31 +7,20 @@
       <div class="col" style="flex:0 0 590px;gap:14px">
         <div class="nt ru r">
           <h3>Nút thắt 1 — số slot ghép tại Root (17/09)</h3>
-          <div class="g1 st" data-s="1">
-            <p class="ga">2 Leaf, Root chỉ 1 slot → 111 OK / 496 hủy →</p>
-            <p class="gc">(1 Leaf: 0,5 %). Leaf B chiếm slot đang ghép dở của Leaf A. Sửa: <b>4 slot</b> + <code>sendSingle</code>.</p>
-            <b class="gb">hủy ~82 %</b>
-          </div>
+          <p class="g1 st" data-s="1">2&nbsp;Leaf, Root chỉ 1&nbsp;slot → 111&nbsp;OK / 496&nbsp;hủy → <b class="gb">hủy&nbsp;~82&nbsp;%</b> <span class="nw">(1&nbsp;Leaf: 0,5&nbsp;%).</span> Leaf B chiếm slot đang ghép dở của Leaf A. Sửa: <span class="nw"><b>4&nbsp;slot</b> + <code>sendSingle</code>.</span></p>
         </div>
         <div class="nt ru r">
           <h3>Nút thắt 2 — tải ghi UART tại Root (28–29/09)</h3>
-          <div class="g2 st" data-s="2">
-            <p style="order:1;flex-basis:100%">Chu kỳ 300 ms: FPS tổng 3,5 → 7 → 10 với 1/2/3 Leaf.</p>
-            <p style="order:2">Nhưng 3 Leaf:</p>
-            <p style="order:4">heap Root 90 → 57 KB.</p>
-            <p style="order:5">~47 KB/s ảnh so với giới hạn ~92 KB/s → ghi UART chặn →</p>
-            <p style="order:7;flex-basis:100%">gọi thưa. Giảm tải ~40 % (600 ms): hết ngừng, FPS ~10 → ~5.</p>
-            <b class="x1" style="order:3">toàn mạng ngừng sau 6–26 s,</b>
-            <code class="x2" style="order:6">mesh.update()</code>
-          </div>
+          <p class="g2 st" data-s="2">Chu kỳ 300&nbsp;ms: FPS tổng 3,5 → 7 → 10 với 1/2/3&nbsp;Leaf. Nhưng 3&nbsp;Leaf: <b class="x1">toàn mạng ngừng sau 6–26&nbsp;s</b>, heap Root 90 → 57&nbsp;KB. ~47&nbsp;KB/s ảnh so với giới hạn ~92&nbsp;KB/s → ghi UART chặn → <span class="nw"><code class="x2">mesh.update()</code> gọi&nbsp;thưa.</span> Giảm tải ~40&nbsp;% (600&nbsp;ms): hết ngừng, FPS ~10 → ~5.</p>
         </div>
         <div class="mech st" data-s="2">
           <svg class="fig" id="s13mech" viewBox="0 0 590 128" role="img" aria-label="Cơ chế nút thắt 2: ghi UART chặn khiến mesh.update() được gọi thưa">
-            <text class="mo" x="0" y="14" font-size="14" font-weight="500" fill="#1f4e9c">~47 KB/s ảnh</text>
-            <text class="mo" x="590" y="14" font-size="14" font-weight="500" text-anchor="end">giới hạn ~92 KB/s</text>
-            <text class="mo" x="0" y="57" font-size="14" font-weight="500" fill="#1f4e9c">ghi UART chặn</text>
-            <text class="mo" x="0" y="99" font-size="14" font-weight="500" fill="#d9432b">mesh.update()</text>
-            <text class="mo" x="0" y="99" font-size="14" font-weight="500" fill="#d9432b" id="s13thua">gọi thưa</text>
+            <text class="mo" x="0" y="14" font-size="15" font-weight="500" fill="#1f4e9c">~47 KB/s ảnh</text>
+            <text class="mo" x="590" y="14" font-size="15" font-weight="500" text-anchor="end">giới hạn ~92 KB/s</text>
+            <text class="mo" x="0" y="57" font-size="15" font-weight="500" fill="#1f4e9c">ghi UART chặn</text>
+            <text class="mo" x="0" y="99" font-size="15" font-weight="500" fill="#d9432b">mesh.update()</text>
+            <text class="mo" x="0" y="99" font-size="15" font-weight="500" fill="#d9432b" id="s13thua">gọi thưa</text>
+            <text class="mo slow" x="590" y="99" font-size="15" font-weight="500" text-anchor="end">hình động làm chậm</text>
           </svg>
         </div>
       </div>

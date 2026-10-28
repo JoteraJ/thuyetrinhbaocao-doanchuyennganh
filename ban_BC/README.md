@@ -20,7 +20,7 @@ kiem_tra_noi_dung.js   so từng slide với bản gốc (xem dưới)
 chup_slide.js    chụp một slide để xem
 ```
 ## Nhận diện (đã đổi so với bản đầu)
-Nền men ngọc, mực chàm, chữ Bricolage Grotesque (tiêu đề, số lớn, biến `--serif` — tên cũ, không còn là chữ serif) + Onest (thân) + IBM Plex Mono (nhãn), đều có tiếng Việt. Bìa nền đêm + vàng thếp, họa tiết mặt trống đồng làm nền mờ (vòng sóng ~ sóng vô tuyến).
+Nền men ngọc, mực chàm, chữ Bricolage Grotesque (tiêu đề, số lớn, biến `--serif` — tên cũ, không còn là chữ serif) + Onest (thân) + IBM Plex Mono (nhãn), đều có tiếng Việt. Nền phẳng, đơn giản, không họa tiết. Bìa nền đêm xanh chàm + vàng, có sóng vô tuyến vàng lan từ Root.
 **Màu viết trong `parts/*` vẫn là bảng màu cũ (kem/đen); `build.js` tự đổi sang bảng mới qua `theme.js`** (nên cứ dùng `var(--ink)`, `var(--red)`… hoặc hex cũ). `style.css` và `iso.js` đã là màu mới. Chữ nghiêng chỉ dùng cho công thức (`var(--math)`); Bricolage không có nghiêng thật, đừng dùng `font-style:italic` cho tiêu đề.
 Hình động làm chậm so với thực tế phải có chú thích ngắn trong hình (`.slow`: "hình động làm chậm").
 

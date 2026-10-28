@@ -18,13 +18,6 @@
   Deck.still = still;
   var tm = location.search.match(/[?&]t=([\d.]+)/); if (tm) Deck.stillT = +tm[1];
 
-  /* ---- họa tiết trống đồng nền mờ ---- */
-  slides.forEach(function (s) {
-    if (s.querySelector('.drum')) return;
-    var d = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); d.setAttribute('class', 'drum'); d.setAttribute('aria-hidden', 'true');
-    d.innerHTML = '<use href="#drum"/>'; s.insertBefore(d, s.firstChild);
-  });
-
   /* ---- tỉ lệ khung ---- */
   function fit() {
     var k = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
@@ -186,7 +179,7 @@
   }, { passive: true });
   var nb = document.getElementById('nbtn'); if (nb) nb.addEventListener('click', function () { notes.classList.toggle('on'); });
   var mb = document.getElementById('mbtn'); if (mb) mb.addEventListener('click', function () { setMode(!SCROLL); });
-  var idleT = setTimeout(function () { root.classList.add('idle'); }, 4000);
+  var idleT = setTimeout(function () { root.classList.add('idle'); }, 3000);
   document.addEventListener('mousemove', function () { root.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(function () { root.classList.add('idle'); }, 3000); });
   window.addEventListener('resize', function () { fit(); if (SCROLL && track) { var p = posFromScroll(); buildTrack(); window.scrollTo(0, beats.filter(function (b) { return b.i === p.i && b.k === p.k; })[0].y + 2); } });
   document.addEventListener('visibilitychange', function () { if (!document.hidden) shownAt = performance.now() - 1000; });

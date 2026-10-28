@@ -7,6 +7,3 @@
 #s1 .meta{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;font-size:17px;line-height:1.4;border-top:1.5px solid rgba(231,242,236,.5);padding-top:14px;color:var(--ink)}
 #s1 .meta b{display:block;font-size:19px;font-weight:600}
 #s1 .meta .lab{display:block;margin-bottom:2px;color:var(--gold)}
-#s1 .drum.big{width:760px;height:760px;right:-170px;top:-30px;bottom:auto;opacity:.2;color:var(--gold);animation:spin 160s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.static #s1 .drum.big{animation:none}

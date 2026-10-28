@@ -158,6 +158,6 @@ function meshFrame(t) {
     }
   });
   flush(list);
-  var q = sc.pt(ROOT[0], ROOT[1] - 31, 24); sc.text(M.lab, q[0], q[1] - 8, 'Root', 17, 700, 'middle', '#26231c', 'sf');
+  var q = sc.pt(ROOT[0], ROOT[1] + 31 * US + 4, 0); sc.text(M.lab, q[0], q[1] + 17, 'Root', 17, 700, 'middle', '#26231c', 'sf');   /* nhãn nằm ngay phía trước khối Root */
 }
 Deck.frames.s3 = function (t) { starFrame(t); meshFrame(t); };

@@ -7,9 +7,6 @@
 #s1 .meta{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;font-size:17px;line-height:1.4;border-top:1.5px solid rgba(231,242,236,.5);padding-top:14px;color:var(--ink)}
 #s1 .meta b{display:block;font-size:19px;font-weight:600}
 #s1 .meta .lab{display:block;margin-bottom:2px;color:var(--gold)}
-#s1 .drum.big{width:760px;height:760px;right:-170px;top:-30px;bottom:auto;opacity:.2;color:var(--gold);animation:spin 160s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.static #s1 .drum.big{animation:none}
 
 #s2 .ag{list-style:none;position:relative;display:flex;flex-direction:column;justify-content:space-around;flex:1;padding-left:64px;margin:6px 0 18px}
 #s2 .ag::before{content:"";position:absolute;left:22px;top:20px;bottom:20px;width:8px;background:var(--red)}
@@ -23,10 +20,11 @@
 #s3 .col{gap:6px}
 #s3 .col ul.l{font-size:19px;gap:6px}
 #s3 .bg{display:grid;grid-template-columns:1fr 1.1fr 1.6fr;grid-template-areas:"l1 l2 l2" "cx c1 c2";column-gap:34px;row-gap:2px;font-size:19px;line-height:1.4;border-top-color:var(--amber)}
+/* DOM theo thứ tự đọc (Bối cảnh → nội dung → Hai thách thức → (1) → (2)); lưới chỉ để bố trí */
 #s3 .bg>b{font:700 22px/1.2 var(--serif);color:var(--amber)}
 #s3 .l1{grid-area:l1}#s3 .l2{grid-area:l2}#s3 .cx{grid-area:cx}#s3 .c1{grid-area:c1}#s3 .c2{grid-area:c2}
 #s3 .bg .no{font:700 24px/1 var(--serif);color:var(--red);margin-right:2px}
-#s3 .bg .c2 b{font-family:var(--mono);font-size:.88em;color:var(--red)}
+#s3 .bg .c2 b{font-family:var(--mono);font-size:.9em;color:var(--red)}
 
 #s4 .th{display:grid;grid-template-columns:220px 150px 1fr;column-gap:18px;border-bottom:2px solid var(--ink);padding-bottom:5px}
 #s4 .th .lab:first-child{grid-column:2}
@@ -183,12 +181,10 @@
 
 #s13 .nt{padding-top:10px}
 #s13 .nt h3{font-size:22px;line-height:1.2;margin:0 0 8px}
-#s13 .g1{display:grid;grid-template-columns:1fr auto;grid-template-areas:"a b" "c c";column-gap:20px;row-gap:6px;align-items:center;font-size:17px;line-height:1.45}
-#s13 .ga{grid-area:a}
-#s13 .gb{grid-area:b;font:700 36px/1 var(--serif);color:var(--red);letter-spacing:-.01em;white-space:nowrap}
-#s13 .gc{grid-area:c}
-#s13 .g2{display:flex;flex-wrap:wrap;column-gap:.4em;align-items:baseline;font-size:17px;line-height:1.45}
+#s13 .g1,#s13 .g2{font-size:17px;line-height:1.5}
+#s13 .gb{display:inline-block;font:700 34px/1 var(--serif);color:var(--red);letter-spacing:-.01em;white-space:nowrap;margin:0 .1em;vertical-align:-.12em}
 #s13 .x1{color:var(--red);font-weight:700}
+#s13 .nw{white-space:nowrap}
 #s13 .x2{color:var(--blue);font-weight:700;font-size:16px}
 #s13 .mech{flex:1;min-height:0;position:relative}
 #s13 .mech .fig{position:absolute;inset:0}
@@ -208,6 +204,7 @@
 .static #s13 .bar.b{transform:none;transition:none}
 .static #s13 .vb{opacity:1;transition:none}
 #s13 .src{font-size:13px}
+#s13 svg text.slow{fill:var(--muted);font-style:normal}
 
 #s14 .fig-wrap .fig{position:absolute;inset:0}
 #s14 .th{font-size:21px;line-height:1.2;margin-bottom:4px;color:var(--ink)}

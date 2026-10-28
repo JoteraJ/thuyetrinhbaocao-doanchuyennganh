@@ -3,7 +3,8 @@
 #s3 .col{gap:6px}
 #s3 .col ul.l{font-size:19px;gap:6px}
 #s3 .bg{display:grid;grid-template-columns:1fr 1.1fr 1.6fr;grid-template-areas:"l1 l2 l2" "cx c1 c2";column-gap:34px;row-gap:2px;font-size:19px;line-height:1.4;border-top-color:var(--amber)}
+/* DOM theo thứ tự đọc (Bối cảnh → nội dung → Hai thách thức → (1) → (2)); lưới chỉ để bố trí */
 #s3 .bg>b{font:700 22px/1.2 var(--serif);color:var(--amber)}
 #s3 .l1{grid-area:l1}#s3 .l2{grid-area:l2}#s3 .cx{grid-area:cx}#s3 .c1{grid-area:c1}#s3 .c2{grid-area:c2}
 #s3 .bg .no{font:700 24px/1 var(--serif);color:var(--red);margin-right:2px}
-#s3 .bg .c2 b{font-family:var(--mono);font-size:.88em;color:var(--red)}
+#s3 .bg .c2 b{font-family:var(--mono);font-size:.9em;color:var(--red)}
