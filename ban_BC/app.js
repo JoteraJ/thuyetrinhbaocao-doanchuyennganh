@@ -112,7 +112,7 @@
   function buildTrack() {
     var vh = window.innerHeight, y = 0;
     segs = []; beats = [];
-    slides.forEach(function (s, i) {
+    slides.slice(0, main).forEach(function (s, i) {
       var n = maxStep(s); segs.push({ start: y, n: n });
       for (var k = 0; k <= n; k++) beats.push({ y: y + k * BEAT * vh, i: i, k: k });
       y += (n + 1) * BEAT * vh + TAIL * vh;
@@ -128,6 +128,7 @@
   var tick = 0;
   function onScroll() {
     if (!SCROLL || tick) return;
+    if (backup) { closeBackup(); return; }
     tick = requestAnimationFrame(function () {
       tick = 0; var p = posFromScroll();
       if (p.i !== cur) show(p.i, false, p.k);
@@ -136,10 +137,11 @@
   }
   function beatIndex() { var p = posFromScroll(), n = 0; for (var j = 0; j < beats.length; j++) if (beats[j].i === p.i && beats[j].k === p.k) n = j; return n; }
   function goBeat(d) { var n = Math.max(0, Math.min(beats.length - 1, beatIndex() + d)); window.scrollTo({ top: beats[n].y + 2, behavior: 'smooth' }); }
-  function goSlide(i, instant) { i = Math.max(0, Math.min(slides.length - 1, i)); window.scrollTo({ top: segs[i].start + 2, behavior: instant ? 'auto' : 'smooth' }); }
-  function goSection(sec) { for (var i = 0; i < slides.length; i++) if (slides[i].getAttribute('data-sec') === String(sec)) return goSlide(i); }
+  function goSlide(i, instant) { i = Math.max(0, Math.min(main - 1, i)); window.scrollTo({ top: segs[i].start + 2, behavior: instant ? 'auto' : 'smooth' }); }
+  function goSection(sec) { if (backup) closeBackup(); for (var i = 0; i < main; i++) if (slides[i].getAttribute('data-sec') === String(sec)) return goSlide(i); }
 
   function setMode(sc) {
+    if (backup) closeBackup();
     SCROLL = sc;
     root.classList.toggle('mode-scroll', sc); root.classList.toggle('mode-deck', !sc); root.classList.toggle('is-scroll', sc);
     var b = document.getElementById('mbtn'); if (b) b.textContent = sc ? 'Chế độ trình chiếu' : 'Chế độ cuộn';
@@ -148,10 +150,28 @@
     else { track.style.display = 'none'; window.scrollTo(0, 0); }
   }
 
+  /* ---- slide dự phòng A–D: không nằm trong dòng chảy của bài; chỉ hiện khi bấm B (hoặc A, C, D) ---- */
+  var backup = false, back = { i: 0, k: 0 };
+  function openBackup(j) {
+    if (firstBackup < 0) return;
+    j = Math.max(0, Math.min(slides.length - firstBackup - 1, j));
+    if (!backup) { back = { i: cur, k: step }; backup = true; }
+    show(firstBackup + j, false, 0);
+  }
+  function closeBackup() { if (!backup) return; backup = false; show(back.i, false, back.k); }
+
   /* ---- trình chiếu bằng phím ---- */
-  function next() { if (SCROLL) return goBeat(1); if (step < maxStep(slides[cur])) { step++; applyStep(); } else show(cur + 1); }
-  function prev() { if (SCROLL) return goBeat(-1); if (step > 0) { step--; applyStep(); } else if (cur > 0) show(cur - 1, true); }
-  function jump(i) { if (SCROLL) goSlide(i); else show(i); }
+  function next() {
+    if (backup) { if (step < maxStep(slides[cur])) { step++; applyStep(); } else if (cur < slides.length - 1) show(cur + 1); return; }
+    if (SCROLL) return goBeat(1);
+    if (step < maxStep(slides[cur])) { step++; applyStep(); } else if (cur < main - 1) show(cur + 1);
+  }
+  function prev() {
+    if (backup) { if (step > 0) { step--; applyStep(); } else if (cur > firstBackup) show(cur - 1, true); else closeBackup(); return; }
+    if (SCROLL) return goBeat(-1);
+    if (step > 0) { step--; applyStep(); } else if (cur > 0) show(cur - 1, true);
+  }
+  function jump(i) { if (backup) closeBackup(); if (SCROLL) goSlide(i); else show(i); }
 
   document.addEventListener('keydown', function (e) {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -160,11 +180,12 @@
     else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); prev(); }
     else if (k === 'Home') jump(0);
     else if (k === 'End') jump(main - 1);
-    else if (k === 'b' || k === 'B') jump(firstBackup >= 0 ? firstBackup : cur);
+    else if (k === 'b' || k === 'B') { if (backup) closeBackup(); else openBackup(0); }
+    else if (k === 'Escape') closeBackup();
     else if (k === 'n' || k === 'N') notes.classList.toggle('on');
     else if (k === 'm' || k === 'M') setMode(!SCROLL);
     else if (k === 'f' || k === 'F') { if (document.fullscreenElement) document.exitFullscreen(); else root.requestFullscreen && root.requestFullscreen(); }
-    else if (/^[a-dA-D]$/.test(k) && firstBackup >= 0) jump(firstBackup + k.toLowerCase().charCodeAt(0) - 97);
+    else if (/^[acdACD]$/.test(k)) openBackup(k.toLowerCase().charCodeAt(0) - 97);
   });
   document.addEventListener('click', function (e) {
     var st = e.target.closest && e.target.closest('.sta'); if (st) { goSection(+st.getAttribute('data-sec')); return; }
@@ -189,7 +210,11 @@
   var start = hi >= 0 ? hi : isNaN(h) ? 0 : h - 1;
   track = document.createElement('div'); track.id = 'track'; document.body.appendChild(track);
   window.addEventListener('scroll', onScroll, { passive: true });
-  if (SCROLL) {
+  if (start >= main) {                                   /* mở thẳng một slide dự phòng (đường dẫn #b1…) */
+    back = { i: main - 1, k: 0 }; backup = true;
+    if (SCROLL) buildTrack(); else track.style.display = 'none';
+    show(start);
+  } else if (SCROLL) {
     buildTrack();
     show(start, false, 0);
     goSlide(start, true);

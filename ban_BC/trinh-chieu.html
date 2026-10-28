@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="parts.css">
 </head>
 <body>
-<div id="help"><button id="nbtn" type="button">Ghi chú</button><button id="mbtn" type="button">Chế độ cuộn</button><span><span id="hint-scroll" style="display:none"><span class="kbd">↓</span> cuộn để chuyển · </span><span class="kbd">←</span> <span class="kbd">→</span> chuyển · <span class="kbd">N</span> ghi chú · <span class="kbd">B</span> dự phòng · <span class="kbd">F</span> toàn màn hình</span></div>
 <div id="stage">
 <!-- 1 · BÌA -->
 <section class="slide night" id="s1">
@@ -131,7 +130,7 @@
       </div>
       <div class="nf ru b">
         <h3>Giao thức định tuyến</h3>
-        <svg class="fg" id="s5b" viewBox="0 0 552 118" role="img" aria-label="Các giao thức định tuyến cho Linux/tầng IP không chuyển sang được ESP32; ESP32 dùng painlessMesh"></svg>
+        <svg class="fg" id="s5b" viewBox="0 0 552 138" role="img" aria-label="Các giao thức định tuyến cho Linux/tầng IP không chuyển sang được ESP32; ESP32 dùng painlessMesh"></svg>
         <p class="st" data-s="2">AODV, OLSR/DSDV, B.A.T.M.A.N đều cho Linux/tầng IP, không có bản cho ESP32 → dùng cơ chế sẵn của painlessMesh.</p>
       </div>
       <div class="nf ru r">
@@ -483,7 +482,7 @@
         </div>
       </div>
       <div class="col f1" style="gap:12px;min-width:0">
-        <div class="fig-wrap"><svg class="fig" id="s14fig" viewBox="0 0 580 340" role="img" aria-label="Hai bộ đệm UART như hai bể chứa: bể 8 KB tràn, chunk bị rơi (uartDrop); bể 16 KB không tràn"></svg></div>
+        <div class="fig-wrap"><svg class="fig" id="s14fig" viewBox="0 0 580 340" role="img" aria-label="Hai bộ đệm UART như hai bể chứa: Root ghép xong từng khung ảnh rồi đẩy vào bể; bể 8 KB không đủ chỗ nên khung bị bỏ, rơi nguyên tấm ra ngoài (uartDrop); bể 16 KB không bỏ khung nào"></svg><span class="slow">hình động làm chậm</span></div>
         <p class="warnbox st" data-s="2"><b>Thận trọng:</b> mỗi cấu hình đo 1 lần, thời lượng khác nhau, hai firmware còn khác ở chỗ khác — chỉ nói "trong hai phép đo này", không khẳng định chung.</p>
       </div>
     </div>
