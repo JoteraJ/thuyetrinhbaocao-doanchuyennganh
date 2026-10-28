@@ -26,5 +26,9 @@ function frame(t) {
     items.push({ x: q[0] - 4.5, y: q[1] - 4.5, z: q[2], w: 9, d: 9, h: 9, t: I.LEAF[k % 3] });
   }
   sc.items(dyn, items);
+  for (var w = 0; w < 3; w++) {                                    /* sóng vô tuyến lan từ Root, như vòng trên mặt trống */
+    var ph = ((t / 3.2) + w / 3) % 1, e = sc.circle(dyn, node.R[0], node.R[1], 0.6, 20 + ph * 130, 48, 'none', '#f2b632', 1.8);
+    e.setAttribute('stroke-opacity', ((1 - ph) * .85).toFixed(2));
+  }
 }
 Deck.frames.s1 = frame;

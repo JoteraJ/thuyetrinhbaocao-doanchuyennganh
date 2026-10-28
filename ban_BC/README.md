@@ -1,9 +1,12 @@
-# Bản trình bày B+C — Phản biện đồ án WiFi Mesh Drone và Robot
+# Bản trình bày B+C (nhận diện "men ngọc – chàm – son – vàng thếp") — Phản biện đồ án WiFi Mesh Drone và Robot
 
 Slide 16:9 (1280×720, tự co theo màn hình). **Nội dung giữ đúng bản gốc `../ban_slide_16x9/index.html`**, chỉ đổi cách trình bày:
 khung tạp chí (C: giấy kem, chữ serif, dải tàu điện tiến độ) + sơ đồ cơ cấu isometric có chuyển động (B).
 
-Mở `index.html` bằng trình duyệt. Phím: ← → (hoặc click) chuyển bước/slide · N ghi chú nói · B dự phòng (A–D) · F toàn màn hình.
+Hai chế độ, cùng một nội dung (build.js sinh cả hai):
+- `index.html` = **cuộn dọc**: cuộn chuột/phím ↓ → mỗi lần cuộn hiện một ý, hết ý thì sang slide kế tiếp; bấm ga trên dải tàu điện để nhảy phần.
+- `trinh-chieu.html` = **trình chiếu** 16:9: phím ← → (hoặc click) chuyển bước/slide.
+Cả hai: N ghi chú nói · B dự phòng (A–D) · F toàn màn hình · M đổi chế độ.
 `index.html?static` = đứng yên, hiện đủ mọi bước (dùng để in PDF: Ctrl+P).
 
 ## Cấu trúc
@@ -16,6 +19,11 @@ build.js         node build.js  ->  index.html, parts.css, scenes.js (đã sinh 
 kiem_tra_noi_dung.js   so từng slide với bản gốc (xem dưới)
 chup_slide.js    chụp một slide để xem
 ```
+## Nhận diện (đã đổi so với bản đầu)
+Nền men ngọc, mực chàm, chữ Bricolage Grotesque (tiêu đề, số lớn, biến `--serif` — tên cũ, không còn là chữ serif) + Onest (thân) + IBM Plex Mono (nhãn), đều có tiếng Việt. Bìa nền đêm + vàng thếp, họa tiết mặt trống đồng làm nền mờ (vòng sóng ~ sóng vô tuyến).
+**Màu viết trong `parts/*` vẫn là bảng màu cũ (kem/đen); `build.js` tự đổi sang bảng mới qua `theme.js`** (nên cứ dùng `var(--ink)`, `var(--red)`… hoặc hex cũ). `style.css` và `iso.js` đã là màu mới. Chữ nghiêng chỉ dùng cho công thức (`var(--math)`); Bricolage không có nghiêng thật, đừng dùng `font-style:italic` cho tiêu đề.
+Hình động làm chậm so với thực tế phải có chú thích ngắn trong hình (`.slow`: "hình động làm chậm").
+
 Quy ước: slide `sN` ↔ id trùng với bản gốc (`s1`…`s16`, dự phòng `b1`…`b4`). File đặt tên `NN-ten` với NN = số slide 2 chữ số (dự phòng: `17-du-phong-a`…).
 
 ## Khung một slide

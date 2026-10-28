@@ -1,16 +1,18 @@
 @import url(fonts/fonts.css);
-/* ===== Hệ thống thiết kế: khung tạp chí (C) + cơ cấu isometric (B) =====
-   Giấy kem, mực đen, ba màu tuyến = ba lớp của hệ thống:
-   đỏ = Lớp 1 Mesh · xanh dương = Lớp 2 UART · xanh lá = Lớp 3 PC */
+/* ===== Hệ thống thiết kế: khung tạp chí (C) + cơ cấu isometric (B), nhận diện "men ngọc – chàm – son – vàng thếp" =====
+   Nền men ngọc, mực chàm; ba màu tuyến = ba lớp của hệ thống:
+   đỏ son = Lớp 1 Mesh · lam = Lớp 2 UART · lục = Lớp 3 PC · vàng thếp = điểm nhấn trên nền đêm */
 :root{
-  --paper:#f6f1e7;--paper2:#ece5d4;--ink:#1c1b19;--muted:#645f52;--rule:rgba(28,27,25,.28);
-  --red:#d9432b;--blue:#1f4e9c;--green:#1b7f5c;--amber:#b86a00;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
-  --sans:"Be Vietnam Pro",system-ui,"Segoe UI",sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --paper:#d8eae0;--paper2:#c5dccf;--ink:#0c2a44;--muted:#456470;--rule:rgba(12,42,68,.28);
+  --red:#d8402b;--blue:#1a4f9c;--green:#0e6b4b;--amber:#a86300;
+  --gold:#f2b632;--night:#0a2038;
+  --serif:"Bricolage Grotesque","Be Vietnam Pro",system-ui,sans-serif;   /* chữ tiêu đề và số lớn */
+  --sans:"Onest","Be Vietnam Pro",system-ui,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --math:"Newsreader",Georgia,serif;                                    /* chỉ dùng cho công thức nghiêng */
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;background:#2a2823;color:var(--ink);font-family:var(--sans)}
+html,body{height:100%;overflow:hidden;background:var(--night);color:var(--ink);font-family:var(--sans)}
 #stage{position:fixed;left:50%;top:50%;width:1280px;height:720px;transform-origin:center;overflow:hidden;background:var(--paper)}
 svg text{font-family:var(--sans);fill:var(--ink)}
 svg .mo{font-family:var(--mono)}svg .sf{font-family:var(--serif)}svg .mu{fill:var(--muted)}
@@ -20,10 +22,10 @@ svg .mo{font-family:var(--mono)}svg .sf{font-family:var(--serif)}svg .mu{fill:va
 .slide.on{display:flex}
 .hd{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:20px;font:500 14px var(--mono);letter-spacing:.14em;text-transform:uppercase}
 .hd .k{color:var(--red)}.hd .k.w{color:var(--amber)}
-h2.t{font:700 50px/1.07 var(--serif);letter-spacing:-.015em;margin-bottom:18px;text-wrap:balance}
-h2.t.m{font-size:44px}h2.t.s{font-size:38px}
-h2.t em,.em{font-style:italic;color:var(--red);background:linear-gradient(transparent 82%,rgba(217,67,43,.2) 0)}
-h3{font:700 25px/1.2 var(--serif);letter-spacing:-.005em}
+h2.t{font:800 52px/1.04 var(--serif);font-variation-settings:'wdth' 86,'opsz' 72;letter-spacing:-.012em;margin-bottom:18px;text-wrap:balance}
+h2.t.m{font-size:45px}h2.t.s{font-size:39px}
+h2.t em,.em{font-style:normal;color:var(--red);background:linear-gradient(transparent 84%,rgba(216,64,43,.22) 0)}
+h3{font:700 25px/1.18 var(--serif);font-variation-settings:'wdth' 90,'opsz' 36;letter-spacing:-.005em}
 .body{flex:1;min-height:0;display:flex;flex-direction:column;gap:18px}
 .row{display:flex;gap:32px;min-height:0}.col{display:flex;flex-direction:column;gap:16px;min-width:0}
 .f1{flex:1;min-width:0}.f2{flex:2;min-width:0}.f3{flex:3;min-width:0}
@@ -46,7 +48,7 @@ ul.l.b li::before{background:var(--blue)}ul.l.g li::before{background:var(--gree
 .warnbox{border:2px dashed var(--amber);padding:10px 16px;font-size:17px;line-height:1.45}
 .warnbox>b:first-child{color:var(--amber)}
 .note{font-size:17px;color:var(--muted);line-height:1.5}
-.src{position:absolute;right:72px;bottom:56px;font:500 12px var(--mono);color:var(--muted);letter-spacing:.04em}
+.src{position:absolute;right:72px;bottom:56px;font:500 13px var(--mono);color:var(--muted);letter-spacing:.04em}
 
 /* ---- bảng kiểu tạp chí ---- */
 table.tb{border-collapse:collapse;width:100%;border-top:2px solid var(--ink)}
@@ -84,11 +86,11 @@ table.tb{border-collapse:collapse;width:100%;border-top:2px solid var(--ink)}
 #metro .done{stroke:var(--red);stroke-width:5}
 #metro .stn{fill:var(--paper);stroke:var(--ink);stroke-width:2.5}
 #metro .stn.on{fill:var(--red);stroke:var(--ink)}
-#metro text{font:500 12px var(--mono);letter-spacing:.02em;text-transform:uppercase;fill:var(--muted)}
+#metro text{font:500 13px var(--mono);letter-spacing:0;text-transform:uppercase;fill:var(--muted)}
 #metro text.on{fill:var(--ink);font-weight:700}
 #metro .tr{transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .nometro #metro{display:none}
-.pn{position:absolute;left:72px;bottom:56px;font:500 12px var(--mono);color:var(--muted);letter-spacing:.06em}
+.pn{position:absolute;left:72px;bottom:56px;font:500 13px var(--mono);color:var(--muted);letter-spacing:.06em}
 
 /* ---- điều khiển ngoài khung ---- */
 #help{position:fixed;left:12px;top:10px;z-index:60;font:500 12px var(--mono);color:#cfc8b6;display:flex;gap:8px;align-items:center;transition:opacity .4s}
@@ -106,4 +108,24 @@ table.tb{border-collapse:collapse;width:100%;border-top:2px solid var(--ink)}
  .slide{display:flex!important;position:relative;height:720px;page-break-after:always}
  .st{opacity:1!important;transform:none!important}
  #help,#notes,#metro{display:none}
+ *{animation:none!important}
+ .drum.big{animation:none!important}
 }
+
+/* ---- họa tiết mặt trống đồng (vòng sóng) làm nền mờ ---- */
+.slide{isolation:isolate}
+.drum{position:absolute;z-index:-1;width:560px;height:560px;right:-150px;bottom:-190px;color:var(--ink);opacity:.07;pointer-events:none}
+.night .drum{opacity:.22;color:var(--gold)}
+/* ---- slide nền đêm (bìa) ---- */
+.slide.night{--paper:#0a2038;--paper2:#10304f;--ink:#e7f2ec;--muted:#9bb8b6;--rule:rgba(231,242,236,.3);--red:#ff6b4a;background:var(--night);color:var(--ink)}
+
+/* ---- chế độ cuộn dọc ---- */
+html.is-scroll,html.is-scroll body{overflow-y:auto;height:auto}
+html.is-scroll body{background:var(--night)}
+#track{width:1px;pointer-events:none}
+.is-scroll #metro{pointer-events:auto}
+.is-scroll #metro .sta{cursor:pointer}
+.is-scroll #metro .sta:hover text{fill:var(--ink)}
+.is-scroll .slide.on{animation:enter .55s cubic-bezier(.2,.7,.2,1) both}
+@keyframes enter{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+.is-scroll #stage{position:fixed}

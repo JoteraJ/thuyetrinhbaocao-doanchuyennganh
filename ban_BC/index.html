@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" class="mode-scroll">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,10 +8,18 @@
 <link rel="stylesheet" href="parts.css">
 </head>
 <body>
-<div id="help"><button id="nbtn" type="button">Ghi chú</button><span><span class="kbd">←</span> <span class="kbd">→</span> chuyển · <span class="kbd">N</span> ghi chú · <span class="kbd">B</span> dự phòng · <span class="kbd">F</span> toàn màn hình</span></div>
+<div id="help"><button id="nbtn" type="button">Ghi chú</button><button id="mbtn" type="button">Chế độ trình chiếu</button><span><span class="kbd">↓</span> cuộn để chuyển · <span class="kbd">←</span> <span class="kbd">→</span> chuyển · <span class="kbd">N</span> ghi chú · <span class="kbd">B</span> dự phòng · <span class="kbd">F</span> toàn màn hình</span></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="drum" viewBox="-200 -200 400 400"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+<polygon points="0.0,-52.0 3.1,-13.6 22.6,-46.9 8.7,-10.9 40.7,-32.4 12.6,-6.1 50.7,-11.6 14.0,0.0 50.7,11.6 12.6,6.1 40.7,32.4 8.7,10.9 22.6,46.9 3.1,13.6 0.0,52.0 -3.1,13.6 -22.6,46.9 -8.7,10.9 -40.7,32.4 -12.6,6.1 -50.7,11.6 -14.0,0.0 -50.7,-11.6 -12.6,-6.1 -40.7,-32.4 -8.7,-10.9 -22.6,-46.9 -3.1,-13.6"/><circle r="60"/><circle r="68"/>
+<circle r="80" stroke-width="9" stroke-dasharray="3 7"/><circle r="94"/>
+<polygon points="100.0,0.0 108.8,7.1 99.1,13.1 106.9,21.3 96.6,25.9 103.2,35.0 92.4,38.3 97.8,48.2 86.6,50.0 90.6,60.6 79.3,60.9 82.0,71.9 70.7,70.7 71.9,82.0 60.9,79.3 60.6,90.6 50.0,86.6 48.2,97.8 38.3,92.4 35.0,103.2 25.9,96.6 21.3,106.9 13.1,99.1 7.1,108.8 0.0,100.0 -7.1,108.8 -13.1,99.1 -21.3,106.9 -25.9,96.6 -35.0,103.2 -38.3,92.4 -48.2,97.8 -50.0,86.6 -60.6,90.6 -60.9,79.3 -71.9,82.0 -70.7,70.7 -82.0,71.9 -79.3,60.9 -90.6,60.6 -86.6,50.0 -97.8,48.2 -92.4,38.3 -103.2,35.0 -96.6,25.9 -106.9,21.3 -99.1,13.1 -108.8,7.1 -100.0,0.0 -108.8,-7.1 -99.1,-13.1 -106.9,-21.3 -96.6,-25.9 -103.2,-35.0 -92.4,-38.3 -97.8,-48.2 -86.6,-50.0 -90.6,-60.6 -79.3,-60.9 -82.0,-71.9 -70.7,-70.7 -71.9,-82.0 -60.9,-79.3 -60.6,-90.6 -50.0,-86.6 -48.2,-97.8 -38.3,-92.4 -35.0,-103.2 -25.9,-96.6 -21.3,-106.9 -13.1,-99.1 -7.1,-108.8 -0.0,-100.0 7.1,-108.8 13.1,-99.1 21.3,-106.9 25.9,-96.6 35.0,-103.2 38.3,-92.4 48.2,-97.8 50.0,-86.6 60.6,-90.6 60.9,-79.3 71.9,-82.0 70.7,-70.7 82.0,-71.9 79.3,-60.9 90.6,-60.6 86.6,-50.0 97.8,-48.2 92.4,-38.3 103.2,-35.0 96.6,-25.9 106.9,-21.3 99.1,-13.1 108.8,-7.1"/><circle r="116"/><circle r="124"/>
+<circle r="136" stroke-width="10" stroke-dasharray="14 10"/><circle r="152"/>
+<polygon points="158.0,0.0 167.8,8.8 157.1,16.5 165.9,26.3 154.5,32.9 162.3,43.5 150.3,48.8 156.8,60.2 144.3,64.3 149.7,76.3 136.8,79.0 140.9,91.5 127.8,92.9 130.6,105.7 117.4,105.7 118.8,118.8 105.7,117.4 105.7,130.6 92.9,127.8 91.5,140.9 79.0,136.8 76.3,149.7 64.3,144.3 60.2,156.8 48.8,150.3 43.5,162.3 32.9,154.5 26.3,165.9 16.5,157.1 8.8,167.8 0.0,158.0 -8.8,167.8 -16.5,157.1 -26.3,165.9 -32.9,154.5 -43.5,162.3 -48.8,150.3 -60.2,156.8 -64.3,144.3 -76.3,149.7 -79.0,136.8 -91.5,140.9 -92.9,127.8 -105.7,130.6 -105.7,117.4 -118.8,118.8 -117.4,105.7 -130.6,105.7 -127.8,92.9 -140.9,91.5 -136.8,79.0 -149.7,76.3 -144.3,64.3 -156.8,60.2 -150.3,48.8 -162.3,43.5 -154.5,32.9 -165.9,26.3 -157.1,16.5 -167.8,8.8 -158.0,0.0 -167.8,-8.8 -157.1,-16.5 -165.9,-26.3 -154.5,-32.9 -162.3,-43.5 -150.3,-48.8 -156.8,-60.2 -144.3,-64.3 -149.7,-76.3 -136.8,-79.0 -140.9,-91.5 -127.8,-92.9 -130.6,-105.7 -117.4,-105.7 -118.8,-118.8 -105.7,-117.4 -105.7,-130.6 -92.9,-127.8 -91.5,-140.9 -79.0,-136.8 -76.3,-149.7 -64.3,-144.3 -60.2,-156.8 -48.8,-150.3 -43.5,-162.3 -32.9,-154.5 -26.3,-165.9 -16.5,-157.1 -8.8,-167.8 -0.0,-158.0 8.8,-167.8 16.5,-157.1 26.3,-165.9 32.9,-154.5 43.5,-162.3 48.8,-150.3 60.2,-156.8 64.3,-144.3 76.3,-149.7 79.0,-136.8 91.5,-140.9 92.9,-127.8 105.7,-130.6 105.7,-117.4 118.8,-118.8 117.4,-105.7 130.6,-105.7 127.8,-92.9 140.9,-91.5 136.8,-79.0 149.7,-76.3 144.3,-64.3 156.8,-60.2 150.3,-48.8 162.3,-43.5 154.5,-32.9 165.9,-26.3 157.1,-16.5 167.8,-8.8"/><circle r="176"/><circle r="184" stroke-width="3"/>
+</g></symbol></svg>
 <div id="stage">
 <!-- 1 · BÌA -->
-<section class="slide" id="s1">
+<section class="slide night" id="s1">
+  <svg class="drum big" aria-hidden="true"><use href="#drum"/></svg>
   <div class="hd"><span class="k">Đồ án chuyên ngành · Kỹ thuật Điện tử – Viễn thông</span><img class="logo" src="assets/logo_tdtu.jpg" alt="Logo Đại học Tôn Đức Thắng"></div>
   <div class="body">
     <div class="row grow" style="gap:20px">
@@ -39,11 +47,11 @@
   <h2 class="t">Năm phần <em>trình bày</em></h2>
   <div class="body">
     <ol class="ag">
-      <li class="st" data-s="1"><i></i><span class="no">1</span><span class="tx">Đặt vấn đề và mục tiêu</span></li>
-      <li class="st" data-s="2"><i></i><span class="no">2</span><span class="tx">Cơ sở lý thuyết trọng tâm</span></li>
-      <li class="st" data-s="3"><i></i><span class="no">3</span><span class="tx">Thiết kế hệ thống (3 lớp)</span></li>
-      <li class="st" data-s="4"><i></i><span class="no">4</span><span class="tx">Kết quả thực nghiệm</span></li>
-      <li class="st" data-s="5"><i></i><span class="no">5</span><span class="tx">Kết luận, hạn chế, hướng phát triển</span></li>
+      <li><i></i><span class="no">1</span><span class="tx">Đặt vấn đề và mục tiêu</span></li>
+      <li><i></i><span class="no">2</span><span class="tx">Cơ sở lý thuyết trọng tâm</span></li>
+      <li><i></i><span class="no">3</span><span class="tx">Thiết kế hệ thống (3 lớp)</span></li>
+      <li><i></i><span class="no">4</span><span class="tx">Kết quả thực nghiệm</span></li>
+      <li><i></i><span class="no">5</span><span class="tx">Kết luận, hạn chế, hướng phát triển</span></li>
     </ol>
   </div>
   <aside>Thời lượng khoảng 12–15 phút. Trọng tâm là phần 3 và 4: hệ thống em đã dựng và số liệu đo được.</aside>
@@ -338,11 +346,11 @@
     <div class="mline">
       <i class="rail"></i><i class="rail done"></i><i class="bump"></i>
       <svg class="train" viewBox="0 0 64 30" aria-hidden="true">
-        <path d="M3 4h46l12 12v10H3z" fill="#d9432b" stroke="#1c1b19" stroke-width="2.5" stroke-linejoin="round"/>
-        <rect x="9" y="9" width="10" height="8" fill="#f6f1e7" stroke="#1c1b19" stroke-width="1.5"/>
-        <rect x="24" y="9" width="10" height="8" fill="#f6f1e7" stroke="#1c1b19" stroke-width="1.5"/>
-        <path d="M40 9h6l6 7h-12z" fill="#f6f1e7" stroke="#1c1b19" stroke-width="1.5" stroke-linejoin="round"/>
-        <rect x="3" y="21" width="58" height="3" fill="#1c1b19"/>
+        <path d="M3 4h46l12 12v10H3z" fill="#d8402b" stroke="#0c2a44" stroke-width="2.5" stroke-linejoin="round"/>
+        <rect x="9" y="9" width="10" height="8" fill="#d8eae0" stroke="#0c2a44" stroke-width="1.5"/>
+        <rect x="24" y="9" width="10" height="8" fill="#d8eae0" stroke="#0c2a44" stroke-width="1.5"/>
+        <path d="M40 9h6l6 7h-12z" fill="#d8eae0" stroke="#0c2a44" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="3" y="21" width="58" height="3" fill="#0c2a44"/>
       </svg>
       <ol class="stns">
         <li class="stn"><span class="dot">1</span><div class="bd">
@@ -416,11 +424,11 @@
         </div>
         <div class="mech st" data-s="2">
           <svg class="fig" id="s13mech" viewBox="0 0 590 128" role="img" aria-label="Cơ chế nút thắt 2: ghi UART chặn khiến mesh.update() được gọi thưa">
-            <text class="mo" x="0" y="14" font-size="14" font-weight="500" fill="#1f4e9c">~47 KB/s ảnh</text>
+            <text class="mo" x="0" y="14" font-size="14" font-weight="500" fill="#1a4f9c">~47 KB/s ảnh</text>
             <text class="mo" x="590" y="14" font-size="14" font-weight="500" text-anchor="end">giới hạn ~92 KB/s</text>
-            <text class="mo" x="0" y="57" font-size="14" font-weight="500" fill="#1f4e9c">ghi UART chặn</text>
-            <text class="mo" x="0" y="99" font-size="14" font-weight="500" fill="#d9432b">mesh.update()</text>
-            <text class="mo" x="0" y="99" font-size="14" font-weight="500" fill="#d9432b" id="s13thua">gọi thưa</text>
+            <text class="mo" x="0" y="57" font-size="14" font-weight="500" fill="#1a4f9c">ghi UART chặn</text>
+            <text class="mo" x="0" y="99" font-size="14" font-weight="500" fill="#d8402b">mesh.update()</text>
+            <text class="mo" x="0" y="99" font-size="14" font-weight="500" fill="#d8402b" id="s13thua">gọi thưa</text>
           </svg>
         </div>
       </div>
@@ -429,31 +437,31 @@
         <div class="fig-wrap">
 <svg class="fig" id="s13fig" viewBox="0 0 500 450" role="img" aria-label="Biểu đồ cột FPS tổng theo số Leaf, trục 0 đến 10; chu kỳ 300 ms so với 600 ms">
 <defs><pattern id="s13h" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="9" fill="rgba(255,255,255,.38)"/></pattern></defs>
-<line x1="44" y1="353.0" x2="496" y2="353.0" stroke="#1c1b19" stroke-opacity="0.5" stroke-width="2"/>
+<line x1="44" y1="353.0" x2="496" y2="353.0" stroke="#0c2a44" stroke-opacity="0.5" stroke-width="2"/>
 <text class="mo ax" x="36" y="358.0" text-anchor="end" font-size="15">0</text>
-<line x1="44" y1="279.2" x2="496" y2="279.2" stroke="#1c1b19" stroke-opacity="0.09" stroke-width="1"/>
-<line x1="44" y1="205.5" x2="496" y2="205.5" stroke="#1c1b19" stroke-opacity="0.22" stroke-width="1"/>
+<line x1="44" y1="279.2" x2="496" y2="279.2" stroke="#0c2a44" stroke-opacity="0.09" stroke-width="1"/>
+<line x1="44" y1="205.5" x2="496" y2="205.5" stroke="#0c2a44" stroke-opacity="0.22" stroke-width="1"/>
 <text class="mo ax" x="36" y="210.5" text-anchor="end" font-size="15">5</text>
-<line x1="44" y1="131.8" x2="496" y2="131.8" stroke="#1c1b19" stroke-opacity="0.09" stroke-width="1"/>
-<line x1="44" y1="58.0" x2="496" y2="58.0" stroke="#1c1b19" stroke-opacity="0.22" stroke-width="1"/>
+<line x1="44" y1="131.8" x2="496" y2="131.8" stroke="#0c2a44" stroke-opacity="0.09" stroke-width="1"/>
+<line x1="44" y1="58.0" x2="496" y2="58.0" stroke="#0c2a44" stroke-opacity="0.22" stroke-width="1"/>
 <text class="mo ax" x="36" y="63.0" text-anchor="end" font-size="15">10</text>
-<g class="bar a" data-v="3.5"><rect x="57" y="249.75" width="56" height="103.25" fill="#d9432b" stroke="#1c1b19" stroke-width="1.2"/><polygon points="57,249.75 66,243.75 122,243.75 113,249.75" fill="#ee8a76" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="113,249.75 122,243.75 122,347.00 113,353.00" fill="#a8301c" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g class="bar b" data-v="1.67"><rect x="125" y="303.74" width="56" height="49.27" fill="#1b7f5c" stroke="#1c1b19" stroke-width="1.2"/><polygon points="125,303.74 134,297.74 190,297.74 181,303.74" fill="#58b394" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="181,303.74 190,297.74 190,347.00 181,353.00" fill="#125a40" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar a" data-v="3.5"><rect x="57" y="249.75" width="56" height="103.25" fill="#d8402b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="57,249.75 66,243.75 122,243.75 113,249.75" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="113,249.75 122,243.75 122,347.00 113,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="1.67"><rect x="125" y="303.74" width="56" height="49.27" fill="#0e6b4b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="125,303.74 134,297.74 190,297.74 181,303.74" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="181,303.74 190,297.74 190,347.00 181,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
 <text class="vl va" x="89.5" y="234.8" text-anchor="middle" font-size="19" font-weight="700">3,5</text>
 <text class="vl vb" x="157.5" y="288.7" text-anchor="middle" font-size="19" font-weight="700">1,67</text>
-<g class="bar a" data-v="7"><rect x="207" y="146.50" width="56" height="206.50" fill="#d9432b" stroke="#1c1b19" stroke-width="1.2"/><polygon points="207,146.50 216,140.50 272,140.50 263,146.50" fill="#ee8a76" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="263,146.50 272,140.50 272,347.00 263,353.00" fill="#a8301c" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g class="bar b" data-v="3.3"><rect x="275" y="255.65" width="56" height="97.35" fill="#1b7f5c" stroke="#1c1b19" stroke-width="1.2"/><polygon points="275,255.65 284,249.65 340,249.65 331,255.65" fill="#58b394" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="331,255.65 340,249.65 340,347.00 331,353.00" fill="#125a40" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar a" data-v="7"><rect x="207" y="146.50" width="56" height="206.50" fill="#d8402b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="207,146.50 216,140.50 272,140.50 263,146.50" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="263,146.50 272,140.50 272,347.00 263,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="3.3"><rect x="275" y="255.65" width="56" height="97.35" fill="#0e6b4b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="275,255.65 284,249.65 340,249.65 331,255.65" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="331,255.65 340,249.65 340,347.00 331,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
 <text class="vl va" x="239.5" y="131.5" text-anchor="middle" font-size="19" font-weight="700">7</text>
 <text class="vl vb" x="307.5" y="240.7" text-anchor="middle" font-size="19" font-weight="700">3,3</text>
-<g class="bar a" data-v="10"><rect x="357" y="58.00" width="56" height="295.00" fill="#d9432b" stroke="#1c1b19" stroke-width="1.2"/><rect x="357" y="58.00" width="56" height="295.00" fill="url(#s13h)"/><polygon points="357,58.00 366,52.00 422,52.00 413,58.00" fill="#ee8a76" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="413,58.00 422,52.00 422,347.00 413,353.00" fill="#a8301c" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g class="bar b" data-v="4.85"><rect x="425" y="209.93" width="56" height="143.07" fill="#1b7f5c" stroke="#1c1b19" stroke-width="1.2"/><polygon points="425,209.93 434,203.93 490,203.93 481,209.93" fill="#58b394" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/><polygon points="481,209.93 490,203.93 490,347.00 481,353.00" fill="#125a40" stroke="#1c1b19" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar a" data-v="10"><rect x="357" y="58.00" width="56" height="295.00" fill="#d8402b" stroke="#0c2a44" stroke-width="1.2"/><rect x="357" y="58.00" width="56" height="295.00" fill="url(#s13h)"/><polygon points="357,58.00 366,52.00 422,52.00 413,58.00" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="413,58.00 422,52.00 422,347.00 413,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="4.85"><rect x="425" y="209.93" width="56" height="143.07" fill="#0e6b4b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="425,209.93 434,203.93 490,203.93 481,209.93" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="481,209.93 490,203.93 490,347.00 481,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
 <text class="vl va bad" x="389.5" y="43.0" text-anchor="middle" font-size="19" font-weight="700">10 ✕</text>
 <text class="vl vb" x="457.5" y="194.9" text-anchor="middle" font-size="19" font-weight="700">4,85</text>
 <text class="mo" x="123" y="379" text-anchor="middle" font-size="17" font-weight="500">1 Leaf</text>
 <text class="mo" x="273" y="379" text-anchor="middle" font-size="17" font-weight="500">2 Leaf</text>
 <text class="mo" x="423" y="379" text-anchor="middle" font-size="17" font-weight="500">3 Leaf</text>
-<rect x="46" y="398.0" width="14" height="14" fill="#d9432b" stroke="#1c1b19" stroke-width="1.2"/><text x="68" y="411.0" font-size="16">300 ms (3 Leaf: ngừng truyền)</text>
-<rect x="46" y="423.0" width="14" height="14" fill="#1b7f5c" stroke="#1c1b19" stroke-width="1.2"/><text x="68" y="436.0" font-size="16">600 ms (ổn định)</text>
+<rect x="46" y="398.0" width="14" height="14" fill="#d8402b" stroke="#0c2a44" stroke-width="1.2"/><text x="68" y="411.0" font-size="16">300 ms (3 Leaf: ngừng truyền)</text>
+<rect x="46" y="423.0" width="14" height="14" fill="#0e6b4b" stroke="#0c2a44" stroke-width="1.2"/><text x="68" y="436.0" font-size="16">600 ms (ổn định)</text>
 </svg>
         </div>
       </div>

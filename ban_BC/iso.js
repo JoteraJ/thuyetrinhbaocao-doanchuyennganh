@@ -5,12 +5,12 @@
 window.Iso = (function () {
   var NS = 'http://www.w3.org/2000/svg';
   var T = {
-    plate: { top: '#d4ccb9', y: '#b8b09c', x: '#a29a86' },
-    stone: { top: '#e9e3d3', y: '#cdc5b2', x: '#b4ac98' },
-    pcb:   { top: '#4b4a44', y: '#35342f', x: '#272622' },
-    chip:  { top: '#8a877c', y: '#6e6b61', x: '#5a574e' },
-    dark:  { top: '#2c2b27', y: '#1f1e1b', x: '#171614' },
-    white: { top: '#fbf8f0', y: '#e6e0d0', x: '#d0c9b6' },
+    plate: { top: '#bfcecd', y: '#9fb5b3', x: '#86a2a0' },
+    stone: { top: '#d7e5de', y: '#b7c8c6', x: '#9ab2b0' },
+    pcb:   { top: '#3c4853', y: '#2a333a', x: '#1f252a' },
+    chip:  { top: '#739390', y: '#576978', x: '#475561' },
+    dark:  { top: '#232a30', y: '#181d22', x: '#121619' },
+    white: { top: '#f1f8f4', y: '#d4e2db', x: '#bbcbc9' },
     red:   { top: '#ff9a52', y: '#ee5f12', x: '#c24a0b' },
     blue:  { top: '#9dbfee', y: '#3f78c4', x: '#2d5a99' },
     green: { top: '#c3dc7a', y: '#7c9a28', x: '#5e7a1c' }
@@ -45,7 +45,7 @@ window.Iso = (function () {
     sc.g = function (p) { return el('g', {}, p || svg); };
     sc.clear = function (g) { while (g.firstChild) g.removeChild(g.firstChild); };
     sc.poly = function (g, p, fill, stroke, sw) {
-      return el('polygon', { points: p.map(function (a) { return f1(a[0]) + ',' + f1(a[1]); }).join(' '), fill: fill, stroke: stroke || 'rgba(45,38,28,.55)', 'stroke-width': sw == null ? .8 : sw, 'stroke-linejoin': 'round' }, g);
+      return el('polygon', { points: p.map(function (a) { return f1(a[0]) + ',' + f1(a[1]); }).join(' '), fill: fill, stroke: stroke || 'rgba(10,32,48,.55)', 'stroke-width': sw == null ? .8 : sw, 'stroke-linejoin': 'round' }, g);
     };
     sc.box = function (g, x, y, z, w, d, h, t) {
       var P = sc.pt;
@@ -80,7 +80,7 @@ window.Iso = (function () {
       return sc.poly(g, p, fill, stroke, sw);
     };
     sc.text = function (g, x, y, s, size, weight, anchor, fill, cls) {
-      var t = el('text', { x: f1(x), y: f1(y), 'font-size': size, 'font-weight': weight || 400, 'text-anchor': anchor || 'middle', fill: fill || '#26231c', class: cls || '' }, g);
+      var t = el('text', { x: f1(x), y: f1(y), 'font-size': size, 'font-weight': weight || 400, 'text-anchor': anchor || 'middle', fill: fill || '#0c2a44', class: cls || '' }, g);
       t.textContent = s; return t;
     };
     /* sắp xếp khối động theo độ sâu rồi vẽ */
