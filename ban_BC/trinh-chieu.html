@@ -225,7 +225,7 @@
     </div>
     <div class="strip">
       <svg class="fig" id="s8fig" viewBox="0 0 1136 262" role="img" aria-label="Chuỗi nguồn của Leaf: pin 18650 trong đế, tụ song song tại chân vào của mạch tăng áp, cáp Micro-USB tới board ESP32-CAM; màn hình đo điện áp khi phát WiFi"></svg>
-      <p class="pw"><span class="lg0 lab r">Khối nguồn Leaf:</span><span class="lg lg1">pin 18650 2000 mAh</span><span class="lg lg2">đế pin</span><span class="lg lg3">tăng áp 0,9–5 V ra 5 V USB</span><span class="lg lg4">Micro-USB</span><span class="lg lg5">board</span><span class="lg lg6"><span class="kw">Tụ 470 µF</span><span class="fl">Tụ 470 µF song song tại chân IN.</span></span></p>
+      <p class="pw"><span class="lg0 lab r">Khối nguồn Leaf:</span><span class="lg lg1">pin 18650 2000 mAh</span><span class="lg lg2">đế pin</span><span class="lg lg3">tăng áp 0,9–5 V ra 5 V USB</span><span class="lg lg4">Micro-USB</span><span class="lg lg5">board</span><span class="lg lg6"><span class="fl">Tụ 470 µF song song tại chân IN.</span><span class="kw">Tụ 470 µF</span></span></p>
       <span class="slow">minh họa</span>
     </div>
   </div>
@@ -333,13 +333,10 @@
             <span class="c3">PAYLOAD</span>
             <span class="c4">CRC16/<wbr>CCITT-FALSE</span>
           </div>
-          <p class="sn"><span class="kw">Bỏ khung ảnh nếu &lt; ½</span><span class="kw">telemetry, log không bị bỏ</span><span class="fl">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</span></p>
+          <p class="sn"><span class="fl">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</span><span class="kw">Bỏ khung ảnh nếu &lt; ½</span><span class="kw">telemetry, log không bị bỏ</span></p>
         </div>
         <div class="blk b">
-          <div class="mh">
-            <h3>Middleware Node.js</h3>
-            <p class="bt st" data-s="1"><span class="kw">Chỉ bỏ phần hỏng · test <b class="good">7/7</b></span><span class="fl">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.</span><span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
-          </div>
+          <h3>Middleware Node.js</h3>
           <div class="sw">
             <p class="bd"><span class="slow">hình động làm chậm</span><span class="slow st" data-s="1">kịch bản test 7/7</span></p>
             <div class="scn">
@@ -347,6 +344,7 @@
               <p class="gl"><span class="g1">Tìm MAGIC</span><span class="g2">kiểm LEN (≤&nbsp;131072)</span><span class="g3">kiểm CRC</span><span class="g4">Socket.IO</span></p>
             </div>
           </div>
+          <p class="bt st" data-s="1"><span class="fl">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.</span><span class="kw">Chỉ bỏ phần hỏng · test <b class="good">7/7</b></span><span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
         </div>
       </div>
       <div class="dash st" data-s="2">
@@ -361,6 +359,8 @@
       </div>
     </div>
   </div>
+  <div class="fsv f1" data-s="3"><img src="assets/dashboardtab1.png" width="1920" height="1080" alt="Ảnh chụp màn hình dashboard, tab Live, cỡ toàn màn hình"><span class="cap">Tab Live</span></div>
+  <div class="fsv f2" data-s="4"><img src="assets/dashboardtab2.png" width="1920" height="1080" alt="Ảnh chụp màn hình dashboard, tab So sánh, cỡ toàn màn hình"><span class="cap">Tab So sánh</span></div>
   <span class="src">chuong3.tex, mục 3.4</span>
   <aside><b>Lưu ý:</b> báo cáo ghi ngưỡng bỏ khung là &lt; ½ bộ đệm; mã mới (commit 7d68445) bỏ khi bộ đệm không đủ chỗ cho cả khung. Nếu được hỏi, nói rõ bản nào dùng cho phép đo. Log văn bản chèn vào luồng nhị phân làm middleware mất đồng bộ, nên em hạ log painlessMesh xuống mức lỗi. Dashboard không dùng dữ liệu giả lập.</aside>
 </section>
