@@ -1,0 +1,8 @@
+#s1 .hd{align-items:center}
+#s1 .logo{height:54px;border:1.5px solid var(--ink);background:#fff;padding:3px}
+#s1 h1.cv{font:700 68px/1.04 var(--serif);letter-spacing:-.025em;text-wrap:balance}
+#s1 h1.cv em{font-style:italic;color:var(--red)}
+#s1 .en{font:italic 500 25px/1.3 var(--serif);color:var(--muted);margin-top:18px;max-width:26ch}
+#s1 .meta{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;font-size:17px;line-height:1.4;border-top:2px solid var(--ink);padding-top:14px}
+#s1 .meta b{display:block;font-size:19px}
+#s1 .meta .lab{display:block;margin-bottom:2px}

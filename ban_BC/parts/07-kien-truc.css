@@ -1,0 +1,8 @@
+#s7 .fig-wrap{position:relative}
+#s7 .fig{position:absolute;inset:0}
+#s7 .co{position:absolute;width:262px;background:var(--paper)}
+#s7 .co h3{font-size:22px;margin:2px 0 4px}
+#s7 .c1{left:0;bottom:6px}
+#s7 .c2{left:300px;bottom:6px}
+#s7 .c3{right:250px;top:0;width:290px}
+#s7 .c4{right:0;top:0;width:236px}

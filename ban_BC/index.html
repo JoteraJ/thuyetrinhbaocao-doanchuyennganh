@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phản biện đồ án — WiFi Mesh Drone và Robot</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="parts.css">
+</head>
+<body>
+<div id="help"><button id="nbtn" type="button">Ghi chú</button><span><span class="kbd">←</span> <span class="kbd">→</span> chuyển · <span class="kbd">N</span> ghi chú · <span class="kbd">B</span> dự phòng · <span class="kbd">F</span> toàn màn hình</span></div>
+<div id="stage">
+<!-- 1 · BÌA -->
+<section class="slide" id="s1">
+  <div class="hd"><span class="k">Đồ án chuyên ngành · Kỹ thuật Điện tử – Viễn thông</span><img class="logo" src="assets/logo_tdtu.jpg" alt="Logo Đại học Tôn Đức Thắng"></div>
+  <div class="body">
+    <div class="row grow" style="gap:20px">
+      <div class="col" style="flex:0 0 600px;justify-content:space-between">
+        <div>
+          <h1 class="cv">Thiết kế mạng <em>WiFi Mesh</em> kết nối Drone và Robot</h1>
+          <p class="en">Design of a WiFi Mesh Network for Connecting Drones and Robots</p>
+        </div>
+        <div class="meta">
+          <div><span class="lab">Sinh viên thực hiện</span><b>Nguyễn Dương Hiếu</b>MSSV 42300151 · Lớp 23040202</div>
+          <div><span class="lab">Giảng viên hướng dẫn</span><b>PGS.TS. Đặng Ngọc Minh Đức</b></div>
+          <div><span class="lab">Trường</span><b>Đại học Tôn Đức Thắng</b>Khoa Điện – Điện tử</div>
+          <div><span class="lab">Thời gian</span><b>TP. Hồ Chí Minh, 2026</b></div>
+        </div>
+      </div>
+      <div class="f1 fig-wrap"><svg class="fig" id="s1fig" viewBox="0 0 520 440" role="img" aria-label="Ba Leaf và một Root nối thành cây, chunk ảnh chuyền qua các Leaf về Root"></svg></div>
+    </div>
+  </div>
+  <aside>Em xin chào Hội đồng. Em là Nguyễn Dương Hiếu, hôm nay em trình bày đồ án thiết kế mạng WiFi Mesh để truyền ảnh từ nhiều node về trạm giám sát.</aside>
+</section>
+
+<!-- 2 · NỘI DUNG -->
+<section class="slide" id="s2">
+  <div class="hd"><span class="k">Nội dung</span><span class="pg"></span></div>
+  <h2 class="t">Năm phần <em>trình bày</em></h2>
+  <div class="body">
+    <ol class="ag">
+      <li class="st" data-s="1"><i></i><span class="no">1</span><span class="tx">Đặt vấn đề và mục tiêu</span></li>
+      <li class="st" data-s="2"><i></i><span class="no">2</span><span class="tx">Cơ sở lý thuyết trọng tâm</span></li>
+      <li class="st" data-s="3"><i></i><span class="no">3</span><span class="tx">Thiết kế hệ thống (3 lớp)</span></li>
+      <li class="st" data-s="4"><i></i><span class="no">4</span><span class="tx">Kết quả thực nghiệm</span></li>
+      <li class="st" data-s="5"><i></i><span class="no">5</span><span class="tx">Kết luận, hạn chế, hướng phát triển</span></li>
+    </ol>
+  </div>
+  <aside>Thời lượng khoảng 12–15 phút. Trọng tâm là phần 3 và 4: hệ thống em đã dựng và số liệu đo được.</aside>
+</section>
+
+<!-- 7 · KIẾN TRÚC -->
+<section class="slide" id="s7" data-sec="2">
+  <div class="hd"><span class="k">03 · Thiết kế hệ thống</span><span class="pg"></span></div>
+  <h2 class="t">Kiến trúc 3 lớp: <em>Mesh – UART – PC</em></h2>
+  <div class="body">
+    <div class="fig-wrap">
+      <svg class="fig" id="s7fig" viewBox="0 0 1136 470" role="img" aria-label="Sơ đồ cơ cấu: ba Leaf đẩy chunk qua mesh dạng cây tới Root, qua UART lên PC"></svg>
+      <div class="co c1 ru r st" data-s="1"><div class="lab r">Lớp 1 — Mesh</div><h3>Leaf × 3</h3><span class="tg">ESP32-CAM OV3660 · pin 18650</span><p class="xs">Gói phân mảnh 1024 B + header 16 B, Base64, <code>sendSingle</code></p></div>
+      <div class="co c2 ru st" data-s="2"><div class="lab">Root</div><h3>Ghép ảnh</h3><span class="tg">ESP32 DevKitC</span><p class="xs">Ghép 4 khung song song, chỉ gửi lên PC ảnh đã hoàn chỉnh</p></div>
+      <div class="co c3 ru b st" data-s="3"><div class="lab b">Lớp 2 — UART 921600 bps</div><div class="mono" style="font-size:15px;line-height:1.3;margin-top:4px">AA 55 | TYPE | LEN | PAYLOAD | CRC16</div><p class="xs">Khung nhị phân, có kiểm CRC</p></div>
+      <div class="co c4 ru g st" data-s="4"><div class="lab g">Lớp 3 — PC</div><p class="sm" style="font-weight:700">Middleware Node.js (serialport) → Socket.IO → Web Dashboard (React)</p></div>
+    </div>
+    <p class="note st" data-s="4"><b>Ý chính:</b> Root chỉ gửi lên PC ảnh đã ghép → middleware và dashboard không xử lý mất gói trên mesh. Tách truyền vô tuyến khỏi hiển thị.</p>
+  </div>
+  <span class="src">chuong3.tex, mục 3.1</span>
+  <aside>Lớp 1 lo truyền vô tuyến, lớp 2 là cầu nối nhị phân có CRC, lớp 3 chỉ hiển thị. Nhờ tách lớp nên lỗi ở lớp nào biết ngay lớp đó.</aside>
+</section>
+
+</div>
+<div id="notes"></div>
+<script>window.Deck={frames:{},steps:{},shows:{}};</script>
+<script src="iso.js"></script>
+<script src="scenes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
