@@ -5,7 +5,7 @@
 #s11 .shot .cr{position:relative;overflow:hidden;flex:1;min-height:0;background:#161a1f}
 #s11 .shot .cr img{position:absolute;left:0;top:0;max-width:none;height:auto;flex:none;object-fit:fill}
 /* phóng to vùng chính của ảnh chụp 1920×1080 (giữ nguyên ảnh gốc): rộng = 1920/Wc, lệch trái/trên = x0/Wc, y0/Wc (đều tính theo bề rộng khung) */
-#s11 .shot .cr img.i1{width:369.2%;margin-left:-9.6%;margin-top:-20%}
+#s11 .shot .cr img.i1{width:520%;margin-left:-5%;margin-top:-28%}
 #s11 .shot .cr img.i2{width:252.6%;margin-left:-25%;margin-top:-26.3%}
 #s11 h3{margin-bottom:6px}
 #s11 .blk.a h3{border-top:2px solid var(--blue);padding-top:6px;margin-bottom:8px}

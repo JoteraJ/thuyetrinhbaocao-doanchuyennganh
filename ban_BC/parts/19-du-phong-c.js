@@ -46,7 +46,7 @@ sc.box(L1.obj, 240, y1 - 46, 0, 52, 12, 3, T.blue); sc.box(L1.obj, 240, y1 + 34,
 stand(L1.obj, 292, y1 - 40); stand(L1.obj, 292, y1 + 40);
 /* nhãn */
 function lab(s, x, y, z, dx, dy, size, w, anchor, fill, cls) { var q = P(x, y, z); return tx(svg, q[0] + dx, q[1] + dy, s, size, w, anchor || 'middle', fill || '#26231c', cls || 'sf'); }
-lab('Root', 22, y0, 24, 0, -14, 19, 700); lab('middleware', 148, y0, 42, 0, -12, 19, 700); lab('dashboard', 315, y0, 46, 0, -12, 19, 700);
+lab('Root', 22, y0, 24, 0, -14, 19, 700); lab('middleware', 148, y0, 42, 0, -22, 19, 700); lab('dashboard', 315, y0, 46, 0, -12, 19, 700);
 lab('broker', 231, y0 - 56, 26, 0, -10, 15, 500, 'middle', '#645f52', 'mo');
 var lb2 = [lab('Root', 22, y1 + 78, -10, 0, 22, 19, 700), lab('broker', 155, y1 + 78, -10, 0, 22, 19, 700), lab('dashboard', 315, y1 + 78, -10, 0, 22, 19, 700), lab('MQTT', 155, y1 - 30, 26, 0, -12, 15, 500, 'middle', '#1f4e9c', 'mo')];
 /* động */

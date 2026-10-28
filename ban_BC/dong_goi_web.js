@@ -1,4 +1,4 @@
-/* Gói cả bài thành MỘT file HTML tự chứa (font, ảnh, CSS, JS nhúng sẵn) để đăng lên web / gửi qua email.
+/* Gói cả bài thành MỘT file HTML tự chứa (có doctype: mở trực tiếp được; bản đăng web thì bỏ dòng doctype ở đầu) (font, ảnh, CSS, JS nhúng sẵn) để đăng lên web / gửi qua email.
    Chạy:  node dong_goi_web.js [file ra]     mặc định: ../bai_trinh_bay_mot_file.html
    Mở ra ở chế độ cuộn; bấm M hoặc nút "Chế độ trình chiếu" để đổi chế độ. */
 const fs = require('fs'), path = require('path');

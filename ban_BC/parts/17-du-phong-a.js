@@ -21,7 +21,7 @@ for (var g2 = 0; g2 < 4; g2++) sc.line(objG, [209, 90.2, 7 + g2 * 8], [291, 90.2
 sc.box(objG, 205, 30, 36, 90, 60, 4, T.white);
 /* nhãn (chữ có sẵn trong HTML, chỉ đặt vị trí) */
 function place(id, x, y, z, dx, dy, anchor) { var t = document.getElementById(id), q = P(x, y, z); t.setAttribute('x', (q[0] + dx).toFixed(1)); t.setAttribute('y', (q[1] + dy).toFixed(1)); t.setAttribute('text-anchor', anchor || 'middle'); svg.appendChild(t); }
-place('b1t1', 70, 0, 12, 0, -62); place('b1n1', 70, 110, -10, 0, 30);
+place('b1t1', 70, 0, 12, 0, -72); place('b1n1', 70, 110, -10, 0, 30);
 place('b1t2', 250, -52, 12, 0, -52); place('b1n2', 250, 110, -10, 0, 30);
 document.getElementById('b1n2').setAttribute('fill', '#645f52');
 /* dòng chảy: hiện tại -> hướng phát triển */

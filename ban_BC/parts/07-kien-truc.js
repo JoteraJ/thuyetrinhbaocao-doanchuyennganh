@@ -68,8 +68,9 @@ function node(ref) { return ref === 'R' ? N.root : N.L[ref]; }
 function modeAt(t) { return Math.floor(t / MODEP) % 2 === 0 ? 1 : 3; }
 /* điểm neo vô tuyến: Leaf = anten PCB trên bo (z 8,5); Root = mép trước bo (z 14,5): mọi đường nối đều kết thúc trên một vật */
 function anchor(n) { return n === N.root ? [482, 0, 14.5] : [n[0] - 12, n[1] + 14, 8.5]; }
-function arcPts(a, b) {
-  var pp = [], u, f; for (u = 0; u <= 8; u++) { f = u / 8; pp.push([I.lerp(a[0], b[0], f), I.lerp(a[1], b[1], f), I.lerp(a[2], b[2], f) + 22 * Math.sin(Math.PI * f)]); }
+function arcPts(a, b) {                       /* cung càng dài càng cao: bay vòng qua bo ở giữa, không chui sau bo */
+  var pp = [], u, f, h = Math.max(22, Math.min(62, .13 * Math.hypot(b[0] - a[0], b[1] - a[1]) + 8));
+  for (u = 0; u <= 8; u++) { f = u / 8; pp.push([I.lerp(a[0], b[0], f), I.lerp(a[1], b[1], f), I.lerp(a[2], b[2], f) + h * Math.sin(Math.PI * f)]); }
   return pp;
 }
 function route(i, mode, bi, zEnd) {              /* các đoạn đường của chunk: theo cung vô tuyến từng chặng rồi thả vào slot */
@@ -120,8 +121,8 @@ function frame(t) {
     }
   }
   for (var j = 0; j < 3; j++) {
-    items.push({ x: 630 + ((t * 60 + j * 28) % 82) - 4, y: -2.5, z: 3, w: 8, d: 5, h: 4, t: T.blue });    /* cáp UART = Lớp 2 = xanh dương */
-    items.push({ x: 798 + ((t * 50 + j * 20) % 60) - 3, y: -2.5, z: 3, w: 7, d: 5, h: 4, t: T.green });   /* dây Socket.IO = Lớp 3 = xanh lá */
+    items.push({ x: 630 + ((t * 60 + j * 28) % 82) - 4, y: -2.5, z: 3, w: 8, d: 5, h: 4, t: T.white });   /* xung trên cáp UART: màu trung tính, không phải chunk của Leaf */
+    items.push({ x: 798 + ((t * 50 + j * 20) % 60) - 3, y: -2.5, z: 3, w: 7, d: 5, h: 4, t: T.white });   /* xung trên dây Socket.IO */
   }
   if (mwOn) items.push({ x: 758, y: -6, z: 51, w: 14, d: 12, h: 2.5, t: mwCol });
   sc.items(dyn, items);

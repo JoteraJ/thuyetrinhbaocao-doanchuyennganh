@@ -817,8 +817,9 @@ function node(ref) { return ref === 'R' ? N.root : N.L[ref]; }
 function modeAt(t) { return Math.floor(t / MODEP) % 2 === 0 ? 1 : 3; }
 /* điểm neo vô tuyến: Leaf = anten PCB trên bo (z 8,5); Root = mép trước bo (z 14,5): mọi đường nối đều kết thúc trên một vật */
 function anchor(n) { return n === N.root ? [482, 0, 14.5] : [n[0] - 12, n[1] + 14, 8.5]; }
-function arcPts(a, b) {
-  var pp = [], u, f; for (u = 0; u <= 8; u++) { f = u / 8; pp.push([I.lerp(a[0], b[0], f), I.lerp(a[1], b[1], f), I.lerp(a[2], b[2], f) + 22 * Math.sin(Math.PI * f)]); }
+function arcPts(a, b) {                       /* cung càng dài càng cao: bay vòng qua bo ở giữa, không chui sau bo */
+  var pp = [], u, f, h = Math.max(22, Math.min(62, .13 * Math.hypot(b[0] - a[0], b[1] - a[1]) + 8));
+  for (u = 0; u <= 8; u++) { f = u / 8; pp.push([I.lerp(a[0], b[0], f), I.lerp(a[1], b[1], f), I.lerp(a[2], b[2], f) + h * Math.sin(Math.PI * f)]); }
   return pp;
 }
 function route(i, mode, bi, zEnd) {              /* các đoạn đường của chunk: theo cung vô tuyến từng chặng rồi thả vào slot */
@@ -869,8 +870,8 @@ function frame(t) {
     }
   }
   for (var j = 0; j < 3; j++) {
-    items.push({ x: 630 + ((t * 60 + j * 28) % 82) - 4, y: -2.5, z: 3, w: 8, d: 5, h: 4, t: T.blue });    /* cáp UART = Lớp 2 = xanh dương */
-    items.push({ x: 798 + ((t * 50 + j * 20) % 60) - 3, y: -2.5, z: 3, w: 7, d: 5, h: 4, t: T.green });   /* dây Socket.IO = Lớp 3 = xanh lá */
+    items.push({ x: 630 + ((t * 60 + j * 28) % 82) - 4, y: -2.5, z: 3, w: 8, d: 5, h: 4, t: T.white });   /* xung trên cáp UART: màu trung tính, không phải chunk của Leaf */
+    items.push({ x: 798 + ((t * 50 + j * 20) % 60) - 3, y: -2.5, z: 3, w: 7, d: 5, h: 4, t: T.white });   /* xung trên dây Socket.IO */
   }
   if (mwOn) items.push({ x: 758, y: -6, z: 51, w: 14, d: 12, h: 2.5, t: mwCol });
   sc.items(dyn, items);
@@ -2023,10 +2024,10 @@ var TS = .008, T0 = .3, PER = 7.2, YB = 28;         /* TS: giây cảnh cho mỗ
 var wallG = sc.g(), plateG = sc.g(), gridG = sc.g(), pillG = [sc.g(), sc.g(), sc.g()], objG = sc.g(), linkG = sc.g(), dyn = sc.g();
 sc.box(plateG, -60, -72, -10, 620, 164, 10, T.plate);
 [[-50, -62], [550, -62], [-50, 82], [550, 82]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#6a7f92' }, plateG); });
-/* tường sau: lưới mỗi 200 ms, ghi mốc 0 / 200 / 400 / 600 ms ở mép trái để thấy tỉ lệ */
-sc.poly(wallG, [P(-60, -70, 0), P(560, -70, 0), P(560, -70, 188), P(-60, -70, 188)], 'rgba(255,255,255,.42)', 'rgba(10,32,48,.35)', .9);
-[0, 200, 400, 600].forEach(function (m) { var z = HZ * m / MSMAX, l = sc.line(gridG, [-60, -69.5, z], [560, -69.5, z], m ? 'rgba(12,42,68,.32)' : 'rgba(12,42,68,.6)', m ? 1 : 1.6); if (m) l.setAttribute('stroke-dasharray', '5 4');
-  var q = P(-60, -69.5, z); sc.text(gridG, q[0] + 6, q[1] - 6, m + ' ms', 14, 500, 'start', '#34505c', 'mo'); });
+/* tường sau đặt đúng mặt phẳng mặt trước của các cột (y = -24), nên đỉnh cột đọc thẳng được trên lưới; lưới mỗi 200 ms, ghi mốc 0 / 200 / 400 / 600 ms ở mép trái để thấy tỉ lệ */
+sc.poly(wallG, [P(-60, -24, 0), P(560, -24, 0), P(560, -24, 188), P(-60, -24, 188)], 'rgba(255,255,255,.42)', 'rgba(10,32,48,.35)', .9);
+[0, 200, 400, 600].forEach(function (m) { var z = HZ * m / MSMAX, l = sc.line(gridG, [-60, -23.5, z], [560, -23.5, z], m ? 'rgba(12,42,68,.32)' : 'rgba(12,42,68,.6)', m ? 1 : 1.6); if (m) l.setAttribute('stroke-dasharray', '5 4');
+  var q = P(-60, -23.5, z); sc.text(gridG, q[0] + 6, q[1] - 6, m + ' ms', 14, 500, 'start', '#34505c', 'mo'); });
 /* bo mạch */
 function leafBoard(cx, i) {
   var y = YB;
@@ -2141,7 +2142,7 @@ for (var g2 = 0; g2 < 4; g2++) sc.line(objG, [209, 90.2, 7 + g2 * 8], [291, 90.2
 sc.box(objG, 205, 30, 36, 90, 60, 4, T.white);
 /* nhãn (chữ có sẵn trong HTML, chỉ đặt vị trí) */
 function place(id, x, y, z, dx, dy, anchor) { var t = document.getElementById(id), q = P(x, y, z); t.setAttribute('x', (q[0] + dx).toFixed(1)); t.setAttribute('y', (q[1] + dy).toFixed(1)); t.setAttribute('text-anchor', anchor || 'middle'); svg.appendChild(t); }
-place('b1t1', 70, 0, 12, 0, -62); place('b1n1', 70, 110, -10, 0, 30);
+place('b1t1', 70, 0, 12, 0, -72); place('b1n1', 70, 110, -10, 0, 30);
 place('b1t2', 250, -52, 12, 0, -52); place('b1n2', 250, 110, -10, 0, 30);
 document.getElementById('b1n2').setAttribute('fill', '#34505c');
 /* dòng chảy: hiện tại -> hướng phát triển */
@@ -2250,7 +2251,7 @@ sc.box(L1.obj, 240, y1 - 46, 0, 52, 12, 3, T.blue); sc.box(L1.obj, 240, y1 + 34,
 stand(L1.obj, 292, y1 - 40); stand(L1.obj, 292, y1 + 40);
 /* nhãn */
 function lab(s, x, y, z, dx, dy, size, w, anchor, fill, cls) { var q = P(x, y, z); return tx(svg, q[0] + dx, q[1] + dy, s, size, w, anchor || 'middle', fill || '#0c2a44', cls || 'sf'); }
-lab('Root', 22, y0, 24, 0, -14, 19, 700); lab('middleware', 148, y0, 42, 0, -12, 19, 700); lab('dashboard', 315, y0, 46, 0, -12, 19, 700);
+lab('Root', 22, y0, 24, 0, -14, 19, 700); lab('middleware', 148, y0, 42, 0, -22, 19, 700); lab('dashboard', 315, y0, 46, 0, -12, 19, 700);
 lab('broker', 231, y0 - 56, 26, 0, -10, 15, 500, 'middle', '#34505c', 'mo');
 var lb2 = [lab('Root', 22, y1 + 78, -10, 0, 22, 19, 700), lab('broker', 155, y1 + 78, -10, 0, 22, 19, 700), lab('dashboard', 315, y1 + 78, -10, 0, 22, 19, 700), lab('MQTT', 155, y1 - 30, 26, 0, -12, 15, 500, 'middle', '#1a4f9c', 'mo')];
 /* động */
