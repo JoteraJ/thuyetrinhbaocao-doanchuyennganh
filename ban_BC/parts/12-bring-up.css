@@ -17,5 +17,5 @@
 #s12 .dt.fx p{font-weight:700}
 #s12 .stats{margin-top:auto;display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:24px;padding-top:12px}
 #s12 .stat .n{font-size:56px}
-#s12 .stat p{max-width:none;margin-top:4px}
+#s12 .stat p{max-width:none;margin-top:4px;font-size:17px}
 #s12 .src{font-size:13px}

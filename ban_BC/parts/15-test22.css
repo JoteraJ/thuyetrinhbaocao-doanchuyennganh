@@ -4,7 +4,7 @@
 #s15 .stats{gap:26px}
 #s15 .stat .n{font-size:50px}
 #s15 .stat .n small{font-size:17px;margin-left:4px}
-#s15 .stat p{font-size:16px;max-width:none}
+#s15 .stat p{font-size:17px;max-width:none}
 #s15 ul.l{gap:11px;font-size:17px;line-height:1.45}
 #s15 ul.l b.rd{color:var(--red)}
 #s15 .fig-wrap .slow{position:absolute;left:0;top:0;font:500 13px var(--mono);letter-spacing:.04em;color:var(--muted)}

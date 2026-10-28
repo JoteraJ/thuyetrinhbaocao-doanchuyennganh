@@ -4,7 +4,8 @@
 #s13 .gb{display:inline-block;font:700 34px/1 var(--serif);color:var(--red);letter-spacing:-.01em;white-space:nowrap;margin:0 .1em;vertical-align:-.12em}
 #s13 .x1{color:var(--red);font-weight:700}
 #s13 .nw{white-space:nowrap}
-#s13 .x2{color:var(--blue);font-weight:700;font-size:16px}
+#s13 p code,#s13 .x2{font-size:17px}
+#s13 .x2{color:var(--blue);font-weight:700}
 #s13 .mech{flex:1;min-height:0;position:relative}
 #s13 .mech .fig{position:absolute;inset:0}
 #s13 .fig-wrap .fig{position:absolute;inset:0}

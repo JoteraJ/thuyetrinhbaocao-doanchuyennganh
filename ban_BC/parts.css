@@ -204,7 +204,7 @@
 #s12 .dt.fx p{font-weight:700}
 #s12 .stats{margin-top:auto;display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:24px;padding-top:12px}
 #s12 .stat .n{font-size:56px}
-#s12 .stat p{max-width:none;margin-top:4px}
+#s12 .stat p{max-width:none;margin-top:4px;font-size:17px}
 #s12 .src{font-size:13px}
 
 #s13 .nt{padding-top:10px}
@@ -213,7 +213,8 @@
 #s13 .gb{display:inline-block;font:700 34px/1 var(--serif);color:var(--red);letter-spacing:-.01em;white-space:nowrap;margin:0 .1em;vertical-align:-.12em}
 #s13 .x1{color:var(--red);font-weight:700}
 #s13 .nw{white-space:nowrap}
-#s13 .x2{color:var(--blue);font-weight:700;font-size:16px}
+#s13 p code,#s13 .x2{font-size:17px}
+#s13 .x2{color:var(--blue);font-weight:700}
 #s13 .mech{flex:1;min-height:0;position:relative}
 #s13 .mech .fig{position:absolute;inset:0}
 #s13 .fig-wrap .fig{position:absolute;inset:0}
@@ -255,7 +256,7 @@
 #s15 .stats{gap:26px}
 #s15 .stat .n{font-size:50px}
 #s15 .stat .n small{font-size:17px;margin-left:4px}
-#s15 .stat p{font-size:16px;max-width:none}
+#s15 .stat p{font-size:17px;max-width:none}
 #s15 ul.l{gap:11px;font-size:17px;line-height:1.45}
 #s15 ul.l b.rd{color:var(--red)}
 #s15 .fig-wrap .slow{position:absolute;left:0;top:0;font:500 13px var(--mono);letter-spacing:.04em;color:var(--muted)}
