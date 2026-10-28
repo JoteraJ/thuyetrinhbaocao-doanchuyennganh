@@ -241,7 +241,7 @@ html:not(.detail) #s10 .gp .gl{font-size:14px}
    Bước 0–1: cột "lc" (Khung UART + Middleware) chiếm cả khung, sơ đồ phóng lớn (scale --k).
    Bước 2 (Dashboard): "lc" mờ đi, hai ảnh chụp 1920×1080 hiện cạnh nhau, KHÔNG crop (object-fit:contain, 16:9).
    Chế độ tĩnh/in (html.static: mọi bước cùng lúc): lưới 2 cột, sơ đồ thu nhỏ bên trái, hai ảnh xếp dọc bên phải. */
-#s11{--k:1.5}
+#s11{--k:1.58}
 #s11 .stg{position:relative;flex:1;min-height:0}
 #s11 .lc{position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;transition:opacity .5s ease,visibility 0s linear 0s}
 html:not(.static) #s11.d .lc{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease,visibility 0s linear .45s}
