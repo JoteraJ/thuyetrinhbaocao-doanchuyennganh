@@ -10,7 +10,7 @@ function dist(a, b) { return Math.hypot(a[0] - b[0], a[1] - b[1]); }
 
 function mk(id, hx, hy, ringAt) {
   var svg = document.getElementById(id);
-  var sc = I.scene(svg, { az: 25, el: 32, rect: [4, 2, 540, 218], pts: [[-hx, -hy, -10], [hx, -hy, -10], [-hx, hy, -10], [hx, hy, -10], [0, 0, 52]] });
+  var sc = I.scene(svg, { az: 25, el: 44, rect: [4, 2, 540, 296], pts: [[-hx, -hy, -10], [hx, -hy, -10], [-hx, hy, -10], [hx, hy, -10], [0, 0, 52]] });
   var W = { sc: sc, plate: sc.g(), link: sc.g(), obj: sc.g(), lab: sc.g() };
   sc.box(W.plate, -hx, -hy, -10, 2 * hx, 2 * hy, 10, T.plate);
   var x0 = -hx + 8, x1 = hx - 8, y0 = -hy + 8, y1 = hy - 8;
@@ -102,7 +102,7 @@ function starFrame(t) {
   }
   list.push({ k: dk(sc, 0, 0), f: function () { router(sc, S.obj, 0, 0, !on); } });
   flush(list);
-  var q = sc.pt(0, 88, 0); sc.text(S.lab, q[0], q[1] + 4, 'Router/AP', 17, 700, 'middle', null, 'sf').style.fill = on ? '#26231c' : '#8a8576';
+  var q = sc.pt(0, 88, 0); sc.text(S.lab, q[0], q[1] + 4, 'Router/AP', 18, 700, 'middle', null, 'sf').style.fill = on ? '#26231c' : '#8a8576';
 }
 
 /* ====================== MESH ====================== */
@@ -158,6 +158,12 @@ function meshFrame(t) {
     }
   });
   flush(list);
-  var q = sc.pt(ROOT[0], ROOT[1] + 31 * US + 4, 0); sc.text(M.lab, q[0], q[1] + 17, 'Root', 17, 700, 'middle', '#26231c', 'sf');   /* nhãn nằm ngay phía trước khối Root */
+  var q = sc.pt(ROOT[0], ROOT[1] + 31 * US + 4, 0); sc.text(M.lab, q[0], q[1] + 17, 'Root', 18, 700, 'middle', '#26231c', 'sf');   /* nhãn nằm ngay phía trước khối Root */
 }
 Deck.frames.s3 = function (t) { starFrame(t); meshFrame(t); };
+
+/* bước 0: sơ đồ lớn; từ bước 1 chừa chỗ cho hai danh sách (xem 03-van-de.css) */
+Deck.steps.s3 = function (step) {
+  var all = Deck.still && !/[?&]step=/.test(location.search);
+  document.getElementById('s3').classList.toggle('res', all || step >= 1);
+};

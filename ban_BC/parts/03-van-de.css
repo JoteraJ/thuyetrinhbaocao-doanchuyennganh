@@ -1,7 +1,10 @@
 #s3 .fig-wrap{position:relative;flex:1;min-height:0}
 #s3 .fig{position:absolute;inset:0}
-#s3 .col{gap:6px}
-#s3 .col ul.l{font-size:19px;gap:6px}
+#s3 .col{gap:6px;position:relative}
+#s3 .col ul.l{font-size:19px;gap:6px;position:absolute;left:0;right:0;bottom:0}
+/* bước 0: hai sơ đồ chiếm cả chiều cao cột; khi hiện các ý (bước 1) sơ đồ thu lại, chừa chỗ cho danh sách */
+#s3 .fig-wrap{margin-bottom:0;transition:margin-bottom .5s ease}
+#s3.res .fig-wrap{margin-bottom:104px}
 #s3 .bg{display:grid;grid-template-columns:1fr 1.1fr 1.6fr;grid-template-areas:"l1 l2 l2" "cx c1 c2";column-gap:34px;row-gap:2px;font-size:19px;line-height:1.4;border-top-color:var(--amber)}
 /* DOM theo thứ tự đọc (Bối cảnh → nội dung → Hai thách thức → (1) → (2)); lưới chỉ để bố trí */
 #s3 .bg>b{font:700 22px/1.2 var(--serif);color:var(--amber)}

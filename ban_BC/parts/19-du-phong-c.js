@@ -13,7 +13,11 @@ function stand(g, x, y) {                       /* màn hình dashboard: mặt m
   sc.poly(g, [P(x + 3, y + 3.2, 21), P(x + 31, y + 3.2, 21), P(x + 31, y + 3.2, 41), P(x + 3, y + 3.2, 41)], '#1d2a25', 'none', 0);
   [[6, 10], [13, 16], [20, 8], [26, 13]].forEach(function (b) { sc.poly(g, [P(x + b[0], y + 3.4, 23), P(x + b[0] + 4, y + 3.4, 23), P(x + b[0] + 4, y + 3.4, 23 + b[1]), P(x + b[0], y + 3.4, 23 + b[1])], '#7fd4a8', 'none', 0); });
 }
-function pcb(g, x, y) { sc.box(g, x, y - 22, 0, 46, 44, 8, T.pcb); sc.box(g, x + 4, y - 15, 8, 16, 14, 3, T.chip); sc.cyl(g, x + 34, y, 8, 9, 8, '#3b3a35', '#6d6b62', '#8b887c'); sc.cyl(g, x + 34, y, 17, 2, 6, '#222', '#444', '#101010'); }
+function pcb(g, x, y) {                          /* Root = ESP32 DevKitC: module ESP32 + ăng-ten trên bo + cổng USB nối middleware; KHÔNG có ống kính (camera chỉ ở Leaf) */
+  sc.box(g, x, y - 22, 0, 46, 44, 8, T.pcb); sc.box(g, x + 5, y - 15, 8, 22, 18, 3, T.chip); sc.box(g, x + 5, y + 5, 8, 22, 3, 1, T.dark);
+  sc.box(g, x + 40, y - 6, 8, 8, 12, 4, T.dark);
+  for (var i = 0; i < 4; i++) { sc.box(g, x + 11 + i * 5, y - 20, 8, 2, 2, 3, T.dark); sc.box(g, x + 11 + i * 5, y + 18, 8, 2, 2, 3, T.dark); }
+}
 function ghostBox(g, x, y, z, w, d, h) {
   var a = [[x, y], [x + w, y], [x + w, y + d], [x, y + d]];
   [z, z + h].forEach(function (zz) { var l = sc.path(g, a.concat([a[0]]), zz, '#645f52', 1.6); l.setAttribute('stroke-dasharray', '5 4'); });

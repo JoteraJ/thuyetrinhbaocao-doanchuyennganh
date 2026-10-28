@@ -12,9 +12,10 @@ var TS = .008, T0 = .3, PER = 7.2, YB = 28;         /* TS: giây cảnh cho mỗ
 var wallG = sc.g(), plateG = sc.g(), gridG = sc.g(), pillG = [sc.g(), sc.g(), sc.g()], objG = sc.g(), linkG = sc.g(), dyn = sc.g();
 sc.box(plateG, -60, -72, -10, 620, 164, 10, T.plate);
 [[-50, -62], [550, -62], [-50, 82], [550, 82]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#8c8470' }, plateG); });
-/* tường sau: lưới mỗi 200 ms (không nhãn) để thấy tỉ lệ */
+/* tường sau: lưới mỗi 200 ms, ghi mốc 0 / 200 / 400 / 600 ms ở mép trái để thấy tỉ lệ */
 sc.poly(wallG, [P(-60, -70, 0), P(560, -70, 0), P(560, -70, 188), P(-60, -70, 188)], 'rgba(255,255,255,.42)', 'rgba(45,38,28,.35)', .9);
-[0, 200, 400, 600].forEach(function (m) { var z = HZ * m / MSMAX, l = sc.line(gridG, [-60, -69.5, z], [560, -69.5, z], m ? 'rgba(28,27,25,.32)' : 'rgba(28,27,25,.6)', m ? 1 : 1.6); if (m) l.setAttribute('stroke-dasharray', '5 4'); });
+[0, 200, 400, 600].forEach(function (m) { var z = HZ * m / MSMAX, l = sc.line(gridG, [-60, -69.5, z], [560, -69.5, z], m ? 'rgba(28,27,25,.32)' : 'rgba(28,27,25,.6)', m ? 1 : 1.6); if (m) l.setAttribute('stroke-dasharray', '5 4');
+  var q = P(-60, -69.5, z); sc.text(gridG, q[0] + 6, q[1] - 6, m + ' ms', 14, 500, 'start', '#645f52', 'mo'); });
 /* bo mạch */
 function leafBoard(cx, i) {
   var y = YB;

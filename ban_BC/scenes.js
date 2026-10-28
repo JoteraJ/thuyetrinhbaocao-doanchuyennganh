@@ -53,6 +53,57 @@ function frame(t) {
 Deck.frames.s1 = frame;
 
 })();
+/* 02-noi-dung.js */
+;(function(){
+/* Slide 2: cùng cảnh với bìa (1 Root + 3 Leaf nối thành cây, chunk chuyền từ Leaf về Root), nền sáng; không chữ. */
+var svg = document.getElementById('s2fig'), I = window.Iso, T = I.T;
+var sc = I.scene(svg, { az: 56, el: 40, rect: [20, 10, 480, 420], pts: [[-20, -110, -10], [420, -110, -10], [-20, 110, -10], [420, 110, -10], [0, 0, 70]] });
+var plateG = sc.g(), linkG = sc.g(), objG = sc.g(), dyn = sc.g();
+sc.box(plateG, -20, -110, -10, 440, 220, 10, T.plate);
+var node = { L: [[260, 70], [150, -60], [30, 60]], R: [370, -10] };
+function board(cx, cy) {
+  sc.box(objG, cx - 30, cy - 24, 0, 60, 48, 8, T.pcb); sc.box(objG, cx - 24, cy - 16, 8, 18, 14, 3, T.chip);
+  sc.cyl(objG, cx + 18, cy, 8, 10, 12, '#2f3941', '#576978', '#739491'); sc.cyl(objG, cx + 18, cy, 18, 2, 8, '#1d2227', '#39454f', '#0d1013');
+}
+[0, 1, 2].sort(function (a, b) { return (node.L[a][0] * sc.S + node.L[a][1] * sc.C) - (node.L[b][0] * sc.S + node.L[b][1] * sc.C); }).forEach(function (i) { board(node.L[i][0], node.L[i][1]); });
+sc.box(objG, node.R[0] - 38, node.R[1] - 42, 0, 76, 84, 12, T.pcb); sc.box(objG, node.R[0] - 10, node.R[1] - 16, 12, 30, 30, 7, T.chip);
+var chain = [node.L[2], node.L[1], node.L[0], node.R];          /* cây: Leaf3 → Leaf2 → Leaf1 → Root */
+var CLEAF = [2, 1, 0];                                            /* chain[i] là Leaf nào (lấy đúng màu của Leaf đó) */
+var HOP = .9, DWELL = .12, EVERY = 3.6;
+CLEAF.forEach(function (li, i) { var c = chain[i]; sc.box(objG, c[0] - 28, c[1] + 14, 8, 7, 7, 3, I.LEAF[li]); });
+function frame(t) {
+  sc.clear(dyn); sc.clear(linkG);
+  var items = [];
+  for (var i = 0; i < 3; i++) {                                   /* các cạnh của cây: L3→L2→L1→Root */
+    var a = chain[i], b = chain[i + 1], pp = [];
+    for (var u = 0; u <= 10; u++) { var f = u / 10; pp.push([I.lerp(a[0], b[0], f), I.lerp(a[1], b[1], f), 30 + 12 * Math.sin(Math.PI * f)]); }
+    var e = sc.path(linkG, pp, 0, '#b5301c', 1.8); e.setAttribute('stroke-dasharray', '4 4'); e.setAttribute('stroke-dashoffset', (-t * 14) % 16);
+  }
+  for (var c0 = 0; c0 < 3; c0++) {                                /* mỗi Leaf gửi chunk của mình, chuyển tiếp từng chặng tới Root */
+    var hops = 3 - c0, tot = hops * HOP + (hops - 1) * DWELL, leaf = CLEAF[c0];
+    for (var k = 0; k < 2; k++) {
+      var s = ((t - c0 * 1.2 - k * .3) % EVERY + EVERY) % EVERY;
+      if (s > tot) continue;
+      var h = 0, tt = s, pos = null;
+      for (; h < hops; h++) {
+        var a2 = chain[c0 + h], b2 = chain[c0 + h + 1];
+        if (tt <= HOP) { var f2 = tt / HOP; f2 = f2 * f2 * (3 - 2 * f2); pos = [I.lerp(a2[0], b2[0], f2), I.lerp(a2[1], b2[1], f2), I.lerp(34, h === hops - 1 ? 22 : 34, f2)]; break; }
+        tt -= HOP;
+        if (tt <= DWELL && h < hops - 1) { pos = [b2[0], b2[1], 34]; break; }
+        tt -= DWELL;
+      }
+      if (pos) items.push({ x: pos[0] - 4.5, y: pos[1] - 4.5, z: pos[2], w: 9, d: 9, h: 9, t: I.LEAF[leaf] });
+    }
+  }
+  sc.items(dyn, items);
+  for (var w = 0; w < 3; w++) {                                    /* sóng vô tuyến lan từ Root */
+    var ph = ((t / 3.2) + w / 3) % 1, e2 = sc.circle(dyn, node.R[0], node.R[1], 0.6, 16 + ph * 96, 48, 'none', '#8a5200', 1.8);
+    e2.setAttribute('stroke-opacity', ((1 - ph) * .85).toFixed(2));
+  }
+}
+Deck.frames.s2 = frame;
+
+})();
 /* 03-van-de.js */
 ;(function(){
 /* Slide 3: hình sao (trái) và mesh đa chặng (phải), chu kỳ 14 s.
@@ -67,7 +118,7 @@ function dist(a, b) { return Math.hypot(a[0] - b[0], a[1] - b[1]); }
 
 function mk(id, hx, hy, ringAt) {
   var svg = document.getElementById(id);
-  var sc = I.scene(svg, { az: 25, el: 32, rect: [4, 2, 540, 218], pts: [[-hx, -hy, -10], [hx, -hy, -10], [-hx, hy, -10], [hx, hy, -10], [0, 0, 52]] });
+  var sc = I.scene(svg, { az: 25, el: 44, rect: [4, 2, 540, 296], pts: [[-hx, -hy, -10], [hx, -hy, -10], [-hx, hy, -10], [hx, hy, -10], [0, 0, 52]] });
   var W = { sc: sc, plate: sc.g(), link: sc.g(), obj: sc.g(), lab: sc.g() };
   sc.box(W.plate, -hx, -hy, -10, 2 * hx, 2 * hy, 10, T.plate);
   var x0 = -hx + 8, x1 = hx - 8, y0 = -hy + 8, y1 = hy - 8;
@@ -159,7 +210,7 @@ function starFrame(t) {
   }
   list.push({ k: dk(sc, 0, 0), f: function () { router(sc, S.obj, 0, 0, !on); } });
   flush(list);
-  var q = sc.pt(0, 88, 0); sc.text(S.lab, q[0], q[1] + 4, 'Router/AP', 17, 700, 'middle', null, 'sf').style.fill = on ? '#0c2a44' : '#6f918e';
+  var q = sc.pt(0, 88, 0); sc.text(S.lab, q[0], q[1] + 4, 'Router/AP', 18, 700, 'middle', null, 'sf').style.fill = on ? '#0c2a44' : '#6f918e';
 }
 
 /* ====================== MESH ====================== */
@@ -215,9 +266,15 @@ function meshFrame(t) {
     }
   });
   flush(list);
-  var q = sc.pt(ROOT[0], ROOT[1] + 31 * US + 4, 0); sc.text(M.lab, q[0], q[1] + 17, 'Root', 17, 700, 'middle', '#0c2a44', 'sf');   /* nhãn nằm ngay phía trước khối Root */
+  var q = sc.pt(ROOT[0], ROOT[1] + 31 * US + 4, 0); sc.text(M.lab, q[0], q[1] + 17, 'Root', 18, 700, 'middle', '#0c2a44', 'sf');   /* nhãn nằm ngay phía trước khối Root */
 }
 Deck.frames.s3 = function (t) { starFrame(t); meshFrame(t); };
+
+/* bước 0: sơ đồ lớn; từ bước 1 chừa chỗ cho hai danh sách (xem 03-van-de.css) */
+Deck.steps.s3 = function (step) {
+  var all = Deck.still && !/[?&]step=/.test(location.search);
+  document.getElementById('s3').classList.toggle('res', all || step >= 1);
+};
 
 })();
 /* 04-muc-tieu.js */
@@ -1963,9 +2020,10 @@ var TS = .008, T0 = .3, PER = 7.2, YB = 28;         /* TS: giây cảnh cho mỗ
 var wallG = sc.g(), plateG = sc.g(), gridG = sc.g(), pillG = [sc.g(), sc.g(), sc.g()], objG = sc.g(), linkG = sc.g(), dyn = sc.g();
 sc.box(plateG, -60, -72, -10, 620, 164, 10, T.plate);
 [[-50, -62], [550, -62], [-50, 82], [550, 82]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#6a7f92' }, plateG); });
-/* tường sau: lưới mỗi 200 ms (không nhãn) để thấy tỉ lệ */
+/* tường sau: lưới mỗi 200 ms, ghi mốc 0 / 200 / 400 / 600 ms ở mép trái để thấy tỉ lệ */
 sc.poly(wallG, [P(-60, -70, 0), P(560, -70, 0), P(560, -70, 188), P(-60, -70, 188)], 'rgba(255,255,255,.42)', 'rgba(10,32,48,.35)', .9);
-[0, 200, 400, 600].forEach(function (m) { var z = HZ * m / MSMAX, l = sc.line(gridG, [-60, -69.5, z], [560, -69.5, z], m ? 'rgba(12,42,68,.32)' : 'rgba(12,42,68,.6)', m ? 1 : 1.6); if (m) l.setAttribute('stroke-dasharray', '5 4'); });
+[0, 200, 400, 600].forEach(function (m) { var z = HZ * m / MSMAX, l = sc.line(gridG, [-60, -69.5, z], [560, -69.5, z], m ? 'rgba(12,42,68,.32)' : 'rgba(12,42,68,.6)', m ? 1 : 1.6); if (m) l.setAttribute('stroke-dasharray', '5 4');
+  var q = P(-60, -69.5, z); sc.text(gridG, q[0] + 6, q[1] - 6, m + ' ms', 14, 500, 'start', '#34505c', 'mo'); });
 /* bo mạch */
 function leafBoard(cx, i) {
   var y = YB;
@@ -2156,7 +2214,11 @@ function stand(g, x, y) {                       /* màn hình dashboard: mặt m
   sc.poly(g, [P(x + 3, y + 3.2, 21), P(x + 31, y + 3.2, 21), P(x + 31, y + 3.2, 41), P(x + 3, y + 3.2, 41)], '#1d2a25', 'none', 0);
   [[6, 10], [13, 16], [20, 8], [26, 13]].forEach(function (b) { sc.poly(g, [P(x + b[0], y + 3.4, 23), P(x + b[0] + 4, y + 3.4, 23), P(x + b[0] + 4, y + 3.4, 23 + b[1]), P(x + b[0], y + 3.4, 23 + b[1])], '#7fd4a8', 'none', 0); });
 }
-function pcb(g, x, y) { sc.box(g, x, y - 22, 0, 46, 44, 8, T.pcb); sc.box(g, x + 4, y - 15, 8, 16, 14, 3, T.chip); sc.cyl(g, x + 34, y, 8, 9, 8, '#2f3941', '#576978', '#739491'); sc.cyl(g, x + 34, y, 17, 2, 6, '#1d2227', '#39454f', '#0d1013'); }
+function pcb(g, x, y) {                          /* Root = ESP32 DevKitC: module ESP32 + ăng-ten trên bo + cổng USB nối middleware; KHÔNG có ống kính (camera chỉ ở Leaf) */
+  sc.box(g, x, y - 22, 0, 46, 44, 8, T.pcb); sc.box(g, x + 5, y - 15, 8, 22, 18, 3, T.chip); sc.box(g, x + 5, y + 5, 8, 22, 3, 1, T.dark);
+  sc.box(g, x + 40, y - 6, 8, 8, 12, 4, T.dark);
+  for (var i = 0; i < 4; i++) { sc.box(g, x + 11 + i * 5, y - 20, 8, 2, 2, 3, T.dark); sc.box(g, x + 11 + i * 5, y + 18, 8, 2, 2, 3, T.dark); }
+}
 function ghostBox(g, x, y, z, w, d, h) {
   var a = [[x, y], [x + w, y], [x + w, y + d], [x, y + d]];
   [z, z + h].forEach(function (zz) { var l = sc.path(g, a.concat([a[0]]), zz, '#34505c', 1.6); l.setAttribute('stroke-dasharray', '5 4'); });
