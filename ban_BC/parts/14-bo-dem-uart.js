@@ -8,7 +8,8 @@ var svg = document.getElementById('s14fig'), I = window.Iso, T = I.T;
 var sc = I.scene(svg, { az: 10, el: 38, rect: [106, 10, 474, 330],
   pts: [[-14, -132, -10], [296, -132, -10], [-14, 162, -10], [296, 162, -10], [130, 92, 80], [130, -82, 80], [130, -142, 0]] });
 var P = sc.pt;
-var PER = 6.4, NF = 3, A0 = .3, DA = .25, TBT = 1.1, RATE = 4.5, EXIT = 1.0, FS = 5;   /* FS: kích thước khung (đơn vị mô hình); bể 8 -> cap 8, bể 16 -> cap 16 */
+var PER = 8, NF = 3, A0 = .3, DA = .6, TBT = .8, RATE = 2.8, EXIT = 1.0, FS = 5;   /* DA = nhịp giữa các khung: đủ thưa để hai khung liền nhau không chồng lên nhau trên ray/miệng bể */
+var S0 = .2, S1 = .5, S2 = .75;                                         /* mốc tuổi khung: nở xong tại khối ghép / hết dốc / tới miệng bể */   /* FS: kích thước khung (đơn vị mô hình); bể 8 -> cap 8, bể 16 -> cap 16 */
 var FW = 26, FD = 18, FH = 3.5;                                       /* khung ảnh: dài (x) × rộng (y) × dày */
 var RIGS = [
   { yc: -82, cap: 8, Ht: 46, d: 20, pd: 50, name: 'test19', kb: '8 KB', drop: '137 → 480', lat: '280 ms', ms: 280, col: '#d9432b', dir: 1, off: 38 },
@@ -16,7 +17,7 @@ var RIGS = [
 ];
 var LQ = { top: '#b9d0f0', y: '#4a82cf', x: '#2d5a99' };
 var DEAD = { top: '#f3b9ad', y: '#d9432b', x: '#a8301c' };
-var LATK = .36;                                                   /* 1 ms = 0,4 đơn vị dài: độ dài thanh tỉ lệ đúng 280 : 199 */
+var LATK = .3;                                                    /* 1 ms = 0,3 đơn vị dài: độ dài thanh tỉ lệ đúng 280 : 199 */
 var X0 = 100, X1 = 160, TX = 130, BX = 68, PCX = 238;                        /* thành bể theo x; TX = tâm bể; BX = tâm khối ghép */
 var BELT = 4.5;
 
@@ -86,12 +87,11 @@ RIGS.forEach(function (R) {
   R.latV = sc.text(g, 4, h[1] + 66, R.lat, 25, 700, 'start', R.col, 'sf');
   R.strip = sc.g(g);
 });
-function drawStrip(R, p) {
-  var y = R.yc, len = R.ms * LATK * ease(p), g = R.strip;
+function drawStrip(R, p) {                                             /* thanh độ trễ: ngay dưới nhãn "độ trễ TB" + số ms của chính nó, dài tỉ lệ 280 : 199 */
+  var len = R.ms * LATK * ease(p), g = R.strip, h = P(-14, R.yc, 0);
   sc.clear(g);
   if (len < .5) return;
-  var x0 = 182, z = .2, pts = [P(x0, y + 28, z), P(x0 + len, y + 28, z), P(x0 + len, y + 40, z), P(x0, y + 40, z)];
-  sc.poly(g, pts, R.col, 'rgba(45,38,28,.6)', 1);
+  I.el('rect', { x: 4, y: (h[1] + 76).toFixed(1), width: len.toFixed(1), height: 9, rx: 1.5, fill: R.col }, g);
 }
 
 /* ---- khung ảnh: tấm phẳng (đế màu theo Leaf) có hình nhỏ ở mặt trên; xén theo x để trượt ra/vào khe ---- */
@@ -136,9 +136,10 @@ function drawRig(R, tau) {
   for (j = 0; j < NF; j++) {
     var age = tau - (A0 + j * DA), leaf = I.LEAF[j % 3], x, z, yy = y, hh = FH, tt = leaf, tgt = items, op = 1;
     if (age < 0) continue;
-    if (age < .3) { x = BX; z = 10.6; hh = FH * ease(age / .3); }
-    else if (age < .8) { var f = ease((age - .3) / .5); x = I.lerp(BX, 96, f); z = I.lerp(10.6, ZT, f); }
-    else if (age < TBT) { x = I.lerp(96, TX, ease((age - .8) / (TBT - .8))); z = ZT; }
+    if (age < S0) { x = BX; z = 10.6; hh = FH * ease(age / S0); }
+    else if (age < S1) { var f = ease((age - S0) / (S1 - S0)); x = I.lerp(BX, 96, f); z = I.lerp(10.6, ZT, f); }
+    else if (age < S2) { x = I.lerp(96, TX, ease((age - S1) / (S2 - S1))); z = ZT; }
+    else if (age < TBT) { x = TX; z = ZT; }
     else {
       var u = age - TBT; x = TX;
       if (s.acc[j]) { if (u >= .2) continue; z = I.lerp(ZT, surf, (u / .2) * (u / .2)); if (z < H + 2) tgt = inner; }

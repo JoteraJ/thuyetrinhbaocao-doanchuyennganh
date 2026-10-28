@@ -1,12 +1,12 @@
 /* Đổi bảng màu "giấy kem – mực đen" (màu viết trong parts/*) sang nhận diện "men ngọc – chàm – son".
    build.js gọi recolor() cho mọi file trong parts/ khi ghép, nên file nguồn giữ màu cũ, kết quả ra màu mới. */
 const EXPLICIT = {
-  '#1c1b19': '#0c2a44', '#26231c': '#0c2a44', '#645f52': '#456470',
-  '#d9432b': '#d8402b', '#1f4e9c': '#1a4f9c', '#1b7f5c': '#0e6b4b',
+  '#1c1b19': '#0c2a44', '#26231c': '#0c2a44', '#645f52': '#34505c', '#6b6455': '#34505c',
+  '#d9432b': '#b5301c', '#1f4e9c': '#1a4f9c', '#1b7f5c': '#0b6a47',
   '#f6f1e7': '#d8eae0', '#ece5d4': '#c5dccf', '#fbf8f0': '#f1f8f4',
-  '#b86a00': '#a86300', '#ffffff': '#ffffff', '#fff': '#ffffff'
+  '#b86a00': '#8a5200', '#a06b10': '#8a5200', '#ffffff': '#ffffff', '#fff': '#ffffff'
 };
-const RGBA = [['28,27,25', '12,42,68'], ['45,38,28', '10,32,48'], ['60,52,38', '10,32,48'], ['217,67,43', '216,64,43'], ['31,78,156', '26,79,156']];
+const RGBA = [['28,27,25', '12,42,68'], ['45,38,28', '10,32,48'], ['60,52,38', '10,32,48'], ['217,67,43', '181,48,28'], ['31,78,156', '26,79,156']];
 function hsl(r, g, b) {
   r /= 255; g /= 255; b /= 255;
   const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; let h = 0, s = 0;

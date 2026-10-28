@@ -11,6 +11,6 @@ let body = rd('index.html').split('<body>')[1].split('</body>')[0];
 body = body.replace(/<script[^>]*src="[^"]*"[^>]*><\/script>/g, '');
 body = body.replace(/src="assets\/([^"]+)"/g, (m, f) => 'src="' + b64('assets/' + f, /\.png$/.test(f) ? 'image/png' : 'image/jpeg') + '"');
 const js = ['iso.js', 'scenes.js', 'app.js'].map(f => '<script>\n' + rd(f) + '\n</script>').join('\n');
-const html = '<title>Phản biện WiFi Mesh</title>\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<style>\n' + css + '\n</style>\n<script>document.documentElement.classList.add("mode-scroll");document.documentElement.lang="vi";</script>\n' + body + '\n' + js + '\n';
+const html = '<!doctype html><html lang="vi" class="mode-scroll"><meta charset="utf-8">\n<title>Phản biện WiFi Mesh</title>\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<style>\n' + css + '\n</style>\n' + body + '\n' + js + '\n';
 fs.writeFileSync(out, html);
 console.log('đã ghi', out, (html.length / 1048576).toFixed(2) + ' MB');

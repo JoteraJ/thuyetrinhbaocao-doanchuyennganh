@@ -43,7 +43,7 @@ Bước hiện dần: thêm `class="st" data-s="1"` (2, 3, …) vào phần tử
 Linh kiện có sẵn (xem style.css): `.row .col .f1 .f2 .f3 .grow`, `.ru` (kẻ trên; `.r .b .g .a` đổi màu), `.lab` (nhãn mono), `.tg` (thẻ nhỏ), `.tb` (bảng tạp chí), `.stats/.stat` (số lớn), `.shot` (ảnh chụp), `.warnbox`, `.note`, `ul.l`, `.fig-wrap` (khung sơ đồ). Màu: `--red` Lớp 1/Mesh · `--blue` Lớp 2/UART · `--green` Lớp 3/PC · `--amber` cảnh báo · `--ink --muted --paper`.
 
 ## Chữ
-Tiêu đề serif (Newsreader 700), thân Be Vietnam Pro, nhãn/số liệu JetBrains Mono. Cỡ chữ trên khung 1280×720: tiêu đề 38–50px · nội dung đọc ≥ 17px · bảng ≥ 17px · nhãn mono ≥ 13px · **không có chữ nào dưới 13px**. Sơ đồ SVG: nhãn ≥ 13px (đã tính theo tỉ lệ co của viewBox).
+Tiêu đề Bricolage Grotesque (biến `--serif`, tên cũ), thân Onest, nhãn/số liệu IBM Plex Mono; công thức nghiêng dùng Newsreader (`--math`). Cỡ chữ trên khung 1280×720: tiêu đề 38–52px · nội dung đọc ≥ 17px · nhãn mono ≥ 13px · **không có chữ nào dưới 13px**. Chữ nhỏ phải đạt tương phản AA: dùng `var(--red)`, `var(--amber)`, `var(--muted)` (đã chọn đủ đậm).
 
 ## CHUẨN KỸ THUẬT (bắt buộc)
 1. Không đổi, không làm tròn, không thêm số liệu/thuật ngữ so với bản gốc. Không thêm kết luận mới.

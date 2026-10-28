@@ -1,9 +1,10 @@
 /* Slide 11: bộ đệm UART ở Root (bỏ khung ảnh nếu còn < ½, telemetry/log không bao giờ bị bỏ)
    -> cáp UART -> middleware: MAGIC -> LEN (≤ 131072) -> CRC -> Socket.IO -> dashboard.
    Lúc đầu chỉ có khung hợp lệ đi qua; từ bước "Lỗi chỉ bỏ phần hỏng" (kịch bản test 7/7) mới minh họa lỗi: rác trước MAGIC bị quét đi, khung quá dài bị chặn ở cổng LEN, khung sai CRC bị loại ở cổng CRC. */
+var FZ0 = 62;                                                           /* độ cao khối dữ liệu đi vào (FZ); điểm [-56,…] giữ khối tới (rộng 38) khỏi bị cắt ở mép trái */
 var svg = document.getElementById('s11fig'), I = window.Iso, T = I.T, LEAF = I.LEAF;
 var sc = I.scene(svg, { az: 8, el: 36, rect: [2, 8, 700, 172],
-  pts: [[-34, -38, -6], [536, -38, -6], [-34, 38, -6], [536, 38, -6], [30, 0, 72], [-34, -14, 74], [490, 0, 80]] });
+  pts: [[-34, -38, -6], [536, -38, -6], [-34, 38, -6], [536, 38, -6], [30, 0, 72], [-34, -14, 74], [490, 0, 80], [-56, -14, FZ0], [-56, 14, FZ0]] });
 var P = sc.pt, S = sc.S, C = sc.C;
 function tx(g, x, y, str, size, w, anchor, fill, cls) { var e = sc.text(g, x, y, str, size, w, anchor, fill, cls); e.style.fill = fill; return e; }
 var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g();
@@ -42,7 +43,7 @@ sc.box(objG, MX, -5, 24, 100, 10, 52, T.dark);
 var SCRM = sc.faceMatrix(MX, 5, 24);
 /* nhãn: ½ ở vạch giữa bộ đệm; vị trí chú thích cổng */
 (function () {
-  var q = P(30 - 17, 15, 6 + 22); var hf = tx(lbG, q[0] - 6, q[1] + 5, '½', 16, 700, 'end', '#d9432b', 'mo'); hf.style.stroke = '#f6f1e7'; hf.style.strokeWidth = '3px'; hf.style.paintOrder = 'stroke';
+  var q = P(30 - 17, 15, 6 + 22); var hf = tx(lbG, q[0] - 6, q[1] + 8, '½', 26, 700, 'end', '#d9432b', 'sf'); hf.style.stroke = '#f6f1e7'; hf.style.strokeWidth = '3px'; hf.style.paintOrder = 'stroke';
   var strip = svg.parentNode;
   [['.g1', GX[0]], ['.g2', GX[1]], ['.g3', GX[2]], ['.g4', BELT1 + 34]].forEach(function (a) {
     var el = strip.querySelector(a[0]), p = P(a[1], 38, -6);

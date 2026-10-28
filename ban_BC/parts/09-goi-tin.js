@@ -59,7 +59,7 @@ function pic(p, q) {
   if (p > .27 && p < .33 && q > .66 && q <= .74) c = '#2c2b27';
   return c;
 }
-var NS = 5, W = 30, D = 96, Y0 = -48, XP = 250, HL = 12, HT = 5, PT = 5;
+var NS = 5, W = 30, D = 96, Y0 = -48, XP = 250, HL = 8, HT = 5, PT = 5;
 var CELL = [24, 12, 12, 12, 12, 24], HC = [null, '#fbf8f0', '#e6dfcd', '#fbf8f0', '#e6dfcd', '#f2b24a'];
 function strip(g, k, x, z, glow) {                       /* lát cắt k (chunk k): hộp mỏng + ô ảnh */
   sc.box(g, x, Y0, z, W, D, PT, T.white);

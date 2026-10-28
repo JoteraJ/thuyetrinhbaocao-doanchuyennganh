@@ -19,13 +19,19 @@
   var tm = location.search.match(/[?&]t=([\d.]+)/); if (tm) Deck.stillT = +tm[1];
 
   /* ---- tỉ lệ khung ---- */
+  /* số trang điền sẵn cho mọi slide (để in PDF cũng có số trang) */
+  slides.forEach(function (s, i) {
+    var pg = s.querySelector('.pg');
+    if (pg) pg.textContent = s.hasAttribute('data-backup') ? 'DỰ PHÒNG' : String(i + 1).padStart(2, '0') + ' / ' + String(main).padStart(2, '0');
+  });
+
   function fit() {
     var k = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
     stage.style.transform = 'translate(-50%,-50%) scale(' + k + ')';
   }
 
   /* ---- dải tàu điện: 5 phần của bài ---- */
-  var SECTIONS = ['Đặt vấn đề và mục tiêu', 'Cơ sở lý thuyết', 'Thiết kế hệ thống', 'Kết quả thực nghiệm', 'Kết luận'];
+  var SECTIONS = ['Vấn đề và mục tiêu', 'Lý thuyết', 'Thiết kế hệ thống', 'Kết quả thực nghiệm', 'Kết luận'];
   var metro = document.createElement('div'); metro.id = 'metro'; stage.appendChild(metro);
   var NS = 'http://www.w3.org/2000/svg', W = 1136, PX = [];
   (function () {
@@ -36,7 +42,7 @@
     mk('line', { class: 'done', id: 'metro-done', x1: PX[0], y1: 14, x2: PX[0], y2: 14 });
     SECTIONS.forEach(function (n, i) {
       var g = mk('g', { class: 'sta', 'data-sec': i });
-      mk('rect', { x: PX[i] - 40, y: 0, width: 80, height: 44, fill: 'transparent' }, g);
+      mk('rect', { x: PX[i] - 110, y: 0, width: 220, height: 44, fill: 'transparent' }, g);
       mk('circle', { class: 'stn', cx: PX[i], cy: 14, r: 9 }, g);
       var t = mk('text', { x: PX[i], y: 40, 'text-anchor': i === 0 ? 'start' : i === 4 ? 'end' : 'middle' }, g);
       if (i === 0) t.setAttribute('x', PX[i] - 14); if (i === 4) t.setAttribute('x', PX[i] + 14);
@@ -83,7 +89,7 @@
     notes.innerHTML = n ? n.innerHTML : '<i>Không có ghi chú.</i>';
     applyStep();
     if (changed && Deck.shows[s.id]) Deck.shows[s.id]();
-    try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) {}
+    try { history.replaceState(null, '', '#' + (isB ? s.id : cur + 1)); } catch (e) {}
     if (!raf && !still) raf = requestAnimationFrame(loop);
     if (still && forced == null) renderAll(); else if (still) { var f = Deck.frames[s.id]; if (f) f(Deck.stillT || 6); }
   }
@@ -136,17 +142,27 @@
     });
   }
   function beatIndex() { var p = posFromScroll(), n = 0; for (var j = 0; j < beats.length; j++) if (beats[j].i === p.i && beats[j].k === p.k) n = j; return n; }
-  function goBeat(d) { var n = Math.max(0, Math.min(beats.length - 1, beatIndex() + d)); window.scrollTo({ top: beats[n].y + 2, behavior: 'smooth' }); }
+  var goal = -1, goalT = 0;
+  function goBeat(d) {                                  /* tính từ bước ĐÍCH đang cuộn tới, nên bấm nhanh liên tiếp vẫn đi đủ từng bước */
+    var base = (goal >= 0 && performance.now() - goalT < 900) ? goal : beatIndex();
+    var n = Math.max(0, Math.min(beats.length - 1, base + d));
+    goal = n; goalT = performance.now();
+    window.scrollTo({ top: beats[n].y + 2, behavior: 'smooth' });
+  }
+  function goBeatOf(i, k, instant) {
+    for (var j = 0; j < beats.length; j++) if (beats[j].i === i && beats[j].k === Math.min(k, segs[i].n)) { window.scrollTo({ top: beats[j].y + 2, behavior: instant ? 'auto' : 'smooth' }); return; }
+  }
   function goSlide(i, instant) { i = Math.max(0, Math.min(main - 1, i)); window.scrollTo({ top: segs[i].start + 2, behavior: instant ? 'auto' : 'smooth' }); }
   function goSection(sec) { if (backup) closeBackup(); for (var i = 0; i < main; i++) if (slides[i].getAttribute('data-sec') === String(sec)) return goSlide(i); }
 
   function setMode(sc) {
     if (backup) closeBackup();
     SCROLL = sc;
+    var keepStep = step;
     root.classList.toggle('mode-scroll', sc); root.classList.toggle('mode-deck', !sc); root.classList.toggle('is-scroll', sc);
     var b = document.getElementById('mbtn'); if (b) b.textContent = sc ? 'Chế độ trình chiếu' : 'Chế độ cuộn';
     var kb = document.getElementById('hint-scroll'); if (kb) kb.style.display = sc ? '' : 'none';
-    if (sc) { track.style.display = ''; buildTrack(); goSlide(cur, true); }
+    if (sc) { track.style.display = ''; buildTrack(); goBeatOf(cur, keepStep, true); }
     else { track.style.display = 'none'; window.scrollTo(0, 0); }
   }
 
@@ -158,7 +174,7 @@
     if (!backup) { back = { i: cur, k: step }; backup = true; }
     show(firstBackup + j, false, 0);
   }
-  function closeBackup() { if (!backup) return; backup = false; show(back.i, false, back.k); }
+  function closeBackup() { if (!backup) return; backup = false; if (SCROLL) goBeatOf(back.i, back.k, true); show(back.i, false, back.k); }
 
   /* ---- trình chiếu bằng phím ---- */
   function next() {
@@ -178,8 +194,8 @@
     var k = e.key;
     if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || k === ' ' || k === 'Enter') { e.preventDefault(); next(); }
     else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); prev(); }
-    else if (k === 'Home') jump(0);
-    else if (k === 'End') jump(main - 1);
+    else if (k === 'Home') { e.preventDefault(); jump(0); }
+    else if (k === 'End') { e.preventDefault(); jump(main - 1); }
     else if (k === 'b' || k === 'B') { if (backup) closeBackup(); else openBackup(0); }
     else if (k === 'Escape') closeBackup();
     else if (k === 'n' || k === 'N') notes.classList.toggle('on');
@@ -192,6 +208,19 @@
     if (SCROLL || e.target.closest('#help,#notes,a,button')) return;
     if (e.clientX < window.innerWidth * 0.25) prev(); else next();
   });
+  /* chế độ cuộn: mỗi lần lăn chuột/vuốt bàn di chuột = đúng một bước; quán tính của bàn di chuột không nhảy thêm bước */
+  var lastWheel = 0, armed = true, acc = 0;
+  window.addEventListener('wheel', function (e) {
+    if (!SCROLL || e.ctrlKey || (e.target.closest && e.target.closest('#notes'))) return;
+    e.preventDefault();
+    if (backup) { closeBackup(); return; }
+    var now = performance.now();
+    if (now - lastWheel > 160) { armed = true; acc = 0; }
+    lastWheel = now;
+    if (!armed) return;
+    acc += e.deltaY * (e.deltaMode === 1 ? 33 : 1);
+    if (Math.abs(acc) >= 40) { armed = false; goBeat(acc > 0 ? 1 : -1); acc = 0; }
+  }, { passive: false });
   var tx = null;
   document.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
   document.addEventListener('touchend', function (e) {

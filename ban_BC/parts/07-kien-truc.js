@@ -58,8 +58,7 @@ var modeTxt = tx(lb, 0, 42, '', 14, 700, 'start', '#26231c', 'mo');
 /* ---- động ---- */
 var cellMat = sc.faceMatrix(850, 5, 34);
 var screen = I.el('g', { transform: cellMat }, dyn);
-var PERIOD = 4.4, STAG = 1.45, MODEP = 20;
-function topOf(n) { return [n[0], n[1], 40]; }
+var PERIOD = 4.4, STAG = 1.45, MODEP = 20, DSEG = .5, DWELL = .12;
 function chainOf(i, mode) {                     /* các node trên đường từ Leaf i tới Root (cây: 1 chặng hoặc 3 chặng) */
   var r = [N.L[i]]; if (mode === 3) for (var k = i - 1; k >= 0; k--) r.push(N.L[k]);
   r.push(N.root); return r;
@@ -67,32 +66,36 @@ function chainOf(i, mode) {                     /* các node trên đường t�
 function linksOf(mode) { return mode === 1 ? [[0, 'R'], [1, 'R'], [2, 'R']] : [[0, 'R'], [1, 0], [2, 1]]; }
 function node(ref) { return ref === 'R' ? N.root : N.L[ref]; }
 function modeAt(t) { return Math.floor(t / MODEP) % 2 === 0 ? 1 : 3; }
-function wps(i, mode, k) {                      /* các điểm dừng của chunk k */
-  var ch = chainOf(i, mode), w = [];
-  ch.forEach(function (n, j) { if (j < ch.length - 1) w.push({ p: [n[0], n[1], 44], dwell: j === 0 ? 0 : .12 }); });
-  w.push({ p: [494 + 12, binY[0], 44], dwell: 0, root: true });
-  return w;
+/* điểm neo vô tuyến: Leaf = anten PCB trên bo (z 8,5); Root = mép trước bo (z 14,5): mọi đường nối đều kết thúc trên một vật */
+function anchor(n) { return n === N.root ? [482, 0, 14.5] : [n[0] - 12, n[1] + 14, 8.5]; }
+function arcPts(a, b) {
+  var pp = [], u, f; for (u = 0; u <= 8; u++) { f = u / 8; pp.push([I.lerp(a[0], b[0], f), I.lerp(a[1], b[1], f), I.lerp(a[2], b[2], f) + 22 * Math.sin(Math.PI * f)]); }
+  return pp;
 }
-var DSEG = .5;
-function travel(w, s, binIdx, zEnd) {            /* s giây kể từ lúc chunk rời Leaf; trả về [x,y,z] hoặc null nếu đã tới */
-  var pts = [[w[0].p[0], w[0].p[1], 8]].concat(w.map(function (a) { return a.p; }));
-  var segs = [], t = 0, i;
-  for (i = 0; i < pts.length - 1; i++) { segs.push({ a: pts[i], b: pts[i + 1], t0: t, d: DSEG }); t += DSEG; if (w[i] && w[i].dwell && i > 0) t += w[i].dwell; }
-  var last = pts[pts.length - 1];
-  var dropA = [494 + 12, binY[binIdx], 44], dropB = [494 + 12, binY[binIdx], zEnd];
-  segs.push({ a: last, b: dropA, t0: t, d: .35 }); t += .35;
-  segs.push({ a: dropA, b: dropB, t0: t, d: .25 }); t += .25;
-  for (i = 0; i < segs.length; i++) { var sg = segs[i]; if (s < sg.t0 + sg.d) { var f = I.clamp((s - sg.t0) / sg.d); f = f * f * (3 - 2 * f); return { p: [I.lerp(sg.a[0], sg.b[0], f), I.lerp(sg.a[1], sg.b[1], f), I.lerp(sg.a[2], sg.b[2], f)], total: t }; } }
-  return { p: null, total: t };
+function route(i, mode, bi, zEnd) {              /* các đoạn đường của chunk: theo cung vô tuyến từng chặng rồi thả vào slot */
+  var an = chainOf(i, mode).map(anchor), segs = [], h, u, pp, t = 0;
+  function add(a, b, d) { segs.push({ a: a, b: b, t0: t, d: d }); t += d; }
+  for (h = 0; h < an.length - 1; h++) {
+    pp = arcPts(an[h], an[h + 1]);
+    for (u = 0; u < 8; u++) add(pp[u], pp[u + 1], DSEG / 8);
+    if (h < an.length - 2) add(pp[8], pp[8], DWELL);          /* node trung gian nhận rồi chuyển tiếp */
+  }
+  var above = [506, binY[bi], 26];
+  add(an[an.length - 1], above, .35); add(above, [506, binY[bi], zEnd], .25);
+  return { segs: segs, total: t };
 }
+function pos(r, s) {                              /* vị trí tại s giây; null nếu đã tới nơi */
+  for (var i = 0; i < r.segs.length; i++) { var sg = r.segs[i]; if (s < sg.t0 + sg.d) { var f = I.clamp((s - sg.t0) / sg.d); f = f * f * (3 - 2 * f); return [I.lerp(sg.a[0], sg.b[0], f), I.lerp(sg.a[1], sg.b[1], f), I.lerp(sg.a[2], sg.b[2], f)]; } }
+  return null;
+}
+var tilePath = [[506, 0, 22], [600, 0, 22], [626, 0, 22], [640, 0, 9], [722, 0, 9], [798, 0, 9], [866, 0, 9]];
 function frame(t) {
   sc.clear(dyn); sc.clear(linkG);
-  var mode = modeAt(t), items = [], tilePath = [[506, 0, 22], [600, 0, 22], [626, 0, 22], [640, 0, 9], [722, 0, 9], [798, 0, 9], [866, 0, 9]];
-  /* liên kết vô tuyến của cây hiện tại */
+  var mode = modeAt(t), items = [];
+  /* liên kết vô tuyến của cây hiện tại: nét đứt nối anten bo này với anten bo kia */
   linksOf(mode).forEach(function (l) {
-    var a = N.L[l[0]], b = node(l[1]), pp = [], u;
-    for (u = 0; u <= 12; u++) { var f = u / 12; pp.push([I.lerp(a[0], b[0], f), I.lerp(a[1], b[1], f), 44 + 14 * Math.sin(Math.PI * f)]); }
-    var e = sc.path(linkG, pp, 0, '#d9432b', 1.6); e.setAttribute('stroke-dasharray', '4 4'); e.setAttribute('stroke-dashoffset', (-t * 14) % 16);
+    var e = sc.path(linkG, arcPts(anchor(N.L[l[0]]), anchor(node(l[1]))), 0, '#d9432b', 1.6);
+    e.setAttribute('stroke-dasharray', '4 4'); e.setAttribute('stroke-dashoffset', (-t * 14) % 16);
   });
   modeTxt.textContent = mode === 1 ? 'đang hiện: 1 chặng' : 'đang hiện: 3 chặng';
   var scr = -1, scrA = 0, mwOn = false, mwCol = T.red, newest = -1e9;
@@ -100,22 +103,20 @@ function frame(t) {
     var n0 = Math.floor((t - i * STAG) / PERIOD);
     for (var nn = n0 - 3; nn <= n0; nn++) {
       var ts = i * STAG + nn * PERIOD; if (ts < 0) continue;
-      var lt = t - ts, fm = modeAt(ts), g = nn * 3 + i, bi = g % 4, hops = fm === 1 ? 1 : i + 1;
-      var T1 = .5 * (hops + 1) + .12 * (hops - 1) + .6, arr = 4 * .25 + T1;      /* chunk cuối tới nơi */
-      var done = false, got = 0;
-      for (var k = 0; k < 5; k++) {
-        var s = lt - k * .25; if (s < 0) continue;
-        var r = travel(wps(i, fm, k), s, bi, 20 + 4.2 * k);
-        if (r.p) items.push({ x: r.p[0] - 4.5, y: r.p[1] - 4.5, z: r.p[2], w: 9, d: 9, h: 9, t: I.LEAF[i] });
-        else { got++; items.push({ x: 494 + 12 - 7, y: binY[bi] - 6, z: 19.6 + k * 4.4, w: 14, d: 12, h: 4, t: I.LEAF[i] }); }
-      }
-      var td = arr + .1;
-      if (lt >= td && lt < td + 3.4) {
-        var p = (lt - td) / 3.4, q = I.along(tilePath, p);
-        if (q[0] >= 722 && q[0] <= 798) { mwOn = true; mwCol = I.LEAF[i]; }
-        else items.push({ x: q[0] - 9, y: -9, z: q[2], w: 18, d: 18, h: 4, t: I.LEAF[i] });
-      }
-      if (lt >= td + 3.4 && ts > newest) { newest = ts; scr = i; scrA = I.clamp((lt - td - 3.4) / .25); }
+      var lt = t - ts, fm = modeAt(ts), g = nn * 3 + i, bi = g % 4;
+      var td = 4 * .25 + route(i, fm, bi, 20).total + .1;         /* lúc chunk cuối vào slot, khung ghép xong rồi rời Root */
+      if (lt < td) {                                              /* khung còn trong slot của Root: các chunk đang bay hoặc đã nằm trong slot */
+        for (var k = 0; k < 5; k++) {
+          var s = lt - k * .25; if (s < 0) continue;
+          var r = route(i, fm, bi, 19.6 + k * 4.4), q = pos(r, s);
+          if (q) items.push({ x: q[0] - 4.5, y: q[1] - 4.5, z: q[2], w: 9, d: 9, h: 9, t: I.LEAF[i] });
+          else items.push({ x: 506 - 7, y: binY[bi] - 6, z: 19.6 + k * 4.4, w: 14, d: 12, h: 4, t: I.LEAF[i] });
+        }
+      } else if (lt < td + 3.4) {                                 /* ảnh đã ghép: một tấm đi qua UART, middleware rồi tới dashboard */
+        var p = (lt - td) / 3.4, q2 = I.along(tilePath, p);
+        if (q2[0] >= 722 && q2[0] <= 798) { mwOn = true; mwCol = I.LEAF[i]; }
+        else items.push({ x: q2[0] - 9, y: -9, z: q2[2], w: 18, d: 18, h: 4, t: I.LEAF[i] });
+      } else if (ts > newest) { newest = ts; scr = i; scrA = I.clamp((lt - td - 3.4) / .25); }
     }
   }
   for (var j = 0; j < 3; j++) {

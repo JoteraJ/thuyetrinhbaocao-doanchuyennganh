@@ -26,7 +26,7 @@ var GRY = { top: '#a5a190', y: '#85816f', x: '#6c6859' };
 var CZ = [LEAF[0], LEAF[1], LEAF[2]], CZC = ['#ee5f12', '#3f78c4', '#7c9a28'];
 
 /* ======================== mô hình dùng chung (A và C) ======================== */
-var CYC = 1.8, ZONE = .6, CK = .12, TFA = .6, TFC = .5, LOOP = 28, FUSE = 6, SHIPW = .2, SHIPD = .8;
+var CYC = 1.8, ZONE = .6, CK = .12, TFA = .6, TFC = .5, LOOP = 28, FUSE = 6, SHIPW = .35, SHIPD = 1.5;
 var FR = [];
 (function () {
   var n, i, f, k, byLeaf = [[], [], []];
@@ -180,6 +180,21 @@ sC.box(C_ob, 208, -2, 0, 50, 4, 1, T.dark);
 function slotY(b) { return Y0[b] + 1 + BH / 2; }
 var TGX = null;
 function lab(g, x, y, str, w, fill) { var e = txt(g, x, y, str, 14, w, 'end', fill, 'mo'); e.style.stroke = '#bfcecd'; e.style.strokeWidth = '3px'; e.style.paintOrder = 'stroke'; return e; }
+/* tấm ảnh đã ghép (một khối phẳng): nằm trong slot, nhấc lên, trượt tới cổng UART, thu nhỏ đi qua cổng rồi chạy trên cáp tới PC */
+var TW = CXS[4] + 20 - CXS[0], TKF = [
+  [0, 0, 13.8, TW, 22], [.16, 0, 26, TW, 22], [.46, 1, 26, TW, 22], [.68, 2, 22, 16, 14], [.8, 2, 18, 14, 12], [.88, 3, 1.2, 14, 12], [1, 4, 1.2, 14, 12]];
+function tileAt(f, t) {
+  var u = (t - f.shipT) / SHIPD, y0 = Y0[f.bin] + 1, cy0 = y0 + 3 + 11, cx0 = CXS[0] + TW / 2;
+  var P4 = [[cx0, cy0], [124, 0], [190, 0], [214, 0], [254, 0]], col = CZ[f.leaf];
+  if (t < f.last + .15) col = T.white;
+  if (u < 0) return { x: CXS[0], y: y0 + 3, z: 13.8, w: TW, d: 22, h: 4, t: col };
+  if (u >= 1) return null;
+  var i = 0; while (i < TKF.length - 2 && u > TKF[i + 1][0]) i++;
+  var a = TKF[i], b = TKF[i + 1], e = sm((u - a[0]) / (b[0] - a[0]));
+  var cx = I.lerp(P4[a[1]][0], P4[b[1]][0], e), cy = I.lerp(P4[a[1]][1], P4[b[1]][1], e), z = I.lerp(a[2], b[2], e), w = I.lerp(a[3], b[3], e), d = I.lerp(a[4], b[4], e);
+  if (u > .9) col = fadeT(CZ[f.leaf], (u - .9) / .1 * .8);
+  return { x: cx - w / 2, y: cy - d / 2, z: z, w: w, d: d, h: 4, t: col };
+}
 function frameC(t) {
   sC.clear(C_dy); sC.clear(C_tx);
   var items = [], P = sC.pt, tags = [], i, k;
@@ -195,14 +210,13 @@ function frameC(t) {
       if (k === f.lost && lt > .3 && lt < .8) tags.push({ kind: 'x', p: P(-150 + (CXS[k] + 159) * .6, y0 + BH / 2, 44), a: 1 - (lt - .3) / .5 });
     }
     if (!(t >= f.first - .01 && t < f.endT + 1.6)) return;
-    /* ô bitmap */
-    var done = f.type === 'ok' && t >= f.last, sh = f.type === 'ok' && t >= f.shipT;
-    for (k = 0; k < 5; k++) {
+    /* ô bitmap: chunk nào tới thì ô đó sáng; đủ khung thì 5 ô nhập thành MỘT TẤM ảnh phẳng, rồi tấm đó rời Root qua cổng UART */
+    var done = f.type === 'ok' && t >= f.last;
+    if (done) {
+      var tl = tileAt(f, t); if (tl) items.push(tl);
+    } else for (k = 0; k < 5; k++) {
       var a = f.arr[k]; if (a == null || t < a || t >= f.endT) continue;
-      var col = CZ[f.leaf], x = CXS[k], z = 13.8, w = 20;
-      if (done && !sh) col = (t - f.last) < .15 ? T.white : col;
-      if (sh) { var u = I.clamp((t - f.shipT) / SHIPD), e = u * u * (3 - 2 * u); z = 13.8 + 22 * Math.min(1, u * 2.5); x = CXS[k] + 150 * e; }
-      items.push({ x: x, y: y0 + 3, z: z, w: w, d: BH - 6, h: 4, t: col });
+      items.push({ x: CXS[k], y: y0 + 3, z: 13.8, w: 20, d: BH - 6, h: 4, t: CZ[f.leaf] });
     }
     /* cầu chì timeout: đầy khi vừa nhận chunk, cháy dần khi im lặng */
     if (f.type !== 'ok' && t >= f.first && t < f.endT || (f.type === 'ok' && t >= f.first && t < f.last + .02)) {
@@ -279,7 +293,7 @@ function frameCL(tau) {
   }
   /* nhãn LRU hiện đúng lúc khung cũ nhất bị đẩy ra */
   var q2 = P(22, slotY(0), 14);
-  if (ev && tau < LRUP - 1.2) lab(C_tx, q2[0] - 16, q2[1] + 5, 'LRU', 700, '#d9432b');
+  if (ev && tau < T_EV + 1.5) lab(C_tx, q2[0] - 16, q2[1] + 5, 'LRU', 700, '#d9432b');
   var bq = P(22, Y0[3] + 1 + BH / 2, 14); lab(C_tx, bq[0] - 24, bq[1] + 5, 'bitmap', 500, '#645f52');
 }
 

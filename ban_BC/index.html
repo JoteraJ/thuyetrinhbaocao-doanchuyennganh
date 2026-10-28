@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="parts.css">
 </head>
 <body>
+<div id="rotate">Xoay ngang màn hình để xem bài trình bày</div>
 <div id="stage">
 <!-- 1 · BÌA -->
 <section class="slide night" id="s1">
@@ -237,7 +238,7 @@
       </div>
       <p class="offs"><span class="o o0">offset 0</span><span class="o o4">4</span><span class="o o6">6</span><span class="o o8">8</span><span class="o o10">10</span><span class="o o12">12</span></p>
     </div>
-    <div class="fig-wrap"><svg class="fig" id="s9fig" viewBox="0 0 1136 240" role="img" aria-label="Sơ đồ: một khung JPEG bị cắt thành các chunk, mỗi chunk gắn header 16 byte, đi qua mesh tới Root và được ghép lại"></svg><span class="slow">hình động làm chậm</span></div>
+    <div class="fig-wrap"><svg class="fig" id="s9fig" viewBox="0 0 1136 240" role="img" aria-label="Sơ đồ: một khung JPEG bị cắt thành các chunk, mỗi chunk gắn header 16 byte, đi qua mesh tới Root và được ghép lại"></svg><span class="slow">hình động làm chậm</span><span class="slow ns">không theo tỉ lệ so với payload</span></div>
     <ul class="l g4">
       <li><span class="st" data-s="1">Payload tối đa <b>1024 B</b>; (16 + 1024) B mã hóa Base64 → tối đa <b>1388 ký tự</b>, vừa giới hạn ~1400 B của painlessMesh.</span></li>
       <li><span class="st" data-s="2">Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</span></li>
@@ -354,7 +355,7 @@
     <div class="mline">
       <i class="rail"></i><i class="rail done"></i><i class="bump"></i>
       <svg class="train" viewBox="0 0 64 30" aria-hidden="true">
-        <path d="M3 4h46l12 12v10H3z" fill="#d8402b" stroke="#0c2a44" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M3 4h46l12 12v10H3z" fill="#b5301c" stroke="#0c2a44" stroke-width="2.5" stroke-linejoin="round"/>
         <rect x="9" y="9" width="10" height="8" fill="#d8eae0" stroke="#0c2a44" stroke-width="1.5"/>
         <rect x="24" y="9" width="10" height="8" fill="#d8eae0" stroke="#0c2a44" stroke-width="1.5"/>
         <path d="M40 9h6l6 7h-12z" fill="#d8eae0" stroke="#0c2a44" stroke-width="1.5" stroke-linejoin="round"/>
@@ -423,8 +424,8 @@
             <text class="mo" x="0" y="14" font-size="15" font-weight="500" fill="#1a4f9c">~47 KB/s ảnh</text>
             <text class="mo" x="590" y="14" font-size="15" font-weight="500" text-anchor="end">giới hạn ~92 KB/s</text>
             <text class="mo" x="0" y="57" font-size="15" font-weight="500" fill="#1a4f9c">ghi UART chặn</text>
-            <text class="mo" x="0" y="99" font-size="15" font-weight="500" fill="#d8402b">mesh.update()</text>
-            <text class="mo" x="0" y="99" font-size="15" font-weight="500" fill="#d8402b" id="s13thua">gọi thưa</text>
+            <text class="mo" x="0" y="99" font-size="15" font-weight="500" fill="#b5301c">mesh.update()</text>
+            <text class="mo" x="0" y="99" font-size="15" font-weight="500" fill="#b5301c" id="s13thua">gọi thưa</text>
             <text class="mo slow" x="590" y="99" font-size="15" font-weight="500" text-anchor="end">hình động làm chậm</text>
           </svg>
         </div>
@@ -442,23 +443,23 @@
 <line x1="44" y1="131.8" x2="496" y2="131.8" stroke="#0c2a44" stroke-opacity="0.09" stroke-width="1"/>
 <line x1="44" y1="58.0" x2="496" y2="58.0" stroke="#0c2a44" stroke-opacity="0.22" stroke-width="1"/>
 <text class="mo ax" x="36" y="63.0" text-anchor="end" font-size="15">10</text>
-<g class="bar a" data-v="3.5"><rect x="57" y="249.75" width="56" height="103.25" fill="#d8402b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="57,249.75 66,243.75 122,243.75 113,249.75" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="113,249.75 122,243.75 122,347.00 113,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g class="bar b" data-v="1.67"><rect x="125" y="303.74" width="56" height="49.27" fill="#0e6b4b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="125,303.74 134,297.74 190,297.74 181,303.74" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="181,303.74 190,297.74 190,347.00 181,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar a" data-v="3.5"><rect x="57" y="249.75" width="56" height="103.25" fill="#b5301c" stroke="#0c2a44" stroke-width="1.2"/><polygon points="57,249.75 66,243.75 122,243.75 113,249.75" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="113,249.75 122,243.75 122,347.00 113,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="1.67"><rect x="125" y="303.74" width="56" height="49.27" fill="#0b6a47" stroke="#0c2a44" stroke-width="1.2"/><polygon points="125,303.74 134,297.74 190,297.74 181,303.74" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="181,303.74 190,297.74 190,347.00 181,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
 <text class="vl va" x="89.5" y="234.8" text-anchor="middle" font-size="19" font-weight="700">3,5</text>
 <text class="vl vb" x="157.5" y="288.7" text-anchor="middle" font-size="19" font-weight="700">1,67</text>
-<g class="bar a" data-v="7"><rect x="207" y="146.50" width="56" height="206.50" fill="#d8402b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="207,146.50 216,140.50 272,140.50 263,146.50" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="263,146.50 272,140.50 272,347.00 263,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g class="bar b" data-v="3.3"><rect x="275" y="255.65" width="56" height="97.35" fill="#0e6b4b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="275,255.65 284,249.65 340,249.65 331,255.65" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="331,255.65 340,249.65 340,347.00 331,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar a" data-v="7"><rect x="207" y="146.50" width="56" height="206.50" fill="#b5301c" stroke="#0c2a44" stroke-width="1.2"/><polygon points="207,146.50 216,140.50 272,140.50 263,146.50" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="263,146.50 272,140.50 272,347.00 263,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="3.3"><rect x="275" y="255.65" width="56" height="97.35" fill="#0b6a47" stroke="#0c2a44" stroke-width="1.2"/><polygon points="275,255.65 284,249.65 340,249.65 331,255.65" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="331,255.65 340,249.65 340,347.00 331,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
 <text class="vl va" x="239.5" y="131.5" text-anchor="middle" font-size="19" font-weight="700">7</text>
 <text class="vl vb" x="307.5" y="240.7" text-anchor="middle" font-size="19" font-weight="700">3,3</text>
-<g class="bar a" data-v="10"><rect x="357" y="58.00" width="56" height="295.00" fill="#d8402b" stroke="#0c2a44" stroke-width="1.2"/><rect x="357" y="58.00" width="56" height="295.00" fill="url(#s13h)"/><polygon points="357,58.00 366,52.00 422,52.00 413,58.00" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="413,58.00 422,52.00 422,347.00 413,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g class="bar b" data-v="4.85"><rect x="425" y="209.93" width="56" height="143.07" fill="#0e6b4b" stroke="#0c2a44" stroke-width="1.2"/><polygon points="425,209.93 434,203.93 490,203.93 481,209.93" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="481,209.93 490,203.93 490,347.00 481,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar a" data-v="10"><rect x="357" y="58.00" width="56" height="295.00" fill="#b5301c" stroke="#0c2a44" stroke-width="1.2"/><rect x="357" y="58.00" width="56" height="295.00" fill="url(#s13h)"/><polygon points="357,58.00 366,52.00 422,52.00 413,58.00" fill="#ee8a76" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="413,58.00 422,52.00 422,347.00 413,353.00" fill="#a8301c" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g class="bar b" data-v="4.85"><rect x="425" y="209.93" width="56" height="143.07" fill="#0b6a47" stroke="#0c2a44" stroke-width="1.2"/><polygon points="425,209.93 434,203.93 490,203.93 481,209.93" fill="#58b394" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/><polygon points="481,209.93 490,203.93 490,347.00 481,353.00" fill="#125a40" stroke="#0c2a44" stroke-width="1.2" stroke-linejoin="round"/></g>
 <text class="vl va bad" x="389.5" y="43.0" text-anchor="middle" font-size="19" font-weight="700">10 ✕</text>
 <text class="vl vb" x="457.5" y="194.9" text-anchor="middle" font-size="19" font-weight="700">4,85</text>
 <text class="mo" x="123" y="379" text-anchor="middle" font-size="17" font-weight="500">1 Leaf</text>
 <text class="mo" x="273" y="379" text-anchor="middle" font-size="17" font-weight="500">2 Leaf</text>
 <text class="mo" x="423" y="379" text-anchor="middle" font-size="17" font-weight="500">3 Leaf</text>
-<rect x="46" y="398.0" width="14" height="14" fill="#d8402b" stroke="#0c2a44" stroke-width="1.2"/><text x="68" y="411.0" font-size="16">300 ms (3 Leaf: ngừng truyền)</text>
-<rect x="46" y="423.0" width="14" height="14" fill="#0e6b4b" stroke="#0c2a44" stroke-width="1.2"/><text x="68" y="436.0" font-size="16">600 ms (ổn định)</text>
+<rect x="46" y="398.0" width="14" height="14" fill="#b5301c" stroke="#0c2a44" stroke-width="1.2"/><text x="68" y="411.0" font-size="16">300 ms (3 Leaf: ngừng truyền)</text>
+<rect x="46" y="423.0" width="14" height="14" fill="#0b6a47" stroke="#0c2a44" stroke-width="1.2"/><text x="68" y="436.0" font-size="16">600 ms (ổn định)</text>
 </svg>
         </div>
       </div>
