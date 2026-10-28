@@ -68,8 +68,8 @@ function frameA(t) {
 
 /* ============ b) giao thức định tuyến ============ */
 var Bm = mk('s5b', 0, 30, 240, 26, 56, [4, 36, 544, 78]);   /* svg 5b cao 138 (cao hơn 20 so với các hình khác) để tên giao thức nằm trên khối kể cả lúc nhảy */
-var PB_X = [-206, -126, -46], PB_NAME = ['AODV', 'OLSR/DSDV', 'B.A.T.M.A.N'], PB = 10.5, GATE = 64;
-label(Bm, -116, 25, 0, 'Linux/tầng IP', '#645f52', 18, 'middle', 13);
+var PB_X = [-208, -112, -16], PB_NAME = ['AODV', 'OLSR/DSDV', 'B.A.T.M.A.N'], PB = 10.5, GATE = 64;
+label(Bm, -112, 25, 0, 'Linux/tầng IP', '#645f52', 18, 'middle', 13);
 label(Bm, 165, 25, 0, 'ESP32', '#645f52', 18, 'middle', 13);
 label(Bm, 182, 0, 32, 'painlessMesh', '#d9432b', -6, 'middle', 14);
 function frameB(t) {
