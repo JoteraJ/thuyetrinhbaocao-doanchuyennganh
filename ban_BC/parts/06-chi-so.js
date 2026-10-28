@@ -34,6 +34,7 @@ function bracket(p, x0, x1, y, col, up) {            /* dấu ngoặc ngang: hai
 /* ---- trục thời gian dùng chung ---- */
 var gAxis = g();
 line(gAxis, 24, 354, 478, 354, INK, 2.4);
+var tAxis = sym(gAxis, 486, 343, 't', '', INK, 22);          /* nhãn trục: t */
 el('polygon', { points: '490,354 476,347 476,361', fill: INK }, gAxis);
 var X0 = 30, X1 = 482, CYC = 9, SWEEP = 4.6;
 function headX(lt) { return X0 + (X1 - X0) * sm(I.clamp((lt % CYC) / SWEEP)); }
@@ -110,16 +111,16 @@ function frameC(lt) {
   playhead(s, h, 244, 330, lt);
 }
 
-/* ---- bước: mỗi làn hiện cùng công thức của nó ---- */
+/* ---- bước: bước 0 đã có công thức 1-3 và làn B sáng; hai làn A, C hiện mờ (chờ), sáng lên cùng công thức của chúng ---- */
 function allOn() { return Deck.still && !/[?&]step=/.test(location.search); }
-var vis = { B: 0, A: 0, C: 0 }, T0 = { B: 0, A: 0, C: 0 }, tNow = 0;
+var vis = { B: 1, A: 1, C: 1 }, T0 = { B: 0, A: 0, C: 0 }, tNow = 0, lit = { B: 1, A: 0, C: 0 };
 function setVis(L, name, on) {
-  if (on && !vis[name]) T0[name] = tNow;
-  vis[name] = on ? 1 : 0; L.g.style.transition = 'opacity .45s'; L.g.style.opacity = on ? 1 : 0;
+  if (on && !lit[name]) T0[name] = tNow;
+  lit[name] = on ? 1 : 0; L.g.style.transition = 'opacity .45s'; L.g.style.opacity = on ? 1 : .3;
 }
-Deck.steps.s6 = function (step) { var a = allOn(); setVis(LB, 'B', a || step >= 1); setVis(LA, 'A', a || step >= 2); setVis(LC, 'C', a || step >= 3); };
+Deck.steps.s6 = function (step) { var a = allOn(); setVis(LB, 'B', true); setVis(LA, 'A', a || step >= 1); setVis(LC, 'C', a || step >= 2); };
 Deck.steps.s6(0);
 Deck.frames.s6 = function (t) {
   tNow = t;
-  if (vis.B) frameB(t - T0.B); if (vis.A) frameA(t - T0.A); if (vis.C) frameC(t - T0.C);
+  frameB(t - T0.B); frameA(t - T0.A); frameC(t - T0.C);
 };

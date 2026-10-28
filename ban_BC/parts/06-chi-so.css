@@ -15,3 +15,7 @@
 #s6 .nt{display:grid;grid-template-columns:1fr 1.45fr;gap:34px}
 #s6 .nt p{font-size:17px;line-height:1.5;color:var(--muted);border-top:3px solid var(--ink);padding-top:8px}
 #s6 .nt p.r{border-top-color:var(--red)}#s6 .nt p.b{border-top-color:var(--blue)}
+#s6 .slow{position:absolute;right:0;top:0;white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px;background:var(--paper)}
+/* chưa tới bước: hiện mờ (chờ) thay vì ẩn hẳn, để bước 0 không trống; tới bước thì sáng lên */
+#s6 .st{opacity:.3;transform:none}
+#s6 .st.vis{opacity:1}

@@ -159,17 +159,17 @@
     <div class="row grow" style="gap:34px">
       <div class="col fm5">
         <div class="fh"><span class="lab">Chỉ số</span><span class="lab">Công thức</span></div>
-        <div class="fr g st" data-s="1"><b class="nm">Thông lượng</b><span class="fx"><i>T</i> = <i>B</i> / <i>Δt</i> <span class="u k">(KB/s)</span></span></div>
-        <div class="fr g st" data-s="1"><b class="nm">Số khung/giây</b><span class="fx">FPS = <i>N</i><sub>ok</sub> / <i>Δt</i></span></div>
-        <div class="fr g st" data-s="1"><b class="nm">Tỉ lệ hủy khung</b><span class="fx"><i>R</i><sub>h</sub> = <i>N</i><sub>h</sub> / (<i>N</i><sub>ok</sub> + <i>N</i><sub>h</sub>) × 100 %</span></div>
-        <div class="fr r st" data-s="2"><b class="nm">Độ trễ</b><span class="fx"><i>d</i> = <i>t</i><sub>ghép</sub> − <i>t</i><sub>chụp</sub> <span class="u">(đồng hồ chung của mesh)</span></span></div>
-        <div class="fr b st" data-s="3"><b class="nm">Tự phục hồi</b><span class="fx"><i>T</i><sub>ph</sub> = <i>t</i><sub>nối</sub> − <i>t</i><sub>mất</sub> <span class="u">(theo luồng dữ liệu)</span></span></div>
+        <div class="fr g"><b class="nm">Thông lượng</b><span class="fx"><i>T</i> = <i>B</i> / <i>Δt</i> <span class="u k">(KB/s)</span></span></div>
+        <div class="fr g"><b class="nm">Số khung/giây</b><span class="fx">FPS = <i>N</i><sub>ok</sub> / <i>Δt</i></span></div>
+        <div class="fr g"><b class="nm">Tỉ lệ hủy khung</b><span class="fx"><i>R</i><sub>h</sub> = <i>N</i><sub>h</sub> / (<i>N</i><sub>ok</sub> + <i>N</i><sub>h</sub>) × 100 %</span></div>
+        <div class="fr r st" data-s="1"><b class="nm">Độ trễ</b><span class="fx"><i>d</i> = <i>t</i><sub>ghép</sub> − <i>t</i><sub>chụp</sub> <span class="u">(đồng hồ chung của mesh)</span></span></div>
+        <div class="fr b st" data-s="2"><b class="nm">Tự phục hồi</b><span class="fx"><i>T</i><sub>ph</sub> = <i>t</i><sub>nối</sub> − <i>t</i><sub>mất</sub> <span class="u">(theo luồng dữ liệu)</span></span></div>
       </div>
-      <div class="f1 fig-wrap"><svg class="fig" id="s6fig" viewBox="0 0 500 372" role="img" aria-label="Trục thời gian: từ lúc Leaf chụp đến lúc Root ghép xong là độ trễ d; trong cửa sổ Δt đếm khung nhận được và khung bị hủy; từ lúc mất đến lúc nối lại luồng gói là T_ph"></svg></div>
+      <div class="f1 fig-wrap"><svg class="fig" id="s6fig" viewBox="0 0 500 372" role="img" aria-label="Trục thời gian t: từ lúc Leaf chụp đến lúc Root ghép xong là độ trễ d; trong cửa sổ Δt đếm khung nhận được và khung bị hủy; từ lúc mất đến lúc nối lại luồng gói là T_ph"></svg><span class="slow">hình động làm chậm</span></div>
     </div>
     <div class="nt">
-      <p class="st r" data-s="2">Độ trễ dùng đồng hồ do painlessMesh đồng bộ, không cần NTP.</p>
-      <p class="st b" data-s="3">Tự phục hồi đo theo gói phân mảnh cuối cùng nhận được và gói đầu tiên nhận lại, không theo sự kiện topology của thư viện.</p>
+      <p class="st r" data-s="1">Độ trễ dùng đồng hồ do painlessMesh đồng bộ, không cần NTP.</p>
+      <p class="st b" data-s="2">Tự phục hồi đo theo gói phân mảnh cuối cùng nhận được và gói đầu tiên nhận lại, không theo sự kiện topology của thư viện.</p>
     </div>
   </div>
   <span class="src">chuong2.tex, mục 2.6</span>

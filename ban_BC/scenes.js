@@ -504,10 +504,15 @@ function frameA(t) {
 
 /* ============ b) giao thức định tuyến ============ */
 var Bm = mk('s5b', 0, 30, 240, 26, 56, [4, 36, 544, 78]);   /* svg 5b cao 138 (cao hơn 20 so với các hình khác) để tên giao thức nằm trên khối kể cả lúc nhảy */
-var PB_X = [-208, -112, -16], PB_NAME = ['AODV', 'OLSR/DSDV', 'B.A.T.M.A.N'], PB = 10.5, GATE = 64;
-label(Bm, -112, 25, 0, 'Linux/tầng IP', '#34505c', 18, 'middle', 13);
+var PB_X = [-206, -126, -46], PB_NAME = ['AODV', 'OLSR/DSDV', 'B.A.T.M.A.N'], PB = 10.5, GATE = 64;
+label(Bm, -116, 25, 0, 'Linux/tầng IP', '#34505c', 18, 'middle', 13);
 label(Bm, 165, 25, 0, 'ESP32', '#34505c', 18, 'middle', 13);
 label(Bm, 182, 0, 32, 'painlessMesh', '#b5301c', -6, 'middle', 14);
+/* tên giao thức: đứng yên trên ô của mình, so le hai hàng (OLSR/DSDV cao hơn) để chữ dài không đè nhau khi khối nhảy qua; nền giấy mỏng quanh chữ */
+PB_NAME.forEach(function (nm, j) {
+  var t = label(Bm, PB_X[j], -16, 31, nm, '#0c2a44', j === 1 ? -17 : -5, 'middle', 13);
+  t.style.paintOrder = 'stroke'; t.style.stroke = '#d8eae0'; t.style.strokeWidth = '3px'; t.style.strokeLinejoin = 'round';
+});
 function frameB(t) {
   var sc = Bm.sc, tm = t % PB, bl = [], names = [], k = Math.floor(tm / 3.5), s = (tm % 3.5) / 3.5, hit = false;
   begin(Bm);
@@ -532,9 +537,6 @@ function frameB(t) {
     names.push([px, pz, j]);
   });
   flush(bl);
-  /* tên giao thức nằm ngay trên khối của nó (đi theo khi khối nhảy), không đè lên khối */
-  names.forEach(function (n) { var hw = PB_NAME[n[2]].length * 7.8 / 2 / sc.K, q = sc.pt(Math.min(n[0], GATE - 9 - hw), -16, n[1] + 26);   /* không cho nhãn dài chạm cột rào */
-    sc.text(Bm.top, q[0], q[1] - 5, PB_NAME[n[2]], 13, 500, 'middle', null, 'mo').style.fill = '#0c2a44'; });
   if (hit) cross(Bm, GATE + 2, 0, 16);
 }
 
@@ -651,6 +653,7 @@ function bracket(p, x0, x1, y, col, up) {            /* dấu ngoặc ngang: hai
 /* ---- trục thời gian dùng chung ---- */
 var gAxis = g();
 line(gAxis, 24, 354, 478, 354, INK, 2.4);
+var tAxis = sym(gAxis, 486, 343, 't', '', INK, 22);          /* nhãn trục: t */
 el('polygon', { points: '490,354 476,347 476,361', fill: INK }, gAxis);
 var X0 = 30, X1 = 482, CYC = 9, SWEEP = 4.6;
 function headX(lt) { return X0 + (X1 - X0) * sm(I.clamp((lt % CYC) / SWEEP)); }
@@ -727,18 +730,18 @@ function frameC(lt) {
   playhead(s, h, 244, 330, lt);
 }
 
-/* ---- bước: mỗi làn hiện cùng công thức của nó ---- */
+/* ---- bước: bước 0 đã có công thức 1-3 và làn B sáng; hai làn A, C hiện mờ (chờ), sáng lên cùng công thức của chúng ---- */
 function allOn() { return Deck.still && !/[?&]step=/.test(location.search); }
-var vis = { B: 0, A: 0, C: 0 }, T0 = { B: 0, A: 0, C: 0 }, tNow = 0;
+var vis = { B: 1, A: 1, C: 1 }, T0 = { B: 0, A: 0, C: 0 }, tNow = 0, lit = { B: 1, A: 0, C: 0 };
 function setVis(L, name, on) {
-  if (on && !vis[name]) T0[name] = tNow;
-  vis[name] = on ? 1 : 0; L.g.style.transition = 'opacity .45s'; L.g.style.opacity = on ? 1 : 0;
+  if (on && !lit[name]) T0[name] = tNow;
+  lit[name] = on ? 1 : 0; L.g.style.transition = 'opacity .45s'; L.g.style.opacity = on ? 1 : .3;
 }
-Deck.steps.s6 = function (step) { var a = allOn(); setVis(LB, 'B', a || step >= 1); setVis(LA, 'A', a || step >= 2); setVis(LC, 'C', a || step >= 3); };
+Deck.steps.s6 = function (step) { var a = allOn(); setVis(LB, 'B', true); setVis(LA, 'A', a || step >= 1); setVis(LC, 'C', a || step >= 2); };
 Deck.steps.s6(0);
 Deck.frames.s6 = function (t) {
   tNow = t;
-  if (vis.B) frameB(t - T0.B); if (vis.A) frameA(t - T0.A); if (vis.C) frameC(t - T0.C);
+  frameB(t - T0.B); frameA(t - T0.A); frameC(t - T0.C);
 };
 
 })();
