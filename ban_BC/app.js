@@ -13,7 +13,7 @@
   var fs = location.search.match(/[?&]step=(\d+)/), forced = fs ? +fs[1] : null, firstShow = true;
   if (still && forced == null) root.classList.add('static');
   var SCROLL = root.classList.contains('mode-scroll') && !still;
-  if (SCROLL) root.classList.add('is-scroll');
+  root.classList.toggle('is-scroll', SCROLL);
   var Deck = window.Deck = window.Deck || { frames: {}, steps: {}, shows: {} };
   Deck.still = still;
   var tm = location.search.match(/[?&]t=([\d.]+)/); if (tm) Deck.stillT = +tm[1];
@@ -134,7 +134,7 @@
   }
   var tick = 0;
   function onScroll() {
-    if (tick) return;
+    if (!SCROLL || tick) return;
     tick = requestAnimationFrame(function () {
       tick = 0; var p = posFromScroll();
       if (p.i !== cur) show(p.i, false, p.k);
@@ -145,6 +145,15 @@
   function goBeat(d) { var n = Math.max(0, Math.min(beats.length - 1, beatIndex() + d)); window.scrollTo({ top: beats[n].y + 2, behavior: 'smooth' }); }
   function goSlide(i, instant) { i = Math.max(0, Math.min(slides.length - 1, i)); window.scrollTo({ top: segs[i].start + 2, behavior: instant ? 'auto' : 'smooth' }); }
   function goSection(sec) { for (var i = 0; i < slides.length; i++) if (slides[i].getAttribute('data-sec') === String(sec)) return goSlide(i); }
+
+  function setMode(sc) {
+    SCROLL = sc;
+    root.classList.toggle('mode-scroll', sc); root.classList.toggle('mode-deck', !sc); root.classList.toggle('is-scroll', sc);
+    var b = document.getElementById('mbtn'); if (b) b.textContent = sc ? 'Chế độ trình chiếu' : 'Chế độ cuộn';
+    var kb = document.getElementById('hint-scroll'); if (kb) kb.style.display = sc ? '' : 'none';
+    if (sc) { track.style.display = ''; buildTrack(); goSlide(cur, true); }
+    else { track.style.display = 'none'; window.scrollTo(0, 0); }
+  }
 
   /* ---- trình chiếu bằng phím ---- */
   function next() { if (SCROLL) return goBeat(1); if (step < maxStep(slides[cur])) { step++; applyStep(); } else show(cur + 1); }
@@ -160,7 +169,7 @@
     else if (k === 'End') jump(main - 1);
     else if (k === 'b' || k === 'B') jump(firstBackup >= 0 ? firstBackup : cur);
     else if (k === 'n' || k === 'N') notes.classList.toggle('on');
-    else if (k === 'm' || k === 'M') { location.href = (SCROLL ? 'trinh-chieu.html' : 'index.html') + '#' + (cur + 1); }
+    else if (k === 'm' || k === 'M') setMode(!SCROLL);
     else if (k === 'f' || k === 'F') { if (document.fullscreenElement) document.exitFullscreen(); else root.requestFullscreen && root.requestFullscreen(); }
     else if (/^[a-dA-D]$/.test(k) && firstBackup >= 0) jump(firstBackup + k.toLowerCase().charCodeAt(0) - 97);
   });
@@ -176,21 +185,21 @@
     if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
   }, { passive: true });
   var nb = document.getElementById('nbtn'); if (nb) nb.addEventListener('click', function () { notes.classList.toggle('on'); });
-  var mb = document.getElementById('mbtn'); if (mb) mb.addEventListener('click', function () { location.href = (SCROLL ? 'trinh-chieu.html' : 'index.html') + '#' + (cur + 1); });
+  var mb = document.getElementById('mbtn'); if (mb) mb.addEventListener('click', function () { setMode(!SCROLL); });
   var idleT = setTimeout(function () { root.classList.add('idle'); }, 4000);
   document.addEventListener('mousemove', function () { root.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(function () { root.classList.add('idle'); }, 3000); });
-  window.addEventListener('resize', function () { fit(); if (SCROLL) { var p = posFromScroll(); buildTrack(); window.scrollTo(0, beats.filter(function (b) { return b.i === p.i && b.k === p.k; })[0].y + 2); } });
+  window.addEventListener('resize', function () { fit(); if (SCROLL && track) { var p = posFromScroll(); buildTrack(); window.scrollTo(0, beats.filter(function (b) { return b.i === p.i && b.k === p.k; })[0].y + 2); } });
   document.addEventListener('visibilitychange', function () { if (!document.hidden) shownAt = performance.now() - 1000; });
 
   fit();
   var hv = location.hash.slice(1), hi = slides.findIndex(function (s) { return s.id === hv; }), h = parseInt(hv, 10);
   var start = hi >= 0 ? hi : isNaN(h) ? 0 : h - 1;
+  track = document.createElement('div'); track.id = 'track'; document.body.appendChild(track);
+  window.addEventListener('scroll', onScroll, { passive: true });
   if (SCROLL) {
-    track = document.createElement('div'); track.id = 'track'; document.body.appendChild(track);
     buildTrack();
-    window.addEventListener('scroll', onScroll, { passive: true });
     show(start, false, 0);
     goSlide(start, true);
-  } else show(start);
+  } else { track.style.display = 'none'; show(start); }
   window.__ready = 1;
 })();
