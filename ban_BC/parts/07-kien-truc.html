@@ -6,12 +6,12 @@
     <div class="fig-wrap">
       <svg class="fig" id="s7fig" viewBox="0 0 1136 448" role="img" aria-label="Sơ đồ cơ cấu: ba Leaf đẩy chunk qua mesh dạng cây tới Root, qua UART lên PC"></svg>
       <span class="slow">hình động làm chậm</span>
-      <div class="co c1 ru r st" data-s="1"><div class="lab r">Lớp 1 — Mesh</div><h3>Leaf × 3</h3><span class="tg">ESP32-CAM OV3660 · pin 18650</span><p class="sm">Gói phân mảnh 1024&nbsp;B + header 16&nbsp;B, Base64, <code>sendSingle</code></p></div>
-      <div class="co c2 ru st" data-s="2"><div class="lab">Root</div><h3>Ghép ảnh</h3><span class="tg">ESP32 DevKitC</span><p class="sm">Ghép 4 khung song song, chỉ gửi lên PC ảnh đã hoàn chỉnh</p></div>
-      <div class="co c3 ru b st" data-s="3"><div class="lab b">Lớp 2 — UART 921600&nbsp;bps</div><div class="mono fr">AA 55 | TYPE | LEN | PAYLOAD&nbsp;| CRC16</div><p class="sm">Khung nhị phân, có kiểm CRC</p></div>
-      <div class="co c4 ru g st" data-s="4"><div class="lab g">Lớp 3 — PC</div><p class="sm" style="font-weight:700">Middleware Node.js (serialport) → Socket.IO → Web Dashboard (React)</p></div>
+      <div class="co c1 ru r st" data-s="1"><div class="lab r">Lớp 1 — Mesh</div><h3>Leaf × 3</h3><span class="tg">ESP32-CAM OV3660 · pin 18650</span><p class="sm"><span class="kw">1024&nbsp;B + header 16&nbsp;B, Base64</span><span class="fl">Gói phân mảnh 1024&nbsp;B + header 16&nbsp;B, Base64, <code>sendSingle</code></span></p></div>
+      <div class="co c2 ru st" data-s="1"><div class="lab">Root</div><h3>Ghép ảnh</h3><span class="tg">ESP32 DevKitC</span><p class="sm"><span class="kw">Ghép 4 khung song song</span><span class="fl">Ghép 4 khung song song, chỉ gửi lên PC ảnh đã hoàn chỉnh</span></p></div>
+      <div class="co c3 ru b st" data-s="2"><div class="lab b">Lớp 2 — UART 921600&nbsp;bps</div><div class="mono fr">AA 55 | TYPE | LEN | PAYLOAD&nbsp;| CRC16</div><p class="sm"><span class="kw">Khung nhị phân, kiểm CRC</span><span class="fl">Khung nhị phân, có kiểm CRC</span></p></div>
+      <div class="co c4 ru g st" data-s="2"><div class="lab g">Lớp 3 — PC</div><p class="sm" style="font-weight:700"><span class="kw">Node.js → Socket.IO → React</span><span class="fl">Middleware Node.js (serialport) → Socket.IO → Web Dashboard (React)</span></p></div>
     </div>
-    <p class="note st" data-s="4"><b>Ý chính:</b> Root chỉ gửi lên PC ảnh đã ghép → middleware và dashboard không xử lý mất gói trên mesh. Tách truyền vô tuyến khỏi hiển thị.</p>
+    <p class="note st" data-s="2"><b>Ý chính:</b> <span class="kw">Root chỉ gửi ảnh đã ghép · tách vô tuyến khỏi hiển thị</span><span class="fl">Root chỉ gửi lên PC ảnh đã ghép → middleware và dashboard không xử lý mất gói trên mesh. Tách truyền vô tuyến khỏi hiển thị.</span></p>
   </div>
   <span class="src">chuong3.tex, mục 3.1</span>
   <aside>Lớp 1 lo truyền vô tuyến, lớp 2 là cầu nối nhị phân có CRC, lớp 3 chỉ hiển thị. Nhờ tách lớp nên lỗi ở lớp nào biết ngay lớp đó.</aside>

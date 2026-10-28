@@ -32,3 +32,4 @@ html:not(.detail) #s8 .pw span{font-size:20px}
 html:not(.detail) #s8 .pw .lg0{font-size:16px;top:-8px}
 html:not(.detail) #s8 .pw .kw{font:600 21px/1.2 var(--serif)}
 #s8 .pw .lg .kw,#s8 .pw .lg .fl{position:static;transform:none;white-space:normal}
+html.detail #s8 .pw .lg3{width:142px!important}

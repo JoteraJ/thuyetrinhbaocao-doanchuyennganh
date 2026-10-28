@@ -19,3 +19,12 @@
 /* chưa tới bước: hiện mờ (chờ) thay vì ẩn hẳn, để bước 0 không trống; tới bước thì sáng lên */
 #s6 .st{opacity:.3;transform:none}
 #s6 .st.vis{opacity:1}
+/* chữ từ khóa (mặc định): to hơn, ít chữ */
+html:not(.detail) #s6 .fh,html:not(.detail) #s6 .fr{grid-template-columns:184px 1fr}
+html:not(.detail) #s6 .fm5{flex:0 0 620px}
+html:not(.detail) #s6 .nm{font-size:23px}
+html:not(.detail) #s6 .fx .u,html:not(.detail) #s6 .fx .u.k{font-size:20px}
+html:not(.detail) #s6 .nt p{font-size:25px;line-height:1.3;color:var(--ink)}
+html:not(.detail) #s6 .nt{grid-template-columns:1.25fr 1fr}
+html.detail #s6 .kwp{display:none}
+html.detail #s6 .nt p.fl{display:block}

@@ -79,8 +79,9 @@
       <b class="l1">Bối cảnh:</b>
       <span class="cx">thiên tai, hầm mỏ, rừng núi.</span>
       <b class="l2">Hai thách thức:</b>
-      <span class="c1"><span class="no">(1)</span> <span class="kw">định tuyến đa chặng</span><span class="fl">định tuyến đa chặng khi topology đổi;</span></span>
-      <span class="c2"><span class="no">(2)</span> <span class="kw">truyền ảnh lớn, <b>~1400 byte</b></span><span class="fl">truyền ảnh lớn khi mỗi bản tin painlessMesh chỉ mang <b>~1400 byte</b>.</span></span>
+      <span class="c1"><span class="kw"><span class="no">(1)</span> định tuyến đa chặng</span></span>
+      <span class="c2"><span class="kw"><span class="no">(2)</span> truyền ảnh lớn, <b>~1400 byte</b></span></span>
+      <span class="fl fx"><span class="no">(1)</span> định tuyến đa chặng khi topology đổi; <span class="no">(2)</span> truyền ảnh lớn khi mỗi bản tin painlessMesh chỉ mang <b>~1400 byte</b>.</span>
     </div>
   </div>
   <span class="src">chuong1.tex, mục 1.1</span>
@@ -136,22 +137,22 @@
       <div class="nf ru">
         <h3>Mạng mesh và FANET</h3>
         <svg class="fg" id="s5a" viewBox="0 0 552 118" role="img" aria-label="FANET: nhiều UAV nối ad-hoc thành chuỗi, gói tin chuyển từng chặng về trạm mặt đất"></svg>
-        <p class="st" data-s="1"><span class="kw">UAV liên lạc ad-hoc (Bekmezci, 2013)</span><span class="fl">FANET đúng nghĩa khi nhiều UAV liên lạc ad-hoc với nhau (Bekmezci, 2013).</span> <span class="kw">kịch bản "mở rộng vùng hoạt động"</span><span class="fl">Đề tài gần nhất với kịch bản "mở rộng vùng hoạt động".</span></p>
+        <p class="st" data-s="1"><span class="kw">UAV liên lạc ad-hoc (Bekmezci, 2013)</span><span class="kw">kịch bản "mở rộng vùng hoạt động"</span><span class="fl">FANET đúng nghĩa khi nhiều UAV liên lạc ad-hoc với nhau (Bekmezci, 2013). Đề tài gần nhất với kịch bản "mở rộng vùng hoạt động".</span></p>
       </div>
       <div class="nf ru b">
         <h3>Giao thức định tuyến</h3>
         <svg class="fg" id="s5b" viewBox="0 0 552 138" role="img" aria-label="Các giao thức định tuyến cho Linux/tầng IP không chuyển sang được ESP32; ESP32 dùng painlessMesh"></svg>
-        <p class="st" data-s="2"><span class="kw">không có bản cho ESP32 → painlessMesh</span><span class="fl">AODV, OLSR/DSDV, B.A.T.M.A.N đều cho Linux/tầng IP, không có bản cho ESP32 → dùng cơ chế sẵn của painlessMesh.</span></p>
+        <p class="st" data-s="1"><span class="kw">không có bản cho ESP32 → painlessMesh</span><span class="fl">AODV, OLSR/DSDV, B.A.T.M.A.N đều cho Linux/tầng IP, không có bản cho ESP32 → dùng cơ chế sẵn của painlessMesh.</span></p>
       </div>
       <div class="nf ru r">
         <h3>painlessMesh</h3>
         <svg class="fg" id="s5c" viewBox="0 0 552 118" role="img" aria-label="painlessMesh: cây động; Leaf di chuyển thì tự đổi node cha, mỗi node chỉ một đường lên Root"></svg>
-        <p class="st" data-s="3"><span class="kw">JSON qua TCP, ~1400 byte/bản tin</span><span class="fl">Mạng cây tự tổ chức, bản tin JSON qua TCP, chuyển tiếp từng cạnh, ~1400 byte/bản tin.</span> <span class="kw"><b>Cây động, không phải full mesh</b></span><span class="fl"><b>Là cây động, không phải full mesh.</b></span></p>
+        <p class="st" data-s="2"><span class="kw">JSON qua TCP, ~1400 byte/bản tin</span><span class="kw"><b>Cây động, không phải full mesh</b></span><span class="fl">Mạng cây tự tổ chức, bản tin JSON qua TCP, chuyển tiếp từng cạnh, ~1400 byte/bản tin. <b>Là cây động, không phải full mesh.</b></span></p>
       </div>
       <div class="nf ru g">
         <h3>FreeRTOS</h3>
         <svg class="fg" id="s5d" viewBox="0 0 552 118" role="img" aria-label="Dòng thời gian của loopTask: khi loop() bị chặn, mesh.update() được gọi thưa"></svg>
-        <p class="st" data-s="4"><span class="kw"><code>loop()</code> bị chặn → <code>mesh.update()</code> gọi thưa</span><span class="fl">painlessMesh chạy trong <code>loopTask</code>; nếu <code>loop()</code> bị chặn thì <code>mesh.update()</code> bị gọi thưa.</span> <span class="kw">mạng ngừng truyền</span><span class="fl">Giải thích hiện tượng mạng ngừng truyền ở phần kết quả.</span></p>
+        <p class="st" data-s="2"><span class="kw"><code>loop()</code> bị chặn → <code>mesh.update()</code> gọi thưa</span><span class="kw">mạng ngừng truyền</span><span class="fl">painlessMesh chạy trong <code>loopTask</code>; nếu <code>loop()</code> bị chặn thì <code>mesh.update()</code> bị gọi thưa. Giải thích hiện tượng mạng ngừng truyền ở phần kết quả.</span></p>
       </div>
     </div>
   </div>
@@ -176,8 +177,9 @@
       <div class="f1 fig-wrap"><svg class="fig" id="s6fig" viewBox="0 0 500 372" role="img" aria-label="Trục thời gian t: từ lúc Leaf chụp đến lúc Root ghép xong là độ trễ d; trong cửa sổ Δt đếm khung nhận được và khung bị hủy; từ lúc mất đến lúc nối lại luồng gói là T_ph"></svg><span class="slow">hình động làm chậm</span></div>
     </div>
     <div class="nt">
-      <p class="st r" data-s="1">Độ trễ dùng đồng hồ do painlessMesh đồng bộ, không cần NTP.</p>
-      <p class="st b" data-s="2">Tự phục hồi đo theo gói phân mảnh cuối cùng nhận được và gói đầu tiên nhận lại, không theo sự kiện topology của thư viện.</p>
+      <p class="st r kwp" data-s="1"><span class="kw">Đồng hồ painlessMesh, không cần NTP</span></p>
+      <p class="st b kwp" data-s="2"><span class="kw">Đo theo gói, không theo topology</span></p>
+      <p class="fl st r" data-s="1">Độ trễ dùng đồng hồ do painlessMesh đồng bộ, không cần NTP.</p> <p class="fl st b" data-s="2">Tự phục hồi đo theo gói phân mảnh cuối cùng nhận được và gói đầu tiên nhận lại, không theo sự kiện topology của thư viện.</p>
     </div>
   </div>
   <span class="src">chuong2.tex, mục 2.6</span>
@@ -192,12 +194,12 @@
     <div class="fig-wrap">
       <svg class="fig" id="s7fig" viewBox="0 0 1136 448" role="img" aria-label="Sơ đồ cơ cấu: ba Leaf đẩy chunk qua mesh dạng cây tới Root, qua UART lên PC"></svg>
       <span class="slow">hình động làm chậm</span>
-      <div class="co c1 ru r st" data-s="1"><div class="lab r">Lớp 1 — Mesh</div><h3>Leaf × 3</h3><span class="tg">ESP32-CAM OV3660 · pin 18650</span><p class="sm">Gói phân mảnh 1024&nbsp;B + header 16&nbsp;B, Base64, <code>sendSingle</code></p></div>
-      <div class="co c2 ru st" data-s="2"><div class="lab">Root</div><h3>Ghép ảnh</h3><span class="tg">ESP32 DevKitC</span><p class="sm">Ghép 4 khung song song, chỉ gửi lên PC ảnh đã hoàn chỉnh</p></div>
-      <div class="co c3 ru b st" data-s="3"><div class="lab b">Lớp 2 — UART 921600&nbsp;bps</div><div class="mono fr">AA 55 | TYPE | LEN | PAYLOAD&nbsp;| CRC16</div><p class="sm">Khung nhị phân, có kiểm CRC</p></div>
-      <div class="co c4 ru g st" data-s="4"><div class="lab g">Lớp 3 — PC</div><p class="sm" style="font-weight:700">Middleware Node.js (serialport) → Socket.IO → Web Dashboard (React)</p></div>
+      <div class="co c1 ru r st" data-s="1"><div class="lab r">Lớp 1 — Mesh</div><h3>Leaf × 3</h3><span class="tg">ESP32-CAM OV3660 · pin 18650</span><p class="sm"><span class="kw">1024&nbsp;B + header 16&nbsp;B, Base64</span><span class="fl">Gói phân mảnh 1024&nbsp;B + header 16&nbsp;B, Base64, <code>sendSingle</code></span></p></div>
+      <div class="co c2 ru st" data-s="1"><div class="lab">Root</div><h3>Ghép ảnh</h3><span class="tg">ESP32 DevKitC</span><p class="sm"><span class="kw">Ghép 4 khung song song</span><span class="fl">Ghép 4 khung song song, chỉ gửi lên PC ảnh đã hoàn chỉnh</span></p></div>
+      <div class="co c3 ru b st" data-s="2"><div class="lab b">Lớp 2 — UART 921600&nbsp;bps</div><div class="mono fr">AA 55 | TYPE | LEN | PAYLOAD&nbsp;| CRC16</div><p class="sm"><span class="kw">Khung nhị phân, kiểm CRC</span><span class="fl">Khung nhị phân, có kiểm CRC</span></p></div>
+      <div class="co c4 ru g st" data-s="2"><div class="lab g">Lớp 3 — PC</div><p class="sm" style="font-weight:700"><span class="kw">Node.js → Socket.IO → React</span><span class="fl">Middleware Node.js (serialport) → Socket.IO → Web Dashboard (React)</span></p></div>
     </div>
-    <p class="note st" data-s="4"><b>Ý chính:</b> Root chỉ gửi lên PC ảnh đã ghép → middleware và dashboard không xử lý mất gói trên mesh. Tách truyền vô tuyến khỏi hiển thị.</p>
+    <p class="note st" data-s="2"><b>Ý chính:</b> <span class="kw">Root chỉ gửi ảnh đã ghép · tách vô tuyến khỏi hiển thị</span><span class="fl">Root chỉ gửi lên PC ảnh đã ghép → middleware và dashboard không xử lý mất gói trên mesh. Tách truyền vô tuyến khỏi hiển thị.</span></p>
   </div>
   <span class="src">chuong3.tex, mục 3.1</span>
   <aside>Lớp 1 lo truyền vô tuyến, lớp 2 là cầu nối nhị phân có CRC, lớp 3 chỉ hiển thị. Nhờ tách lớp nên lỗi ở lớp nào biết ngay lớp đó.</aside>
@@ -249,10 +251,10 @@
     </div>
     <div class="fig-wrap"><svg class="fig" id="s9fig" viewBox="0 0 1136 240" role="img" aria-label="Sơ đồ: một khung JPEG bị cắt thành các chunk, mỗi chunk gắn header 16 byte, đi qua mesh tới Root và được ghép lại"></svg><span class="slow">hình động làm chậm</span><span class="slow ns">không theo tỉ lệ so với payload</span></div>
     <ul class="l g4">
-      <li><span class="st" data-s="1">Payload tối đa <b>1024 B</b>; (16 + 1024) B mã hóa Base64 → tối đa <b>1388 ký tự</b>, vừa giới hạn ~1400 B của painlessMesh.</span></li>
-      <li><span class="st" data-s="2">Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</span></li>
-      <li><span class="st" data-s="3"><code>capture_us</code> thêm ngày 30/09 để đo độ trễ (trước đó header 12 B).</span></li>
-      <li><span class="st" data-s="4">Phân mảnh tự viết ở tầng ứng dụng, khác IP fragmentation ở tầng Network.</span></li>
+      <li><span class="st" data-s="1"><span class="kw">Payload <b>1024 B</b> → <b>1388 ký tự</b></span><span class="fl">Payload tối đa <b>1024 B</b>; (16 + 1024) B mã hóa Base64 → tối đa <b>1388 ký tự</b>, vừa giới hạn ~1400 B của painlessMesh.</span></span></li>
+      <li><span class="st" data-s="2"><span class="kw">Nhỏ hơn 1024: chỉ tăng overhead</span><span class="fl">Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</span></span></li>
+      <li><span class="st" data-s="3"><span class="kw"><code>capture_us</code> thêm 30/09, đo độ trễ</span><span class="fl"><code>capture_us</code> thêm ngày 30/09 để đo độ trễ (trước đó header 12 B).</span></span></li>
+      <li><span class="st" data-s="4"><span class="kw">Tầng ứng dụng, khác IP fragmentation</span><span class="fl">Phân mảnh tự viết ở tầng ứng dụng, khác IP fragmentation ở tầng Network.</span></span></li>
     </ul>
   </div>
   <span class="src">chuong3.tex, Bảng 3.3</span>
@@ -274,16 +276,16 @@
         </div>
         <div class="gp"><span class="gl">Chụp và gửi</span>
           <ul class="l">
-            <li>QVGA 320×240, JPEG quality 12, chu kỳ <b>600 ms</b></li>
-            <li>Học ID Root qua beacon <code>#ROOT</code> (2 s), gửi <code>sendSingle</code> thẳng tới Root</li>
-            <li>Gửi lệch pha: 3 khe × 200 ms, mỗi Leaf một khe</li>
+            <li><span class="kw">QVGA 320×240 · chu kỳ <b>600 ms</b></span><span class="fl">QVGA 320×240, JPEG quality 12, chu kỳ <b>600 ms</b></span></li>
+            <li><span class="kw">beacon <code>#ROOT</code> → <code>sendSingle</code> tới Root</span><span class="fl">Học ID Root qua beacon <code>#ROOT</code> (2 s), gửi <code>sendSingle</code> thẳng tới Root</span></li>
+            <li><span class="kw">Lệch pha: 3 khe × 200 ms</span><span class="fl">Gửi lệch pha: 3 khe × 200 ms, mỗi Leaf một khe</span></li>
           </ul>
         </div>
         <div class="gp"><span class="gl">Giám sát</span>
           <ul class="l">
-            <li>Watchdog: mất beacon &gt; 8 s học lại Root; &gt; 30 s khởi động lại</li>
-            <li class="st" data-s="2"><code>#NSTAT</code> mỗi 2 s: RSSI, heap, firmware, lý do reset</li>
-            <li class="st" data-s="2"><code>#</code> không thuộc bảng Base64 → không nhầm với gói ảnh</li>
+            <li><span class="kw">Watchdog: mất beacon 8 s · 30 s</span><span class="fl">Watchdog: mất beacon &gt; 8 s học lại Root; &gt; 30 s khởi động lại</span></li>
+            <li class="st" data-s="2"><span class="kw"><code>#NSTAT</code> mỗi 2 s: RSSI, heap</span><span class="fl"><code>#NSTAT</code> mỗi 2 s: RSSI, heap, firmware, lý do reset</span></li>
+            <li class="st" data-s="2"><span class="kw"><code>#</code> không thuộc Base64</span><span class="fl"><code>#</code> không thuộc bảng Base64 → không nhầm với gói ảnh</span></li>
           </ul>
         </div>
       </div>
@@ -295,15 +297,16 @@
         </div>
         <div class="gp"><span class="gl">Ghép khung</span>
           <ul class="l">
-            <li>4 slot ghép, mỗi slot có bitmap + timeout <b>2 s</b></li>
-            <li><b>Supersede:</b> khung mới của cùng node → hủy khung cũ chưa xong</li>
-            <li class="st" data-s="1">Hết slot → loại khung cũ nhất (LRU)</li>
+            <li><span class="kw">4 slot · bitmap · timeout <b>2 s</b></span><span class="fl">4 slot ghép, mỗi slot có bitmap + timeout <b>2 s</b></span></li>
+            <li><span class="kw"><b>Supersede:</b> khung mới hủy khung cũ</span><span class="fl"><b>Supersede:</b> khung mới của cùng node → hủy khung cũ chưa xong</span></li>
+            <li class="st" data-s="1"><span class="kw">Hết slot → loại cũ nhất (LRU)</span><span class="fl">Hết slot → loại khung cũ nhất (LRU)</span></li>
           </ul>
         </div>
         <div class="gp st" data-s="2"><span class="gl">Giám sát</span>
           <ul class="l">
-            <li>Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</li>
-            <li>Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</li>
+            <li><span class="kw">Telemetry mỗi 2 s: heap, RSSI</span><span class="fl">Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</span></li>
+            <li><span class="kw">Node im lặng &gt; 10 s</span><span class="fl">Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</span></li>
+            <li class="k2"><span class="kw">heap &lt; 40 KB → tự reset</span></li>
           </ul>
         </div>
       </div>
@@ -318,8 +321,8 @@
   <div class="hd"><span class="k">03 · UART, Middleware, Dashboard</span><span class="pg"></span></div>
   <h2 class="t m">Khung nhị phân có CRC, dashboard dùng dữ liệu thật</h2>
   <div class="body">
-    <div class="row cols">
-      <div class="col lc">
+    <div class="stg">
+      <div class="lc">
         <div class="blk a">
           <h3>Khung UART</h3>
           <div class="frm">
@@ -330,24 +333,30 @@
             <span class="c3">PAYLOAD</span>
             <span class="c4">CRC16/<wbr>CCITT-FALSE</span>
           </div>
-          <p class="sn st" data-s="1">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</p>
+          <p class="sn"><span class="kw">Bỏ khung ảnh nếu &lt; ½</span><span class="kw">telemetry, log không bị bỏ</span><span class="fl">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</span></p>
         </div>
         <div class="blk b">
-          <h3>Middleware Node.js</h3>
-          <p class="bd"><span class="slow">hình động làm chậm</span><span class="slow st" data-s="2">kịch bản test 7/7</span></p>
-          <div class="scn">
-            <svg class="fig" id="s11fig" viewBox="0 0 704 232" role="img" aria-label="Bộ đệm UART ở Root bỏ khung ảnh khi còn dưới một nửa; khung đi qua cáp UART tới middleware, qua ba cổng kiểm MAGIC, LEN, CRC rồi Socket.IO tới dashboard"></svg>
-            <p class="gl"><span class="g1">Tìm MAGIC</span><span class="g2">kiểm LEN (≤&nbsp;131072)</span><span class="g3">kiểm CRC</span><span class="g4">Socket.IO</span></p>
+          <div class="mh">
+            <h3>Middleware Node.js</h3>
+            <p class="bt st" data-s="1"><span class="kw">Chỉ bỏ phần hỏng · test <b class="good">7/7</b></span><span class="fl">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.</span><span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
           </div>
-          <p class="bt st" data-s="2">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.<span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
+          <div class="sw">
+            <p class="bd"><span class="slow">hình động làm chậm</span><span class="slow st" data-s="1">kịch bản test 7/7</span></p>
+            <div class="scn">
+              <svg class="fig" id="s11fig" viewBox="0 0 704 212" role="img" aria-label="Bộ đệm UART ở Root bỏ khung ảnh khi còn dưới một nửa; khung đi qua cáp UART tới middleware, qua ba cổng kiểm MAGIC, LEN, CRC rồi Socket.IO tới dashboard"></svg>
+              <p class="gl"><span class="g1">Tìm MAGIC</span><span class="g2">kiểm LEN (≤&nbsp;131072)</span><span class="g3">kiểm CRC</span><span class="g4">Socket.IO</span></p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col rc">
-        <figure class="shot"><div class="cr"><img class="i1" src="assets/dashboardtab1.png" alt="Dashboard tab Live"></div><figcaption>Tab Live</figcaption></figure>
-        <figure class="shot"><div class="cr"><img class="i2" src="assets/dashboardtab2.png" alt="Dashboard tab So sánh"></div><figcaption>Tab So sánh</figcaption></figure>
-        <div class="blk c st" data-s="3">
+      <div class="dash st" data-s="2">
+        <div class="imgs">
+          <figure class="shot"><img class="i1" src="assets/dashboardtab1.png" width="1920" height="1080" alt="Ảnh chụp màn hình dashboard, tab Live: cột trạng thái kết nối và telemetry của Root, khung media stream chờ Leaf vào mạng mesh"><figcaption>Tab Live</figcaption></figure>
+          <figure class="shot"><img class="i2" src="assets/dashboardtab2.png" width="1920" height="1080" alt="Ảnh chụp màn hình dashboard, tab So sánh: các biểu đồ cột FPS, thông lượng, tỉ lệ frame bị hủy, chunk, heap, latency và self-healing theo 1, 2, 3 drone"><figcaption>Tab So sánh</figcaption></figure>
+        </div>
+        <div class="blk c">
           <h3>Dashboard (React 18 + Tailwind)</h3>
-          <p>Tab Live: ảnh từng Leaf, cây topology theo RSSI. Tab So sánh: FPS, thông lượng, tỉ lệ hủy, heap, tự phục hồi; xuất CSV.</p>
+          <p><span class="kw">Live: ảnh Leaf, topology RSSI</span><span class="kw">So sánh: FPS, heap, xuất CSV</span><span class="fl">Tab Live: ảnh từng Leaf, cây topology theo RSSI. Tab So sánh: FPS, thông lượng, tỉ lệ hủy, heap, tự phục hồi; xuất CSV.</span></p>
         </div>
       </div>
     </div>
@@ -484,7 +493,7 @@
   <h2 class="t">Chu kỳ 600 ms và bộ đệm UART 16 KB</h2>
   <div class="body">
     <div class="row grow" style="gap:36px">
-      <div class="col" style="flex:0 0 520px;gap:14px">
+      <div class="col" style="flex:0 0 480px;gap:14px">
         <div>
           <h3 class="th">Chu kỳ 600 ms</h3>
           <table class="tb t1">
@@ -509,8 +518,8 @@
         </div>
       </div>
       <div class="col f1" style="gap:12px;min-width:0">
-        <div class="fig-wrap"><svg class="fig" id="s14fig" viewBox="0 0 580 340" role="img" aria-label="Hai bộ đệm UART như hai bể chứa: Root ghép xong từng khung ảnh rồi đẩy vào bể; bể 8 KB không đủ chỗ nên khung bị bỏ, rơi nguyên tấm ra ngoài (uartDrop); bể 16 KB không bỏ khung nào"></svg><span class="slow">hình động làm chậm</span></div>
-        <p class="warnbox st" data-s="2"><b>Thận trọng:</b> mỗi cấu hình đo 1 lần, thời lượng khác nhau, hai firmware còn khác ở chỗ khác — chỉ nói "trong hai phép đo này", không khẳng định chung.</p>
+        <div class="fig-wrap"><svg class="fig" id="s14fig" viewBox="0 0 640 440" role="img" aria-label="Hai bộ đệm UART như hai bể chứa: Root ghép xong từng khung ảnh rồi đẩy vào bể; bể 8 KB không đủ chỗ nên khung bị bỏ, rơi nguyên tấm ra ngoài (uartDrop); bể 16 KB không bỏ khung nào"></svg><span class="slow">hình động làm chậm</span></div>
+        <p class="warnbox st" data-s="2"><b>Thận trọng:</b> <span class="kw">đo 1 lần, không khẳng định chung</span><span class="fl">mỗi cấu hình đo 1 lần, thời lượng khác nhau, hai firmware còn khác ở chỗ khác — chỉ nói "trong hai phép đo này", không khẳng định chung.</span></p>
       </div>
     </div>
   </div>
@@ -524,7 +533,7 @@
   <h2 class="t">Mỗi chặng cộng thêm ~200 ms độ trễ</h2>
   <div class="body">
     <div class="row grow" style="gap:36px">
-      <div class="col" style="flex:0 0 612px;gap:6px">
+      <div class="col lc" style="gap:6px">
         <div class="cap"><h3>Độ trễ trung vị theo số chặng (ms)</h3><span class="lab">trung vị; RSSI trung bình</span></div>
         <div class="fig-wrap"><svg class="fig" id="s15fig" viewBox="0 0 612 440" role="img" aria-label="Chuỗi ba chặng: Root, ba Leaf nối tiếp; chunk đi lần lượt qua từng chặng, cột cao tỉ lệ với độ trễ trung vị 148, 350, 576 ms">
           <text class="v" id="s15v1" font-size="30" font-weight="700">148</text>
@@ -540,16 +549,16 @@
         </svg><span class="slow">hình động làm chậm</span></div>
       </div>
       <div class="col f1" style="gap:14px;min-width:0">
-        <p class="sm muted">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16&nbsp;phút (490&nbsp;mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</p>
+        <p class="sm muted"><span class="kw">~16&nbsp;phút, 490&nbsp;mẫu, bật stagger</span><span class="fl">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16&nbsp;phút (490&nbsp;mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</span></p>
         <div class="stats">
           <div class="stat"><div class="n">4,94</div><p>FPS tổng</p></div>
           <div class="stat"><div class="n">20,6<small>KB/s</small></div><p>thông lượng</p></div>
           <div class="stat g"><div class="n">0,56<small>%</small></div><p>hủy; uartDrop 0</p></div>
         </div>
         <ul class="l b3">
-          <li class="st" data-s="1">FPS gần như không đổi so với test21: tải bị giới hạn bởi chu kỳ chụp, <b class="rd">chưa ép tới bão hòa</b> → chưa đo suy giảm thông lượng theo hop</li>
-          <li class="st" data-s="2">~6,5&nbsp;% mẫu trễ &gt; 1&nbsp;s, cao nhất 4,3&nbsp;s</li>
-          <li class="st" data-s="3"><b>Tự phục hồi:</b> 5 sự kiện, 1530–23225&nbsp;ms; node mới gia nhập làm toàn mạng gián đoạn ~16&nbsp;s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</li>
+          <li class="st" data-s="1"><span class="kw">FPS không đổi, <b class="rd">chưa ép tới <span class="nw">bão hòa</span></b></span><span class="fl">FPS gần như không đổi so với test21: tải bị giới hạn bởi chu kỳ chụp, <b class="rd">chưa ép tới bão hòa</b> → chưa đo suy giảm thông lượng theo hop</span></li>
+          <li class="st" data-s="2">~6,5&nbsp;% mẫu trễ &gt; 1&nbsp;s, <span class="nw">cao nhất 4,3&nbsp;s</span></li>
+          <li class="st" data-s="3"><b>Tự phục hồi:</b> <span class="kw">5 sự kiện, <span class="nw">1530–23225&nbsp;ms</span></span><span class="fl">5 sự kiện, 1530–23225&nbsp;ms; node mới gia nhập làm toàn mạng gián đoạn ~16&nbsp;s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</span></li>
         </ul>
       </div>
     </div>
@@ -568,9 +577,9 @@
         <span class="dot"></span>
         <h3 class="good">Đạt được</h3>
         <ul class="l g">
-          <li>Chuỗi hoàn chỉnh trên phần cứng thật: chụp → phân mảnh → mesh → ghép → UART CRC → middleware → dashboard</li>
-          <li>Xác định bằng đo đạc 2&nbsp;nút&nbsp;thắt: số slot ghép, tải ghi UART</li>
-          <li>Watchdog, bảo vệ heap, theo dõi node im lặng, ghi UART không chặn, gửi lệch pha, đo độ trễ và tự phục hồi</li>
+          <li><span class="kw">Chuỗi hoàn chỉnh trên phần cứng thật</span><span class="fl">Chuỗi hoàn chỉnh trên phần cứng thật: chụp → phân mảnh → mesh → ghép → UART CRC → middleware → dashboard</span></li>
+          <li><span class="kw">Xác định 2&nbsp;nút&nbsp;thắt bằng đo đạc</span><span class="fl">Xác định bằng đo đạc 2&nbsp;nút&nbsp;thắt: số slot ghép, tải ghi UART</span></li>
+          <li><span class="kw">Watchdog, bảo vệ heap, tự phục hồi</span><span class="fl">Watchdog, bảo vệ heap, theo dõi node im lặng, ghi UART không chặn, gửi lệch pha, đo độ trễ và tự phục hồi</span></li>
         </ul>
 <svg class="chain" id="s16chain" viewBox="0 0 349 88" role="img" aria-label="Chuỗi: chụp, phân mảnh, mesh, ghép, UART CRC, middleware, dashboard">
   <g class="bk r" data-i="0"><rect x="1" y="4" width="50" height="30"/><text class="mo" x="26.0" y="24" text-anchor="middle" font-size="14" font-weight="500">chụp</text></g>
@@ -593,18 +602,18 @@
         <span class="dot"></span>
         <h3 class="wc">Hạn chế (nói trước)</h3>
         <ul class="l a lim st" data-s="1">
-          <li>Chưa gửi lại: mất 1&nbsp;chunk là mất cả khung</li>
-          <li>Tự phục hồi phân tán (<span class="nw">885–32528&nbsp;ms</span>; test22: <span class="nw">1530–23225&nbsp;ms</span>, cách đo mới), chưa đủ mẫu từng kịch bản</li>
-          <li>Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</li>
-          <li>Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 <span class="nw">+33&nbsp;%</span>) không thiết kế cho nhiều luồng ảnh</li>
+          <li><span class="kw">Chưa gửi lại, mất cả khung</span><span class="fl">Chưa gửi lại: mất 1&nbsp;chunk là mất cả khung</span></li>
+          <li><span class="kw">Tự phục hồi phân tán, chưa đủ mẫu</span><span class="fl">Tự phục hồi phân tán (<span class="nw">885–32528&nbsp;ms</span>; test22: <span class="nw">1530–23225&nbsp;ms</span>, cách đo mới), chưa đủ mẫu từng kịch bản</span></li>
+          <li><span class="kw">Chưa đo bão hòa, dòng tiêu thụ</span><span class="fl">Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</span></li>
+          <li><span class="kw">Node đặt tĩnh; Base64 <span class="nw">+33&nbsp;%</span></span><span class="fl">Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 <span class="nw">+33&nbsp;%</span>) không thiết kế cho nhiều luồng ảnh</span></li>
         </ul>
       </div>
       <div class="cl c3">
         <span class="dot"></span>
         <h3>Hướng phát triển</h3>
         <ul class="l b st" data-s="2">
-          <li><b>Ngắn hạn:</b> ghi UART sang task FreeRTOS riêng; đo tự phục hồi <span class="nw">5–10&nbsp;lần</span>; đo bão hòa <span class="nw">1/2/3&nbsp;chặng</span> và dòng Leaf; NACK gộp</li>
-          <li><b>Dài hạn:</b> <span class="nw">ESP-WIFI-MESH</span> (đã dựng một phần); định tuyến theo vị trí <span class="nw">(GPS/UWB)</span>; <span class="nw">ESP-NOW</span></li>
+          <li><b>Ngắn hạn:</b> <span class="kw">task FreeRTOS riêng; NACK gộp</span><span class="fl">ghi UART sang task FreeRTOS riêng; đo tự phục hồi <span class="nw">5–10&nbsp;lần</span>; đo bão hòa <span class="nw">1/2/3&nbsp;chặng</span> và dòng Leaf; NACK gộp</span></li>
+          <li><b>Dài hạn:</b> <span class="kw"><span class="nw">ESP-WIFI-MESH</span>, <span class="nw">GPS/UWB</span>, <span class="nw">ESP-NOW</span></span><span class="fl"><span class="nw">ESP-WIFI-MESH</span> (đã dựng một phần); định tuyến theo vị trí <span class="nw">(GPS/UWB)</span>; <span class="nw">ESP-NOW</span></span></li>
         </ul>
       </div>
     </div>
@@ -620,10 +629,10 @@
   <h2 class="t m">Vì sao chọn painlessMesh, không chọn ESP-WIFI-MESH?</h2>
   <div class="body">
     <div class="row grow" style="gap:44px">
-      <ul class="l bk" style="flex:0 0 650px">
-        <li class="st" data-s="1">Danh sách nhiệm vụ đề tài đã chỉ định painlessMesh; chốt ngày 29/09/2026.</li>
-        <li class="st" data-s="2">Chạy trên Arduino, nhanh dựng mẫu; gói board esp32 hạ từ 3.3.11 về 2.0.17 theo khuyến nghị thư viện; dùng fork Alteriom/painlessMesh 2.0.3.</li>
-        <li class="st" data-s="3">Bản ESP-IDF được giữ trong <code class="nw">data/esp_idf_migration/</code>, đưa vào hướng phát triển.</li>
+      <ul class="l bk">
+        <li class="st" data-s="1"><span class="kw">Đề tài đã chỉ định painlessMesh</span><span class="fl">Danh sách nhiệm vụ đề tài đã chỉ định painlessMesh; chốt ngày 29/09/2026.</span></li>
+        <li class="st" data-s="2"><span class="kw">Chạy trên Arduino, nhanh dựng mẫu</span><span class="fl">Chạy trên Arduino, nhanh dựng mẫu; gói board esp32 hạ từ 3.3.11 về 2.0.17 theo khuyến nghị thư viện; dùng fork Alteriom/painlessMesh 2.0.3.</span></li>
+        <li class="st" data-s="3"><span class="kw">ESP-IDF: đưa vào hướng phát triển</span><span class="fl">Bản ESP-IDF được giữ trong <code class="nw">data/esp_idf_migration/</code>, đưa vào hướng phát triển.</span></li>
       </ul>
       <div class="fig-wrap f1"><svg class="fig" id="b1fig" viewBox="0 0 492 440" role="img" aria-label="Hiện tại: painlessMesh trên Arduino. Hướng phát triển: ESP-WIFI-MESH trên ESP-IDF, bản đã dựng một phần giữ trong thư mục lưu trữ">
         <text class="mo t1" id="b1t1" font-size="15.5" font-weight="500">Arduino</text>
@@ -642,14 +651,14 @@
   <h2 class="t">Vì sao UART 921600 bps?</h2>
   <div class="body">
     <ul class="l bk">
-      <li class="st" data-s="1">115200 bps ≈ 11,5 KB/s (tính toán) — chưa đủ cho 2 Leaf (≈ 15,6 KB/s ở chu kỳ 600 ms) → UART thành nút thắt, làm sai số đo mesh.</li>
-      <li class="st" data-s="2">921600 bps ≈ 92 KB/s lý thuyết; thực tế đã chạm giới hạn ở 3 Leaf × 300 ms (~47 KB/s ảnh + ghi chặn) → bằng chứng cho thấy cần chọn tốc độ cao.</li>
+      <li class="st" data-s="1"><span class="kw">115200 bps: UART thành nút thắt</span><span class="fl">115200 bps ≈ 11,5 KB/s (tính toán) — chưa đủ cho 2 Leaf (≈ 15,6 KB/s ở chu kỳ 600 ms) → UART thành nút thắt, làm sai số đo mesh.</span></li>
+      <li class="st" data-s="2"><span class="kw">921600 bps: cần chọn tốc độ cao</span><span class="fl">921600 bps ≈ 92 KB/s lý thuyết; thực tế đã chạm giới hạn ở 3 Leaf × 300 ms (~47 KB/s ảnh + ghi chặn) → bằng chứng cho thấy cần chọn tốc độ cao.</span></li>
     </ul>
-    <div class="fig-wrap"><svg class="fig" id="b2fig" viewBox="0 0 1136 320" role="img" aria-label="Hai thanh dài tỉ lệ đúng: 115200 bps ≈ 11,5 KB/s và 921600 bps ≈ 92 KB/s, cùng hai mốc tải 15,6 KB/s (2 Leaf, 600 ms) và 47 KB/s (3 Leaf, 300 ms)">
-      <text class="mo" id="b2l1" font-size="15" font-weight="500">115200 bps ≈ 11,5 KB/s</text>
-      <text class="mo" id="b2l2" font-size="15" font-weight="500">921600 bps ≈ 92 KB/s</text>
-      <text class="mo" id="b2m1" font-size="15" font-weight="700">≈ 15,6 KB/s</text>
-      <text class="mo" id="b2m2" font-size="15" font-weight="700">~47 KB/s ảnh</text>
+    <div class="fig-wrap"><svg class="fig" id="b2fig" viewBox="0 0 1136 380" role="img" aria-label="Hai thanh dài tỉ lệ đúng: 115200 bps ≈ 11,5 KB/s và 921600 bps ≈ 92 KB/s, cùng hai mốc tải 15,6 KB/s (2 Leaf, 600 ms) và 47 KB/s (3 Leaf, 300 ms)">
+      <text class="mo" id="b2l1" font-size="18" font-weight="500">115200 bps ≈ 11,5 KB/s</text>
+      <text class="mo" id="b2l2" font-size="18" font-weight="500">921600 bps ≈ 92 KB/s</text>
+      <text class="mo" id="b2m1" font-size="18" font-weight="700">≈ 15,6 KB/s</text>
+      <text class="mo" id="b2m2" font-size="18" font-weight="700">~47 KB/s ảnh</text>
     </svg></div>
   </div>
   <aside>Phím B.</aside>
@@ -661,10 +670,10 @@
   <h2 class="t">Vì sao WebSocket (Socket.IO), không MQTT?</h2>
   <div class="body">
     <div class="row grow" style="gap:40px">
-      <ul class="l bk" style="flex:0 0 440px">
-        <li class="st" data-s="1">Kiến trúc 1 Root – 1 middleware – 1 dashboard, không cần broker trung gian.</li>
-        <li class="st" data-s="2">Ít thành phần, độ trễ thấp hơn, triển khai nhanh.</li>
-        <li class="st" data-s="3">MQTT hợp lý khi mở rộng nhiều Root / nhiều dashboard.</li>
+      <ul class="l bk">
+        <li class="st" data-s="1"><span class="kw">Không cần broker trung gian</span><span class="fl">Kiến trúc 1 Root – 1 middleware – 1 dashboard, không cần broker trung gian.</span></li>
+        <li class="st" data-s="2"><span class="kw">Ít thành phần, triển khai nhanh</span><span class="fl">Ít thành phần, độ trễ thấp hơn, triển khai nhanh.</span></li>
+        <li class="st" data-s="3"><span class="kw">MQTT hợp lý khi mở rộng</span><span class="fl">MQTT hợp lý khi mở rộng nhiều Root / nhiều dashboard.</span></li>
       </ul>
       <div class="fig-wrap f1"><svg class="fig" id="b3fig" viewBox="0 0 656 450" role="img" aria-label="Trên: Root, middleware, dashboard nối thẳng bằng WebSocket, không cần broker. Dưới: nhiều Root và nhiều dashboard qua broker MQTT khi mở rộng"></svg></div>
     </div>
@@ -678,11 +687,11 @@
   <h2 class="t">Cơ chế ghép ảnh khi mất chunk</h2>
   <div class="body">
     <div class="row grow" style="gap:36px">
-      <ul class="l bk" style="flex:0 0 470px">
-        <li data-s="1">Bitmap đánh dấu chunk đã nhận; quá <b>2&nbsp;s</b> chưa đủ → hủy khung.</li>
-        <li data-s="2">Khung mới cùng node tới → hủy khung cũ (supersede, vì Leaf gửi tuần tự).</li>
+      <ul class="l bk">
+        <li data-s="1"><span class="kw">Bitmap: quá <b>2&nbsp;s</b> → hủy khung</span><span class="fl">Bitmap đánh dấu chunk đã nhận; quá <b>2&nbsp;s</b> chưa đủ → hủy khung.</span></li>
+        <li data-s="2"><span class="kw">Khung mới → hủy khung cũ (supersede)</span><span class="fl">Khung mới cùng node tới → hủy khung cũ (supersede, vì Leaf gửi tuần tự).</span></li>
         <li data-s="3">Hết slot → LRU.</li>
-        <li data-s="4">Hướng cải tiến: NACK gộp, một bản tin/khung, tránh bão ACK.</li>
+        <li data-s="4"><span class="kw">Hướng cải tiến: NACK gộp</span><span class="fl">Hướng cải tiến: NACK gộp, một bản tin/khung, tránh bão ACK.</span></li>
       </ul>
       <div class="fig-wrap f1"><svg class="fig" id="b4fig" viewBox="0 0 630 450" role="img" aria-label="Bốn slot ghép ở Root; mỗi slot có bitmap các chunk đã nhận và đồng hồ 2 s. Mất chunk: hủy khung; khung mới cùng node: hủy khung cũ; hết slot: bỏ slot ít dùng nhất; hướng cải tiến: NACK gộp"></svg></div>
     </div>

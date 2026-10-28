@@ -5,7 +5,7 @@
    Chỉ có các số của bảng gốc được hiển thị; kích thước khung/mức nước trong mô hình chỉ để minh họa (không in ra).
    Hai bể giữ đúng tỉ lệ 1 : 2 (cùng chiều cao, diện tích đáy gấp đôi). */
 var svg = document.getElementById('s14fig'), I = window.Iso, T = I.T;
-var sc = I.scene(svg, { az: 10, el: 38, rect: [106, 10, 474, 330],
+var sc = I.scene(svg, { az: 10, el: 38, rect: [124, 8, 516, 424],
   pts: [[-14, -132, -10], [296, -132, -10], [-14, 162, -10], [296, 162, -10], [130, 92, 80], [130, -82, 80], [130, -142, 0]] });
 var P = sc.pt;
 var PER = 8, NF = 3, A0 = .3, DA = .6, TBT = .8, RATE = 2.8, EXIT = 1.0, FS = 5;   /* DA = nhịp giữa các khung: đủ thưa để hai khung liền nhau không chồng lên nhau trên ray/miệng bể */
@@ -74,24 +74,24 @@ RIGS.forEach(function (R) {
 var lab = sc.g();
 RIGS.forEach(function (R) {
   var q = P(-14, R.yc, 0);
-  sc.text(lab, 4, q[1] - 2, R.name, 24, 700, 'start', '#26231c', 'sf');
-  sc.text(lab, 4, q[1] + 19, R.kb, 17, 700, 'start', '#1f4e9c', 'mo');
+  sc.text(lab, 4, q[1] - 4, R.name, 30, 700, 'start', '#26231c', 'sf');
+  sc.text(lab, 4, q[1] + 22, R.kb, 22, 700, 'start', '#1f4e9c', 'mo');
 });
 /* kết quả (hiện từ bước 1): uartDrop + thanh độ trễ tỉ lệ đúng */
 RIGS.forEach(function (R) {
   var g = R.res = sc.g(), y = R.yc;
   var a = y < 0 ? P(X0 - 40, y - R.pd, 0) : P(TX, y + R.pd, 0);
-  R.dropT = y < 0 ? sc.text(g, a[0], a[1] - 14, 'uartDrop ' + R.drop, 17, 700, 'end', R.col, 'mo') : sc.text(g, a[0], a[1] + 24, 'uartDrop ' + R.drop, 17, 700, 'middle', R.col, 'mo');
+  R.dropT = y < 0 ? sc.text(g, a[0], a[1] - 14, 'uartDrop ' + R.drop, 22, 700, 'end', R.col, 'mo') : sc.text(g, a[0], a[1] + 28, 'uartDrop ' + R.drop, 22, 700, 'middle', R.col, 'mo');
   var h = P(-14, y, 0);
-  R.latL = sc.text(g, 4, h[1] + 42, 'độ trễ TB', 14, 500, 'start', '#645f52', 'mo');
-  R.latV = sc.text(g, 4, h[1] + 66, R.lat, 25, 700, 'start', R.col, 'sf');
+  R.latL = sc.text(g, 4, h[1] + 50, 'độ trễ TB', 16, 500, 'start', '#645f52', 'mo');
+  R.latV = sc.text(g, 4, h[1] + 82, R.lat, 32, 700, 'start', R.col, 'sf');
   R.strip = sc.g(g);
 });
 function drawStrip(R, p) {                                             /* thanh độ trễ: ngay dưới nhãn "độ trễ TB" + số ms của chính nó, dài tỉ lệ 280 : 199 */
   var len = R.ms * LATK * ease(p), g = R.strip, h = P(-14, R.yc, 0);
   sc.clear(g);
   if (len < .5) return;
-  I.el('rect', { x: 4, y: (h[1] + 76).toFixed(1), width: len.toFixed(1), height: 9, rx: 1.5, fill: R.col }, g);
+  I.el('rect', { x: 4, y: (h[1] + 92).toFixed(1), width: len.toFixed(1), height: 10, rx: 1.5, fill: R.col }, g);
 }
 
 /* ---- khung ảnh: tấm phẳng (đế màu theo Leaf) có hình nhỏ ở mặt trên; xén theo x để trượt ra/vào khe ---- */

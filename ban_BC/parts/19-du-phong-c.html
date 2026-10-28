@@ -4,10 +4,10 @@
   <h2 class="t">Vì sao WebSocket (Socket.IO), không MQTT?</h2>
   <div class="body">
     <div class="row grow" style="gap:40px">
-      <ul class="l bk" style="flex:0 0 440px">
-        <li class="st" data-s="1">Kiến trúc 1 Root – 1 middleware – 1 dashboard, không cần broker trung gian.</li>
-        <li class="st" data-s="2">Ít thành phần, độ trễ thấp hơn, triển khai nhanh.</li>
-        <li class="st" data-s="3">MQTT hợp lý khi mở rộng nhiều Root / nhiều dashboard.</li>
+      <ul class="l bk">
+        <li class="st" data-s="1"><span class="kw">Không cần broker trung gian</span><span class="fl">Kiến trúc 1 Root – 1 middleware – 1 dashboard, không cần broker trung gian.</span></li>
+        <li class="st" data-s="2"><span class="kw">Ít thành phần, triển khai nhanh</span><span class="fl">Ít thành phần, độ trễ thấp hơn, triển khai nhanh.</span></li>
+        <li class="st" data-s="3"><span class="kw">MQTT hợp lý khi mở rộng</span><span class="fl">MQTT hợp lý khi mở rộng nhiều Root / nhiều dashboard.</span></li>
       </ul>
       <div class="fig-wrap f1"><svg class="fig" id="b3fig" viewBox="0 0 656 450" role="img" aria-label="Trên: Root, middleware, dashboard nối thẳng bằng WebSocket, không cần broker. Dưới: nhiều Root và nhiều dashboard qua broker MQTT khi mở rộng"></svg></div>
     </div>

@@ -13,16 +13,16 @@
         </div>
         <div class="gp"><span class="gl">Chụp và gửi</span>
           <ul class="l">
-            <li>QVGA 320×240, JPEG quality 12, chu kỳ <b>600 ms</b></li>
-            <li>Học ID Root qua beacon <code>#ROOT</code> (2 s), gửi <code>sendSingle</code> thẳng tới Root</li>
-            <li>Gửi lệch pha: 3 khe × 200 ms, mỗi Leaf một khe</li>
+            <li><span class="kw">QVGA 320×240 · chu kỳ <b>600 ms</b></span><span class="fl">QVGA 320×240, JPEG quality 12, chu kỳ <b>600 ms</b></span></li>
+            <li><span class="kw">beacon <code>#ROOT</code> → <code>sendSingle</code> tới Root</span><span class="fl">Học ID Root qua beacon <code>#ROOT</code> (2 s), gửi <code>sendSingle</code> thẳng tới Root</span></li>
+            <li><span class="kw">Lệch pha: 3 khe × 200 ms</span><span class="fl">Gửi lệch pha: 3 khe × 200 ms, mỗi Leaf một khe</span></li>
           </ul>
         </div>
         <div class="gp"><span class="gl">Giám sát</span>
           <ul class="l">
-            <li>Watchdog: mất beacon &gt; 8 s học lại Root; &gt; 30 s khởi động lại</li>
-            <li class="st" data-s="2"><code>#NSTAT</code> mỗi 2 s: RSSI, heap, firmware, lý do reset</li>
-            <li class="st" data-s="2"><code>#</code> không thuộc bảng Base64 → không nhầm với gói ảnh</li>
+            <li><span class="kw">Watchdog: mất beacon 8 s · 30 s</span><span class="fl">Watchdog: mất beacon &gt; 8 s học lại Root; &gt; 30 s khởi động lại</span></li>
+            <li class="st" data-s="2"><span class="kw"><code>#NSTAT</code> mỗi 2 s: RSSI, heap</span><span class="fl"><code>#NSTAT</code> mỗi 2 s: RSSI, heap, firmware, lý do reset</span></li>
+            <li class="st" data-s="2"><span class="kw"><code>#</code> không thuộc Base64</span><span class="fl"><code>#</code> không thuộc bảng Base64 → không nhầm với gói ảnh</span></li>
           </ul>
         </div>
       </div>
@@ -34,15 +34,16 @@
         </div>
         <div class="gp"><span class="gl">Ghép khung</span>
           <ul class="l">
-            <li>4 slot ghép, mỗi slot có bitmap + timeout <b>2 s</b></li>
-            <li><b>Supersede:</b> khung mới của cùng node → hủy khung cũ chưa xong</li>
-            <li class="st" data-s="1">Hết slot → loại khung cũ nhất (LRU)</li>
+            <li><span class="kw">4 slot · bitmap · timeout <b>2 s</b></span><span class="fl">4 slot ghép, mỗi slot có bitmap + timeout <b>2 s</b></span></li>
+            <li><span class="kw"><b>Supersede:</b> khung mới hủy khung cũ</span><span class="fl"><b>Supersede:</b> khung mới của cùng node → hủy khung cũ chưa xong</span></li>
+            <li class="st" data-s="1"><span class="kw">Hết slot → loại cũ nhất (LRU)</span><span class="fl">Hết slot → loại khung cũ nhất (LRU)</span></li>
           </ul>
         </div>
         <div class="gp st" data-s="2"><span class="gl">Giám sát</span>
           <ul class="l">
-            <li>Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</li>
-            <li>Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</li>
+            <li><span class="kw">Telemetry mỗi 2 s: heap, RSSI</span><span class="fl">Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</span></li>
+            <li><span class="kw">Node im lặng &gt; 10 s</span><span class="fl">Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</span></li>
+            <li class="k2"><span class="kw">heap &lt; 40 KB → tự reset</span></li>
           </ul>
         </div>
       </div>

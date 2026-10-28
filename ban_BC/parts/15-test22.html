@@ -4,7 +4,7 @@
   <h2 class="t">Mỗi chặng cộng thêm ~200 ms độ trễ</h2>
   <div class="body">
     <div class="row grow" style="gap:36px">
-      <div class="col" style="flex:0 0 612px;gap:6px">
+      <div class="col lc" style="gap:6px">
         <div class="cap"><h3>Độ trễ trung vị theo số chặng (ms)</h3><span class="lab">trung vị; RSSI trung bình</span></div>
         <div class="fig-wrap"><svg class="fig" id="s15fig" viewBox="0 0 612 440" role="img" aria-label="Chuỗi ba chặng: Root, ba Leaf nối tiếp; chunk đi lần lượt qua từng chặng, cột cao tỉ lệ với độ trễ trung vị 148, 350, 576 ms">
           <text class="v" id="s15v1" font-size="30" font-weight="700">148</text>
@@ -20,16 +20,16 @@
         </svg><span class="slow">hình động làm chậm</span></div>
       </div>
       <div class="col f1" style="gap:14px;min-width:0">
-        <p class="sm muted">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16&nbsp;phút (490&nbsp;mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</p>
+        <p class="sm muted"><span class="kw">~16&nbsp;phút, 490&nbsp;mẫu, bật stagger</span><span class="fl">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16&nbsp;phút (490&nbsp;mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</span></p>
         <div class="stats">
           <div class="stat"><div class="n">4,94</div><p>FPS tổng</p></div>
           <div class="stat"><div class="n">20,6<small>KB/s</small></div><p>thông lượng</p></div>
           <div class="stat g"><div class="n">0,56<small>%</small></div><p>hủy; uartDrop 0</p></div>
         </div>
         <ul class="l b3">
-          <li class="st" data-s="1">FPS gần như không đổi so với test21: tải bị giới hạn bởi chu kỳ chụp, <b class="rd">chưa ép tới bão hòa</b> → chưa đo suy giảm thông lượng theo hop</li>
-          <li class="st" data-s="2">~6,5&nbsp;% mẫu trễ &gt; 1&nbsp;s, cao nhất 4,3&nbsp;s</li>
-          <li class="st" data-s="3"><b>Tự phục hồi:</b> 5 sự kiện, 1530–23225&nbsp;ms; node mới gia nhập làm toàn mạng gián đoạn ~16&nbsp;s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</li>
+          <li class="st" data-s="1"><span class="kw">FPS không đổi, <b class="rd">chưa ép tới <span class="nw">bão hòa</span></b></span><span class="fl">FPS gần như không đổi so với test21: tải bị giới hạn bởi chu kỳ chụp, <b class="rd">chưa ép tới bão hòa</b> → chưa đo suy giảm thông lượng theo hop</span></li>
+          <li class="st" data-s="2">~6,5&nbsp;% mẫu trễ &gt; 1&nbsp;s, <span class="nw">cao nhất 4,3&nbsp;s</span></li>
+          <li class="st" data-s="3"><b>Tự phục hồi:</b> <span class="kw">5 sự kiện, <span class="nw">1530–23225&nbsp;ms</span></span><span class="fl">5 sự kiện, 1530–23225&nbsp;ms; node mới gia nhập làm toàn mạng gián đoạn ~16&nbsp;s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</span></li>
         </ul>
       </div>
     </div>

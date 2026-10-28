@@ -22,3 +22,12 @@
 #s9 ul.g4 li:nth-child(2) .st{border-color:var(--blue)}
 #s9 ul.g4 li:nth-child(3) .st{border-color:var(--amber)}
 #s9 ul.g4 li:nth-child(4) .st{border-color:var(--green)}
+/* chữ từ khóa (mặc định): to hơn, ít chữ; chế độ chi tiết (K) giữ cỡ cũ ở trên */
+html:not(.detail) #s9 .hdr .f{font-size:17px;padding:9px 8px 8px}
+html:not(.detail) #s9 .hdr .f small{font-size:15px;margin-top:4px}
+html:not(.detail) #s9 .offs{height:26px;font-size:15px;line-height:24px}
+html:not(.detail) #s9 ul.g4{font-size:17px;gap:24px}
+html:not(.detail) #s9 .kw{font:600 28px/1.18 var(--serif);font-variation-settings:'wdth' 90,'opsz' 32;letter-spacing:-.004em}
+html:not(.detail) #s9 .kw code{font-size:.82em}
+html:not(.detail) #s9 .kw b{font-weight:800}
+html:not(.detail) #s9 .slow{font-size:14px}

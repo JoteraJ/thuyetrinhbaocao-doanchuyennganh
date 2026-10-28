@@ -21,3 +21,12 @@
 #s10 .slow.sa{right:0}
 #s10 .slow.sc{right:0}
 #s10 .slow.lru{right:176px}
+/* chữ từ khóa (mặc định): to hơn, ít chữ; chế độ chi tiết (K) giữ cỡ cũ ở trên */
+html.detail #s10 li.k2{display:none}
+html:not(.detail) #s10 .kw{font:600 22px/1.2 var(--serif);font-variation-settings:'wdth' 90,'opsz' 28;letter-spacing:-.003em}
+html:not(.detail) #s10 .kw code{font-size:.84em}
+html:not(.detail) #s10 .kw b{font-weight:800}
+html:not(.detail) #s10 ul.l{gap:5px}
+html:not(.detail) #s10 ul.l li{padding-left:24px}
+html:not(.detail) #s10 ul.l li::before{top:.5em;width:9px;height:9px}
+html:not(.detail) #s10 .gp .gl{font-size:14px}

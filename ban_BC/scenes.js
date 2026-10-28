@@ -1578,7 +1578,10 @@ function tx(g, x, y, str, size, w, anchor, fill, cls) { var e = sc.text(g, x, y,
 var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g();
 var cur = 0;
 function ST() { return (Deck.still && !/[?&]step=/.test(location.search)) ? 9 : cur; }
-Deck.steps.s11 = function (n) { cur = n; };
+Deck.steps.s11 = function (n) {
+  cur = n;
+  var sec = document.getElementById('s11'); if (sec) sec.classList.toggle('d', n >= 2);   /* bước cuối "Dashboard": cột sơ đồ mờ đi, hai ảnh hiện (xem css) */
+};
 var BLUE = T.blue, GRN = T.green, TEL = { top: '#9dbfee', y: '#3f78c4', x: '#2d5a99' }, LOG = { top: '#afbca9', y: '#7d9272', x: '#536472' };
 var RED = { top: '#ff9a82', y: '#b5301c', x: '#a8321f' }, AMB = { top: '#f2b24a', y: '#c98a1c', x: '#8a5200' };
 
@@ -1696,7 +1699,7 @@ function frame(t) {
   var curImg = MON.img, curLeaf = MON.leaf, tel = -9, lg = -9, passed = [];
   ARR.forEach(function (f) {
     if (f.drop || t < f.exit) return;
-    var fate = ST() >= 2 ? f.fate : 'ok';   /* lỗi chỉ được minh họa khi bước "Lỗi chỉ bỏ phần hỏng" hiện */
+    var fate = ST() >= 1 ? f.fate : 'ok';   /* lỗi chỉ được minh họa từ bước 1 ("Lỗi chỉ bỏ phần hỏng") */
     var big = fate === 'len', b = body(f.kind, f.leaf || 0, big), x = X_START + V * (t - f.exit), z = 4, y = 0, a = 1, ejected = false;
     var tg = [ [GX[0] - 8, 'noise'], [GX[1] - 22, 'len'], [GX[2] - 10, 'crc'] ];
         if (fate === 'len' && x > tg[1][0]) {
@@ -1719,7 +1722,7 @@ function frame(t) {
   });
   /* rác trước MAGIC: bị quét khỏi băng chuyền ở cổng 1 */
   ARR.forEach(function (f) {
-    if (!f.noise || ST() < 2) return;
+    if (!f.noise || ST() < 1) return;
     for (var k = 0; k < 4; k++) {
       var x = BELT0 + V * (t - f.exit + .55 + k * .09), y = 0, z = 4, a = 1;
       if (t < f.exit - .55 || x < BELT0) continue;
@@ -1836,7 +1839,7 @@ Deck.frames.s13 = function (t) {
    Chỉ có các số của bảng gốc được hiển thị; kích thước khung/mức nước trong mô hình chỉ để minh họa (không in ra).
    Hai bể giữ đúng tỉ lệ 1 : 2 (cùng chiều cao, diện tích đáy gấp đôi). */
 var svg = document.getElementById('s14fig'), I = window.Iso, T = I.T;
-var sc = I.scene(svg, { az: 10, el: 38, rect: [106, 10, 474, 330],
+var sc = I.scene(svg, { az: 10, el: 38, rect: [124, 8, 516, 424],
   pts: [[-14, -132, -10], [296, -132, -10], [-14, 162, -10], [296, 162, -10], [130, 92, 80], [130, -82, 80], [130, -142, 0]] });
 var P = sc.pt;
 var PER = 8, NF = 3, A0 = .3, DA = .6, TBT = .8, RATE = 2.8, EXIT = 1.0, FS = 5;   /* DA = nhịp giữa các khung: đủ thưa để hai khung liền nhau không chồng lên nhau trên ray/miệng bể */
@@ -1905,24 +1908,24 @@ RIGS.forEach(function (R) {
 var lab = sc.g();
 RIGS.forEach(function (R) {
   var q = P(-14, R.yc, 0);
-  sc.text(lab, 4, q[1] - 2, R.name, 24, 700, 'start', '#0c2a44', 'sf');
-  sc.text(lab, 4, q[1] + 19, R.kb, 17, 700, 'start', '#1a4f9c', 'mo');
+  sc.text(lab, 4, q[1] - 4, R.name, 30, 700, 'start', '#0c2a44', 'sf');
+  sc.text(lab, 4, q[1] + 22, R.kb, 22, 700, 'start', '#1a4f9c', 'mo');
 });
 /* kết quả (hiện từ bước 1): uartDrop + thanh độ trễ tỉ lệ đúng */
 RIGS.forEach(function (R) {
   var g = R.res = sc.g(), y = R.yc;
   var a = y < 0 ? P(X0 - 40, y - R.pd, 0) : P(TX, y + R.pd, 0);
-  R.dropT = y < 0 ? sc.text(g, a[0], a[1] - 14, 'uartDrop ' + R.drop, 17, 700, 'end', R.col, 'mo') : sc.text(g, a[0], a[1] + 24, 'uartDrop ' + R.drop, 17, 700, 'middle', R.col, 'mo');
+  R.dropT = y < 0 ? sc.text(g, a[0], a[1] - 14, 'uartDrop ' + R.drop, 22, 700, 'end', R.col, 'mo') : sc.text(g, a[0], a[1] + 28, 'uartDrop ' + R.drop, 22, 700, 'middle', R.col, 'mo');
   var h = P(-14, y, 0);
-  R.latL = sc.text(g, 4, h[1] + 42, 'độ trễ TB', 14, 500, 'start', '#34505c', 'mo');
-  R.latV = sc.text(g, 4, h[1] + 66, R.lat, 25, 700, 'start', R.col, 'sf');
+  R.latL = sc.text(g, 4, h[1] + 50, 'độ trễ TB', 16, 500, 'start', '#34505c', 'mo');
+  R.latV = sc.text(g, 4, h[1] + 82, R.lat, 32, 700, 'start', R.col, 'sf');
   R.strip = sc.g(g);
 });
 function drawStrip(R, p) {                                             /* thanh độ trễ: ngay dưới nhãn "độ trễ TB" + số ms của chính nó, dài tỉ lệ 280 : 199 */
   var len = R.ms * LATK * ease(p), g = R.strip, h = P(-14, R.yc, 0);
   sc.clear(g);
   if (len < .5) return;
-  I.el('rect', { x: 4, y: (h[1] + 76).toFixed(1), width: len.toFixed(1), height: 9, rx: 1.5, fill: R.col }, g);
+  I.el('rect', { x: 4, y: (h[1] + 92).toFixed(1), width: len.toFixed(1), height: 10, rx: 1.5, fill: R.col }, g);
 }
 
 /* ---- khung ảnh: tấm phẳng (đế màu theo Leaf) có hình nhỏ ở mặt trên; xén theo x để trượt ra/vào khe ---- */
@@ -2161,10 +2164,10 @@ Deck.frames.b1 = function (t) {
 /* Dự phòng B: hai thanh tốc độ UART vẽ đúng tỉ lệ (1 KB/s = 5,6 đơn vị dài): 11,5 : 92 = 1 : 8; hai mốc tải: 15,6 và 47 KB/s. */
 var svg = document.getElementById('b2fig'), I = window.Iso, T = I.T;
 var U = 5.6, V1 = 11.5, V2 = 92, M1 = 15.6, M2 = 47;
-var sc = I.scene(svg, { az: 6, el: 28, rect: [0, 8, 1136, 304], pts: [[-135, -56, -10], [V2 * U + 50, -56, -10], [-135, 110, -10], [V2 * U + 50, 110, -10], [M2 * U, -46, 78], [0, 0, 52], [0, 80, 52]] });
+var sc = I.scene(svg, { az: 6, el: 34, rect: [0, 8, 1136, 364], pts: [[-190, -56, -10], [V2 * U + 50, -56, -10], [-190, 110, -10], [V2 * U + 50, 110, -10], [M2 * U, -46, 78], [0, 0, 52], [0, 80, 52]] });
 var P = sc.pt;
 var plateG = sc.g(), barsG = sc.g(), gateG = sc.g(), dyn = sc.g();
-sc.box(plateG, -135, -56, -10, V2 * U + 185, 166, 10, T.plate);
+sc.box(plateG, -190, -56, -10, V2 * U + 240, 166, 10, T.plate);
 /* thang chia 0..92 KB/s (vạch không nhãn, mỗi ~11,5 KB/s) để thấy tỉ lệ */
 for (var i = 0; i <= 8; i++) sc.line(plateG, [i * V2 / 8 * U, -50, 0.2], [i * V2 / 8 * U, 104, 0.2], 'rgba(12,42,68,.16)', 1);
 var BY = [0, 80], BD = 26, BH = 22;

@@ -1,10 +1,10 @@
 /* Dự phòng B: hai thanh tốc độ UART vẽ đúng tỉ lệ (1 KB/s = 5,6 đơn vị dài): 11,5 : 92 = 1 : 8; hai mốc tải: 15,6 và 47 KB/s. */
 var svg = document.getElementById('b2fig'), I = window.Iso, T = I.T;
 var U = 5.6, V1 = 11.5, V2 = 92, M1 = 15.6, M2 = 47;
-var sc = I.scene(svg, { az: 6, el: 28, rect: [0, 8, 1136, 304], pts: [[-135, -56, -10], [V2 * U + 50, -56, -10], [-135, 110, -10], [V2 * U + 50, 110, -10], [M2 * U, -46, 78], [0, 0, 52], [0, 80, 52]] });
+var sc = I.scene(svg, { az: 6, el: 34, rect: [0, 8, 1136, 364], pts: [[-190, -56, -10], [V2 * U + 50, -56, -10], [-190, 110, -10], [V2 * U + 50, 110, -10], [M2 * U, -46, 78], [0, 0, 52], [0, 80, 52]] });
 var P = sc.pt;
 var plateG = sc.g(), barsG = sc.g(), gateG = sc.g(), dyn = sc.g();
-sc.box(plateG, -135, -56, -10, V2 * U + 185, 166, 10, T.plate);
+sc.box(plateG, -190, -56, -10, V2 * U + 240, 166, 10, T.plate);
 /* thang chia 0..92 KB/s (vạch không nhãn, mỗi ~11,5 KB/s) để thấy tỉ lệ */
 for (var i = 0; i <= 8; i++) sc.line(plateG, [i * V2 / 8 * U, -50, 0.2], [i * V2 / 8 * U, 104, 0.2], 'rgba(28,27,25,.16)', 1);
 var BY = [0, 80], BD = 26, BH = 22;

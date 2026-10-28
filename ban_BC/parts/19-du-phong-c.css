@@ -2,3 +2,7 @@
 #b3 ul.l.bk li{padding-left:28px}
 #b3 ul.l.bk li::before{top:.66em;width:10px;height:10px}
 #b3 .fig-wrap .fig{position:absolute;inset:0}
+
+html:not(.detail) #b3 ul.l.bk{flex:0 0 430px;font-size:36px;line-height:1.22;gap:48px}
+html:not(.detail) #b3 ul.l.bk li::before{top:.55em;width:12px;height:12px}
+html.detail #b3 ul.l.bk{flex-basis:440px}

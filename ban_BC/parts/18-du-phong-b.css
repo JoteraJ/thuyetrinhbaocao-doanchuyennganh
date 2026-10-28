@@ -2,3 +2,6 @@
 #b2 ul.l.bk li{padding-left:28px}
 #b2 ul.l.bk li::before{top:.62em;width:10px;height:10px}
 #b2 .fig-wrap .fig{position:absolute;inset:0}
+
+html:not(.detail) #b2 ul.l.bk{font-size:34px;line-height:1.25;gap:20px}
+html:not(.detail) #b2 ul.l.bk li::before{top:.55em;width:12px;height:12px}

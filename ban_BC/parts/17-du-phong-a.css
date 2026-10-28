@@ -6,3 +6,8 @@
 #b1 .fig-wrap .fig{position:absolute;inset:0}
 #b1 svg text.n{font-family:var(--serif)}
 #b1 svg text.t1{fill:var(--muted)}
+
+/* chữ từ khóa: chế độ mặc định chữ lớn, cột hẹp để sơ đồ rộng; chế độ chi tiết (K) giữ cỡ và bố cục cũ */
+html:not(.detail) #b1 ul.l.bk{flex:0 0 480px;font-size:34px;line-height:1.22;gap:48px}
+html:not(.detail) #b1 ul.l.bk li::before{top:.55em;width:12px;height:12px}
+html.detail #b1 ul.l.bk{flex-basis:650px}

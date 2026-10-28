@@ -10,7 +10,10 @@ function tx(g, x, y, str, size, w, anchor, fill, cls) { var e = sc.text(g, x, y,
 var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g();
 var cur = 0;
 function ST() { return (Deck.still && !/[?&]step=/.test(location.search)) ? 9 : cur; }
-Deck.steps.s11 = function (n) { cur = n; };
+Deck.steps.s11 = function (n) {
+  cur = n;
+  var sec = document.getElementById('s11'); if (sec) sec.classList.toggle('d', n >= 2);   /* bước cuối "Dashboard": cột sơ đồ mờ đi, hai ảnh hiện (xem css) */
+};
 var BLUE = T.blue, GRN = T.green, TEL = { top: '#9dbfee', y: '#3f78c4', x: '#2d5a99' }, LOG = { top: '#bdb8a8', y: '#8c8878', x: '#6c6859' };
 var RED = { top: '#ff9a82', y: '#d9432b', x: '#a8321f' }, AMB = { top: '#f2b24a', y: '#c98a1c', x: '#a06b10' };
 
@@ -128,7 +131,7 @@ function frame(t) {
   var curImg = MON.img, curLeaf = MON.leaf, tel = -9, lg = -9, passed = [];
   ARR.forEach(function (f) {
     if (f.drop || t < f.exit) return;
-    var fate = ST() >= 2 ? f.fate : 'ok';   /* lỗi chỉ được minh họa khi bước "Lỗi chỉ bỏ phần hỏng" hiện */
+    var fate = ST() >= 1 ? f.fate : 'ok';   /* lỗi chỉ được minh họa từ bước 1 ("Lỗi chỉ bỏ phần hỏng") */
     var big = fate === 'len', b = body(f.kind, f.leaf || 0, big), x = X_START + V * (t - f.exit), z = 4, y = 0, a = 1, ejected = false;
     var tg = [ [GX[0] - 8, 'noise'], [GX[1] - 22, 'len'], [GX[2] - 10, 'crc'] ];
         if (fate === 'len' && x > tg[1][0]) {
@@ -151,7 +154,7 @@ function frame(t) {
   });
   /* rác trước MAGIC: bị quét khỏi băng chuyền ở cổng 1 */
   ARR.forEach(function (f) {
-    if (!f.noise || ST() < 2) return;
+    if (!f.noise || ST() < 1) return;
     for (var k = 0; k < 4; k++) {
       var x = BELT0 + V * (t - f.exit + .55 + k * .09), y = 0, z = 4, a = 1;
       if (t < f.exit - .55 || x < BELT0) continue;

@@ -1,6 +1,6 @@
 #s16 .body{gap:0;justify-content:space-between;padding-top:14px}
-#s16 .cols{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:44px;flex:0 0 auto}
-#s16 .rail{position:absolute;left:0;right:0;top:15px;height:5px;background:linear-gradient(90deg,var(--green) 0 33%,var(--amber) 33% 66.5%,var(--blue) 66.5% 100%);display:block}
+#s16 .cols{position:relative;display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:40px;flex:0 0 auto}
+#s16 .rail{position:absolute;left:0;right:0;top:15px;height:5px;background:linear-gradient(90deg,var(--green) 0 40%,var(--amber) 40% 72%,var(--blue) 72% 100%);display:block}
 #s16 .cl{position:relative;min-width:0}
 #s16 .dot{display:block;width:34px;height:34px;border-radius:50%;background:var(--paper);border:5px solid var(--ink);position:relative;z-index:1;margin-bottom:12px}
 #s16 .c1 .dot{background:var(--green);border-color:var(--ink)}
@@ -23,3 +23,12 @@
 #s16 .chain .ar{fill:none;stroke:var(--ink);stroke-width:2;opacity:.6}
 #s16 .chain .ah{fill:var(--ink);opacity:.6}
 #s16 .chain .pk{fill:var(--gold);stroke:var(--ink);stroke-width:1.6}
+
+/* chữ từ khóa: cỡ lớn hơn, chỉ ở chế độ mặc định (không đặt display cho .kw/.fl) */
+html:not(.detail) #s16 ul.l{font-size:28px;line-height:1.22;gap:20px}
+html:not(.detail) #s16 ul.l li::before{top:.52em}
+html:not(.detail) #s16 h3{font-size:38px}
+html:not(.detail) #s16 .thx{font-size:34px}
+html.detail #s16 .cols{grid-template-columns:1.18fr 1fr 1fr}
+html.detail #s16 .rail{background:linear-gradient(90deg,var(--green) 0 37%,var(--amber) 37% 70%,var(--blue) 70% 100%)}
+html:not(.detail) #s16 ul.l.b li b{display:block}

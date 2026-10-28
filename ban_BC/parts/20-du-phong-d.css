@@ -6,3 +6,7 @@
 #b4 ul.l.bk li b{color:var(--red)}
 #b4 svg text.lb{font-family:var(--mono);font-weight:700;transition:opacity .25s}
 #b4 .fig-wrap .fig{position:absolute;inset:0}
+
+html:not(.detail) #b4 ul.l.bk{flex:0 0 430px;font-size:33px;line-height:1.22;gap:40px}
+html:not(.detail) #b4 ul.l.bk li::before{top:.55em;width:12px;height:12px}
+html.detail #b4 ul.l.bk{flex-basis:470px}

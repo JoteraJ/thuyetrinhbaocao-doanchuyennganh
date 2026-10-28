@@ -3,8 +3,8 @@
   <div class="hd"><span class="k">03 · UART, Middleware, Dashboard</span><span class="pg"></span></div>
   <h2 class="t m">Khung nhị phân có CRC, dashboard dùng dữ liệu thật</h2>
   <div class="body">
-    <div class="row cols">
-      <div class="col lc">
+    <div class="stg">
+      <div class="lc">
         <div class="blk a">
           <h3>Khung UART</h3>
           <div class="frm">
@@ -15,24 +15,30 @@
             <span class="c3">PAYLOAD</span>
             <span class="c4">CRC16/<wbr>CCITT-FALSE</span>
           </div>
-          <p class="sn st" data-s="1">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</p>
+          <p class="sn"><span class="kw">Bỏ khung ảnh nếu &lt; ½</span><span class="kw">telemetry, log không bị bỏ</span><span class="fl">Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</span></p>
         </div>
         <div class="blk b">
-          <h3>Middleware Node.js</h3>
-          <p class="bd"><span class="slow">hình động làm chậm</span><span class="slow st" data-s="2">kịch bản test 7/7</span></p>
-          <div class="scn">
-            <svg class="fig" id="s11fig" viewBox="0 0 704 232" role="img" aria-label="Bộ đệm UART ở Root bỏ khung ảnh khi còn dưới một nửa; khung đi qua cáp UART tới middleware, qua ba cổng kiểm MAGIC, LEN, CRC rồi Socket.IO tới dashboard"></svg>
-            <p class="gl"><span class="g1">Tìm MAGIC</span><span class="g2">kiểm LEN (≤&nbsp;131072)</span><span class="g3">kiểm CRC</span><span class="g4">Socket.IO</span></p>
+          <div class="mh">
+            <h3>Middleware Node.js</h3>
+            <p class="bt st" data-s="1"><span class="kw">Chỉ bỏ phần hỏng · test <b class="good">7/7</b></span><span class="fl">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.</span><span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
           </div>
-          <p class="bt st" data-s="2">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.<span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
+          <div class="sw">
+            <p class="bd"><span class="slow">hình động làm chậm</span><span class="slow st" data-s="1">kịch bản test 7/7</span></p>
+            <div class="scn">
+              <svg class="fig" id="s11fig" viewBox="0 0 704 212" role="img" aria-label="Bộ đệm UART ở Root bỏ khung ảnh khi còn dưới một nửa; khung đi qua cáp UART tới middleware, qua ba cổng kiểm MAGIC, LEN, CRC rồi Socket.IO tới dashboard"></svg>
+              <p class="gl"><span class="g1">Tìm MAGIC</span><span class="g2">kiểm LEN (≤&nbsp;131072)</span><span class="g3">kiểm CRC</span><span class="g4">Socket.IO</span></p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col rc">
-        <figure class="shot"><div class="cr"><img class="i1" src="assets/dashboardtab1.png" alt="Dashboard tab Live"></div><figcaption>Tab Live</figcaption></figure>
-        <figure class="shot"><div class="cr"><img class="i2" src="assets/dashboardtab2.png" alt="Dashboard tab So sánh"></div><figcaption>Tab So sánh</figcaption></figure>
-        <div class="blk c st" data-s="3">
+      <div class="dash st" data-s="2">
+        <div class="imgs">
+          <figure class="shot"><img class="i1" src="assets/dashboardtab1.png" width="1920" height="1080" alt="Ảnh chụp màn hình dashboard, tab Live: cột trạng thái kết nối và telemetry của Root, khung media stream chờ Leaf vào mạng mesh"><figcaption>Tab Live</figcaption></figure>
+          <figure class="shot"><img class="i2" src="assets/dashboardtab2.png" width="1920" height="1080" alt="Ảnh chụp màn hình dashboard, tab So sánh: các biểu đồ cột FPS, thông lượng, tỉ lệ frame bị hủy, chunk, heap, latency và self-healing theo 1, 2, 3 drone"><figcaption>Tab So sánh</figcaption></figure>
+        </div>
+        <div class="blk c">
           <h3>Dashboard (React 18 + Tailwind)</h3>
-          <p>Tab Live: ảnh từng Leaf, cây topology theo RSSI. Tab So sánh: FPS, thông lượng, tỉ lệ hủy, heap, tự phục hồi; xuất CSV.</p>
+          <p><span class="kw">Live: ảnh Leaf, topology RSSI</span><span class="kw">So sánh: FPS, heap, xuất CSV</span><span class="fl">Tab Live: ảnh từng Leaf, cây topology theo RSSI. Tab So sánh: FPS, thông lượng, tỉ lệ hủy, heap, tự phục hồi; xuất CSV.</span></p>
         </div>
       </div>
     </div>
