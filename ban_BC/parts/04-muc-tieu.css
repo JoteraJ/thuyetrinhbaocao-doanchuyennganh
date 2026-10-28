@@ -1,12 +1,18 @@
-#s4 .th{display:grid;grid-template-columns:220px 150px 1fr;column-gap:18px;border-bottom:2px solid var(--ink);padding-bottom:5px}
+#s4 .th{display:grid;grid-template-columns:232px 176px 1fr;column-gap:18px;border-bottom:2px solid var(--ink);padding-bottom:5px}
 #s4 .th .lab:first-child{grid-column:2}
 #s4 .th .lab:last-child{grid-column:3}
-#s4 .cr{display:grid;grid-template-columns:220px 150px 1fr;column-gap:18px;align-items:center;flex:1;border-bottom:1px solid var(--rule)}
+#s4 .cr{display:grid;grid-template-columns:232px 176px 1fr;column-gap:18px;align-items:center;flex:1;border-bottom:1px solid var(--rule)}
 #s4 .cr:last-child{border-bottom:0}
-#s4 .ic{width:220px;height:112px;display:block}
-#s4 .nm{font:700 25px/1.15 var(--serif);letter-spacing:-.01em}
+#s4 .ic{width:232px;height:118px;display:block}
+#s4 .nm{font:700 30px/1.15 var(--serif);letter-spacing:-.01em}
 #s4 .df{font-size:19px;line-height:1.45}
 #s4 .sp{width:100%;height:auto;display:block;margin:2px 0 4px}
 #s4 .col.ru ul.l{font-size:18px;gap:6px}
 #s4 li.wb{border:2px dashed var(--amber);padding:6px 10px 6px 30px;margin-top:2px}
 #s4 li.wb::before{left:11px;top:1.02em}
+/* chữ từ khóa (mặc định): to hơn, ít chữ */
+html:not(.detail) #s4 .df{font-size:25px;line-height:1.3}
+html:not(.detail) #s4 .col.ru ul.l{font-size:24px;line-height:1.3;gap:18px;text-wrap:balance}
+html:not(.detail) #s4 li.wb{padding:8px 10px 8px 30px}
+html:not(.detail) #s4 li.wb::before{top:1.1em}
+html:not(.detail) #s4 .sp{margin:12px 0 22px}

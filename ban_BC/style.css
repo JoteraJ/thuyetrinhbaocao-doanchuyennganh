@@ -1,9 +1,9 @@
 @import url(fonts/fonts.css);
-/* ===== Hệ thống thiết kế: khung tạp chí (C) + cơ cấu isometric (B), nhận diện "men ngọc – chàm – son – vàng" =====
-   Nền men ngọc, mực chàm; ba màu tuyến = ba lớp của hệ thống:
+/* ===== Hệ thống thiết kế: khung tạp chí (C) + cơ cấu isometric (B), nhận diện "xanh lá nhạt – chàm – son – vàng" =====
+   Nền xanh lá nhạt, mực chàm; ba màu tuyến = ba lớp của hệ thống:
    đỏ son = Lớp 1 Mesh · lam = Lớp 2 UART · lục = Lớp 3 PC · vàng thếp = điểm nhấn trên nền đêm */
 :root{
-  --paper:#d8eae0;--paper2:#c5dccf;--ink:#0c2a44;--muted:#34505c;--rule:rgba(12,42,68,.28);
+  --paper:#e3f0d6;--paper2:#cfe3bd;--ink:#0c2a44;--muted:#34505c;--rule:rgba(12,42,68,.28);
   --red:#b5301c;--blue:#1a4f9c;--green:#0b6a47;--amber:#8a5200;   /* đã chọn đủ tương phản AA cho chữ nhỏ trên nền men ngọc */
   --gold:#f2b632;--night:#0a2038;
   --serif:"Bricolage Grotesque","Be Vietnam Pro",system-ui,sans-serif;   /* chữ tiêu đề và số lớn */
@@ -20,7 +20,7 @@ svg .mo{font-family:var(--mono)}svg .sf{font-family:var(--serif)}svg .mu{fill:va
 /* ---- slide ---- */
 .slide{position:absolute;inset:0;display:none;flex-direction:column;padding:32px 72px 76px;font-size:21px;line-height:1.5}
 .slide.on{display:flex}
-.hd{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:20px;font:500 14px var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.hd{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;margin-bottom:20px;font:500 14px var(--mono);letter-spacing:.14em;text-transform:uppercase}
 .hd .k{color:var(--red)}.hd .k.w{color:var(--amber)}
 h2.t{font:800 52px/1.04 var(--serif);font-variation-settings:'wdth' 86,'opsz' 72;letter-spacing:-.012em;margin-bottom:18px;text-wrap:balance}
 h2.t.m{font-size:45px}h2.t.s{font-size:39px}
@@ -89,7 +89,8 @@ table.tb{border-collapse:collapse;width:100%;border-top:2px solid var(--ink)}
 #metro text{font:500 13px var(--mono);letter-spacing:0;text-transform:uppercase;fill:var(--muted)}
 #metro text.on{fill:var(--ink);font-weight:700}
 #metro .tr{transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.nometro #metro{display:none}
+.nometro #metro{opacity:0;pointer-events:none!important}
+#metro{transition:opacity .45s}
 .pn{position:absolute;left:72px;bottom:56px;font:500 13px var(--mono);color:var(--muted);letter-spacing:.06em}
 
 /* ---- điều khiển ngoài khung ---- */
@@ -125,6 +126,20 @@ html.is-scroll body{background:var(--night)}
 .is-scroll #metro{pointer-events:auto}
 .is-scroll #metro .sta{cursor:pointer}
 .is-scroll #metro .sta:hover text{fill:var(--ink)}
-.is-scroll .slide.on{animation:enter .55s cubic-bezier(.2,.7,.2,1) both}
-@keyframes enter{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
 .is-scroll #stage{position:fixed}
+
+/* ---- chữ từ khóa: mặc định chỉ hiện .kw (từ khóa); .fl giữ nguyên câu gốc, hiện khi bấm D (chế độ chi tiết) ---- */
+.fl{display:none}
+html.detail .fl{display:inline}
+html.detail .kw{display:none}
+
+/* ---- chuyển slide kiểu Morph ---- */
+.w{display:inline-block;transform-origin:0 0;will-change:transform,opacity}
+.slide>*:not(h2.t):not(.hd){opacity:var(--fade,1);transform:translateY(var(--ty,0px))}
+.slide>.hd{transform:translateY(var(--ty,0px))}
+.slide>.hd>*{opacity:var(--fade,1)}
+.xf .slide.night{background:transparent!important}
+#rule{position:absolute;left:72px;right:72px;height:2px;background:var(--ink);z-index:3;pointer-events:none}
+.static .hd,.is-print .hd{border-bottom:2px solid var(--ink);padding-bottom:8px}
+.static #rule{display:none}
+@media print{.hd{border-bottom:2px solid var(--ink)!important;padding-bottom:8px!important}#rule{display:none!important}.slide>*:not(h2.t){opacity:1!important;transform:none!important}}

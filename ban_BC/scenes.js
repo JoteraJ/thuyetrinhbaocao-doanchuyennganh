@@ -10,7 +10,7 @@ sc.box(plateG, -20, -150, -10, 440, 300, 10, T.plate);
 var node = { L: [[260, 70], [150, -60], [30, 60]], R: [370, -10] };
 function board(cx, cy) {
   sc.box(objG, cx - 30, cy - 24, 0, 60, 48, 8, T.pcb); sc.box(objG, cx - 24, cy - 16, 8, 18, 14, 3, T.chip);
-  sc.cyl(objG, cx + 18, cy, 8, 10, 12, '#2f3941', '#576978', '#739491'); sc.cyl(objG, cx + 18, cy, 18, 2, 8, '#1d2227', '#39454f', '#0d1013');
+  sc.cyl(objG, cx + 18, cy, 8, 10, 12, '#2f3941', '#576978', '#7e9473'); sc.cyl(objG, cx + 18, cy, 18, 2, 8, '#1d2227', '#39454f', '#0d1013');
 }
 [0, 1, 2].sort(function (a, b) { return (node.L[a][0] * sc.S + node.L[a][1] * sc.C) - (node.L[b][0] * sc.S + node.L[b][1] * sc.C); }).forEach(function (i) { board(node.L[i][0], node.L[i][1]); });
 sc.box(objG, node.R[0] - 38, node.R[1] - 42, 0, 76, 84, 12, T.pcb); sc.box(objG, node.R[0] - 10, node.R[1] - 16, 12, 30, 30, 7, T.chip);
@@ -63,7 +63,7 @@ sc.box(plateG, -20, -110, -10, 440, 220, 10, T.plate);
 var node = { L: [[260, 70], [150, -60], [30, 60]], R: [370, -10] };
 function board(cx, cy) {
   sc.box(objG, cx - 30, cy - 24, 0, 60, 48, 8, T.pcb); sc.box(objG, cx - 24, cy - 16, 8, 18, 14, 3, T.chip);
-  sc.cyl(objG, cx + 18, cy, 8, 10, 12, '#2f3941', '#576978', '#739491'); sc.cyl(objG, cx + 18, cy, 18, 2, 8, '#1d2227', '#39454f', '#0d1013');
+  sc.cyl(objG, cx + 18, cy, 8, 10, 12, '#2f3941', '#576978', '#7e9473'); sc.cyl(objG, cx + 18, cy, 18, 2, 8, '#1d2227', '#39454f', '#0d1013');
 }
 [0, 1, 2].sort(function (a, b) { return (node.L[a][0] * sc.S + node.L[a][1] * sc.C) - (node.L[b][0] * sc.S + node.L[b][1] * sc.C); }).forEach(function (i) { board(node.L[i][0], node.L[i][1]); });
 sc.box(objG, node.R[0] - 38, node.R[1] - 42, 0, 76, 84, 12, T.pcb); sc.box(objG, node.R[0] - 10, node.R[1] - 16, 12, 30, 30, 7, T.chip);
@@ -111,7 +111,7 @@ Deck.frames.s2 = frame;
    Mesh: 1 Root + 3 Leaf, cây động. 0-4 Leaf3 -> Leaf1 -> Root · 4-7 Leaf3 đi chỗ khác, tự đổi cha sang Leaf2 ·
          8-13,6 Leaf2 mất nguồn, Leaf3 mất cha rồi nối lại qua Leaf1. */
 var I = window.Iso, T = I.T, PER = 14, R = 100;
-var DEAD = { top: '#779794', y: '#5f7283', x: '#50606e' };
+var DEAD = { top: '#829777', y: '#5f7283', x: '#50606e' };
 function sm(a) { a = I.clamp(a); return a * a * (3 - 2 * a); }
 function mix2(a, b, f) { return [I.lerp(a[0], b[0], f), I.lerp(a[1], b[1], f)]; }
 function dist(a, b) { return Math.hypot(a[0] - b[0], a[1] - b[1]); }
@@ -138,7 +138,7 @@ function cy2(sc, g, cx, cy, dx, dy, z, h, r, a, b, c) { sc.cyl(g, cx + dx * US, 
 function board(sc, g, cx, cy, dead, led) {
   bx(sc, g, cx, cy, -32, -26, 0, 64, 52, 8, dead ? DEAD : T.pcb);
   bx(sc, g, cx, cy, -26, -18, 8, 20, 16, 3, T.chip);
-  cy2(sc, g, cx, cy, 20, 0, 8, 10, 13, '#2f3941', '#576978', '#739491');
+  cy2(sc, g, cx, cy, 20, 0, 8, 10, 13, '#2f3941', '#576978', '#7e9473');
   cy2(sc, g, cx, cy, 20, 0, 18, 2, 9, '#1d2227', '#39454f', '#0d1013');
   bx(sc, g, cx, cy, -28, 16, 8, 7, 7, 3, dead ? T.dark : led);
 }
@@ -195,7 +195,7 @@ function starFrame(t) {
     if (up) link(S, p, HUB, '#1a4f9c', t);
     else {
       /* liên kết đã đứt: chỉ còn nửa đoạn mờ + dấu gạch chéo */
-      var e = S.sc.path(S.link, [arc(p, HUB, 0), arc(p, HUB, .35)], 0, '#829e9c', 1.6); e.setAttribute('stroke-dasharray', '3 5');
+      var e = S.sc.path(S.link, [arc(p, HUB, 0), arc(p, HUB, .35)], 0, '#8b9e82', 1.6); e.setAttribute('stroke-dasharray', '3 5');
       if (!on || far) cross(S, p, mix2(p, HUB, .6), 20);
     }
     (function (i, p, dead) { list.push({ k: dk(sc, p[0], p[1]), f: function () { board(sc, S.obj, p[0], p[1], dead, SLED[i]); } }); })(i, p, !up);
@@ -210,7 +210,7 @@ function starFrame(t) {
   }
   list.push({ k: dk(sc, 0, 0), f: function () { router(sc, S.obj, 0, 0, !on); } });
   flush(list);
-  var q = sc.pt(0, 88, 0); sc.text(S.lab, q[0], q[1] + 4, 'Router/AP', 18, 700, 'middle', null, 'sf').style.fill = on ? '#0c2a44' : '#6f918e';
+  var q = sc.pt(0, 88, 0); sc.text(S.lab, q[0], q[1] + 4, 'Router/AP', 18, 700, 'middle', null, 'sf').style.fill = on ? '#0c2a44' : '#7a916f';
 }
 
 /* ====================== MESH ====================== */
@@ -281,7 +281,7 @@ Deck.steps.s3 = function (step) {
 ;(function(){
 /* Slide 4: ba biểu tượng cơ cấu nhỏ (thông lượng, độ trễ, tự phục hồi) + cây 1 Root / 3 Leaf cho phạm vi.
    Chỉ vẽ cơ chế; không có số liệu. */
-var I = window.Iso, T = I.T, DEAD = { top: '#779794', y: '#5f7283', x: '#50606e' }, RED2 = { top: '#ee6a50', y: '#b5301c', x: '#a8321f' };
+var I = window.Iso, T = I.T, DEAD = { top: '#829777', y: '#5f7283', x: '#50606e' }, RED2 = { top: '#ee6a50', y: '#b5301c', x: '#a8321f' };
 function sm(a) { a = I.clamp(a); return a * a * (3 - 2 * a); }
 function dk(sc, x, y) { return x * sc.S + y * sc.C; }
 function mini(id, hx, hy, rect, U) {
@@ -295,7 +295,7 @@ function bx(W, cx, cy, dx, dy, z, w, d, h, t) { var U = W.U; W.sc.box(W.obj, cx 
 function board(W, cx, cy, dead, led) {
   bx(W, cx, cy, -32, -26, 0, 64, 52, 8, dead ? DEAD : T.pcb);
   bx(W, cx, cy, -26, -18, 8, 20, 16, 3, T.chip);
-  W.sc.cyl(W.obj, cx + 20 * W.U, cy, 8 * W.U, 10 * W.U, 13 * W.U, '#2f3941', '#576978', '#739491');
+  W.sc.cyl(W.obj, cx + 20 * W.U, cy, 8 * W.U, 10 * W.U, 13 * W.U, '#2f3941', '#576978', '#7e9473');
   W.sc.cyl(W.obj, cx + 20 * W.U, cy, 18 * W.U, 2 * W.U, 9 * W.U, '#1d2227', '#39454f', '#0d1013');
   bx(W, cx, cy, -28, 16, 8, 8, 8, 3, dead ? T.dark : led);
 }
@@ -369,7 +369,7 @@ function frameB(t) {
     if (tm >= T1) sc.box(Bm.obj, B_R[0] - 15, B_R[1] - 12, 9 * .62 + 2, 30, 26, 2, T.red);    /* ảnh đã ghép xong */
   });
   B(Bm, bl, B_C[0], B_C[1], function () {
-    sc.cyl(Bm.obj, B_C[0], B_C[1], 0, 6, 20, '#739491', '#c2d7cd', '#f1f8f4');
+    sc.cyl(Bm.obj, B_C[0], B_C[1], 0, 6, 20, '#7e9473', '#c9dabf', '#f3f9ec');
     var P = sc.pt;
     if (ang > .01) {                                                  /* quạt thời gian đã trôi */
       var pp = [P(B_C[0], B_C[1], 6.2)]; for (var i = 0; i <= 18; i++) { var a = -Math.PI / 2 + ang * i / 18; pp.push(P(B_C[0] + 17 * Math.cos(a), B_C[1] + 17 * Math.sin(a), 6.2)); }
@@ -437,7 +437,7 @@ Deck.frames.s4 = function (t) { frameA(t); frameB(t); frameC(t); frameD(t); };
 /* Slide 5: bốn sơ đồ cơ cấu nhỏ.
    a) FANET: UAV nối ad-hoc, gói đi từng chặng về trạm · b) giao thức Linux/IP không sang được ESP32 -> dùng painlessMesh
    c) painlessMesh: cây động, Leaf di chuyển thì đổi cha · d) FreeRTOS: loop() bị chặn -> mesh.update() gọi thưa */
-var I = window.Iso, T = I.T, DEAD = { top: '#779794', y: '#5f7283', x: '#50606e' };
+var I = window.Iso, T = I.T, DEAD = { top: '#829777', y: '#5f7283', x: '#50606e' };
 function sm(a) { a = I.clamp(a); return a * a * (3 - 2 * a); }
 function dk(sc, x, y) { return x * sc.S + y * sc.C; }
 function mk(id, az, el, hx, hy, zTop, rect) {
@@ -462,7 +462,7 @@ function bx(W, cx, cy, U, dx, dy, z, w, d, h, t) { W.sc.box(W.obj, cx + dx * U, 
 function board(W, cx, cy, U, dead, led) {
   bx(W, cx, cy, U, -32, -26, 0, 64, 52, 8, dead ? DEAD : T.pcb);
   bx(W, cx, cy, U, -26, -18, 8, 20, 16, 3, T.chip);
-  W.sc.cyl(W.obj, cx + 20 * U, cy, 8 * U, 10 * U, 13 * U, '#2f3941', '#576978', '#739491');
+  W.sc.cyl(W.obj, cx + 20 * U, cy, 8 * U, 10 * U, 13 * U, '#2f3941', '#576978', '#7e9473');
   W.sc.cyl(W.obj, cx + 20 * U, cy, 18 * U, 2 * U, 9 * U, '#1d2227', '#39454f', '#0d1013');
   bx(W, cx, cy, U, -28, 16, 8, 8, 8, 3, dead ? T.dark : led);
 }
@@ -511,7 +511,7 @@ label(Bm, 182, 0, 32, 'painlessMesh', '#b5301c', -6, 'middle', 14);
 /* tên giao thức: đứng yên trên ô của mình, so le hai hàng (OLSR/DSDV cao hơn) để chữ dài không đè nhau khi khối nhảy qua; nền giấy mỏng quanh chữ */
 PB_NAME.forEach(function (nm, j) {
   var t = label(Bm, PB_X[j], -16, 31, nm, '#0c2a44', j === 1 ? -17 : -5, 'middle', 13);
-  t.style.paintOrder = 'stroke'; t.style.stroke = '#d8eae0'; t.style.strokeWidth = '3px'; t.style.strokeLinejoin = 'round';
+  t.style.paintOrder = 'stroke'; t.style.stroke = '#e3f0d6'; t.style.strokeWidth = '3px'; t.style.strokeLinejoin = 'round';
 });
 function frameB(t) {
   var sc = Bm.sc, tm = t % PB, bl = [], names = [], k = Math.floor(tm / 3.5), s = (tm % 3.5) / 3.5, hit = false;
@@ -522,7 +522,7 @@ function frameB(t) {
   sc.box(Bm.obj, GATE - 1.5, -23, 26, 3, 46, 4, T.red);
   sc.box(Bm.obj, 90, -25, 0, 150, 50, 8, T.pcb); sc.box(Bm.obj, 98, -16, 8, 30, 24, 4, T.chip);
   var z = []; for (var i = 0; i < 8; i++) z.push(sc.pt(166 + i * 8, -16 + (i % 2) * 10, 8.2));
-  I.el('polyline', { points: z.map(function (a) { return a[0].toFixed(1) + ',' + a[1].toFixed(1); }).join(' '), fill: 'none', stroke: '#b4c5c4', 'stroke-width': 1.4 }, Bm.obj);
+  I.el('polyline', { points: z.map(function (a) { return a[0].toFixed(1) + ',' + a[1].toFixed(1); }).join(' '), fill: 'none', stroke: '#bac5b4', 'stroke-width': 1.4 }, Bm.obj);
   sc.box(Bm.obj, 140, -8, 8, 84, 32, 22, T.red);                                         /* khối painlessMesh trên ESP32 */
   sc.box(Bm.obj, 150, 24, 16, 20, .6, 3, T.white);
   /* các khối giao thức; một khối nhảy tới rào, bị chặn, quay về */
@@ -599,7 +599,7 @@ function frameD(t) {
   D_SEQ.forEach(function (s) {
     var x = D_X0 + s.u * D_SC, w = s.w * D_SC, done = head >= s.u + s.w ? 1 : head > s.u ? (head - s.u) / s.w : 0;
     var col = s.t === 'upd' ? T.red : s.t === 'blk' ? T.dark : T.stone, h = s.t === 'upd' ? 22 : s.t === 'blk' ? 14 : 12;
-    sc.box(D.obj, x, -16, 0, w - .8, 32, h * (.55 + .45 * (done > 0 ? 1 : 0)), done > 0 ? col : { top: '#cfdfd8', y: '#b7c8c6', x: '#9ab2b0' });
+    sc.box(D.obj, x, -16, 0, w - .8, 32, h * (.55 + .45 * (done > 0 ? 1 : 0)), done > 0 ? col : { top: '#d4e1cd', y: '#bdc8b7', x: '#a2b29a' });
     if (s.t === 'blk' && done > 0) for (var q = 0; q < Math.floor(w / 9); q++) sc.line(D.obj, [x + 4 + q * 9, 16.2, 1], [x + 12 + q * 9, 16.2, 10], 'rgba(246,241,231,.5)', 1.2);
   });
   /* các lần gọi mesh.update() đã xảy ra -> gói gửi ra mạng (hàng khối phía sau) */
@@ -692,7 +692,7 @@ sym(LA.st, AX0, 28, 't', 'chụp', INK, 22);
 line(LA.st, AX0, 36, AX0, 100, MUTED, 1.2, '3 4');
 /* ống kính Leaf ở t_chụp */
 el('circle', { cx: AX0, cy: AY, r: 16, fill: '#232a30', stroke: EDGE, 'stroke-width': 1 }, LA.st);
-el('circle', { cx: AX0, cy: AY, r: 9, fill: '#576978' }, LA.st); el('circle', { cx: AX0 - 3, cy: AY - 3, r: 2.6, fill: '#d4e2db' }, LA.st);
+el('circle', { cx: AX0, cy: AY, r: 9, fill: '#576978' }, LA.st); el('circle', { cx: AX0 - 3, cy: AY - 3, r: 2.6, fill: '#d9e4d2' }, LA.st);
 function frameA(lt) {
   var s = LA.dy, h = headX(lt), cyc = lt % CYC; while (s.firstChild) s.removeChild(s.firstChild);
   if (cyc < .5 && cyc > 0) el('circle', { cx: AX0, cy: AY, r: 16 + 14 * cyc / .5, fill: 'none', stroke: '#e0a200', 'stroke-width': 2.4, opacity: 1 - cyc / .5 }, s);
@@ -719,7 +719,7 @@ function frameC(lt) {
   var s = LC.dy, h = headX(lt); while (s.firstChild) s.removeChild(s.firstChild);
   CT.forEach(function (x) { if (h >= x) blk(s, x - 6, CY - 6, 12, 12, 5, T.blue); });
   if (h > CL + 14) {                                                     /* đường truyền đứt: không còn gói nào tới */
-    line(s, CL + 18, CY, Math.min(h, CR - 18), CY, '#829e9c', 1.6, '3 6');
+    line(s, CL + 18, CY, Math.min(h, CR - 18), CY, '#8b9e82', 1.6, '3 6');
     if (h > (CL + CR) / 2 + 6) { var mx = (CL + CR) / 2; line(s, mx - 9, CY - 9, mx + 9, CY + 9, RED, 3.2); line(s, mx - 9, CY + 9, mx + 9, CY - 9, RED, 3.2); }
   }
   var e1 = Math.min(h, CR);
@@ -769,8 +769,8 @@ function leafBoard(cx, cy, i) {
   sc.box(objG, cx - 32, cy - 26, 0, 64, 52, 8, T.pcb);
   sc.box(objG, cx - 26, cy - 18, 8, 20, 16, 3, T.chip);
   var z = []; for (var k = 0; k < 7; k++) z.push(P(cx - 24 + k * 4, cy + 18 - (k % 2) * 6, 8.2));
-  I.el('polyline', { points: z.map(function (a) { return a[0].toFixed(1) + ',' + a[1].toFixed(1); }).join(' '), fill: 'none', stroke: '#b4c5c4', 'stroke-width': 1.2 }, objG);
-  sc.cyl(objG, cx + 20, cy, 8, 10, 13, '#2f3941', '#576978', '#739491');
+  I.el('polyline', { points: z.map(function (a) { return a[0].toFixed(1) + ',' + a[1].toFixed(1); }).join(' '), fill: 'none', stroke: '#bac5b4', 'stroke-width': 1.2 }, objG);
+  sc.cyl(objG, cx + 20, cy, 8, 10, 13, '#2f3941', '#576978', '#7e9473');
   sc.cyl(objG, cx + 20, cy, 18, 2, 9, '#1d2227', '#39454f', '#0d1013');
 }
 /* vẽ từ xa tới gần */
@@ -892,7 +892,7 @@ var svg = document.getElementById('s8fig'), I = window.Iso, T = I.T;
 var AZ = 8, EL = 30, RAD = Math.PI / 180, CE = Math.cos(EL * RAD), SE = Math.sin(EL * RAD);
 var GOLD = { top: '#ffd75e', y: '#e8a920', x: '#b9830f' };
 var BRIGHT = { top: '#fff3c4', y: '#ffd75e', x: '#e0a92a' };
-var METAL = { top: '#c3d7ce', y: '#94acaa', x: '#729290' };
+var METAL = { top: '#cadac0', y: '#9cac94', x: '#7d9272' };
 var sc = I.scene(svg, { az: AZ, el: EL, rect: [4, 40, 1128, 190],
   pts: [[-20, -56, -8], [810, -56, -8], [-20, 56, -8], [810, 56, -8], [715, 0, 112], [10, 0, 40]] });
 var P = sc.pt;
@@ -932,9 +932,9 @@ sc.box(plateG, -20, -56, -8, 830, 112, 8, T.plate);
 sc.box(objG, 0, -20, 0, 124, 40, 5, T.dark);
 sc.box(objG, 6, -20, 5, 112, 3, 4, T.dark); sc.box(objG, 6, 17, 5, 112, 3, 4, T.dark);
 sc.box(objG, 0, -20, 5, 6, 40, 18, T.dark);
-hcyl(objG, 6, 0, 17, 112, 12, '#829e9c', '#f1f8f4', '#a9bcbb');           /* thân cell */
+hcyl(objG, 6, 0, 17, 112, 12, '#8b9e82', '#f3f9ec', '#afbca9');           /* thân cell */
 hcyl(objG, 36, 0, 17, 36, 12.4, '#0c2a44', '#3d4a55', '#232a30');          /* dải nhãn */
-hcyl(objG, 100, 0, 17, 18, 12.3, '#729290', '#c3d7ce', '#bfcdcc');         /* nắp kim loại cực + */
+hcyl(objG, 100, 0, 17, 18, 12.3, '#7d9272', '#cadac0', '#c4cdbf');         /* nắp kim loại cực + */
 sc.box(objG, 118, -20, 5, 6, 40, 18, T.dark);                              /* thành phải đế (che đầu cell) */
 sc.box(objG, 119, -4, 9, 5, 8, 4, METAL);
 
@@ -945,13 +945,13 @@ sc.path(cableG, [[124, RAIL[1], 11], [134, RAIL[1], 3], [210, RAIL[1], 3]], 3, '
 
 /* ---- 3. tụ 470 µF: trụ nhỏ đứng giữa hai dây, chân nối song song tại chân IN ---- */
 var CAP = [162, 0];
-sc.cyl(objG, CAP[0], CAP[1], 0, 34, 10, '#16213c', '#5878b4', '#739491');
+sc.cyl(objG, CAP[0], CAP[1], 0, 34, 10, '#16213c', '#5878b4', '#7e9473');
 sc.cyl(objG, CAP[0], CAP[1], 27, 3.4, 10.4, '#b68a1e', '#f0c859', '#d9b44a');
 sc.line(objG, [CAP[0] - 6, CAP[1], 34.2], [CAP[0] + 6, CAP[1], 34.2], '#3a4650', 1.2);
 sc.line(objG, [CAP[0], CAP[1] - 6, 34.2], [CAP[0], CAP[1] + 6, 34.2], '#3a4650', 1.2);
-sc.line(objG, [CAP[0], CAP[1] - 9, 1.5], [CAP[0], RAIL[0], 3], '#729290', 1.6);
-sc.line(objG, [CAP[0], CAP[1] + 9, 1.5], [CAP[0], RAIL[1], 3], '#729290', 1.6);
-[RAIL[0], RAIL[1]].forEach(function (y) { var q = P(CAP[0], y, 3.2); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.6, fill: '#bfcdcc', stroke: '#3a4650', 'stroke-width': .6 }, objG); });
+sc.line(objG, [CAP[0], CAP[1] - 9, 1.5], [CAP[0], RAIL[0], 3], '#7d9272', 1.6);
+sc.line(objG, [CAP[0], CAP[1] + 9, 1.5], [CAP[0], RAIL[1], 3], '#7d9272', 1.6);
+[RAIL[0], RAIL[1]].forEach(function (y) { var q = P(CAP[0], y, 3.2); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.6, fill: '#c4cdbf', stroke: '#3a4650', 'stroke-width': .6 }, objG); });
 
 /* ---- 4. module tăng áp 0,9–5 V -> 5 V USB ---- */
 sc.box(objG, 206, -28, 0, 100, 56, 4, T.pcb);
@@ -961,7 +961,7 @@ sc.path(objG, [[215, RAIL[1]], [228, RAIL[1]], [228, 22], [276, 22]], 4.1, '#c9a
 sc.box(objG, 240, 6, 4, 26, 22, 14, T.dark);                                 /* cuộn cảm */
 sc.box(objG, 244, 10, 18, 18, 14, 0.6, T.chip);
 sc.box(objG, 252, -20, 4, 18, 14, 3, T.chip);                                /* IC tăng áp */
-sc.cyl(objG, 282, -16, 4, 14, 6.5, '#2f3941', '#576978', '#739491');         /* tụ lọc ra */
+sc.cyl(objG, 282, -16, 4, 14, 6.5, '#2f3941', '#576978', '#7e9473');         /* tụ lọc ra */
 sc.box(objG, 292, -9, 4, 22, 18, 11, METAL);                                 /* cổng USB-A cái */
 sc.box(objG, 313.2, -6, 6, 1.2, 12, 5, T.dark);
 
@@ -979,7 +979,7 @@ sc.box(objG2, 484, -24, 5, 100, 48, 3, { top: '#313b43', y: '#22282e', x: '#171b
 sc.box(objG2, 494, -12, 8, 26, 24, 4, T.chip);
 sc.box(objG2, 500, -6, 12, 14, 12, 1, T.dark);
 var zz = []; for (var k = 0; k < 8; k++) zz.push(P(490 + k * 3.4, 17 - (k % 2) * 6, 8.2));
-I.el('polyline', { points: zz.map(function (a) { return a[0].toFixed(1) + ',' + a[1].toFixed(1); }).join(' '), fill: 'none', stroke: '#b4c5c4', 'stroke-width': 1.2 }, objG2);
+I.el('polyline', { points: zz.map(function (a) { return a[0].toFixed(1) + ',' + a[1].toFixed(1); }).join(' '), fill: 'none', stroke: '#bac5b4', 'stroke-width': 1.2 }, objG2);
 sc.box(objG2, 546, -11, 8, 26, 22, 11, T.dark);                               /* thân camera */
 sc.cyl(objG2, 561, 0, 19, 3, 9, '#1d2227', '#475663', '#0d1013');
 sc.cyl(objG2, 561, 0, 22, 2, 5.5, '#0c1230', '#243c88', '#16265a');
@@ -998,9 +998,9 @@ sc.box(objG2, SCR.x, -5, SCR.z, SCR.w, 10, SCR.h, T.dark);
     var el = strip.querySelector(sel), p = P(wx, wy, wz);
     el.style.left = p[0].toFixed(1) + 'px'; el.style.top = (p[1] + dy).toFixed(1) + 'px'; if (w) { el.style.width = w + 'px'; el.style.whiteSpace = 'normal'; }
   }
-  put('.lg1', 80, 0, 30, -28, 180);
+  put('.lg1', 80, 0, 30, -30, 250);
   put('.lg2', 56, 56, -8, 6);
-  put('.lg3', 256, 56, -8, 6, 142);
+  put('.lg3', 256, 56, -8, 6, 190);
   put('.lg4', 400, 56, -8, 6);
   put('.lg5', 530, 56, -8, 6);
   put('.lg6', 140, 56, -8, 6, 150);
@@ -1065,7 +1065,7 @@ function frame(t) {
   I.el('rect', { x: 5, y: 5, width: SCR.w - 10, height: SCR.h - 10, fill: '#1d2a25' }, g);
   I.el('line', { x1: 8, y1: 28, x2: SCR.w - 8, y2: 28, stroke: '#667a8c', 'stroke-width': .7, 'stroke-dasharray': '3 3' }, g);
   var FS = Math.ceil(14.5 / (CE * sc.K) * 10) / 10;   /* cao thực tế >= 14 px (mặt đứng co theo cos(el)) */
-  tx(g, 9, 21, '5 V', FS, 500, 'start', '#bbcac9', 'mo');
+  tx(g, 9, 21, '5 V', FS, 500, 'start', '#c0cabb', 'mo');
   var W0 = 7.2, u0 = 10, u1 = SCR.w - 10, pa = [], pb = [], tt;
   for (i = 0; i <= 90; i++) {
     tt = t - W0 + W0 * i / 90; var u = u0 + (u1 - u0) * i / 90, d = dip(burstRel(tt));
@@ -1111,8 +1111,8 @@ sc.box(plateG, -20, -60, -8, 702, 120, 8, T.plate);
 sc.box(objG, 0, -30, 0, 76, 60, 6, T.pcb);
 sc.box(objG, 6, -22, 6, 22, 18, 3, T.chip);
 var zz = []; for (var k = 0; k < 8; k++) zz.push(P(8 + k * 3.4, 22 - (k % 2) * 6, 6.2));
-I.el('polyline', { points: zz.map(function (a) { return a[0].toFixed(1) + ',' + a[1].toFixed(1); }).join(' '), fill: 'none', stroke: '#b4c5c4', 'stroke-width': 1.2 }, objG);
-sc.cyl(objG, 54, 0, 6, 12, 14, '#2f3941', '#576978', '#739491');
+I.el('polyline', { points: zz.map(function (a) { return a[0].toFixed(1) + ',' + a[1].toFixed(1); }).join(' '), fill: 'none', stroke: '#bac5b4', 'stroke-width': 1.2 }, objG);
+sc.cyl(objG, 54, 0, 6, 12, 14, '#2f3941', '#576978', '#7e9473');
 sc.cyl(objG, 54, 0, 18, 2.4, 9.5, '#1d2227', '#39454f', '#0d1013');
 sc.box(objG, 70, -3, 6, 3, 3, 14, T.dark);                             /* cột ăng-ten */
 /* ray của lưỡi cắt + khay chụp (nơi khung hiện ra) */
@@ -1147,7 +1147,7 @@ function pic(p, q) {
   return c;
 }
 var NS = 5, W = 30, D = 96, Y0 = -48, XP = 250, HL = 8, HT = 5, PT = 5;
-var CELL = [24, 12, 12, 12, 12, 24], HC = [null, '#f1f8f4', '#d2e1da', '#f1f8f4', '#d2e1da', '#f2b24a'];
+var CELL = [24, 12, 12, 12, 12, 24], HC = [null, '#f3f9ec', '#d7e3d0', '#f3f9ec', '#d7e3d0', '#f2b24a'];
 function strip(g, k, x, z, glow) {                       /* lát cắt k (chunk k): hộp mỏng + ô ảnh */
   sc.box(g, x, Y0, z, W, D, PT, T.white);
   for (var j = 0; j < 2; j++) for (var i = 0; i < 8; i++) {
@@ -1278,7 +1278,7 @@ Deck.steps.s10 = function (n) {
 };
 var AMB = { top: '#f2b24a', y: '#c98a1c', x: '#8a5200' };
 var RED = { top: '#ff9a82', y: '#b5301c', x: '#a8321f' };
-var GRY = { top: '#8da8a5', y: '#667b8e', x: '#536472' };
+var GRY = { top: '#96a88d', y: '#667b8e', x: '#536472' };
 var CZ = [LEAF[0], LEAF[1], LEAF[2]], CZC = ['#ee5f12', '#3f78c4', '#7c9a28'];
 
 /* ======================== mô hình dùng chung (A và C) ======================== */
@@ -1325,7 +1325,7 @@ function boardA(i) {
   var cx = XB[i], cy = YB;
   sA.box(A_ob, cx - 32, cy - 24, 0, 64, 48, 6, T.pcb);
   sA.box(A_ob, cx - 26, cy - 16, 6, 20, 16, 3, T.chip);
-  sA.cyl(A_ob, cx + 16, cy, 6, 10, 12, '#2f3941', '#576978', '#739491');
+  sA.cyl(A_ob, cx + 16, cy, 6, 10, 12, '#2f3941', '#576978', '#7e9473');
   sA.cyl(A_ob, cx + 16, cy, 16, 2, 8, '#1d2227', '#39454f', '#0d1013');
   sA.box(A_ob, cx - 30, cy + 14, 6, 8, 8, 2.5, CZ[i]);                           /* màu của Leaf */
 }
@@ -1402,8 +1402,8 @@ function frameB(t) {
   if (s > 0) sB.box(B_dy, -6, -6, Z0, 12, 12, s * ZS, lvC);
   /* cờ ở hai mốc (sáng khi mức chạm mốc) */
   var f1 = s >= 8, f2 = s >= 30;
-  sB.box(B_dy, 8, -8, zB(8) - 1.5, 22, 16, 3, f1 ? AMB : { top: '#cdded6', y: '#b7c8c6', x: '#a2b8b6' });
-  sB.box(B_dy, 8, -8, zB(30) - 1.5, 22, 16, 3, f2 ? RED : { top: '#cdded6', y: '#b7c8c6', x: '#a2b8b6' });
+  sB.box(B_dy, 8, -8, zB(8) - 1.5, 22, 16, 3, f1 ? AMB : { top: '#d3e0cb', y: '#bdc8b7', x: '#a9b8a2' });
+  sB.box(B_dy, 8, -8, zB(30) - 1.5, 22, 16, 3, f2 ? RED : { top: '#d3e0cb', y: '#bdc8b7', x: '#a9b8a2' });
   var a = sB.pt(32, 0, zB(8) + 4), b = sB.pt(32, 0, zB(30) + 4);
   txt(B_dy, a[0] + 4, a[1] + 5, 'học lại Root', 14, f1 ? 700 : 500, 'start', f1 ? '#8a5200' : '#34505c', 'mo');
   txt(B_dy, b[0] + 4, b[1] + 5, 'khởi động lại', 14, f2 ? 700 : 500, 'start', f2 ? '#b5301c' : '#34505c', 'mo');
@@ -1579,7 +1579,7 @@ var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g();
 var cur = 0;
 function ST() { return (Deck.still && !/[?&]step=/.test(location.search)) ? 9 : cur; }
 Deck.steps.s11 = function (n) { cur = n; };
-var BLUE = T.blue, GRN = T.green, TEL = { top: '#9dbfee', y: '#3f78c4', x: '#2d5a99' }, LOG = { top: '#a9bcbb', y: '#729290', x: '#536472' };
+var BLUE = T.blue, GRN = T.green, TEL = { top: '#9dbfee', y: '#3f78c4', x: '#2d5a99' }, LOG = { top: '#afbca9', y: '#7d9272', x: '#536472' };
 var RED = { top: '#ff9a82', y: '#b5301c', x: '#a8321f' }, AMB = { top: '#f2b24a', y: '#c98a1c', x: '#8a5200' };
 
 /* ---------- cảnh tĩnh ---------- */
@@ -1611,7 +1611,7 @@ sc.box(objG, MX, -5, 24, 100, 10, 52, T.dark);
 var SCRM = sc.faceMatrix(MX, 5, 24);
 /* nhãn: ½ ở vạch giữa bộ đệm; vị trí chú thích cổng */
 (function () {
-  var q = P(30 - 17, 15, 6 + 22); var hf = tx(lbG, q[0] - 6, q[1] + 8, '½', 26, 700, 'end', '#b5301c', 'sf'); hf.style.stroke = '#d8eae0'; hf.style.strokeWidth = '3px'; hf.style.paintOrder = 'stroke';
+  var q = P(30 - 17, 15, 6 + 22); var hf = tx(lbG, q[0] - 6, q[1] + 8, '½', 26, 700, 'end', '#b5301c', 'sf'); hf.style.stroke = '#e3f0d6'; hf.style.strokeWidth = '3px'; hf.style.paintOrder = 'stroke';
   var strip = svg.parentNode;
   [['.g1', GX[0]], ['.g2', GX[1]], ['.g3', GX[2]], ['.g4', BELT1 + 34]].forEach(function (a) {
     var el = strip.querySelector(a[0]), p = P(a[1], 38, -6);
@@ -1800,11 +1800,11 @@ Deck.shows.s13 = function () { at2 = -1; };
 var W = 590, FULL = 47 / 92 * W, P = W / 6, BL = P * 0.51;          /* 47 KB/s trên giới hạn 92 KB/s; ghi chặn ≈ nửa thời gian */
 var NS = 'http://www.w3.org/2000/svg';
 function mk(n, a) { return I.el(n, a, ms); }
-mk('rect', { x: 0.75, y: 20.75, width: W - 1.5, height: 20.5, fill: '#c5dccf', stroke: '#0c2a44', 'stroke-width': 1.5 });
+mk('rect', { x: 0.75, y: 20.75, width: W - 1.5, height: 20.5, fill: '#cfe3bd', stroke: '#0c2a44', 'stroke-width': 1.5 });
 var gfill = mk('rect', { x: 1.5, y: 21.5, width: FULL, height: 19, fill: '#1a4f9c' });
 mk('line', { x1: FULL, y1: 16, x2: FULL, y2: 46, stroke: '#0c2a44', 'stroke-width': 2 });
-mk('rect', { x: 0.75, y: 62.75, width: W - 1.5, height: 22.5, fill: '#c5dccf', stroke: '#0c2a44', 'stroke-width': 1.5 });
-mk('rect', { x: 0.75, y: 104.75, width: W - 1.5, height: 22.5, fill: '#c5dccf', stroke: '#0c2a44', 'stroke-width': 1.5 });
+mk('rect', { x: 0.75, y: 62.75, width: W - 1.5, height: 22.5, fill: '#cfe3bd', stroke: '#0c2a44', 'stroke-width': 1.5 });
+mk('rect', { x: 0.75, y: 104.75, width: W - 1.5, height: 22.5, fill: '#cfe3bd', stroke: '#0c2a44', 'stroke-width': 1.5 });
 var blocks = [], ticks = [], k, j;
 for (k = 0; k < 6; k++) {
   var bx = k * P + 1;
@@ -1877,7 +1877,7 @@ RIGS.forEach(function (R) {
   [[-6, y - R.pd + 8], [288, y - R.pd + 8], [-6, y + R.pd - 8], [288, y + R.pd - 8]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#6a7f92' }, g.plate); });
   /* Root: bo mạch + chip + ăng-ten */
   sc.box(g.obj, 0, y - 22, 0, 44, 44, 7, T.pcb); sc.box(g.obj, 5, y - 15, 7, 16, 14, 3, T.chip);
-  sc.cyl(g.obj, 31, y, 7, 9, 9, '#2f3941', '#576978', '#739491'); sc.cyl(g.obj, 31, y, 16, 2, 6.5, '#1d2227', '#39454f', '#0d1013');
+  sc.cyl(g.obj, 31, y, 7, 9, 9, '#2f3941', '#576978', '#7e9473'); sc.cyl(g.obj, 31, y, 16, 2, 6.5, '#1d2227', '#39454f', '#0d1013');
   /* khối ghép của Root: khay đá có 4 slot; khung ghép xong từ đây đi ra */
   sc.box(g.obj, 46, y - 21, 0, 44, 42, 10, T.stone);
   for (var k = 0; k < 4; k++) sc.box(g.obj, BX - 17, y - 18 + k * 9.4, 10, 34, 7.6, .6, T.dark);
@@ -2032,14 +2032,14 @@ sc.poly(wallG, [P(-60, -24, 0), P(560, -24, 0), P(560, -24, 188), P(-60, -24, 18
 function leafBoard(cx, i) {
   var y = YB;
   sc.box(objG, cx - 32, y - 25, 0, 64, 50, 8, T.pcb); sc.box(objG, cx - 26, y - 17, 8, 20, 16, 3, T.chip);
-  sc.cyl(objG, cx + 20, y, 8, 10, 13, '#2f3941', '#576978', '#739491'); sc.cyl(objG, cx + 20, y, 18, 2, 9, '#1d2227', '#39454f', '#0d1013');
+  sc.cyl(objG, cx + 20, y, 8, 10, 13, '#2f3941', '#576978', '#7e9473'); sc.cyl(objG, cx + 20, y, 18, 2, 9, '#1d2227', '#39454f', '#0d1013');
   sc.box(objG, cx - 26, y + 12, 8, 12, 8, 4, I.LEAF[i - 1]);
 }
 function rootBoard(cx) {
   var y = YB;
   sc.box(objG, cx - 42, y - 32, 0, 84, 64, 10, T.pcb); sc.box(objG, cx - 8, y - 14, 10, 30, 30, 7, T.chip);
   sc.box(objG, cx - 36, y - 26, 10, 14, 16, 8, T.dark);
-  sc.cyl(objG, cx + 26, y + 18, 10, 16, 5, '#2f3941', '#576978', '#739491');
+  sc.cyl(objG, cx + 26, y + 18, 10, 16, 5, '#2f3941', '#576978', '#7e9473');
 }
 /* bo mạch, vẽ từ xa tới gần */
 rootBoard(0); [1, 2, 3].forEach(function (i) { leafBoard(NODES[i].x, i); });
@@ -2127,7 +2127,7 @@ var plateG = sc.g(), objG = sc.g(), ghostG = sc.g(), dyn = sc.g();
 sc.box(plateG, -20, -110, -10, 350, 220, 10, T.plate);
 /* hiện tại: bo mạch thật (ESP32 + chip + anten) */
 sc.box(objG, 20, -38, 0, 100, 76, 12, T.pcb); sc.box(objG, 30, -26, 12, 34, 28, 5, T.chip);
-sc.cyl(objG, 96, 0, 12, 14, 16, '#2f3941', '#576978', '#739491'); sc.cyl(objG, 96, 0, 26, 2, 11, '#1d2227', '#39454f', '#0d1013');
+sc.cyl(objG, 96, 0, 12, 14, 16, '#2f3941', '#576978', '#7e9473'); sc.cyl(objG, 96, 0, 26, 2, 11, '#1d2227', '#39454f', '#0d1013');
 sc.box(objG, 30, 14, 12, 20, 10, 4, T.red);
 /* hướng phát triển: bản "bóng" (chỉ có nét) + hộp lưu trữ đã dựng một phần */
 function ghostBox(g, x, y, z, w, d, h) {
@@ -2136,7 +2136,7 @@ function ghostBox(g, x, y, z, w, d, h) {
   a.forEach(function (c) { var l = sc.line(g, [c[0], c[1], z], [c[0], c[1], z + h], '#34505c', 1.6); l.setAttribute('stroke-dasharray', '5 4'); });
 }
 ghostBox(ghostG, 200, -90, 0, 100, 76, 12);
-sc.cyl(ghostG, 276, -52, 12, 0.1, 16, '#c2d6cd', '#d6e4dd', 'rgba(0,0,0,0)');
+sc.cyl(ghostG, 276, -52, 12, 0.1, 16, '#c8d9bf', '#dbe6d4', 'rgba(0,0,0,0)');
 sc.box(objG, 205, 30, 0, 90, 60, 36, T.stone);
 for (var g2 = 0; g2 < 4; g2++) sc.line(objG, [209, 90.2, 7 + g2 * 8], [291, 90.2, 7 + g2 * 8], 'rgba(10,32,48,.45)', 1);
 sc.box(objG, 205, 30, 36, 90, 60, 4, T.white);
@@ -2294,7 +2294,7 @@ var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g(), lbOn = {};
 sc.box(plateG, -30, -135, -10, 370, 270, 10, T.plate);
 /* Root (nơi chunk tới từ mesh) */
 sc.box(objG, -8, -26, 0, 60, 52, 9, T.pcb); sc.box(objG, -2, -16, 9, 22, 18, 3, T.chip);
-sc.cyl(objG, 36, 0, 9, 12, 11, '#2f3941', '#576978', '#739491'); sc.cyl(objG, 36, 0, 21, 2, 8, '#1d2227', '#39454f', '#0d1013');
+sc.cyl(objG, 36, 0, 9, 12, 11, '#2f3941', '#576978', '#7e9473'); sc.cyl(objG, 36, 0, 21, 2, 8, '#1d2227', '#39454f', '#0d1013');
 /* 4 slot: khay đá, mỗi ô là một chỗ lõm */
 SY.forEach(function (y) {
   sc.box(objG, 108, y - 20, 0, TW, 40, 5, T.stone);
@@ -2362,7 +2362,7 @@ function drawPhase(ph, tau) {
     if (tm.fix != null) { f = tm.fix; if (tm.to != null && tau >= tm.to) return; if (tm.from != null) return; }
     else { if (tau < tm.from) return; if (tm.stop && tau >= tm.to) return; f = I.clamp((tau - tm.from) / (tm.to - tm.from)); if (!tm.stop && tau > tm.to + .8) return; }
     var y = SY[tm.s] + 24, x0 = 108, w = TW; if (tm.s === 0) lbOn.t2 = 1;
-    sc.poly(dyn, [P(x0, y, .3), P(x0 + w, y, .3), P(x0 + w, y + 7, .3), P(x0, y + 7, .3)], '#c5dccf', 'rgba(12,42,68,.7)', 1);
+    sc.poly(dyn, [P(x0, y, .3), P(x0 + w, y, .3), P(x0 + w, y + 7, .3), P(x0, y + 7, .3)], '#cfe3bd', 'rgba(12,42,68,.7)', 1);
     if (f > .01) sc.poly(dyn, [P(x0, y, .5), P(x0 + w * f, y, .5), P(x0 + w * f, y + 7, .5), P(x0, y + 7, .5)], f > .98 ? '#b5301c' : '#8a5200', 'none', 0);
   });
   /* đường NACK nét đứt */

@@ -110,9 +110,9 @@ sc.box(objG2, SCR.x, -5, SCR.z, SCR.w, 10, SCR.h, T.dark);
     var el = strip.querySelector(sel), p = P(wx, wy, wz);
     el.style.left = p[0].toFixed(1) + 'px'; el.style.top = (p[1] + dy).toFixed(1) + 'px'; if (w) { el.style.width = w + 'px'; el.style.whiteSpace = 'normal'; }
   }
-  put('.lg1', 80, 0, 30, -28, 180);
+  put('.lg1', 80, 0, 30, -30, 250);
   put('.lg2', 56, 56, -8, 6);
-  put('.lg3', 256, 56, -8, 6, 142);
+  put('.lg3', 256, 56, -8, 6, 190);
   put('.lg4', 400, 56, -8, 6);
   put('.lg5', 530, 56, -8, 6);
   put('.lg6', 140, 56, -8, 6, 150);

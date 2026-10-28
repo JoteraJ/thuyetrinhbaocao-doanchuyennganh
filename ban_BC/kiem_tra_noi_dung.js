@@ -21,7 +21,7 @@ const extract = () => {
     const tw = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT); let joined = '', nd;
     while ((nd = tw.nextNode())) joined += ' ' + nd.textContent;
     const aside = sec.querySelector('aside');
-    out[sec.id] = { pieces, text: joined.replace(/\s+/g, ' '), aside: aside ? aside.textContent.replace(/\s+/g, ' ').trim() : '' };
+    out[sec.id] = { kws: Array.from(sec.querySelectorAll('.kw')).map(e => e.textContent), pieces, text: joined.replace(/\s+/g, ' '), aside: aside ? aside.textContent.replace(/\s+/g, ' ').trim() : '' };
   });
   return out;
 };
@@ -38,9 +38,12 @@ const extract = () => {
     const miss = o[id].pieces.filter(pc => { const q = norm(pc); return q && q.split(' ').length >= 2 && !nt.includes(' ' + q + ' '); });
     const nums = (norm(o[id].pieces.join(' ')).match(/\p{N}[\p{N},.]*/gu) || []).filter(x => !nt.includes(' ' + x.replace(/[,.]+$/, '') + ' ') && !nt.includes(x.replace(/[,.]+$/, '')));
     const asideOk = norm(o[id].aside) === norm(n[id].aside);
-    const ok = !miss.length && !nums.length && asideOk;
+    /* từ khóa (.kw) chỉ được rút từ chữ của slide gốc, không thêm chữ mới */
+    const oldWords = new Set(norm(o[id].pieces.join(' ') + ' ' + o[id].aside).split(' '));
+    const newKw = [...new Set((n[id].kws || []).flatMap(t => norm(t).split(' ')).filter(w => w && !oldWords.has(w)))];
+    const ok = !miss.length && !nums.length && asideOk && !newKw.length;
     console.log(`${ok ? '✓' : '✗'} ${id}${asideOk ? '' : '  [ghi chú nói khác bản gốc]'}`);
-    if (!ok) { bad++; miss.forEach(m => console.log('    thiếu chữ: ' + m)); if (nums.length) console.log('    thiếu số: ' + [...new Set(nums)].join(' | ')); }
+    if (!ok) { bad++; if (newKw.length) console.log('    từ khóa có chữ KHÔNG có ở slide gốc: ' + newKw.join(' | ')); miss.forEach(m => console.log('    thiếu chữ: ' + m)); if (nums.length) console.log('    thiếu số: ' + [...new Set(nums)].join(' | ')); }
   });
   console.log(bad ? `\n${bad} slide cần sửa` : '\nTất cả đạt');
   process.exit(bad ? 1 : 0);

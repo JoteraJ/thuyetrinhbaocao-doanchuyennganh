@@ -7,22 +7,22 @@
       <div class="nf ru">
         <h3>Mạng mesh và FANET</h3>
         <svg class="fg" id="s5a" viewBox="0 0 552 118" role="img" aria-label="FANET: nhiều UAV nối ad-hoc thành chuỗi, gói tin chuyển từng chặng về trạm mặt đất"></svg>
-        <p class="st" data-s="1">FANET đúng nghĩa khi nhiều UAV liên lạc ad-hoc với nhau (Bekmezci, 2013). Đề tài gần nhất với kịch bản "mở rộng vùng hoạt động".</p>
+        <p class="st" data-s="1"><span class="kw">UAV liên lạc ad-hoc (Bekmezci, 2013)</span><span class="fl">FANET đúng nghĩa khi nhiều UAV liên lạc ad-hoc với nhau (Bekmezci, 2013).</span> <span class="kw">kịch bản "mở rộng vùng hoạt động"</span><span class="fl">Đề tài gần nhất với kịch bản "mở rộng vùng hoạt động".</span></p>
       </div>
       <div class="nf ru b">
         <h3>Giao thức định tuyến</h3>
         <svg class="fg" id="s5b" viewBox="0 0 552 138" role="img" aria-label="Các giao thức định tuyến cho Linux/tầng IP không chuyển sang được ESP32; ESP32 dùng painlessMesh"></svg>
-        <p class="st" data-s="2">AODV, OLSR/DSDV, B.A.T.M.A.N đều cho Linux/tầng IP, không có bản cho ESP32 → dùng cơ chế sẵn của painlessMesh.</p>
+        <p class="st" data-s="2"><span class="kw">không có bản cho ESP32 → painlessMesh</span><span class="fl">AODV, OLSR/DSDV, B.A.T.M.A.N đều cho Linux/tầng IP, không có bản cho ESP32 → dùng cơ chế sẵn của painlessMesh.</span></p>
       </div>
       <div class="nf ru r">
         <h3>painlessMesh</h3>
         <svg class="fg" id="s5c" viewBox="0 0 552 118" role="img" aria-label="painlessMesh: cây động; Leaf di chuyển thì tự đổi node cha, mỗi node chỉ một đường lên Root"></svg>
-        <p class="st" data-s="3">Mạng cây tự tổ chức, bản tin JSON qua TCP, chuyển tiếp từng cạnh, ~1400 byte/bản tin. <b>Là cây động, không phải full mesh.</b></p>
+        <p class="st" data-s="3"><span class="kw">JSON qua TCP, ~1400 byte/bản tin</span><span class="fl">Mạng cây tự tổ chức, bản tin JSON qua TCP, chuyển tiếp từng cạnh, ~1400 byte/bản tin.</span> <span class="kw"><b>Cây động, không phải full mesh</b></span><span class="fl"><b>Là cây động, không phải full mesh.</b></span></p>
       </div>
       <div class="nf ru g">
         <h3>FreeRTOS</h3>
         <svg class="fg" id="s5d" viewBox="0 0 552 118" role="img" aria-label="Dòng thời gian của loopTask: khi loop() bị chặn, mesh.update() được gọi thưa"></svg>
-        <p class="st" data-s="4">painlessMesh chạy trong <code>loopTask</code>; nếu <code>loop()</code> bị chặn thì <code>mesh.update()</code> bị gọi thưa. Giải thích hiện tượng mạng ngừng truyền ở phần kết quả.</p>
+        <p class="st" data-s="4"><span class="kw"><code>loop()</code> bị chặn → <code>mesh.update()</code> gọi thưa</span><span class="fl">painlessMesh chạy trong <code>loopTask</code>; nếu <code>loop()</code> bị chặn thì <code>mesh.update()</code> bị gọi thưa.</span> <span class="kw">mạng ngừng truyền</span><span class="fl">Giải thích hiện tượng mạng ngừng truyền ở phần kết quả.</span></p>
       </div>
     </div>
   </div>

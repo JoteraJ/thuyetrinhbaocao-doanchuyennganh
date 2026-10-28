@@ -7,3 +7,8 @@
 #s5 .nf p b{color:var(--red)}
 #s5 code.tk{font-size:.9em;color:var(--green)}
 #s5 .nf p code{font-size:17px}
+/* chữ từ khóa (mặc định): mỗi cụm một dòng, to hơn */
+html:not(.detail) #s5 .nf p{font-size:24px;line-height:1.3}
+html:not(.detail) #s5 .nf p .kw{display:block}
+html:not(.detail) #s5 .nf p code{font-size:22px}
+html:not(.detail) #s5 .nf h3{font-size:28px}

@@ -6,19 +6,19 @@
     <div class="row top">
       <table class="tb hw">
         <tr><th>Vai trò</th><th>Node ID</th><th>Phần cứng</th></tr>
-        <tr class="hl"><td><b>Root</b></td><td class="mono">2846999225</td><td>ESP32-WROOM-32D DevKitC, không PSRAM, CP2102, UART 921600</td></tr>
-        <tr><td>Leaf</td><td class="mono">1207369673</td><td rowspan="3">ESP32-CAM-MB OV3660,<br>pin 18650 + module tăng áp</td></tr>
+        <tr class="hl"><td><b>Root</b></td><td class="mono">2846999225</td><td><span class="kw">ESP32-WROOM-32D, UART 921600</span><span class="fl">ESP32-WROOM-32D DevKitC, không PSRAM, CP2102, UART 921600</span></td></tr>
+        <tr><td>Leaf</td><td class="mono">1207369673</td><td rowspan="3"><span class="kw">ESP32-CAM-MB OV3660, pin 18650</span><span class="fl">ESP32-CAM-MB OV3660,<br>pin 18650 + module tăng áp</span></td></tr>
         <tr><td>Leaf</td><td class="mono">1207433521</td></tr>
         <tr><td>Leaf</td><td class="mono">1207449329</td></tr>
       </table>
       <div class="col cds">
-        <div class="cd ru r" data-s="1"><h3>Tăng áp, không dùng LM2596</h3><p>1 cell 18650 ≈ 3,7 V &lt; 5 V nên mạch hạ áp không hoạt động.</p></div>
-        <div class="cd ru a" data-s="2"><h3>Tụ 470 µF</h3><p>ESP32 phát WiFi có dòng đỉnh lớn; sụt áp gây reset giả, dễ nhầm là lỗi phần mềm.</p></div>
+        <div class="cd ru r" data-s="1"><h3>Tăng áp, không dùng LM2596</h3><p><span class="kw">1 cell 18650 ≈ 3,7 V &lt; 5 V</span><span class="fl">1 cell 18650 ≈ 3,7 V &lt; 5 V nên mạch hạ áp không hoạt động.</span></p></div>
+        <div class="cd ru a" data-s="2"><h3>Tụ 470 µF</h3><p><span class="kw">dòng đỉnh lớn → sụt áp → reset giả</span><span class="fl">ESP32 phát WiFi có dòng đỉnh lớn; sụt áp gây reset giả, dễ nhầm là lỗi phần mềm.</span></p></div>
       </div>
     </div>
     <div class="strip">
       <svg class="fig" id="s8fig" viewBox="0 0 1136 262" role="img" aria-label="Chuỗi nguồn của Leaf: pin 18650 trong đế, tụ song song tại chân vào của mạch tăng áp, cáp Micro-USB tới board ESP32-CAM; màn hình đo điện áp khi phát WiFi"></svg>
-      <p class="pw"><span class="lg0 lab r">Khối nguồn Leaf:</span><span class="lg lg1">pin 18650 2000 mAh</span><span class="lg lg2">đế pin</span><span class="lg lg3">tăng áp 0,9–5 V ra 5 V USB</span><span class="lg lg4">Micro-USB</span><span class="lg lg5">board</span><span class="lg lg6">Tụ 470 µF song song tại chân IN.</span></p>
+      <p class="pw"><span class="lg0 lab r">Khối nguồn Leaf:</span><span class="lg lg1">pin 18650 2000 mAh</span><span class="lg lg2">đế pin</span><span class="lg lg3">tăng áp 0,9–5 V ra 5 V USB</span><span class="lg lg4">Micro-USB</span><span class="lg lg5">board</span><span class="lg lg6"><span class="kw">Tụ 470 µF</span><span class="fl">Tụ 470 µF song song tại chân IN.</span></span></p>
       <span class="slow">minh họa</span>
     </div>
   </div>

@@ -10,12 +10,20 @@
 #s12 .stn.open .dot{background:var(--red);color:#fff}
 #s12 .bd{margin:4px 4px 0 14px;padding:0 2px 0 14px;border-left:3px dashed rgba(28,27,25,.38);transition:border-color .4s}
 #s12 .stn.open .bd{border-left-style:solid;border-left-color:var(--red)}
-#s12 .bd h3{font-size:20px;line-height:1.18;margin:2px 0 6px;min-height:47px}
-#s12 .dt{margin-bottom:6px}
+#s12 .bd h3{font-size:23px;line-height:1.15;margin:2px 0 8px;min-height:53px}
+#s12 .bd .lab{font-size:14px}
+#s12 .dt{margin-bottom:9px}
 #s12 .dt p{font-size:17px;line-height:1.35}
 #s12 .dt.fx{transition-delay:.3s}
 #s12 .dt.fx p{font-weight:700}
+html:not(.detail) #s12 .dt p{font-size:23px;line-height:1.2}
+html:not(.detail) #s12 .dt.fx p{font-size:25px}
 #s12 .stats{margin-top:auto;margin-bottom:12px;display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:24px;padding-top:12px}
-#s12 .stat .n{font-size:56px}
-#s12 .stat p{max-width:none;margin-top:4px;font-size:17px}
+#s12 .stat .n{font-size:68px}
+#s12 .stat .n small{font-size:22px}
+html.detail #s12 .stat .n{font-size:56px}
+html.detail #s12 .stat .n small{font-size:18px}
+html.detail #s12 .bd h3{font-size:20px;min-height:47px}
+html.detail #s12 .dt{margin-bottom:6px}
+#s12 .stat p{max-width:none;margin-top:4px;font-size:20px}
 #s12 .src{font-size:13px}

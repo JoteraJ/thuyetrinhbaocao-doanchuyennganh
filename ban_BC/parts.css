@@ -31,19 +31,31 @@
 #s3 .l1{grid-area:l1}#s3 .l2{grid-area:l2}#s3 .cx{grid-area:cx}#s3 .c1{grid-area:c1}#s3 .c2{grid-area:c2}
 #s3 .bg .no{font:700 24px/1 var(--serif);color:var(--red);margin-right:2px}
 #s3 .bg .c2 b{font-family:var(--mono);font-size:.9em;color:var(--red)}
+/* chữ từ khóa (mặc định): to hơn, ít chữ */
+html:not(.detail) #s3 .col ul.l{font-size:26px;line-height:1.25;gap:5px}
+html:not(.detail) #s3.res .fig-wrap{margin-bottom:116px}
+html:not(.detail) #s3 .bg{font-size:26px;line-height:1.3;grid-template-columns:372px 296px 1fr}
+html:not(.detail) #s3 .bg>b{font-size:23px}
+html:not(.detail) #s3 .bg .no{font-size:28px}
 
-#s4 .th{display:grid;grid-template-columns:220px 150px 1fr;column-gap:18px;border-bottom:2px solid var(--ink);padding-bottom:5px}
+#s4 .th{display:grid;grid-template-columns:232px 176px 1fr;column-gap:18px;border-bottom:2px solid var(--ink);padding-bottom:5px}
 #s4 .th .lab:first-child{grid-column:2}
 #s4 .th .lab:last-child{grid-column:3}
-#s4 .cr{display:grid;grid-template-columns:220px 150px 1fr;column-gap:18px;align-items:center;flex:1;border-bottom:1px solid var(--rule)}
+#s4 .cr{display:grid;grid-template-columns:232px 176px 1fr;column-gap:18px;align-items:center;flex:1;border-bottom:1px solid var(--rule)}
 #s4 .cr:last-child{border-bottom:0}
-#s4 .ic{width:220px;height:112px;display:block}
-#s4 .nm{font:700 25px/1.15 var(--serif);letter-spacing:-.01em}
+#s4 .ic{width:232px;height:118px;display:block}
+#s4 .nm{font:700 30px/1.15 var(--serif);letter-spacing:-.01em}
 #s4 .df{font-size:19px;line-height:1.45}
 #s4 .sp{width:100%;height:auto;display:block;margin:2px 0 4px}
 #s4 .col.ru ul.l{font-size:18px;gap:6px}
 #s4 li.wb{border:2px dashed var(--amber);padding:6px 10px 6px 30px;margin-top:2px}
 #s4 li.wb::before{left:11px;top:1.02em}
+/* chữ từ khóa (mặc định): to hơn, ít chữ */
+html:not(.detail) #s4 .df{font-size:25px;line-height:1.3}
+html:not(.detail) #s4 .col.ru ul.l{font-size:24px;line-height:1.3;gap:18px;text-wrap:balance}
+html:not(.detail) #s4 li.wb{padding:8px 10px 8px 30px}
+html:not(.detail) #s4 li.wb::before{top:1.1em}
+html:not(.detail) #s4 .sp{margin:12px 0 22px}
 
 #s5 .grid4{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px 32px}
 #s5 .nf{display:flex;flex-direction:column;gap:4px;min-height:0}
@@ -54,6 +66,11 @@
 #s5 .nf p b{color:var(--red)}
 #s5 code.tk{font-size:.9em;color:var(--green)}
 #s5 .nf p code{font-size:17px}
+/* chữ từ khóa (mặc định): mỗi cụm một dòng, to hơn */
+html:not(.detail) #s5 .nf p{font-size:24px;line-height:1.3}
+html:not(.detail) #s5 .nf p .kw{display:block}
+html:not(.detail) #s5 .nf p code{font-size:22px}
+html:not(.detail) #s5 .nf h3{font-size:28px}
 
 #s6 .fm5{flex:0 0 604px;gap:0}
 #s6 .fh{display:grid;grid-template-columns:168px 1fr;border-bottom:2px solid var(--ink);padding-bottom:5px}
@@ -110,6 +127,22 @@
 #s8 .pw span{position:absolute;white-space:nowrap;font:500 17px/1.25 var(--sans);text-align:center;transform:translateX(-50%)}
 #s8 .pw .lg0{transform:none;left:0;top:-10px;text-align:left}
 #s8 .slow{position:absolute;transform:translateX(-50%);white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px}
+/* chữ từ khóa (mặc định): to hơn, ít chữ; chế độ chi tiết (K) giữ cỡ cũ ở trên */
+html:not(.detail) #s8 .top{gap:36px}
+html:not(.detail) #s8 .hw{flex:0 0 700px;width:700px}
+html:not(.detail) #s8 .hw th{font-size:14px}
+html:not(.detail) #s8 .hw th:nth-child(1){width:92px}
+html:not(.detail) #s8 .hw th:nth-child(2){width:172px}
+html:not(.detail) #s8 .hw td{font-size:22px;line-height:1.25;padding:9px 10px 9px 0}
+html:not(.detail) #s8 .hw td.mono{font-size:21px}
+html:not(.detail) #s8 .kw{font:600 24px/1.25 var(--serif);font-variation-settings:'wdth' 92,'opsz' 28}
+html:not(.detail) #s8 .hw .kw{font-size:23px}
+html:not(.detail) #s8 .cds{gap:20px}
+html:not(.detail) #s8 .cd h3{font-size:28px;margin:0 0 6px}
+html:not(.detail) #s8 .cd p .kw{font-size:27px;line-height:1.25}
+html:not(.detail) #s8 .pw span{font-size:20px}
+html:not(.detail) #s8 .pw .lg0{font-size:16px;top:-8px}
+html:not(.detail) #s8 .pw .kw{font:600 21px/1.2 var(--serif)}
 
 #s9 .body{gap:12px}
 #s9 .hdr{display:grid;grid-template-columns:minmax(0,4fr) repeat(4,minmax(0,2fr)) minmax(0,4fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
@@ -179,7 +212,7 @@
 #s11 .frm .c0{grid-column:1;background:var(--ink);color:var(--paper);font-size:18px;font-weight:700;border-left-color:var(--ink)}
 #s11 .frm .c1{grid-column:2;background:rgba(26,79,156,.18);color:var(--blue)}
 #s11 .frm .c2{grid-column:3;background:var(--paper2)}
-#s11 .frm .c3{grid-column:4;background:#f1f8f4;letter-spacing:.12em;position:relative}
+#s11 .frm .c3{grid-column:4;background:#f3f9ec;letter-spacing:.12em;position:relative}
 #s11 .frm .c3::after{content:"";position:absolute;right:26px;top:-2px;bottom:-2px;width:14px;background:var(--paper);transform:skewX(-24deg);border-left:2px solid var(--ink);border-right:2px solid var(--ink)}
 #s11 .frm .c4{grid-column:5;background:rgba(27,127,92,.16);font-size:14px;border-right:2px solid var(--ink)}
 #s11 .frm .c1n{grid-column:2/5;grid-row:2;justify-content:flex-start;border:0;border-left:2px solid var(--blue);margin-left:24px;padding:4px 0 2px 10px;font:500 15px/1.2 var(--mono);color:var(--blue)}
@@ -208,14 +241,22 @@
 #s12 .stn.open .dot{background:var(--red);color:#ffffff}
 #s12 .bd{margin:4px 4px 0 14px;padding:0 2px 0 14px;border-left:3px dashed rgba(12,42,68,.38);transition:border-color .4s}
 #s12 .stn.open .bd{border-left-style:solid;border-left-color:var(--red)}
-#s12 .bd h3{font-size:20px;line-height:1.18;margin:2px 0 6px;min-height:47px}
-#s12 .dt{margin-bottom:6px}
+#s12 .bd h3{font-size:23px;line-height:1.15;margin:2px 0 8px;min-height:53px}
+#s12 .bd .lab{font-size:14px}
+#s12 .dt{margin-bottom:9px}
 #s12 .dt p{font-size:17px;line-height:1.35}
 #s12 .dt.fx{transition-delay:.3s}
 #s12 .dt.fx p{font-weight:700}
+html:not(.detail) #s12 .dt p{font-size:23px;line-height:1.2}
+html:not(.detail) #s12 .dt.fx p{font-size:25px}
 #s12 .stats{margin-top:auto;margin-bottom:12px;display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:24px;padding-top:12px}
-#s12 .stat .n{font-size:56px}
-#s12 .stat p{max-width:none;margin-top:4px;font-size:17px}
+#s12 .stat .n{font-size:68px}
+#s12 .stat .n small{font-size:22px}
+html.detail #s12 .stat .n{font-size:56px}
+html.detail #s12 .stat .n small{font-size:18px}
+html.detail #s12 .bd h3{font-size:20px;min-height:47px}
+html.detail #s12 .dt{margin-bottom:6px}
+#s12 .stat p{max-width:none;margin-top:4px;font-size:20px}
 #s12 .src{font-size:13px}
 
 #s13 .nt{padding-top:10px}
@@ -245,6 +286,14 @@
 .static #s13 .vb{opacity:1;transition:none}
 #s13 .src{font-size:13px}
 #s13 svg text.slow{fill:var(--muted);font-style:normal}
+
+/* chữ từ khóa: chỉ chỉnh cỡ, KHÔNG đặt display cho .kw/.fl (style.css điều khiển) */
+#s13 .kw .ln{display:block}
+html:not(.detail) #s13 .nt h3{font-size:24px}
+html:not(.detail) #s13 .g1,html:not(.detail) #s13 .g2{font-size:27px;line-height:1.28}
+html:not(.detail) #s13 .g1 .gb{font-size:50px}
+html:not(.detail) #s13 .g1 .ln:first-child{line-height:1.2}
+html:not(.detail) #s13 p code,html:not(.detail) #s13 .x2{font-size:23px}
 
 #s14 .fig-wrap .fig{position:absolute;inset:0}
 #s14 .th{font-size:21px;line-height:1.2;margin-bottom:4px;color:var(--ink)}

@@ -25,3 +25,11 @@
 .static #s13 .vb{opacity:1;transition:none}
 #s13 .src{font-size:13px}
 #s13 svg text.slow{fill:var(--muted);font-style:normal}
+
+/* chữ từ khóa: chỉ chỉnh cỡ, KHÔNG đặt display cho .kw/.fl (style.css điều khiển) */
+#s13 .kw .ln{display:block}
+html:not(.detail) #s13 .nt h3{font-size:24px}
+html:not(.detail) #s13 .g1,html:not(.detail) #s13 .g2{font-size:27px;line-height:1.28}
+html:not(.detail) #s13 .g1 .gb{font-size:50px}
+html:not(.detail) #s13 .g1 .ln:first-child{line-height:1.2}
+html:not(.detail) #s13 p code,html:not(.detail) #s13 .x2{font-size:23px}

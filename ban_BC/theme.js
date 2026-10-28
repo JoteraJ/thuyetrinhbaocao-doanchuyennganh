@@ -1,9 +1,9 @@
-/* Đổi bảng màu "giấy kem – mực đen" (màu viết trong parts/*) sang nhận diện "men ngọc – chàm – son".
+/* Đổi bảng màu "giấy kem – mực đen" (màu viết trong parts/*) sang nhận diện "xanh lá nhạt – chàm – son".
    build.js gọi recolor() cho mọi file trong parts/ khi ghép, nên file nguồn giữ màu cũ, kết quả ra màu mới. */
 const EXPLICIT = {
   '#1c1b19': '#0c2a44', '#26231c': '#0c2a44', '#645f52': '#34505c', '#6b6455': '#34505c',
   '#d9432b': '#b5301c', '#1f4e9c': '#1a4f9c', '#1b7f5c': '#0b6a47',
-  '#f6f1e7': '#d8eae0', '#ece5d4': '#c5dccf', '#fbf8f0': '#f1f8f4',
+  '#f6f1e7': '#e3f0d6', '#ece5d4': '#cfe3bd', '#fbf8f0': '#f3f9ec',
   '#b86a00': '#8a5200', '#a06b10': '#8a5200', '#ffffff': '#ffffff', '#fff': '#ffffff'
 };
 const RGBA = [['28,27,25', '12,42,68'], ['45,38,28', '10,32,48'], ['60,52,38', '10,32,48'], ['217,67,43', '181,48,28'], ['31,78,156', '26,79,156']];
@@ -30,8 +30,8 @@ function mapHex(hex) {
   const [hh, s, l] = hsl(R, G, B);
   const warmNeutral = s < .12 || (hh >= 15 && hh <= 65 && s < .45);
   if (!warmNeutral) return hex;
-  if (l >= .8) return rgb(152, .2, l);          /* nền, giấy: tông men ngọc */
-  if (l >= .5) return rgb(175, .13, l);         /* xám trung: ngọc xám */
+  if (l >= .8) return rgb(98, .26, l);          /* nền, giấy: tông xanh lá nhạt */
+  if (l >= .5) return rgb(100, .13, l);         /* xám trung: xanh lá xám */
   return rgb(208, .16, l);                      /* xám đậm: chàm xám */
 }
 function recolor(text) {

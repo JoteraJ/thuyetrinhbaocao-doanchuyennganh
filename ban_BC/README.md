@@ -71,3 +71,11 @@ Khối chunk: ô lập phương nhỏ màu theo Leaf (`Iso.LEAF[i]`: Leaf1 cam, 
 
 ## Kiểm tra bằng mắt
 `NODE_PATH=$(npm root -g) node chup_slide.js s9 6 /tmp/s9.png` (slide, thời điểm t giây, file ra, [bước]). Xem ảnh bằng công cụ Read. Kiểm: chữ đè nhau, chữ bị cắt/tràn, khối xuyên nhau, không còn chỗ trống lớn, mỗi bước (0,1,2…) đều gọn. Không có lỗi console.
+
+## CHỮ TỪ KHÓA (bắt buộc cho mọi slide)
+Bài trình bày chỉ hiện **từ khóa** để người xem không bị ngợp; câu gốc đầy đủ vẫn nằm trong DOM và hiện khi bấm **K** (chế độ chi tiết, `?detail`).
+- Mỗi khối chữ dài hơn ~5 từ (gạch đầu dòng, đoạn văn, định nghĩa trong bảng, chữ trong thẻ, chú thích) viết thành cặp: `<span class="kw">từ khóa</span><span class="fl">câu gốc NGUYÊN VĂN (kể cả <b>, <code> bên trong)</span>`.
+- `kw` ≤ 6 từ (tốt nhất 2–4), CHỈ dùng chữ/số/ký hiệu có trong slide gốc (`kiem_tra_noi_dung.js` bắt chữ mới); giữ nguyên thuật ngữ và số (1024 B, 921600 bps, 4 slot, CRC16, ~200 ms…). Không thêm sự kiện mới.
+- Giữ nguyên, KHÔNG rút gọn: tiêu đề (`h2.t`), kick, `.src`, nhãn trong sơ đồ SVG, số liệu trong bảng/biểu đồ, số lớn. `<aside>` ghi chú nói giữ nguyên.
+- Vì chữ ít đi: tăng cỡ `kw` (nội dung chính ≥ 22px, phụ ≥ 19px), phóng to sơ đồ để dùng chỗ trống, bỏ khoảng trắng thừa. `fl` (chi tiết) giữ cỡ cũ (≥ 17px) và vẫn không được tràn/đè. Kiểm tra cả hai: `chup_slide.js s9 6 /tmp/a.png` và `chup_slide.js s9 6 /tmp/b.png "" detail`.
+- Thứ tự DOM = thứ tự đọc.

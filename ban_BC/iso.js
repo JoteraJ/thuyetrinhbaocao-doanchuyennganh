@@ -5,8 +5,8 @@
 window.Iso = (function () {
   var NS = 'http://www.w3.org/2000/svg';
   var T = {
-    plate: { top: '#bfcecd', y: '#9fb5b3', x: '#86a2a0' },
-    stone: { top: '#d7e5de', y: '#b7c8c6', x: '#9ab2b0' },
+    plate: { top: '#c6d9b4', y: '#a8bf95', x: '#93ab80' },
+    stone: { top: '#e3efd6', y: '#c3d4b2', x: '#a7ba95' },
     pcb:   { top: '#3c4853', y: '#2a333a', x: '#1f252a' },
     chip:  { top: '#739390', y: '#576978', x: '#475561' },
     dark:  { top: '#232a30', y: '#181d22', x: '#121619' },
