@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phản biện đồ án — WiFi Mesh Drone và Robot</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="help"><button id="theme" type="button">Sáng / Tối</button><button id="nbtn" type="button">Ghi chú</button><span><span class="kbd">←</span> <span class="kbd">→</span> chuyển · <span class="kbd">N</span> ghi chú · <span class="kbd">B</span> dự phòng · <span class="kbd">F</span> toàn màn hình</span></div>
+<div id="stage">
+<div class="bar" id="bar"></div>
+
+<!-- 1 · BÌA -->
+<section class="slide" id="s1">
+  <svg id="meshbg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+  <img class="logo" src="assets/logo_tdtu.jpg" alt="Logo TDTU">
+  <p class="kick">Đồ án chuyên ngành · Kỹ thuật Điện tử – Viễn thông</p>
+  <h1>Thiết kế mạng WiFi Mesh kết nối Drone và Robot</h1>
+  <p class="en">Design of a WiFi Mesh Network for Connecting Drones and Robots</p>
+  <div class="meta">
+    <div><span>Sinh viên thực hiện</span><b>Nguyễn Dương Hiếu</b>MSSV 42300151 · Lớp 23040202</div>
+    <div><span>Giảng viên hướng dẫn</span><b>PGS.TS. Đặng Ngọc Minh Đức</b></div>
+    <div><span>Trường</span><b>Đại học Tôn Đức Thắng</b>Khoa Điện – Điện tử</div>
+    <div><span>Thời gian</span><b>TP. Hồ Chí Minh, 2026</b></div>
+  </div>
+  <span class="pn"></span>
+  <aside>Em xin chào Hội đồng. Em là Nguyễn Dương Hiếu, hôm nay em trình bày đồ án thiết kế mạng WiFi Mesh để truyền ảnh từ nhiều node về trạm giám sát.</aside>
+</section>
+
+<!-- 2 · NỘI DUNG -->
+<section class="slide" id="s2">
+  <p class="kick">Nội dung</p>
+  <h2>Năm phần trình bày</h2>
+  <ul class="l grow" style="gap:16px;font-size:1.15em;margin-top:6px">
+    <li><b>1.</b> Đặt vấn đề và mục tiêu</li>
+    <li><b>2.</b> Cơ sở lý thuyết trọng tâm</li>
+    <li><b>3.</b> Thiết kế hệ thống (3 lớp)</li>
+    <li><b>4.</b> Kết quả thực nghiệm</li>
+    <li><b>5.</b> Kết luận, hạn chế, hướng phát triển</li>
+  </ul>
+  <span class="pn"></span>
+  <aside>Thời lượng khoảng 12–15 phút. Trọng tâm là phần 3 và 4: hệ thống em đã dựng và số liệu đo được.</aside>
+</section>
+
+<!-- 3 · ĐẶT VẤN ĐỀ -->
+<section class="slide" id="s3">
+  <p class="kick">01 · Đặt vấn đề</p>
+  <h2>Vùng không có hạ tầng mạng cần một mạng tự tổ chức</h2>
+  <div class="row grow">
+    <div class="card f1 col">
+      <h3>Mô hình hình sao (Star)</h3>
+      <svg viewBox="0 0 300 150" style="width:100%;height:130px"><g stroke="var(--accent2)" stroke-width="2"><line x1="150" y1="75" x2="50" y2="30"/><line x1="150" y1="75" x2="50" y2="120"/><line x1="150" y1="75" x2="250" y2="30"/><line x1="150" y1="75" x2="250" y2="120"/></g><circle cx="150" cy="75" r="16" fill="var(--accent)"/><text x="150" y="108" text-anchor="middle" font-size="17" class="dim m">Router/AP</text><g fill="var(--node)" stroke="var(--accent2)" stroke-width="2"><circle cx="50" cy="30" r="10"/><circle cx="50" cy="120" r="10"/><circle cx="250" cy="30" r="10"/><circle cx="250" cy="120" r="10"/></g></svg>
+      <ul class="l s"><li>Mọi thiết bị nối trực tiếp router/AP</li><li>Ra khỏi vùng phủ hoặc router hỏng → <b class="badc">mất liên lạc</b></li><li>4G cần SIM và hạ tầng nhà mạng</li></ul>
+    </div>
+    <div class="card f1 col hl">
+      <h3>Mô hình mesh đa chặng</h3>
+      <svg viewBox="0 0 300 150" style="width:100%;height:130px"><g stroke="var(--accent)" stroke-width="2"><line x1="30" y1="75" x2="100" y2="40"/><line x1="100" y1="40" x2="170" y2="85"/><line x1="170" y1="85" x2="240" y2="45"/><line x1="100" y1="40" x2="110" y2="115"/><line x1="110" y1="115" x2="170" y2="85"/></g><circle cx="240" cy="45" r="16" fill="var(--accent)"/><g fill="var(--node)" stroke="var(--accent)" stroke-width="2"><circle cx="30" cy="75" r="10"/><circle cx="100" cy="40" r="10"/><circle cx="170" cy="85" r="10"/><circle cx="110" cy="115" r="10"/></g><text x="240" y="82" text-anchor="middle" font-size="17" class="dim m">Root</text></svg>
+      <ul class="l s"><li>Mỗi node vừa gửi vừa <b>chuyển tiếp</b></li><li>Node xa gửi qua node trung gian</li><li><b class="good">Không cần</b> SIM, Internet, router</li></ul>
+    </div>
+  </div>
+  <p style="margin-top:14px;font-size:.85em"><b>Bối cảnh:</b> thiên tai, hầm mỏ, rừng núi. <b>Hai thách thức:</b> (1) định tuyến đa chặng khi topology đổi; (2) truyền ảnh lớn khi mỗi bản tin painlessMesh chỉ mang <b>~1400 byte</b>.</p>
+  <span class="src">chuong1.tex, mục 1.1</span><span class="pn"></span>
+  <aside><b>Lời nói:</b> Ví dụ robot trong tòa nhà bị tường chắn sóng tới trạm — nếu có một node đặt ở hành lang nghe được cả hai bên thì ảnh vẫn về được.</aside>
+</section>
+
+<!-- 4 · MỤC TIÊU & PHẠM VI -->
+<section class="slide" id="s4">
+  <p class="kick">01 · Mục tiêu và phạm vi</p>
+  <h2>Thiết kế, thi công, đánh giá mạng mesh truyền ảnh thời gian thực</h2>
+  <div class="row grow">
+    <div class="f1">
+      <table>
+        <tr><th>Tiêu chí</th><th>Định nghĩa</th></tr>
+        <tr><td><b>Thông lượng</b></td><td>Dữ liệu ảnh nhận thành công / thời gian, và suy giảm theo số chặng</td></tr>
+        <tr><td><b>Độ trễ</b></td><td>Từ lúc Leaf chụp đến lúc Root ghép xong ảnh</td></tr>
+        <tr><td><b>Tự phục hồi</b></td><td>Thời gian khôi phục đường truyền khi node trung gian mất nguồn / ra vùng phủ</td></tr>
+      </table>
+    </div>
+    <div class="card f1 warn">
+      <h3>Phạm vi</h3>
+      <ul class="l s">
+        <li><b>1 Root + 3 Leaf</b>, đặt trên mặt đất hoặc cầm tay</li>
+        <li>Không chế tạo drone, không dùng xe RC; anten PCB tích hợp</li>
+        <li>Vai trò chuyển tiếp do mạng tự hình thành theo vị trí và RSSI</li>
+        <li>Mô hình truyền thông đa chặng theo hướng FANET — <b class="wc">chưa thử trên drone đang bay</b></li>
+      </ul>
+    </div>
+  </div>
+  <span class="src">chuong1.tex, mục 1.2, 1.4</span><span class="pn"></span>
+  <aside>Ba tiêu chí đều là tiêu chí của mạng, không phải cơ khí. Em nói rõ ngay phạm vi: chưa thử trên drone đang bay.</aside>
+</section>
+
+<!-- 5 · LÝ THUYẾT -->
+<section class="slide" id="s5">
+  <p class="kick">02 · Cơ sở lý thuyết trọng tâm</p>
+  <h2>Bốn nền tảng của hệ thống</h2>
+  <div class="row grow" style="flex-wrap:wrap;align-content:flex-start">
+    <div class="card" style="flex:1 1 45%"><h3>Mạng mesh và FANET</h3><p>FANET đúng nghĩa khi nhiều UAV liên lạc ad-hoc với nhau (Bekmezci, 2013). Đề tài gần nhất với kịch bản "mở rộng vùng hoạt động".</p></div>
+    <div class="card" style="flex:1 1 45%"><h3>Giao thức định tuyến</h3><p>AODV, OLSR/DSDV, B.A.T.M.A.N đều cho Linux/tầng IP, không có bản cho ESP32 → dùng cơ chế sẵn của painlessMesh.</p></div>
+    <div class="card hl" style="flex:1 1 45%"><h3>painlessMesh</h3><p>Mạng cây tự tổ chức, bản tin JSON qua TCP, chuyển tiếp từng cạnh, ~1400 byte/bản tin. <b>Là cây động, không phải full mesh.</b></p></div>
+    <div class="card" style="flex:1 1 45%"><h3>FreeRTOS</h3><p>painlessMesh chạy trong <code>loopTask</code>; nếu <code>loop()</code> bị chặn thì <code>mesh.update()</code> bị gọi thưa. Giải thích hiện tượng mạng ngừng truyền ở phần kết quả.</p></div>
+  </div>
+  <span class="src">chuong2.tex</span><span class="pn"></span>
+  <aside>Điểm cần nhớ: painlessMesh là cây động. Và FreeRTOS là chìa khóa để giải thích nút thắt UART ở slide 13.</aside>
+</section>
+
+<!-- 6 · CHỈ SỐ -->
+<section class="slide" id="s6">
+  <p class="kick">02 · Chỉ số đánh giá</p>
+  <h2>Năm chỉ số, đo ngay trên mạng thật</h2>
+  <table style="font-size:.95em">
+    <tr><th>Chỉ số</th><th>Công thức</th></tr>
+    <tr><td><b>Thông lượng</b></td><td class="mono">T = B / Δt  (KB/s)</td></tr>
+    <tr><td><b>Số khung/giây</b></td><td class="mono">FPS = N_ok / Δt</td></tr>
+    <tr><td><b>Tỉ lệ hủy khung</b></td><td class="mono">R_h = N_h / (N_ok + N_h) × 100 %</td></tr>
+    <tr><td><b>Độ trễ</b></td><td class="mono">d = t_ghép − t_chụp  (đồng hồ chung của mesh)</td></tr>
+    <tr><td><b>Tự phục hồi</b></td><td class="mono">T_ph = t_nối − t_mất  (theo luồng dữ liệu)</td></tr>
+  </table>
+  <p class="muted" style="margin-top:20px;font-size:.85em">Độ trễ dùng đồng hồ do painlessMesh đồng bộ, không cần NTP. Tự phục hồi đo theo gói phân mảnh cuối cùng nhận được và gói đầu tiên nhận lại, không theo sự kiện topology của thư viện.</p>
+  <span class="src">chuong2.tex, mục 2.6</span><span class="pn"></span>
+  <aside>Hai điểm hội đồng hay hỏi: độ trễ lấy đồng hồ ở đâu (đồng hồ chung của mesh) và tự phục hồi đo theo luồng dữ liệu chứ không theo sự kiện thư viện.</aside>
+</section>
+
+<!-- 7 · KIẾN TRÚC -->
+<section class="slide" id="s7">
+  <p class="kick">03 · Thiết kế hệ thống</p>
+  <h2>Kiến trúc 3 lớp: Mesh – UART – PC</h2>
+  <div class="stk grow">
+    <div class="blk"><b>Lớp 1 — Mesh · Leaf × 3 <span class="tag">ESP32-CAM OV3660 · pin 18650</span></b><small>Gói phân mảnh 1024 B + header 16 B, Base64, <code>sendSingle</code></small></div>
+    <div class="arr">▼ chuyển tiếp đa chặng (đã thử 1 và 3 chặng)</div>
+    <div class="blk hl"><b>Root <span class="tag">ESP32 DevKitC</span></b><small>Ghép 4 khung song song, chỉ gửi lên PC ảnh đã hoàn chỉnh</small></div>
+    <div class="arr">▼ Lớp 2 — UART 921600 bps</div>
+    <div class="blk"><b class="mono" style="font-weight:500">AA 55 | TYPE | LEN | PAYLOAD | CRC16</b><small>Khung nhị phân, có kiểm CRC</small></div>
+    <div class="arr">▼ Lớp 3 — PC</div>
+    <div class="blk"><b>Middleware Node.js (serialport) → Socket.IO → Web Dashboard (React)</b></div>
+  </div>
+  <p class="note" style="margin-top:8px"><b>Ý chính:</b> Root chỉ gửi lên PC ảnh đã ghép → middleware và dashboard không xử lý mất gói trên mesh. Tách truyền vô tuyến khỏi hiển thị.</p>
+  <span class="src">chuong3.tex, mục 3.1</span><span class="pn"></span>
+  <aside>Lớp 1 lo truyền vô tuyến, lớp 2 là cầu nối nhị phân có CRC, lớp 3 chỉ hiển thị. Nhờ tách lớp nên lỗi ở lớp nào biết ngay lớp đó.</aside>
+</section>
+
+<!-- 8 · PHẦN CỨNG -->
+<section class="slide" id="s8">
+  <p class="kick">03 · Phần cứng</p>
+  <h2>Một Root, ba Leaf chạy bằng pin</h2>
+  <div class="row grow">
+    <div class="f2">
+      <table>
+        <tr><th>Vai trò</th><th>Node ID</th><th>Phần cứng</th></tr>
+        <tr class="hl"><td><b>Root</b></td><td class="mono">2846999225</td><td>ESP32-WROOM-32D DevKitC, không PSRAM, CP2102, UART 921600</td></tr>
+        <tr><td>Leaf</td><td class="mono">1207369673</td><td rowspan="3">ESP32-CAM-MB OV3660,<br>pin 18650 + module tăng áp</td></tr>
+        <tr><td>Leaf</td><td class="mono">1207433521</td></tr>
+        <tr><td>Leaf</td><td class="mono">1207449329</td></tr>
+      </table>
+      <p class="muted" style="margin-top:14px;font-size:.8em">Khối nguồn Leaf: pin 18650 2000 mAh → đế pin → tăng áp 0,9–5 V ra 5 V USB → Micro-USB → board. Tụ 470 µF song song tại chân IN.</p>
+    </div>
+    <div class="col f1">
+      <div class="card hl"><h3>Tăng áp, không dùng LM2596</h3><p>1 cell 18650 ≈ 3,7 V &lt; 5 V nên mạch hạ áp không hoạt động.</p></div>
+      <div class="card"><h3>Tụ 470 µF</h3><p>ESP32 phát WiFi có dòng đỉnh lớn; sụt áp gây reset giả, dễ nhầm là lỗi phần mềm.</p></div>
+    </div>
+  </div>
+  <span class="src">chuong3.tex, Bảng 3.1, 3.2</span><span class="pn"></span>
+  <aside>Hai quyết định phần cứng cần giải thích: dùng mạch tăng áp vì pin 3,7 V thấp hơn 5 V, và tụ 470 µF để chống sụt áp khi phát WiFi.</aside>
+</section>
+
+<!-- 9 · GÓI TIN -->
+<section class="slide" id="s9">
+  <p class="kick">03 · Phân mảnh ảnh</p>
+  <h2>Header gói phân mảnh 16 byte</h2>
+  <div class="hdr">
+    <span style="flex:4">node_id<small>uint32 · 4 B</small></span>
+    <span style="flex:2">frame_id<small>uint16</small></span>
+    <span style="flex:2">chunk_index<small>uint16</small></span>
+    <span style="flex:2">total_chunks<small>uint16</small></span>
+    <span style="flex:2">payload_len<small>uint16</small></span>
+    <span style="flex:4;border-color:var(--warn)">capture_us<small>uint32 · 4 B</small></span>
+  </div>
+  <p class="muted mono" style="font-size:14px;margin-bottom:12px">offset 0 · 4 · 6 · 8 · 10 · 12</p>
+  <ul class="l" style="font-size:.88em">
+    <li>Payload tối đa <b>1024 B</b>; (16 + 1024) B mã hóa Base64 → tối đa <b>1388 ký tự</b>, vừa giới hạn ~1400 B của painlessMesh.</li>
+    <li>Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</li>
+    <li><code>capture_us</code> thêm ngày 30/09 để đo độ trễ (trước đó header 12 B).</li>
+    <li>Phân mảnh tự viết ở tầng ứng dụng, khác IP fragmentation ở tầng Network.</li>
+  </ul>
+  <span class="src">chuong3.tex, Bảng 3.3</span><span class="pn"></span>
+  <aside>1388 ký tự vừa dưới giới hạn 1400 byte. Trường capture_us là thứ cho phép đo độ trễ đầu cuối.</aside>
+</section>
+
+<!-- 10 · FIRMWARE -->
+<section class="slide" id="s10">
+  <p class="kick">03 · Firmware</p>
+  <h2>Leaf chụp và gửi lệch pha, Root ghép bằng 4 slot</h2>
+  <div class="row grow">
+    <div class="card f1">
+      <h3>Leaf <code>node_camera.ino</code></h3>
+      <ul class="l s">
+        <li>QVGA 320×240, JPEG quality 12, chu kỳ <b>600 ms</b></li>
+        <li>Học ID Root qua beacon <code>#ROOT</code> (2 s), gửi <code>sendSingle</code> thẳng tới Root</li>
+        <li>Gửi lệch pha: 3 khe × 200 ms, mỗi Leaf một khe</li>
+        <li>Watchdog: mất beacon &gt; 8 s học lại Root; &gt; 30 s khởi động lại</li>
+        <li><code>#NSTAT</code> mỗi 2 s: RSSI, heap, firmware, lý do reset</li>
+        <li><code>#</code> không thuộc bảng Base64 → không nhầm với gói ảnh</li>
+      </ul>
+    </div>
+    <div class="card f1 hl">
+      <h3>Root <code>node_root.ino</code></h3>
+      <ul class="l s">
+        <li>4 slot ghép, mỗi slot có bitmap + timeout <b>2 s</b></li>
+        <li><b>Supersede:</b> khung mới của cùng node → hủy khung cũ chưa xong</li>
+        <li>Hết slot → loại khung cũ nhất (LRU)</li>
+        <li>Telemetry mỗi 2 s: khung OK/hủy, heap, topology, số chặng, RSSI, độ trễ, tự phục hồi</li>
+        <li>Node im lặng &gt; 10 s bị đánh dấu; heap &lt; 40 KB liên tục &gt; 10 s → tự reset</li>
+      </ul>
+    </div>
+  </div>
+  <span class="src">chuong3.tex, mục 3.3.2–3.3.3</span><span class="pn"></span>
+  <aside>Bản đầu dùng sendBroadcast nên mọi Leaf nhận thừa; sau đổi sang sendSingle tới Root. Gửi lệch pha giảm đụng độ giữa các Leaf.</aside>
+</section>
+
+<!-- 11 · UART / MIDDLEWARE / DASHBOARD -->
+<section class="slide" id="s11">
+  <p class="kick">03 · UART, Middleware, Dashboard</p>
+  <h2>Khung nhị phân có CRC, dashboard dùng dữ liệu thật</h2>
+  <div class="row grow" style="min-height:0">
+    <div class="col f1" style="font-size:.78em">
+      <div class="card"><h3>Khung UART</h3><p><code>AA 55</code> | TYPE (01 ảnh, 02 telemetry, 03 log) | LEN 4 B LE | PAYLOAD | CRC16/CCITT-FALSE. Bỏ khung ảnh nếu bộ đệm còn &lt; ½; telemetry và log không bao giờ bị bỏ.</p></div>
+      <div class="card"><h3>Middleware Node.js</h3><p>Tìm MAGIC → kiểm LEN (≤ 131072) → kiểm CRC → Socket.IO. Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.</p></div>
+      <div class="card"><h3>Dashboard (React 18 + Tailwind)</h3><p>Tab Live: ảnh từng Leaf, cây topology theo RSSI. Tab So sánh: FPS, thông lượng, tỉ lệ hủy, heap, tự phục hồi; xuất CSV.</p></div>
+    </div>
+    <div class="col f1" style="min-height:0">
+      <div class="imgbox grow"><img src="assets/dashboardtab1.png" alt="Dashboard tab Live"><small>Tab Live</small></div>
+      <div class="imgbox grow"><img src="assets/dashboardtab2.png" alt="Dashboard tab So sánh"><small>Tab So sánh</small></div>
+    </div>
+  </div>
+  <span class="src">chuong3.tex, mục 3.4</span><span class="pn"></span>
+  <aside><b>Lưu ý:</b> báo cáo ghi ngưỡng bỏ khung là &lt; ½ bộ đệm; mã mới (commit 7d68445) bỏ khi bộ đệm không đủ chỗ cho cả khung. Nếu được hỏi, nói rõ bản nào dùng cho phép đo. Log văn bản chèn vào luồng nhị phân làm middleware mất đồng bộ, nên em hạ log painlessMesh xuống mức lỗi. Dashboard không dùng dữ liệu giả lập.</aside>
+</section>
+
+<!-- 12 · BRING-UP -->
+<section class="slide" id="s12">
+  <p class="kick">04 · Kết quả — bring-up</p>
+  <h2>Sáu sự cố và cách xử lý</h2>
+  <table style="font-size:.78em">
+    <tr><th>Sự cố</th><th>Nguyên nhân</th><th>Xử lý</th></tr>
+    <tr><td>Root treo khi khởi động</td><td>Firmware bắt buộc PSRAM, board không có</td><td>Cấp phát trong SRAM nội</td></tr>
+    <tr><td>Middleware bỏ nhiều byte</td><td>Log văn bản chèn vào UART nhị phân</td><td>Hạ mức log</td></tr>
+    <tr><td>Leaf gửi thất bại 100 %</td><td>Lỗi ngừng quét của painlessMesh gốc</td><td>Chuyển sang fork Alteriom</td></tr>
+    <tr><td>Leaf mất kết nối liên tục</td><td>Root nối WiFi nhà, tranh chấp radio</td><td>Tắt station của Root</td></tr>
+    <tr><td>Heap Leaf giảm 154 → 72 KB</td><td>Cáp/cổng USB không đủ dòng đỉnh</td><td>Đổi cáp, sau đó dùng pin</td></tr>
+    <tr><td>Hai Leaf đổi cha liên tục</td><td>Hai radio cách vài cm tranh chấp kênh</td><td>Tách các Leaf ra xa</td></tr>
+  </table>
+  <div class="big" style="margin-top:20px"><div><div class="n">1306<em>khung OK</em></div><p>1 Leaf, giai đoạn bring-up</p></div><div><div class="n">~0,5<em>%</em></div><p>6 khung hủy (bring-up)</p></div><div><div class="n">0<em>sai CRC</em></div><p>khung UART</p></div></div>
+  <span class="src">chuong4.tex, Bảng 4.1</span><span class="pn"></span>
+  <aside><b>Lưu ý:</b> báo cáo ghi MAX_FRAME_SIZE 24 KB/24 chunk; mã hiện tại 12 KB/12 chunk (4 slot). Cả hai đều lớn hơn ảnh QVGA ~4,6 KB. Mã Root trong repo là 10-01c/UART 8 KB, chưa có bản 10-06a. Nhiều lỗi nhìn như lỗi phần mềm nhưng gốc là nguồn điện hoặc nhiễu radio — đây là bài học đo đạc.</aside>
+</section>
+
+<!-- 13 · NÚT THẮT -->
+<section class="slide" id="s13">
+  <p class="kick">04 · Kết quả 1</p>
+  <h2>Hai nút thắt được xác định bằng đo đạc</h2>
+  <div class="row grow">
+    <div class="col f1" style="font-size:.82em">
+      <div class="card warn">
+        <h3>Nút thắt 1 — số slot ghép tại Root (17/09)</h3>
+        <p>2 Leaf, Root chỉ 1 slot → 111 OK / 496 hủy → <b class="badc">hủy ~82 %</b> (1 Leaf: 0,5 %). Leaf B chiếm slot đang ghép dở của Leaf A. Sửa: <b>4 slot</b> + <code>sendSingle</code>.</p>
+      </div>
+      <div class="card warn">
+        <h3>Nút thắt 2 — tải ghi UART tại Root (28–29/09)</h3>
+        <p>Chu kỳ 300 ms: FPS tổng 3,5 → 7 → 10 với 1/2/3 Leaf. Nhưng 3 Leaf: <b class="badc">toàn mạng ngừng sau 6–26 s</b>, heap Root 90 → 57 KB. ~47 KB/s ảnh so với giới hạn ~92 KB/s → ghi UART chặn → <code>mesh.update()</code> gọi thưa. Giảm tải ~40 % (600 ms): hết ngừng, FPS ~10 → ~5.</p>
+      </div>
+    </div>
+    <div class="card f1 col" style="min-width:0">
+      <h3>FPS tổng theo số Leaf</h3>
+      <svg viewBox="0 0 460 270" style="width:100%;flex:1;min-height:0">
+        <g stroke="var(--line)"><line x1="40" y1="220" x2="450" y2="220"/><line x1="40" y1="170" x2="450" y2="170"/><line x1="40" y1="120" x2="450" y2="120"/><line x1="40" y1="70" x2="450" y2="70"/></g>
+        <g class="dim m" font-size="12" text-anchor="end"><text x="34" y="224">0</text><text x="34" y="174">5</text><text x="34" y="124">10</text></g>
+        <g>
+          <rect x="60" y="150" width="44" height="70" rx="4" fill="var(--accent2)"/><text x="82" y="144" text-anchor="middle" font-size="14" font-weight="700">3,5</text>
+          <rect x="108" y="190" width="44" height="30" rx="4" fill="var(--accent)"/><text x="130" y="184" text-anchor="middle" font-size="14" font-weight="700">1,67</text>
+          <rect x="190" y="80" width="44" height="140" rx="4" fill="var(--accent2)"/><text x="212" y="74" text-anchor="middle" font-size="14" font-weight="700">7</text>
+          <rect x="238" y="154" width="44" height="66" rx="4" fill="var(--accent)"/><text x="260" y="148" text-anchor="middle" font-size="14" font-weight="700">3,3</text>
+          <rect x="320" y="20" width="44" height="200" rx="4" fill="var(--accent2)"/><text x="342" y="14" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--bad)">10 ✕</text>
+          <rect x="368" y="123" width="44" height="97" rx="4" fill="var(--accent)"/><text x="390" y="117" text-anchor="middle" font-size="14" font-weight="700">4,85</text>
+        </g>
+        <g class="dim m" font-size="13" text-anchor="middle"><text x="106" y="242">1 Leaf</text><text x="236" y="242">2 Leaf</text><text x="366" y="242">3 Leaf</text></g>
+        <g font-size="12"><rect x="50" y="254" width="10" height="10" fill="var(--accent2)"/><text x="66" y="263">300 ms (3 Leaf: ngừng truyền)</text><rect x="260" y="254" width="10" height="10" fill="var(--accent)"/><text x="276" y="263">600 ms (ổn định)</text></g>
+      </svg>
+    </div>
+  </div>
+  <span class="src">chuong4.tex, mục 4.4</span><span class="pn"></span>
+  <aside>Hai nút thắt đều tìm ra bằng số đo, không phải đoán. Nút thắt 2: Root dành gần nửa thời gian ghi UART chặn nên mesh.update bị gọi thưa, dữ liệu dồn trong TCP. Đánh đổi: giảm tải thì FPS tổng giảm từ ~10 xuống ~5.</aside>
+</section>
+
+<!-- 14 · 600ms + UART buffer -->
+<section class="slide" id="s14">
+  <p class="kick">04 · Kết quả 2</p>
+  <h2>Chu kỳ 600 ms và bộ đệm UART 16 KB</h2>
+  <div class="row grow">
+    <div class="f1">
+      <h3 style="margin-bottom:6px;font-size:.85em" class="muted">Chu kỳ 600 ms</h3>
+      <table style="font-size:.74em">
+        <tr><th>Leaf</th><th class="n">FPS tổng</th><th>Ghi chú</th></tr>
+        <tr><td>1</td><td class="n">1,67 ± 0,40</td><td>7,8 KB/s; hủy 0 %; heap 111–113 KB</td></tr>
+        <tr><td>2</td><td class="n">≈ 3,3</td><td>Ổn định ~4 phút</td></tr>
+        <tr><td>3</td><td class="n">4,85 ± 0,96</td><td>~1,6 FPS/Leaf; 31 chunk/s; ~2 phút</td></tr>
+      </table>
+    </div>
+    <div class="f1">
+      <h3 style="margin-bottom:6px;font-size:.85em" class="muted">Bộ đệm UART TX (06/10, 3 Leaf, 1 chặng)</h3>
+      <table style="font-size:.74em">
+        <tr><th>Chỉ tiêu</th><th class="n">test19</th><th class="n">test21</th></tr>
+        <tr><td>Firmware Root</td><td class="n">10-01c</td><td class="n">10-06a</td></tr>
+        <tr><td>Bộ đệm UART TX</td><td class="n">8 KB</td><td class="n">16 KB</td></tr>
+        <tr><td>Thời lượng</td><td class="n">15 ph</td><td class="n">20 ph</td></tr>
+        <tr><td>FPS tổng TB</td><td class="n">5,0</td><td class="n">5,0</td></tr>
+        <tr><td>Thông lượng TB</td><td class="n">22,0 KB/s</td><td class="n">25,6 KB/s</td></tr>
+        <tr class="hl"><td><b>Độ trễ TB</b></td><td class="n">280 ms</td><td class="n"><b class="good">199 ms</b></td></tr>
+        <tr class="hl"><td><b>uartDrop</b></td><td class="n">137 → 480</td><td class="n"><b class="good">0</b></td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="card warn" style="font-size:.74em;padding:10px 16px"><b>Thận trọng:</b> mỗi cấu hình đo 1 lần, thời lượng khác nhau, hai firmware còn khác ở chỗ khác — chỉ nói "trong hai phép đo này", không khẳng định chung.</p>
+  <span class="src">chuong4.tex, Bảng 4.2, 4.4</span><span class="pn"></span>
+  <aside>uartDrop về 0 và độ trễ giảm từ 280 xuống 199 ms. Nhưng đây là so sánh một lần đo, em không khẳng định chung.</aside>
+</section>
+
+<!-- 15 · test22 -->
+<section class="slide" id="s15">
+  <p class="kick">04 · Kết quả 3 · test22 (09/10) <span class="tag w">bổ sung sau khi nộp báo cáo</span></p>
+  <h2>Mỗi chặng cộng thêm ~200 ms độ trễ</h2>
+  <div class="row grow">
+    <div class="card f1 col" style="min-width:0">
+      <h3>Độ trễ trung vị theo số chặng (ms)</h3>
+      <svg viewBox="0 0 400 230" style="width:100%;flex:1;min-height:0">
+        <line x1="30" y1="190" x2="390" y2="190" stroke="var(--line)"/>
+        <g font-weight="700" font-size="14" text-anchor="middle">
+          <rect x="50" y="153" width="70" height="37" rx="4" fill="var(--accent)"/><text x="85" y="146">148</text>
+          <rect x="165" y="102" width="70" height="88" rx="4" fill="var(--accent2)"/><text x="200" y="95">350</text>
+          <rect x="280" y="46" width="70" height="144" rx="4" fill="var(--warn)"/><text x="315" y="39">576</text>
+        </g>
+        <g class="dim m" font-size="12" text-anchor="middle"><text x="85" y="208">Hop 1 · −45,8 dBm</text><text x="200" y="208">Hop 2 · −54,5</text><text x="315" y="208">Hop 3 · −67,3</text><text x="200" y="224">trung vị; RSSI trung bình</text></g>
+      </svg>
+    </div>
+    <div class="col f1" style="font-size:.78em">
+      <p class="muted">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16 phút (490 mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</p>
+      <div class="big" style="gap:18px"><div><div class="n" style="font-size:36px">4,94</div><p>FPS tổng</p></div><div><div class="n" style="font-size:36px">20,6<em>KB/s</em></div><p>thông lượng</p></div><div><div class="n" style="font-size:36px">0,56<em>%</em></div><p>hủy; uartDrop 0</p></div></div>
+      <ul class="l s">
+        <li>FPS gần như không đổi so với test21: tải bị giới hạn bởi chu kỳ chụp, <b>chưa ép tới bão hòa</b> → chưa đo suy giảm thông lượng theo hop</li>
+        <li>~6,5 % mẫu trễ &gt; 1 s, cao nhất 4,3 s</li>
+        <li><b>Tự phục hồi:</b> 5 sự kiện, 1530–23225 ms; node mới gia nhập làm toàn mạng gián đoạn ~16 s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</li>
+      </ul>
+    </div>
+  </div>
+  <span class="src">Nhật ký đo đạc 09/10/2026 (test22)</span><span class="pn"></span>
+  <aside><b>Lưu ý:</b> số liệu này có trong nhật ký đo 09/10 nhưng báo cáo LaTeX hiện ghi "chưa có số liệu ở hai hoặc ba chặng". Nếu báo cáo chưa cập nhật, nói đây là kết quả bổ sung sau khi nộp. Trung vị +~200 ms mỗi chặng; RSSI giảm dần theo chặng.</aside>
+</section>
+
+<!-- 16 · KẾT LUẬN -->
+<section class="slide" id="s16">
+  <p class="kick">05 · Kết luận, hạn chế, hướng phát triển</p>
+  <div class="row grow" style="gap:16px;min-height:0">
+    <div class="card f1" style="font-size:.78em"><h3 class="good">Đạt được</h3><ul class="l s">
+      <li>Chuỗi hoàn chỉnh trên phần cứng thật: chụp → phân mảnh → mesh → ghép → UART CRC → middleware → dashboard</li>
+      <li>Xác định bằng đo đạc 2 nút thắt: số slot ghép, tải ghi UART</li>
+      <li>Watchdog, bảo vệ heap, theo dõi node im lặng, ghi UART không chặn, gửi lệch pha, đo độ trễ và tự phục hồi</li></ul></div>
+    <div class="card warn f1" style="font-size:.78em"><h3 class="wc">Hạn chế (nói trước)</h3><ul class="l s lim">
+      <li>Chưa gửi lại: mất 1 chunk là mất cả khung</li>
+      <li>Tự phục hồi phân tán (885–32528 ms; test22: 1530–23225 ms, cách đo mới), chưa đủ mẫu từng kịch bản</li>
+      <li>Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</li>
+      <li>Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 +33 %) không thiết kế cho nhiều luồng ảnh</li></ul></div>
+    <div class="card hl f1" style="font-size:.78em"><h3 style="color:var(--accent)">Hướng phát triển</h3><ul class="l s">
+      <li><b>Ngắn hạn:</b> ghi UART sang task FreeRTOS riêng; đo tự phục hồi 5–10 lần; đo bão hòa 1/2/3 chặng và dòng Leaf; NACK gộp</li>
+      <li><b>Dài hạn:</b> ESP-WIFI-MESH (đã dựng một phần); định tuyến theo vị trí (GPS/UWB); ESP-NOW</li></ul></div>
+  </div>
+  <p style="margin-top:14px;font-size:1.05em;font-weight:700">Cảm ơn Hội đồng đã lắng nghe — em xin sẵn sàng trả lời câu hỏi.</p>
+  <span class="src">chuong5.tex</span><span class="pn"></span>
+  <aside>Nói thẳng hạn chế trước khi hội đồng hỏi. Nhấn phím B để mở slide dự phòng A–D khi cần.</aside>
+</section>
+
+<!-- DỰ PHÒNG A -->
+<section class="slide" id="b1" data-backup>
+  <p class="kick bk">Dự phòng A</p>
+  <h2>Vì sao chọn painlessMesh, không chọn ESP-WIFI-MESH?</h2>
+  <ul class="l" style="font-size:.95em">
+    <li>Danh sách nhiệm vụ đề tài đã chỉ định painlessMesh; chốt ngày 29/09/2026.</li>
+    <li>Chạy trên Arduino, nhanh dựng mẫu; gói board esp32 hạ từ 3.3.11 về 2.0.17 theo khuyến nghị thư viện; dùng fork Alteriom/painlessMesh 2.0.3.</li>
+    <li>Bản ESP-IDF được giữ trong <code>data/esp_idf_migration/</code>, đưa vào hướng phát triển.</li>
+  </ul>
+  <span class="pn"></span><aside><b>Cần kiểm lại:</b> phiên bản fork 2.0.3 và ngày chốt 29/09 chưa tìm thấy trong chương báo cáo. Phím A. Quay lại bằng phím ←.</aside>
+</section>
+
+<!-- DỰ PHÒNG B -->
+<section class="slide" id="b2" data-backup>
+  <p class="kick bk">Dự phòng B</p>
+  <h2>Vì sao UART 921600 bps?</h2>
+  <ul class="l" style="font-size:.95em">
+    <li>115200 bps ≈ 11,5 KB/s (tính toán) — chưa đủ cho 2 Leaf (≈ 15,6 KB/s ở chu kỳ 600 ms) → UART thành nút thắt, làm sai số đo mesh.</li>
+    <li>921600 bps ≈ 92 KB/s lý thuyết; thực tế đã chạm giới hạn ở 3 Leaf × 300 ms (~47 KB/s ảnh + ghi chặn) → bằng chứng cho thấy cần chọn tốc độ cao.</li>
+  </ul>
+  <span class="pn"></span><aside>Phím B.</aside>
+</section>
+
+<!-- DỰ PHÒNG C -->
+<section class="slide" id="b3" data-backup>
+  <p class="kick bk">Dự phòng C</p>
+  <h2>Vì sao WebSocket (Socket.IO), không MQTT?</h2>
+  <ul class="l" style="font-size:.95em">
+    <li>Kiến trúc 1 Root – 1 middleware – 1 dashboard, không cần broker trung gian.</li>
+    <li>Ít thành phần, độ trễ thấp hơn, triển khai nhanh.</li>
+    <li>MQTT hợp lý khi mở rộng nhiều Root / nhiều dashboard.</li>
+  </ul>
+  <span class="pn"></span><aside>Phím C.</aside>
+</section>
+
+<!-- DỰ PHÒNG D -->
+<section class="slide" id="b4" data-backup>
+  <p class="kick bk">Dự phòng D</p>
+  <h2>Cơ chế ghép ảnh khi mất chunk</h2>
+  <ul class="l" style="font-size:.95em">
+    <li>Bitmap đánh dấu chunk đã nhận; quá <b>2 s</b> chưa đủ → hủy khung.</li>
+    <li>Khung mới cùng node tới → hủy khung cũ (supersede, vì Leaf gửi tuần tự).</li>
+    <li>Hết slot → LRU.</li>
+    <li>Hướng cải tiến: NACK gộp, một bản tin/khung, tránh bão ACK.</li>
+  </ul>
+  <span class="pn"></span><aside>Phím D. Hiện chưa gửi lại — là hạn chế đã nêu.</aside>
+</section>
+
+</div>
+<div id="notes"></div>
+<script src="app.js"></script>
+</body>
+</html>
