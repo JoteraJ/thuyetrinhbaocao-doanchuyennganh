@@ -1,6 +1,6 @@
 # Bản trình bày B+C (nhận diện "xanh lá nhạt – chàm – son – vàng") — Phản biện đồ án WiFi Mesh Drone và Robot
 
-Slide 16:9 (1280×720, tự co theo màn hình). **Nội dung giữ đúng bản gốc `../ban_slide_16x9/index.html`**, chỉ đổi cách trình bày:
+Slide 16:9 (1280×720, tự co theo màn hình). **Nội dung giữ đúng bản gốc `ban_slide_16x9/index.html`**, chỉ đổi cách trình bày:
 khung tạp chí (C: giấy kem, chữ serif, dải tàu điện tiến độ) + sơ đồ cơ cấu isometric có chuyển động (B).
 
 Hai chế độ, cùng một nội dung (build.js sinh cả hai):

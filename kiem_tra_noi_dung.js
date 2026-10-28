@@ -1,9 +1,9 @@
-/* So bản mới (ban_BC/index.html) với bản gốc 16:9 (ban_slide_16x9/index.html) theo từng slide (cùng id).
+/* So bản mới (index.html) với bản gốc 16:9 (ban_slide_16x9/index.html) theo từng slide (cùng id).
    Báo: (1) đoạn chữ của bản gốc không còn trong bản mới, (2) con số bị mất, (3) ghi chú nói (aside) khác bản gốc.
    Chạy:  NODE_PATH=$(npm root -g) node kiem_tra_noi_dung.js [s7 s12 ...]   (bỏ trống = tất cả) */
 const { chromium } = require('playwright');
 const path = require('path');
-const OLD = 'file://' + path.resolve(__dirname, '../ban_slide_16x9/index.html');
+const OLD = 'file://' + path.resolve(__dirname, './ban_slide_16x9/index.html');
 const NEW = 'file://' + path.resolve(__dirname, 'index.html');
 const norm = s => s.normalize('NFC').toLowerCase().replace(/[^\p{L}\p{N},.]+/gu, ' ').replace(/(?<![\p{N}])[,.]|[,.](?![\p{N}])/gu, ' ').replace(/\s+/g, ' ').trim();
 const extract = () => {
