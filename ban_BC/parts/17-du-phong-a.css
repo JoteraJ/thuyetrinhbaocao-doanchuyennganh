@@ -1,8 +1,8 @@
 #b1 ul.l.bk{display:flex;flex-direction:column;justify-content:center;gap:34px;font-size:24px;line-height:1.45}
 #b1 ul.l.bk li{padding-left:28px}
 #b1 ul.l.bk li::before{top:.66em;width:10px;height:10px}
-#b1 .fl{display:flex;flex-wrap:wrap;column-gap:.3em;align-items:baseline}
-#b1 .fl code{font-size:.82em}
+#b1 code{font-size:.82em}
+#b1 .nw{white-space:nowrap}
 #b1 .fig-wrap .fig{position:absolute;inset:0}
 #b1 svg text.n{font-family:var(--serif)}
 #b1 svg text.t1{fill:var(--muted)}

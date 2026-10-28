@@ -6,7 +6,7 @@
 #s6 .fr:last-child{border-bottom:0}
 #s6 .nm{font:700 19px/1.25 var(--sans)}
 #s6 .fx{font:400 31px/1.2 var(--serif);letter-spacing:.005em;white-space:nowrap}
-#s6 .fx i{font-style:italic}
+#s6 .fx i{font-style:italic;font-family:"Newsreader","Onest",system-ui,sans-serif;font-size:1.1em}   /* chữ nghiêng chỉ dùng cho công thức */
 #s6 .fx sub{font:400 17px var(--sans);font-style:normal;vertical-align:-.28em;margin-left:1px;letter-spacing:0}
 #s6 .fx .u{display:block;font:400 17px/1.3 var(--sans);color:var(--muted);white-space:normal;margin-top:1px}
 #s6 .fx .u.k{display:inline;font:500 19px var(--mono);margin-left:6px}

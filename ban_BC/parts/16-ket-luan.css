@@ -2,14 +2,24 @@
 #s16 .cols{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:44px;flex:0 0 auto}
 #s16 .rail{position:absolute;left:0;right:0;top:15px;height:5px;background:linear-gradient(90deg,var(--green) 0 33%,var(--amber) 33% 66.5%,var(--blue) 66.5% 100%);display:block}
 #s16 .cl{position:relative;min-width:0}
-#s16 .dot{display:block;width:34px;height:34px;border-radius:50%;background:var(--paper);border:5px solid var(--ink);position:relative;z-index:1;margin-bottom:16px}
+#s16 .dot{display:block;width:34px;height:34px;border-radius:50%;background:var(--paper);border:5px solid var(--ink);position:relative;z-index:1;margin-bottom:12px}
 #s16 .c1 .dot{background:var(--green);border-color:var(--ink)}
 #s16 .c2 .dot{background:var(--paper);border-color:var(--amber);box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
 #s16 .c3 .dot{background:var(--blue);border-radius:0;border:0;clip-path:polygon(0 0,100% 50%,0 100%);width:34px;height:34px}
-#s16 h3{font-size:34px;line-height:1.1;margin-bottom:16px;letter-spacing:-.01em}
+#s16 h3{font-size:34px;line-height:1.1;margin-bottom:12px;letter-spacing:-.01em}
 #s16 h3:not(.good):not(.wc){color:var(--blue)}
-#s16 ul.l{gap:13px;font-size:19px;line-height:1.42}
+#s16 ul.l{gap:11px;font-size:18px;line-height:1.4}
 #s16 ul.l li{padding-left:24px}
 #s16 ul.l li::before{top:.62em}
 #s16 .thx{font:700 30px/1.25 var(--serif);border-top:2px solid var(--ink);padding-top:14px;letter-spacing:-.01em}
 #s16 .src{font-size:13px}
+#s16 .nw{white-space:nowrap}
+#s16 .chain{display:block;width:100%;margin-top:12px;overflow:visible}
+#s16 .bk rect{fill:var(--paper);stroke-width:2;transition:fill .3s}
+#s16 .bk.r rect{stroke:var(--red)}#s16 .bk.b rect{stroke:var(--blue)}#s16 .bk.g rect{stroke:var(--green)}
+#s16 .bk text{fill:var(--ink);transition:fill .3s}
+#s16 .bk.on.r rect{fill:var(--red)}#s16 .bk.on.b rect{fill:var(--blue)}#s16 .bk.on.g rect{fill:var(--green)}
+#s16 .bk.on text{fill:#fff}
+#s16 .chain .ar{fill:none;stroke:var(--ink);stroke-width:2;opacity:.6}
+#s16 .chain .ah{fill:var(--ink);opacity:.6}
+#s16 .chain .pk{fill:var(--gold);stroke:var(--ink);stroke-width:1.6}

@@ -43,7 +43,7 @@
 #s5 .nf{display:flex;flex-direction:column;gap:4px;min-height:0}
 #s5 .nf h3{font-size:23px}
 #s5 .fg{width:100%;height:118px;display:block;flex:none}
-#s5 .fg#s5b{height:138px}
+#s5 .fg#s5b{height:138px;margin-top:-20px}   /* cao hơn 20px để nhãn nằm trên khối khi nhảy; kéo lên để đoạn văn dưới thẳng hàng với cột bên cạnh */
 #s5 .nf p{font-size:17px;line-height:1.45}
 #s5 .nf p b{color:var(--red)}
 #s5 code.tk{font-size:.9em;color:var(--green)}
@@ -57,7 +57,7 @@
 #s6 .fr:last-child{border-bottom:0}
 #s6 .nm{font:700 19px/1.25 var(--sans)}
 #s6 .fx{font:400 31px/1.2 var(--serif);letter-spacing:.005em;white-space:nowrap}
-#s6 .fx i{font-style:italic}
+#s6 .fx i{font-style:italic;font-family:"Newsreader","Onest",system-ui,sans-serif;font-size:1.1em}   /* chữ nghiêng chỉ dùng cho công thức */
 #s6 .fx sub{font:400 17px var(--sans);font-style:normal;vertical-align:-.28em;margin-left:1px;letter-spacing:0}
 #s6 .fx .u{display:block;font:400 17px/1.3 var(--sans);color:var(--muted);white-space:normal;margin-top:1px}
 #s6 .fx .u.k{display:inline;font:500 19px var(--mono);margin-left:6px}
@@ -69,12 +69,19 @@
 
 #s7 .fig-wrap{position:relative}
 #s7 .fig{position:absolute;inset:0}
-#s7 .co{position:absolute;width:262px;background:var(--paper)}
+#s7 .co{position:absolute;background:var(--paper)}
 #s7 .co h3{font-size:22px;margin:2px 0 4px}
-#s7 .c1{left:0;bottom:6px}
-#s7 .c2{left:300px;bottom:6px}
-#s7 .c3{right:250px;top:0;width:290px}
-#s7 .c4{right:0;top:0;width:236px}
+#s7 .co .lab{font-size:14px}
+#s7 .co .tg{font-size:17px}
+#s7 .co p{line-height:1.4}
+#s7 .co code{font-size:17px}
+#s7 .co .fr{font-size:17px;line-height:1.3;margin:4px 0;white-space:nowrap}   /* khung AA 55 | … | CRC16 luôn nằm trên một dòng, CRC16 không rơi xuống dòng riêng */
+#s7 .c1{left:0;bottom:0;width:330px}
+#s7 .c2{left:346px;bottom:0;width:292px}
+#s7 .c3{right:354px;top:0;width:392px}
+#s7 .c4{right:0;top:0;width:330px}
+/* chú thích cố định ở góc dưới phải khung hình (cùng kiểu ở mọi slide có hình động chậm hơn thực tế) */
+#s7 .slow{position:absolute;right:0;bottom:0;font:500 13px var(--mono);letter-spacing:.04em;color:var(--muted)}
 
 #s8 .top{flex:1;min-height:0;gap:36px;align-items:flex-start}
 #s8 .hw{flex:0 0 640px;width:640px}
@@ -92,6 +99,7 @@
 #s8 .pw{position:absolute;inset:0;pointer-events:none}
 #s8 .pw span{position:absolute;white-space:nowrap;font:500 17px/1.25 var(--sans);text-align:center;transform:translateX(-50%)}
 #s8 .pw .lg0{transform:none;left:0;top:-10px;text-align:left}
+#s8 .slow{position:absolute;transform:translateX(-50%);white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px}
 
 #s9 .body{gap:12px}
 #s9 .hdr{display:grid;grid-template-columns:minmax(0,4fr) repeat(4,minmax(0,2fr)) minmax(0,4fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
@@ -108,6 +116,7 @@
 #s9 .o0{left:0}#s9 .o4{left:25%}#s9 .o6{left:37.5%}#s9 .o8{left:50%}#s9 .o10{left:62.5%}#s9 .o12{left:75%}
 #s9 .fig-wrap{flex:1;min-height:0;position:relative}
 #s9 .fig-wrap .fig{position:absolute;inset:0}
+#s9 .slow{position:absolute;right:0;top:0;white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px}
 #s9 ul.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;font-size:17px;line-height:1.42}
 #s9 ul.g4 li{padding:8px 0 0;border-top:2px solid var(--red)}
 #s9 ul.g4 li::before{display:none}
@@ -132,9 +141,14 @@
 #s10 ul.l code{font-size:.9em}
 
 #s11 .cols{flex:1;min-height:0;gap:32px}
-#s11 .lc{flex:0 0 734px;width:734px;gap:14px}
+#s11 .lc{flex:0 0 704px;width:704px;gap:14px}
 #s11 .rc{flex:1;gap:10px;min-height:0}
 #s11 .rc .shot{flex:1;min-height:0}
+#s11 .shot .cr{position:relative;overflow:hidden;flex:1;min-height:0;background:#161a1f}
+#s11 .shot .cr img{position:absolute;left:0;top:0;max-width:none;height:auto;flex:none;object-fit:fill}
+/* phóng to vùng chính của ảnh chụp 1920×1080 (giữ nguyên ảnh gốc): rộng = 1920/Wc, lệch trái/trên = x0/Wc, y0/Wc (đều tính theo bề rộng khung) */
+#s11 .shot .cr img.i1{width:192%;margin-left:-4.2%;margin-top:-4.5%}
+#s11 .shot .cr img.i2{width:181%;margin-left:-17%;margin-top:-9.4%}
 #s11 h3{margin-bottom:6px}
 #s11 .blk.a h3{border-top:2px solid var(--blue);padding-top:6px;margin-bottom:8px}
 #s11 .blk.b h3{border-top:2px solid var(--green);padding-top:6px;margin-bottom:4px}
@@ -150,13 +164,15 @@
 #s11 .frm .c4{grid-column:5;background:rgba(27,127,92,.16);font-size:14px;border-right:2px solid var(--ink)}
 #s11 .frm .c1n{grid-column:2/5;grid-row:2;justify-content:flex-start;border:0;border-left:2px solid var(--blue);margin-left:24px;padding:4px 0 2px 10px;font:500 15px/1.2 var(--mono);color:var(--blue)}
 #s11 .sn{font-size:17px;line-height:1.45;margin-top:8px}
-#s11 .scn{position:relative;height:150px}
-#s11 .scn .fig{position:absolute;inset:0;width:734px;height:150px}
+#s11 .scn{position:relative;height:232px}
+#s11 .scn .fig{position:absolute;inset:0;width:704px;height:232px}
 #s11 .gl{position:absolute;inset:0;pointer-events:none}
 #s11 .gl span{position:absolute;width:104px;text-align:center;font:600 15px/1.2 var(--mono);transform:translateX(-50%);color:var(--green)}
 #s11 .bt{font-size:17px;line-height:1.45;margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 #s11 .lamps{display:inline-flex;gap:4px;margin-left:10px}
 #s11 .lamps i{display:block;width:12px;height:12px;background:var(--green);border:1.5px solid var(--ink)}
+#s11 .bd{position:absolute;right:0;top:-35px;display:flex;gap:8px;pointer-events:none}
+#s11 .slow{white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px;background:var(--paper)}
 #s11 .blk.c p{font-size:17px;line-height:1.45}
 
 #s12 .body{gap:14px}
@@ -231,8 +247,8 @@
 #s15 .stat .n small{font-size:17px;margin-left:4px}
 #s15 .stat p{font-size:16px;max-width:none}
 #s15 ul.l{gap:11px;font-size:17px;line-height:1.45}
-#s15 .fl{display:flex;flex-wrap:wrap;column-gap:.35em;align-items:baseline}
-#s15 .fl b{color:var(--red)}
+#s15 ul.l b.rd{color:var(--red)}
+#s15 .fig-wrap .slow{position:absolute;left:0;top:0;font:500 13px var(--mono);letter-spacing:.04em;color:var(--muted)}
 #s15 svg text.v{fill:var(--ink);font-family:var(--serif)}
 #s15 svg text.n{font-family:var(--serif)}
 #s15 svg text.h{fill:var(--muted)}
@@ -242,23 +258,33 @@
 #s16 .cols{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:44px;flex:0 0 auto}
 #s16 .rail{position:absolute;left:0;right:0;top:15px;height:5px;background:linear-gradient(90deg,var(--green) 0 33%,var(--amber) 33% 66.5%,var(--blue) 66.5% 100%);display:block}
 #s16 .cl{position:relative;min-width:0}
-#s16 .dot{display:block;width:34px;height:34px;border-radius:50%;background:var(--paper);border:5px solid var(--ink);position:relative;z-index:1;margin-bottom:16px}
+#s16 .dot{display:block;width:34px;height:34px;border-radius:50%;background:var(--paper);border:5px solid var(--ink);position:relative;z-index:1;margin-bottom:12px}
 #s16 .c1 .dot{background:var(--green);border-color:var(--ink)}
 #s16 .c2 .dot{background:var(--paper);border-color:var(--amber);box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
 #s16 .c3 .dot{background:var(--blue);border-radius:0;border:0;clip-path:polygon(0 0,100% 50%,0 100%);width:34px;height:34px}
-#s16 h3{font-size:34px;line-height:1.1;margin-bottom:16px;letter-spacing:-.01em}
+#s16 h3{font-size:34px;line-height:1.1;margin-bottom:12px;letter-spacing:-.01em}
 #s16 h3:not(.good):not(.wc){color:var(--blue)}
-#s16 ul.l{gap:13px;font-size:19px;line-height:1.42}
+#s16 ul.l{gap:11px;font-size:18px;line-height:1.4}
 #s16 ul.l li{padding-left:24px}
 #s16 ul.l li::before{top:.62em}
 #s16 .thx{font:700 30px/1.25 var(--serif);border-top:2px solid var(--ink);padding-top:14px;letter-spacing:-.01em}
 #s16 .src{font-size:13px}
+#s16 .nw{white-space:nowrap}
+#s16 .chain{display:block;width:100%;margin-top:12px;overflow:visible}
+#s16 .bk rect{fill:var(--paper);stroke-width:2;transition:fill .3s}
+#s16 .bk.r rect{stroke:var(--red)}#s16 .bk.b rect{stroke:var(--blue)}#s16 .bk.g rect{stroke:var(--green)}
+#s16 .bk text{fill:var(--ink);transition:fill .3s}
+#s16 .bk.on.r rect{fill:var(--red)}#s16 .bk.on.b rect{fill:var(--blue)}#s16 .bk.on.g rect{fill:var(--green)}
+#s16 .bk.on text{fill:#ffffff}
+#s16 .chain .ar{fill:none;stroke:var(--ink);stroke-width:2;opacity:.6}
+#s16 .chain .ah{fill:var(--ink);opacity:.6}
+#s16 .chain .pk{fill:var(--gold);stroke:var(--ink);stroke-width:1.6}
 
 #b1 ul.l.bk{display:flex;flex-direction:column;justify-content:center;gap:34px;font-size:24px;line-height:1.45}
 #b1 ul.l.bk li{padding-left:28px}
 #b1 ul.l.bk li::before{top:.66em;width:10px;height:10px}
-#b1 .fl{display:flex;flex-wrap:wrap;column-gap:.3em;align-items:baseline}
-#b1 .fl code{font-size:.82em}
+#b1 code{font-size:.82em}
+#b1 .nw{white-space:nowrap}
 #b1 .fig-wrap .fig{position:absolute;inset:0}
 #b1 svg text.n{font-family:var(--serif)}
 #b1 svg text.t1{fill:var(--muted)}

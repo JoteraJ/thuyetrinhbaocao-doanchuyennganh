@@ -1,9 +1,9 @@
 /* Slide 11: bộ đệm UART ở Root (bỏ khung ảnh nếu còn < ½, telemetry/log không bao giờ bị bỏ)
    -> cáp UART -> middleware: MAGIC -> LEN (≤ 131072) -> CRC -> Socket.IO -> dashboard.
-   Lỗi chỉ bỏ phần hỏng: rác trước MAGIC bị quét đi, khung quá dài bị chặn ở cổng LEN, khung sai CRC bị loại ở cổng CRC. */
+   Lúc đầu chỉ có khung hợp lệ đi qua; từ bước "Lỗi chỉ bỏ phần hỏng" (kịch bản test 7/7) mới minh họa lỗi: rác trước MAGIC bị quét đi, khung quá dài bị chặn ở cổng LEN, khung sai CRC bị loại ở cổng CRC. */
 var svg = document.getElementById('s11fig'), I = window.Iso, T = I.T, LEAF = I.LEAF;
-var sc = I.scene(svg, { az: 5, el: 36, rect: [2, 2, 730, 118],
-  pts: [[-34, -38, -6], [596, -38, -6], [-34, 38, -6], [596, 38, -6], [30, 0, 72], [-34, -14, 74], [550, 0, 80]] });
+var sc = I.scene(svg, { az: 8, el: 36, rect: [2, 8, 700, 172],
+  pts: [[-34, -38, -6], [536, -38, -6], [-34, 38, -6], [536, 38, -6], [30, 0, 72], [-34, -14, 74], [490, 0, 80]] });
 var P = sc.pt, S = sc.S, C = sc.C;
 function tx(g, x, y, str, size, w, anchor, fill, cls) { var e = sc.text(g, x, y, str, size, w, anchor, fill, cls); e.style.fill = fill; return e; }
 var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g();
@@ -14,8 +14,8 @@ var BLUE = T.blue, GRN = T.green, TEL = { top: '#9dbfee', y: '#3f78c4', x: '#2d5
 var RED = { top: '#ff9a82', y: '#d9432b', x: '#a8321f' }, AMB = { top: '#f2b24a', y: '#c98a1c', x: '#a06b10' };
 
 /* ---------- cảnh tĩnh ---------- */
-var X_START = 74, BELT0 = 114, BELT1 = 420, GX = [165, 265, 365], MX = 470;
-sc.box(plateG, -34, -38, -6, 630, 76, 6, T.plate);
+var X_START = 74, BELT0 = 114, BELT1 = 360, GX = [155, 235, 315], MX = 410;
+sc.box(plateG, -34, -38, -6, 570, 76, 6, T.plate);
 /* Root: bo mạch ESP32 + bộ đệm */
 sc.box(objG, 0, -30, 0, 72, 60, 5, T.pcb);
 sc.box(objG, 46, -22, 5, 20, 18, 3, T.chip);
@@ -46,7 +46,7 @@ var SCRM = sc.faceMatrix(MX, 5, 24);
   var strip = svg.parentNode;
   [['.g1', GX[0]], ['.g2', GX[1]], ['.g3', GX[2]], ['.g4', BELT1 + 34]].forEach(function (a) {
     var el = strip.querySelector(a[0]), p = P(a[1], 38, -6);
-    el.style.left = p[0].toFixed(1) + 'px'; el.style.top = (p[1] + 4).toFixed(1) + 'px';
+    el.style.left = p[0].toFixed(1) + 'px'; el.style.top = (p[1] + 6).toFixed(1) + 'px';
   });
 })();
 
@@ -127,13 +127,14 @@ function frame(t) {
   var curImg = MON.img, curLeaf = MON.leaf, tel = -9, lg = -9, passed = [];
   ARR.forEach(function (f) {
     if (f.drop || t < f.exit) return;
-    var big = f.fate === 'len', b = body(f.kind, f.leaf || 0, big), x = X_START + V * (t - f.exit), z = 4, y = 0, a = 1, ejected = false;
+    var fate = ST() >= 2 ? f.fate : 'ok';   /* lỗi chỉ được minh họa khi bước "Lỗi chỉ bỏ phần hỏng" hiện */
+    var big = fate === 'len', b = body(f.kind, f.leaf || 0, big), x = X_START + V * (t - f.exit), z = 4, y = 0, a = 1, ejected = false;
     var tg = [ [GX[0] - 8, 'noise'], [GX[1] - 22, 'len'], [GX[2] - 10, 'crc'] ];
-        if (f.fate === 'len' && x > tg[1][0]) {
+        if (fate === 'len' && x > tg[1][0]) {
       var u = (x - tg[1][0]) / 46; if (u < .6) { x = tg[1][0] + u * 4; } else { var w = I.clamp((u - .6) / .8); x = tg[1][0] + 2.4; y = 34 * w; z = 4 - 4 * w; a = 1 - w; }
       if (u > 1.5) return;
       if (u >= .55 && u < 1.1) tags.push({ p: P(GX[1], 0, 22), a: 1 - (u - .55) / .55 });
-    } else if (f.fate === 'crc' && x > tg[2][0]) {
+    } else if (fate === 'crc' && x > tg[2][0]) {
       var u2 = (x - tg[2][0]) / 40; var w2 = I.clamp(u2 / .8); y = -34 * w2; z = 4 - 4 * w2; a = 1 - w2; x = tg[2][0] + u2 * 6;
       if (u2 > 1.2) return;
       if (u2 < .7) tags.push({ p: P(GX[2], 0, 22), a: 1 - u2 / .7 });
@@ -149,7 +150,7 @@ function frame(t) {
   });
   /* rác trước MAGIC: bị quét khỏi băng chuyền ở cổng 1 */
   ARR.forEach(function (f) {
-    if (!f.noise) return;
+    if (!f.noise || ST() < 2) return;
     for (var k = 0; k < 4; k++) {
       var x = BELT0 + V * (t - f.exit + .55 + k * .09), y = 0, z = 4, a = 1;
       if (t < f.exit - .55 || x < BELT0) continue;

@@ -9,26 +9,42 @@
         <h3 class="good">Đạt được</h3>
         <ul class="l g">
           <li>Chuỗi hoàn chỉnh trên phần cứng thật: chụp → phân mảnh → mesh → ghép → UART CRC → middleware → dashboard</li>
-          <li>Xác định bằng đo đạc 2 nút thắt: số slot ghép, tải ghi UART</li>
+          <li>Xác định bằng đo đạc 2&nbsp;nút&nbsp;thắt: số slot ghép, tải ghi UART</li>
           <li>Watchdog, bảo vệ heap, theo dõi node im lặng, ghi UART không chặn, gửi lệch pha, đo độ trễ và tự phục hồi</li>
         </ul>
+<svg class="chain" id="s16chain" viewBox="0 0 349 88" role="img" aria-label="Chuỗi: chụp, phân mảnh, mesh, ghép, UART CRC, middleware, dashboard">
+  <g class="bk r" data-i="0"><rect x="1" y="4" width="50" height="30"/><text class="mo" x="26.0" y="24" text-anchor="middle" font-size="14" font-weight="500">chụp</text></g>
+  <g class="bk r" data-i="1"><rect x="77" y="4" width="90" height="30"/><text class="mo" x="122.0" y="24" text-anchor="middle" font-size="14" font-weight="500">phân mảnh</text></g>
+  <g class="bk r" data-i="2"><rect x="193" y="4" width="50" height="30"/><text class="mo" x="218.0" y="24" text-anchor="middle" font-size="14" font-weight="500">mesh</text></g>
+  <g class="bk r" data-i="3"><rect x="269" y="4" width="50" height="30"/><text class="mo" x="294.0" y="24" text-anchor="middle" font-size="14" font-weight="500">ghép</text></g>
+  <g class="bk b" data-i="4"><rect x="1" y="52" width="81" height="30"/><text class="mo" x="41.5" y="72" text-anchor="middle" font-size="14" font-weight="500">UART CRC</text></g>
+  <g class="bk g" data-i="5"><rect x="108" y="52" width="98" height="30"/><text class="mo" x="157.0" y="72" text-anchor="middle" font-size="14" font-weight="500">middleware</text></g>
+  <g class="bk g" data-i="6"><rect x="232" y="52" width="90" height="30"/><text class="mo" x="277.0" y="72" text-anchor="middle" font-size="14" font-weight="500">dashboard</text></g>
+  <path class="ar" d="M55 19.0H70"/><path class="ah" d="M68 15.0L74 19.0L68 23.0z"/>
+  <path class="ar" d="M171 19.0H186"/><path class="ah" d="M184 15.0L190 19.0L184 23.0z"/>
+  <path class="ar" d="M247 19.0H262"/><path class="ah" d="M260 15.0L266 19.0L260 23.0z"/>
+  <path class="ar" d="M86 67.0H101"/><path class="ah" d="M99 63.0L105 67.0L99 71.0z"/>
+  <path class="ar" d="M210 67.0H225"/><path class="ah" d="M223 63.0L229 67.0L223 71.0z"/>
+  <path class="ar" d="M294.0 35V43H41.5V46"/><path class="ah" d="M37.5 45L41.5 51L45.5 45z"/>
+  <rect class="pk" id="s16pk" x="0" y="0" width="9" height="9"/>
+</svg>
       </div>
       <div class="cl c2">
         <span class="dot"></span>
         <h3 class="wc">Hạn chế (nói trước)</h3>
         <ul class="l a lim st" data-s="1">
-          <li>Chưa gửi lại: mất 1 chunk là mất cả khung</li>
-          <li>Tự phục hồi phân tán (885–32528 ms; test22: 1530–23225 ms, cách đo mới), chưa đủ mẫu từng kịch bản</li>
+          <li>Chưa gửi lại: mất 1&nbsp;chunk là mất cả khung</li>
+          <li>Tự phục hồi phân tán (<span class="nw">885–32528&nbsp;ms</span>; test22: <span class="nw">1530–23225&nbsp;ms</span>, cách đo mới), chưa đủ mẫu từng kịch bản</li>
           <li>Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</li>
-          <li>Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 +33 %) không thiết kế cho nhiều luồng ảnh</li>
+          <li>Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 <span class="nw">+33&nbsp;%</span>) không thiết kế cho nhiều luồng ảnh</li>
         </ul>
       </div>
       <div class="cl c3">
         <span class="dot"></span>
         <h3>Hướng phát triển</h3>
         <ul class="l b st" data-s="2">
-          <li><b>Ngắn hạn:</b> ghi UART sang task FreeRTOS riêng; đo tự phục hồi 5–10 lần; đo bão hòa 1/2/3 chặng và dòng Leaf; NACK gộp</li>
-          <li><b>Dài hạn:</b> ESP-WIFI-MESH (đã dựng một phần); định tuyến theo vị trí (GPS/UWB); ESP-NOW</li>
+          <li><b>Ngắn hạn:</b> ghi UART sang task FreeRTOS riêng; đo tự phục hồi <span class="nw">5–10&nbsp;lần</span>; đo bão hòa <span class="nw">1/2/3&nbsp;chặng</span> và dòng Leaf; NACK gộp</li>
+          <li><b>Dài hạn:</b> <span class="nw">ESP-WIFI-MESH</span> (đã dựng một phần); định tuyến theo vị trí <span class="nw">(GPS/UWB)</span>; <span class="nw">ESP-NOW</span></li>
         </ul>
       </div>
     </div>

@@ -447,7 +447,7 @@ function frameA(t) {
 
 /* ============ b) giao thức định tuyến ============ */
 var Bm = mk('s5b', 0, 30, 240, 26, 56, [4, 36, 544, 78]);   /* svg 5b cao 138 (cao hơn 20 so với các hình khác) để tên giao thức nằm trên khối kể cả lúc nhảy */
-var PB_X = [-206, -122, -38], PB_NAME = ['AODV', 'OLSR/DSDV', 'B.A.T.M.A.N'], PB = 10.5, GATE = 64;
+var PB_X = [-206, -126, -46], PB_NAME = ['AODV', 'OLSR/DSDV', 'B.A.T.M.A.N'], PB = 10.5, GATE = 64;
 label(Bm, -116, 25, 0, 'Linux/tầng IP', '#456470', 18, 'middle', 13);
 label(Bm, 165, 25, 0, 'ESP32', '#456470', 18, 'middle', 13);
 label(Bm, 182, 0, 32, 'painlessMesh', '#d8402b', -6, 'middle', 14);
@@ -476,8 +476,9 @@ function frameB(t) {
   });
   flush(bl);
   /* tên giao thức nằm ngay trên khối của nó (đi theo khi khối nhảy), không đè lên khối */
-  names.forEach(function (n) { var q = sc.pt(n[0], -16, n[1] + 26); sc.text(Bm.top, q[0], q[1] - 5, PB_NAME[n[2]], 13, 500, 'middle', null, 'mo').style.fill = '#0c2a44'; });
-  if (hit) cross(Bm, GATE + 2, 0, 40);
+  names.forEach(function (n) { var hw = PB_NAME[n[2]].length * 7.8 / 2 / sc.K, q = sc.pt(Math.min(n[0], GATE - 9 - hw), -16, n[1] + 26);   /* không cho nhãn dài chạm cột rào */
+    sc.text(Bm.top, q[0], q[1] - 5, PB_NAME[n[2]], 13, 500, 'middle', null, 'mo').style.fill = '#0c2a44'; });
+  if (hit) cross(Bm, GATE + 2, 0, 16);
 }
 
 /* ============ c) painlessMesh: cây động, Leaf di chuyển thì đổi cha ============ */
@@ -563,6 +564,7 @@ Deck.frames.s5 = function (t) { frameA(t); frameB(t); frameC(t); frameD(t); };
    C (xanh dương) luồng gói phân mảnh: gói cuối nhận được (t_mất) -> gói đầu nhận lại (t_nối), khoảng cách là T_ph.
    Mỗi làn hiện cùng bước với công thức của nó; mỗi làn có con trỏ thời gian riêng quét từ trái sang phải. */
 var I = window.Iso, T = I.T, el = I.el, svg = document.getElementById('s6fig');
+var MATH = '"Newsreader","Onest",system-ui,sans-serif';   /* chữ nghiêng chỉ dùng cho công thức */
 var INK = '#0c2a44', RED = '#d8402b', BLUE = '#1a4f9c', GREEN = '#0e6b4b', MUTED = '#456470', EDGE = 'rgba(10,32,48,.55)';
 function sm(a) { a = I.clamp(a); return a * a * (3 - 2 * a); }
 function g(p, cls) { return el('g', cls ? { 'class': cls } : {}, p || svg); }
@@ -577,11 +579,11 @@ function blk(p, x, y, w, h, d, t, dash) {
 function txt(p, x, y, s, size, col, anchor, cls, wt) {
   var t = el('text', { x: x, y: y, 'font-size': size, 'font-weight': wt || 500, 'text-anchor': anchor || 'middle', 'class': cls || 'mo' }, p); t.style.fill = col || INK; t.textContent = s; return t;
 }
-/* ký hiệu có chỉ số dưới: chữ nghiêng + chỉ số 14 px */
+/* ký hiệu có chỉ số dưới: chữ nghiêng + chỉ số 15 px */
 function sym(p, x, y, b, sub, col, size, anchor) {
   var t = el('text', { x: x, y: y, 'text-anchor': anchor || 'middle', 'class': 'sf' }, p); t.style.fill = col || INK;
-  var a = el('tspan', { 'font-size': size || 22, 'font-style': 'italic', 'font-weight': 500 }, t); a.textContent = b;
-  if (sub) { var s = el('tspan', { 'font-size': 14, dy: 5, 'font-weight': 500 }, t); s.style.fontStyle = 'normal'; s.style.fontFamily = 'var(--sans)'; s.textContent = sub; }
+  var a = el('tspan', { 'font-size': (size || 22) * 1.08, 'font-style': 'italic', 'font-weight': 500 }, t); a.style.fontFamily = MATH; a.textContent = b;
+  if (sub) { var s = el('tspan', { 'font-size': 15, dy: 5, 'font-weight': 500 }, t); s.style.fontStyle = 'normal'; s.style.fontFamily = 'var(--sans)'; s.textContent = sub; }
   return t;
 }
 function line(p, x1, y1, x2, y2, col, w, dash) { var e = el('line', { x1: x1, y1: y1, x2: x2, y2: y2, stroke: col, 'stroke-width': w || 1.5, 'stroke-linecap': 'round' }, p); if (dash) e.setAttribute('stroke-dasharray', dash); return e; }
@@ -637,7 +639,7 @@ function frameA(lt) {
   var e1 = Math.min(h, AX1);
   if (e1 > AX0 + 20) {                                                   /* các gói phân mảnh của khung đi dần về Root */
     line(s, AX0 + 18, AY, e1, AY, '#d8402b', 2, '5 5');
-    for (var q = 0; q < 5; q++) { var cx = AX0 + 38 + q * 38; if (cx < e1 - 6 && cx < AX1 - 30) blk(s, cx - 6, AY - 18, 12, 12, 5, I.LEAF[q % 3] || T.red); }
+    for (var q = 0; q < 5; q++) { var cx = AX0 + 38 + q * 38; if (cx < e1 - 6 && cx < AX1 - 30) blk(s, cx - 6, AY - 18, 12, 12, 5, T.red);   /* 5 chunk của MỘT khung ảnh = cùng một Leaf = cùng một màu (Leaf 1) */ }
   }
   var k = I.clamp((h - AX1) / 26);
   if (k > 0) { var e = sm(k), w = 48 * e, hh = 34 * e; blk(s, AX1 - w / 2, AY - hh / 2, w, hh, 8 * e, T.red); if (k > .8) { for (var r = 0; r < 4; r++) el('rect', { x: AX1 - 18 + r * 10, y: AY - 8, width: 7, height: 16, fill: 'rgba(255,255,255,.55)' }, s); } }
@@ -687,7 +689,8 @@ Deck.frames.s6 = function (t) {
 ;(function(){
 /* Slide 7: kiến trúc. Chỉ có 1 Root + 3 Leaf; Leaf cũng là node chuyển tiếp; mạng là cây (1 chặng ↔ 3 chặng). */
 var svg = document.getElementById('s7fig'), I = window.Iso, T = I.T;
-var sc = I.scene(svg, { az: 22, el: 30, rect: [0, 30, 1136, 400],
+/* viewBox 1136×448 = đúng cỡ khung hình (1136×448 px) nên 1 đơn vị = 1 px, nhãn 13 là 13 px thật */
+var sc = I.scene(svg, { az: 22, el: 30, rect: [26, 29, 1084, 382],
   pts: [[-50, -120, -10], [990, -120, -10], [-50, 120, -10], [990, 120, -10], [910, -4, 130], [850, -4, 130], [970, -4, 130]] });
 var P = sc.pt, tx = sc.text;
 var plateG = sc.g(), linkG = sc.g(), objG = sc.g(), lb = sc.g(), dyn = sc.g();
@@ -725,15 +728,19 @@ for (var g2 = 0; g2 < 5; g2++) sc.line(objG, [726, 48.2, 8 + g2 * 5], [798, 48.2
 sc.box(objG, 730, -40, 48, 60, 80, 3, T.white);
 sc.box(objG, 870, -20, 0, 60, 40, 5, T.stone); sc.box(objG, 892, -6, 5, 16, 12, 34, T.stone); sc.box(objG, 850, -5, 34, 120, 10, 84, T.dark);
 /* nhãn tĩnh */
-function name(x, y, z, a, b, up) { var q = P(x, y, z); tx(lb, q[0], q[1] - up, a, 20, 700, 'middle', '#0c2a44', 'sf'); tx(lb, q[0], q[1] - up + 17, b, 13, 500, 'middle', '#51616f', 'mo'); }
-[0, 1, 2].forEach(function (i) { var q = P(N.L[i][0] - 32, N.L[i][1] + 26, 4); tx(lb, q[0] - 10, q[1] + 4, 'Leaf ' + (i + 1), 18, 700, 'end', '#0c2a44', 'sf'); tx(lb, q[0] - 10, q[1] + 21, 'ESP32-CAM', 13, 500, 'end', '#51616f', 'mo'); });
+function name(x, y, z, a, b, up) { var q = P(x, y, z); tx(lb, q[0], q[1] - up, a, 20, 700, 'middle', '#0c2a44', 'sf'); tx(lb, q[0], q[1] - up + 18, b, 14, 500, 'middle', '#51616f', 'mo'); }
+/* tên Leaf nằm phía trước bo mạch (dưới góc thấp nhất của bo), không đè lên bo hay dây nối */
+[0, 1, 2].forEach(function (i) {
+  var cx = N.L[i][0], cy = N.L[i][1], low = P(cx + 32, cy + 26, 0), mid = P(cx, cy, 0);
+  tx(lb, mid[0] + 6, low[1] + 22, 'Leaf ' + (i + 1), 18, 700, 'middle', '#0c2a44', 'sf'); tx(lb, mid[0] + 6, low[1] + 40, 'ESP32-CAM', 14, 500, 'middle', '#51616f', 'mo');
+});
 name(545, -52, 14, 'Root', 'ESP32 DevKitC', 60);
 name(760, -48, 48, 'Middleware', 'Node.js', 36);
 name(930, -5, 118, 'Dashboard', 'React', 36);
 [['LỚP 1 · MESH', 275, 120], ['LỚP 2', 656, 120], ['LỚP 3 · PC', 851, 120]].forEach(function (l, i) { var q = P(l[1], l[2], -10); tx(lb, q[0] + 6, q[1] + 24, l[0], 14, 500, 'middle', ['#d8402b', '#1a4f9c', '#0e6b4b'][i], 'mo').setAttribute('letter-spacing', '1.5'); });
 var uart = P(660, 0, 3), ws = P(826, 0, 3);
-tx(lb, uart[0], uart[1] + 38, 'UART', 13, 500, 'middle', '#1a4f9c', 'mo'); tx(lb, uart[0], uart[1] + 53, '921600', 13, 500, 'middle', '#1a4f9c', 'mo');
-tx(lb, ws[0], ws[1] + 38, 'Socket.IO', 13, 500, 'middle', '#0e6b4b', 'mo'); tx(lb, ws[0], ws[1] + 53, 'WebSocket', 13, 500, 'middle', '#0e6b4b', 'mo');
+tx(lb, uart[0], uart[1] + 38, 'UART', 14, 500, 'middle', '#1a4f9c', 'mo'); tx(lb, uart[0], uart[1] + 54, '921600', 14, 500, 'middle', '#1a4f9c', 'mo');
+tx(lb, ws[0], ws[1] + 38, 'Socket.IO', 14, 500, 'middle', '#0e6b4b', 'mo'); tx(lb, ws[0], ws[1] + 54, 'WebSocket', 14, 500, 'middle', '#0e6b4b', 'mo');
 tx(lb, 0, 22, 'chuyển tiếp đa chặng (đã thử 1 và 3 chặng)', 14, 500, 'start', '#d8402b', 'mo');
 var modeTxt = tx(lb, 0, 42, '', 14, 700, 'start', '#0c2a44', 'mo');
 
@@ -777,7 +784,7 @@ function frame(t) {
     var e = sc.path(linkG, pp, 0, '#d8402b', 1.6); e.setAttribute('stroke-dasharray', '4 4'); e.setAttribute('stroke-dashoffset', (-t * 14) % 16);
   });
   modeTxt.textContent = mode === 1 ? 'đang hiện: 1 chặng' : 'đang hiện: 3 chặng';
-  var scr = -1, scrA = 0, mwOn = false, newest = -1e9;
+  var scr = -1, scrA = 0, mwOn = false, mwCol = T.red, newest = -1e9;
   for (var i = 0; i < 3; i++) {
     var n0 = Math.floor((t - i * STAG) / PERIOD);
     for (var nn = n0 - 3; nn <= n0; nn++) {
@@ -794,17 +801,17 @@ function frame(t) {
       var td = arr + .1;
       if (lt >= td && lt < td + 3.4) {
         var p = (lt - td) / 3.4, q = I.along(tilePath, p);
-        if (q[0] >= 722 && q[0] <= 798) mwOn = true;
+        if (q[0] >= 722 && q[0] <= 798) { mwOn = true; mwCol = I.LEAF[i]; }
         else items.push({ x: q[0] - 9, y: -9, z: q[2], w: 18, d: 18, h: 4, t: I.LEAF[i] });
       }
       if (lt >= td + 3.4 && ts > newest) { newest = ts; scr = i; scrA = I.clamp((lt - td - 3.4) / .25); }
     }
   }
   for (var j = 0; j < 3; j++) {
-    items.push({ x: 630 + ((t * 60 + j * 28) % 82) - 3, y: -1.5, z: 3, w: 6, d: 3, h: 3, t: T.red });
-    items.push({ x: 798 + ((t * 50 + j * 20) % 60) - 2, y: -1.5, z: 3, w: 4, d: 3, h: 3, t: T.red });
+    items.push({ x: 630 + ((t * 60 + j * 28) % 82) - 4, y: -2.5, z: 3, w: 8, d: 5, h: 4, t: T.blue });    /* cáp UART = Lớp 2 = xanh dương */
+    items.push({ x: 798 + ((t * 50 + j * 20) % 60) - 3, y: -2.5, z: 3, w: 7, d: 5, h: 4, t: T.green });   /* dây Socket.IO = Lớp 3 = xanh lá */
   }
-  if (mwOn) items.push({ x: 758, y: -6, z: 51, w: 14, d: 12, h: 2.5, t: T.red });
+  if (mwOn) items.push({ x: 758, y: -6, z: 51, w: 14, d: 12, h: 2.5, t: mwCol });
   sc.items(dyn, items);
   var g = I.el('g', { transform: cellMat }, dyn);
   I.el('rect', { x: 7, y: 7, width: 106, height: 70, fill: '#1d2a25' }, g);
@@ -935,6 +942,7 @@ sc.box(objG2, SCR.x, -5, SCR.z, SCR.w, 10, SCR.h, T.dark);
   put('.lg4', 400, 56, -8, 6);
   put('.lg5', 530, 56, -8, 6);
   put('.lg6', 140, 56, -8, 6, 150);
+  put('.slow', SCR.x + SCR.w / 2, 56, -8, 6);
 })();
 
 /* ---- mô hình thời gian: các đợt phát WiFi (dòng đỉnh) ---- */
@@ -994,7 +1002,7 @@ function frame(t) {
   var M = sc.faceMatrix(SCR.x, 5, SCR.z), g = I.el('g', { transform: M + ' translate(0,' + SCR.h + ') scale(1,-1)' }, dyn);
   I.el('rect', { x: 5, y: 5, width: SCR.w - 10, height: SCR.h - 10, fill: '#1d2a25' }, g);
   I.el('line', { x1: 8, y1: 28, x2: SCR.w - 8, y2: 28, stroke: '#667a8c', 'stroke-width': .7, 'stroke-dasharray': '3 3' }, g);
-  var FS = Math.ceil(14 / (0.96 * sc.K) * 10) / 10;
+  var FS = Math.ceil(14.5 / (CE * sc.K) * 10) / 10;   /* cao thực tế >= 14 px (mặt đứng co theo cos(el)) */
   tx(g, 9, 21, '5 V', FS, 500, 'start', '#bbcac9', 'mo');
   var W0 = 7.2, u0 = 10, u1 = SCR.w - 10, pa = [], pb = [], tt;
   for (i = 0; i <= 90; i++) {
@@ -1003,10 +1011,10 @@ function frame(t) {
   }
   if (step >= 2) {
     I.el('polyline', { points: pa.join(' '), fill: 'none', stroke: '#ff8a70', 'stroke-width': 1.5, 'stroke-dasharray': '4 2.5', 'stroke-linejoin': 'round' }, g);
-    tx(g, 9, SCR.h - 6, 'sụt áp', FS, 500, 'start', '#ff8a70', 'mo');
+    tx(g, 8, SCR.h - 7, 'sụt áp', FS, 500, 'start', '#ff8a70', 'mo');
   }
   I.el('polyline', { points: pb.join(' '), fill: 'none', stroke: '#7fd4a8', 'stroke-width': 1.8, 'stroke-linejoin': 'round' }, g);
-  tx(g, 70, SCR.h - 6, 'Tụ 470 µF', FS, 500, 'start', '#7fd4a8', 'mo');
+  tx(g, SCR.w - 7, SCR.h - 7, 'Tụ 470 µF', FS, 500, 'end', '#7fd4a8', 'mo');
   /* tụ nhấp nháy khi xả */
   if (step >= 2 && rel < BLEN + .3) { var gl = sc.circle(dyn, CAP[0], CAP[1], 34.4, 7.5, 24, '#ffd75e', 'none', 0); gl.setAttribute('opacity', (.9 * dip(rel)).toFixed(2)); }
 }
@@ -1096,18 +1104,21 @@ function header(g, x, z, glow) {                          /* header 16 B: 6 ô t
   }
 }
 
-/* ---- mô hình thời gian (chu kỳ 12 s) ---- */
-var PER = 12, CUT = [1.0, 1.6, 2.2, 2.8, 3.2], DUR = [3.0, 3.0, 3.9, 3.0, 3.0], ZF = [36, 36, 36, 52, 36];
+/* ---- mô hình thời gian (chu kỳ 10,2 s; hình động làm chậm so với thực tế) ----
+   Lưỡi cắt quét từ đầu khung về cuối, mỗi 0,9 s cắt một chunk. Chunk k+1 chỉ bị cắt sau khi chunk k đã nhấc lên xong,
+   nên header vừa gắn không bao giờ chạm chunk đứng trước; lưỡi cắt không quay lại mà nâng lên rồi mờ đi.
+   Khi đủ 5 chunk, Root sáng đèn rồi nhấc khung đã ghép đi tiếp. Luôn có ít nhất một vật chuyển động có nghĩa. */
+var PER = 10.2, CUT = [0.9, 1.8, 2.7, 3.6, 4.5], DUR = [3, 3, 3, 3, 3], ZF = [36, 36, 36, 36, 36];
 var X0 = [], SLOT = [];
 for (var kk = 0; kk < NS; kk++) { X0.push(XP - W * (kk + 1)); SLOT.push(630 - W * (kk + 1)); }
-function launch(k) { return CUT[k] + .8; }
+function launch(k) { return CUT[k] + .6; }
 function arrive(k) { return launch(k) + DUR[k]; }
 function ease(u) { u = I.clamp(u); return u * u * (3 - 2 * u); }
-var DONE = Math.max.apply(null, [0, 1, 2, 3, 4].map(arrive));
+var DONE = Math.max.apply(null, [0, 1, 2, 3, 4].map(arrive)), SHIP0 = DONE + .5, SHIP = 1.1;
 function bladeX(t) {                                   /* lưỡi cắt quét từ đầu khung (x lớn) về cuối */
-  var kx = [[.5, 262], [CUT[0], 220], [CUT[1], 190], [CUT[2], 160], [CUT[3], 130], [CUT[4], 100], [4.4, 100], [5.2, 262]];
+  var kx = [[.4, 262], [CUT[0], X0[0]], [CUT[1], X0[1]], [CUT[2], X0[2]], [CUT[3], X0[3]], [CUT[4], X0[4]]];
   for (var i = 0; i < kx.length - 1; i++) if (t < kx[i + 1][0]) return I.lerp(kx[i][1], kx[i + 1][1], I.clamp((t - kx[i][0]) / (kx[i + 1][0] - kx[i][0])));
-  return 262;
+  return X0[4];
 }
 
 function frame(t) {
@@ -1117,7 +1128,7 @@ function frame(t) {
   var dr = [];                                          /* các vật động, sắp theo độ sâu */
   function add(x, y, z, w, d, fn, op) { dr.push({ key: (x + w / 2) * S + (y + d / 2) * C + z * .0001, fn: fn, op: op }); }
   var glow = step === 3 ? .5 + .5 * Math.sin(t * 6) : 0;
-  var fin = ease(t / .5), fout = t > 11.3 ? 1 - ease((t - 11.3) / .6) : 1;   /* khung mới hiện; Root xóa khung cũ */
+  var fin = ease(t / .5), shp = I.clamp((t - SHIP0) / SHIP), fout = 1 - ease(shp);   /* khung mới hiện; khung đã ghép được nhấc đi */
   var landed = 0, cruise = [];
 
   /* liên kết mesh (đường đứt) */
@@ -1139,7 +1150,7 @@ function frame(t) {
       }
     } else { x = SLOT[k]; z = 14.4; onRoot = true; landed++; }
     var xs = x, zs = z;
-    if (onRoot) { add(xs, Y0, zs, W, D, (function (xx, zz2, kq) { return function (g) { strip(g, kq, xx, zz2); }; })(xs, zs, k), fout); }
+    if (onRoot) { xs = x + 30 * ease(shp); zs = z + 30 * ease(shp); add(xs, Y0, zs, W, D, (function (xx, zz2, kq) { return function (g) { strip(g, kq, xx, zz2); }; })(xs, zs, k), fout); }
     else add(xs, Y0, zs, W, D, (function (xx, zz2, kq) { return function (g) { strip(g, kq, xx, zz2); }; })(xs, zs, k), t < ct ? fin : 1);
     if (showH && !onRoot) {
       var hxx = xs + W, hzz = zs + (hz || 0) + 16 * hop, hop2 = hop;
@@ -1149,18 +1160,19 @@ function frame(t) {
   dr.sort(function (a, b) { return a.key - b.key; });
   dr.forEach(function (o) { var g = I.el('g', {}, dyn); if (o.op < 1) g.setAttribute('opacity', o.op.toFixed(2)); o.fn(g); });
 
-  /* lưỡi cắt: cổng trượt trên hai ray (xanh lá ở bước 4: phân mảnh tự viết ở tầng ứng dụng) */
-  if (t < 5.2) {
+  /* lưỡi cắt: cổng trượt trên hai ray (xanh lá ở bước 4: phân mảnh tự viết ở tầng ứng dụng); cắt xong thì nâng lên và mờ đi */
+  if (t < 5.4) {
     var bx = bladeX(t), g4 = step === 4, bt = g4 ? { top: '#6fcf9f', y: '#0e6b4b', x: '#12583f' } : T.dark;
-    var gb = I.el('g', { opacity: (t < .5 ? fin : I.clamp(1 - (t - 4.6) / .6)).toFixed(2) }, dyn);
-    sc.box(gb, bx - 3, -60, 3, 6, 6, 40, bt);
-    sc.poly(gb, [P(bx, -54, 3), P(bx, 54, 3), P(bx, 54, 36), P(bx, -54, 36)], g4 ? 'rgba(27,127,92,.22)' : 'rgba(12,42,68,.14)', g4 ? '#0e6b4b' : '#0c2a44', 1.2);
-    sc.box(gb, bx - 3, 54, 3, 6, 6, 40, bt);
-    sc.box(gb, bx - 3, -60, 41, 6, 120, 4, bt);
+    var up = 50 * ease((t - (CUT[4] + .3)) / .6);
+    var gb = I.el('g', { opacity: (t < .4 ? fin : I.clamp(1 - (t - (CUT[4] + .3)) / .6)).toFixed(2) }, dyn);
+    sc.box(gb, bx - 3, -60, 3 + up, 6, 6, 40, bt);
+    sc.poly(gb, [P(bx, -54, 3 + up), P(bx, 54, 3 + up), P(bx, 54, 36 + up), P(bx, -54, 36 + up)], g4 ? 'rgba(27,127,92,.22)' : 'rgba(12,42,68,.14)', g4 ? '#0e6b4b' : '#0c2a44', 1.2);
+    sc.box(gb, bx - 3, 54, 3 + up, 6, 6, 40, bt);
+    sc.box(gb, bx - 3, -60, 41 + up, 6, 120, 4, bt);
   }
 
   /* đèn báo Root: sáng khi đủ khung */
-  if (landed === NS && t < 11.3) sc.box(dyn, 450, 50, 10, 5, 5, 3, { top: '#e9ffe9', y: '#7ee0a8', x: '#4fb77f' });
+  if (landed === NS && shp < 1) sc.box(dyn, 450, 50, 10, 5, 5, 3, { top: '#e9ffe9', y: '#7ee0a8', x: '#4fb77f' });
 
   /* nhãn header/payload đi theo chunk đang bay gần giữa đường */
   if (cruise.length) {
@@ -1419,10 +1431,10 @@ Deck.frames.s10 = function (t) {
 ;(function(){
 /* Slide 11: bộ đệm UART ở Root (bỏ khung ảnh nếu còn < ½, telemetry/log không bao giờ bị bỏ)
    -> cáp UART -> middleware: MAGIC -> LEN (≤ 131072) -> CRC -> Socket.IO -> dashboard.
-   Lỗi chỉ bỏ phần hỏng: rác trước MAGIC bị quét đi, khung quá dài bị chặn ở cổng LEN, khung sai CRC bị loại ở cổng CRC. */
+   Lúc đầu chỉ có khung hợp lệ đi qua; từ bước "Lỗi chỉ bỏ phần hỏng" (kịch bản test 7/7) mới minh họa lỗi: rác trước MAGIC bị quét đi, khung quá dài bị chặn ở cổng LEN, khung sai CRC bị loại ở cổng CRC. */
 var svg = document.getElementById('s11fig'), I = window.Iso, T = I.T, LEAF = I.LEAF;
-var sc = I.scene(svg, { az: 5, el: 36, rect: [2, 2, 730, 118],
-  pts: [[-34, -38, -6], [596, -38, -6], [-34, 38, -6], [596, 38, -6], [30, 0, 72], [-34, -14, 74], [550, 0, 80]] });
+var sc = I.scene(svg, { az: 8, el: 36, rect: [2, 8, 700, 172],
+  pts: [[-34, -38, -6], [536, -38, -6], [-34, 38, -6], [536, 38, -6], [30, 0, 72], [-34, -14, 74], [490, 0, 80]] });
 var P = sc.pt, S = sc.S, C = sc.C;
 function tx(g, x, y, str, size, w, anchor, fill, cls) { var e = sc.text(g, x, y, str, size, w, anchor, fill, cls); e.style.fill = fill; return e; }
 var plateG = sc.g(), objG = sc.g(), dyn = sc.g(), lbG = sc.g();
@@ -1433,8 +1445,8 @@ var BLUE = T.blue, GRN = T.green, TEL = { top: '#9dbfee', y: '#3f78c4', x: '#2d5
 var RED = { top: '#ff9a82', y: '#d8402b', x: '#a8321f' }, AMB = { top: '#f2b24a', y: '#c98a1c', x: '#a06b10' };
 
 /* ---------- cảnh tĩnh ---------- */
-var X_START = 74, BELT0 = 114, BELT1 = 420, GX = [165, 265, 365], MX = 470;
-sc.box(plateG, -34, -38, -6, 630, 76, 6, T.plate);
+var X_START = 74, BELT0 = 114, BELT1 = 360, GX = [155, 235, 315], MX = 410;
+sc.box(plateG, -34, -38, -6, 570, 76, 6, T.plate);
 /* Root: bo mạch ESP32 + bộ đệm */
 sc.box(objG, 0, -30, 0, 72, 60, 5, T.pcb);
 sc.box(objG, 46, -22, 5, 20, 18, 3, T.chip);
@@ -1465,7 +1477,7 @@ var SCRM = sc.faceMatrix(MX, 5, 24);
   var strip = svg.parentNode;
   [['.g1', GX[0]], ['.g2', GX[1]], ['.g3', GX[2]], ['.g4', BELT1 + 34]].forEach(function (a) {
     var el = strip.querySelector(a[0]), p = P(a[1], 38, -6);
-    el.style.left = p[0].toFixed(1) + 'px'; el.style.top = (p[1] + 4).toFixed(1) + 'px';
+    el.style.left = p[0].toFixed(1) + 'px'; el.style.top = (p[1] + 6).toFixed(1) + 'px';
   });
 })();
 
@@ -1546,13 +1558,14 @@ function frame(t) {
   var curImg = MON.img, curLeaf = MON.leaf, tel = -9, lg = -9, passed = [];
   ARR.forEach(function (f) {
     if (f.drop || t < f.exit) return;
-    var big = f.fate === 'len', b = body(f.kind, f.leaf || 0, big), x = X_START + V * (t - f.exit), z = 4, y = 0, a = 1, ejected = false;
+    var fate = ST() >= 2 ? f.fate : 'ok';   /* lỗi chỉ được minh họa khi bước "Lỗi chỉ bỏ phần hỏng" hiện */
+    var big = fate === 'len', b = body(f.kind, f.leaf || 0, big), x = X_START + V * (t - f.exit), z = 4, y = 0, a = 1, ejected = false;
     var tg = [ [GX[0] - 8, 'noise'], [GX[1] - 22, 'len'], [GX[2] - 10, 'crc'] ];
-        if (f.fate === 'len' && x > tg[1][0]) {
+        if (fate === 'len' && x > tg[1][0]) {
       var u = (x - tg[1][0]) / 46; if (u < .6) { x = tg[1][0] + u * 4; } else { var w = I.clamp((u - .6) / .8); x = tg[1][0] + 2.4; y = 34 * w; z = 4 - 4 * w; a = 1 - w; }
       if (u > 1.5) return;
       if (u >= .55 && u < 1.1) tags.push({ p: P(GX[1], 0, 22), a: 1 - (u - .55) / .55 });
-    } else if (f.fate === 'crc' && x > tg[2][0]) {
+    } else if (fate === 'crc' && x > tg[2][0]) {
       var u2 = (x - tg[2][0]) / 40; var w2 = I.clamp(u2 / .8); y = -34 * w2; z = 4 - 4 * w2; a = 1 - w2; x = tg[2][0] + u2 * 6;
       if (u2 > 1.2) return;
       if (u2 < .7) tags.push({ p: P(GX[2], 0, 22), a: 1 - u2 / .7 });
@@ -1568,7 +1581,7 @@ function frame(t) {
   });
   /* rác trước MAGIC: bị quét khỏi băng chuyền ở cổng 1 */
   ARR.forEach(function (f) {
-    if (!f.noise) return;
+    if (!f.noise || ST() < 2) return;
     for (var k = 0; k < 4; k++) {
       var x = BELT0 + V * (t - f.exit + .55 + k * .09), y = 0, z = 4, a = 1;
       if (t < f.exit - .55 || x < BELT0) continue;
@@ -1685,19 +1698,19 @@ Deck.frames.s13 = function (t) {
    Chỉ có các số của bảng gốc được hiển thị; kích thước khung/mức nước trong mô hình chỉ để minh họa (không in ra).
    Hai bể giữ đúng tỉ lệ 1 : 2 (cùng chiều cao, diện tích đáy gấp đôi). */
 var svg = document.getElementById('s14fig'), I = window.Iso, T = I.T;
-var sc = I.scene(svg, { az: 10, el: 38, rect: [112, 14, 468, 326],
-  pts: [[-14, -132, -10], [322, -132, -10], [-14, 156, -10], [322, 156, -10], [130, 86, 80], [130, -82, 80], [130, -142, 0]] });
+var sc = I.scene(svg, { az: 10, el: 38, rect: [106, 10, 474, 330],
+  pts: [[-14, -132, -10], [296, -132, -10], [-14, 162, -10], [296, 162, -10], [130, 92, 80], [130, -82, 80], [130, -142, 0]] });
 var P = sc.pt;
 var PER = 6.4, NF = 3, A0 = .3, DA = .25, TBT = 1.1, RATE = 4.5, EXIT = 1.0, FS = 5;   /* FS: kích thước khung (đơn vị mô hình); bể 8 -> cap 8, bể 16 -> cap 16 */
-var FW = 20, FD = 14, FH = 3;                                       /* khung ảnh: dài (x) × rộng (y) × dày */
+var FW = 26, FD = 18, FH = 3.5;                                       /* khung ảnh: dài (x) × rộng (y) × dày */
 var RIGS = [
-  { yc: -82, cap: 8, Ht: 46, d: 20, pd: 50, name: 'test19', kb: '8 KB', drop: '137 → 480', lat: '280 ms', ms: 280, col: '#d8402b', dir: -1, off: 40 },
-  { yc: 86, cap: 16, Ht: 46, d: 40, pd: 70, name: 'test21', kb: '16 KB', drop: '0', lat: '199 ms', ms: 199, col: '#0e6b4b', dir: 1, off: 54 }
+  { yc: -82, cap: 8, Ht: 46, d: 20, pd: 50, name: 'test19', kb: '8 KB', drop: '137 → 480', lat: '280 ms', ms: 280, col: '#d8402b', dir: 1, off: 38 },
+  { yc: 92, cap: 16, Ht: 46, d: 40, pd: 70, name: 'test21', kb: '16 KB', drop: '0', lat: '199 ms', ms: 199, col: '#0e6b4b', dir: 1, off: 54 }
 ];
 var LQ = { top: '#b9d0f0', y: '#4a82cf', x: '#2d5a99' };
 var DEAD = { top: '#f3b9ad', y: '#d8402b', x: '#a8301c' };
-var LATK = .4;                                                    /* 1 ms = 0,4 đơn vị dài: độ dài thanh tỉ lệ đúng 280 : 199 */
-var X0 = 100, X1 = 160, TX = 130, BX = 66;                        /* thành bể theo x; TX = tâm bể; BX = tâm khối ghép */
+var LATK = .36;                                                   /* 1 ms = 0,4 đơn vị dài: độ dài thanh tỉ lệ đúng 280 : 199 */
+var X0 = 100, X1 = 160, TX = 130, BX = 68, PCX = 238;                        /* thành bể theo x; TX = tâm bể; BX = tâm khối ghép */
 var BELT = 4.5;
 
 /* ---- mô hình: cùng một dòng khung, bể có dung lượng khác nhau; khung chỉ vào bể khi còn đủ chỗ cho CẢ khung ---- */
@@ -1721,22 +1734,22 @@ function ease(x) { x = I.clamp(x); return x * x * (3 - 2 * x); }
 function face(g, pts, fill, stroke, sw) { sc.poly(g, pts.map(function (q) { return P(q[0], q[1], q[2]); }), fill, stroke || 'rgba(10,32,48,.55)', sw == null ? .9 : sw); }
 RIGS.forEach(function (R) {
   var y = R.yc, g = R.g = { plate: sc.g(), obj: sc.g(), back: sc.g(), liq: sc.g(), inn: sc.g(), front: sc.g(), out: sc.g() };
-  sc.box(g.plate, -14, y - R.pd, -10, 336, 2 * R.pd, 10, T.plate);
-  [[-6, y - R.pd + 8], [314, y - R.pd + 8], [-6, y + R.pd - 8], [314, y + R.pd - 8]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#6a7f92' }, g.plate); });
+  sc.box(g.plate, -14, y - R.pd, -10, 310, 2 * R.pd, 10, T.plate);
+  [[-6, y - R.pd + 8], [288, y - R.pd + 8], [-6, y + R.pd - 8], [288, y + R.pd - 8]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#6a7f92' }, g.plate); });
   /* Root: bo mạch + chip + ăng-ten */
   sc.box(g.obj, 0, y - 22, 0, 44, 44, 7, T.pcb); sc.box(g.obj, 5, y - 15, 7, 16, 14, 3, T.chip);
   sc.cyl(g.obj, 31, y, 7, 9, 9, '#2f3941', '#576978', '#739491'); sc.cyl(g.obj, 31, y, 16, 2, 6.5, '#1d2227', '#39454f', '#0d1013');
   /* khối ghép của Root: khay đá có 4 slot; khung ghép xong từ đây đi ra */
-  sc.box(g.obj, 46, y - 19, 0, 40, 38, 10, T.stone);
-  for (var k = 0; k < 4; k++) sc.box(g.obj, BX - 15, y - 16 + k * 8.6, 10, 30, 7, .6, T.dark);
+  sc.box(g.obj, 46, y - 21, 0, 44, 42, 10, T.stone);
+  for (var k = 0; k < 4; k++) sc.box(g.obj, BX - 17, y - 18 + k * 9.4, 10, 34, 7.6, .6, T.dark);
   /* đường ra từ khối ghép: ray dốc lên rồi chạy phẳng tới miệng bể */
-  sc.path(g.obj, [[BX + 18, y, 10.5], [96, y, R.Ht + 9], [TX + 14, y, R.Ht + 9]], 0, '#181d22', 3.4);
+  sc.path(g.obj, [[BX + 22, y, 10.5], [96, y, R.Ht + 9], [TX + 16, y, R.Ht + 9]], 0, '#181d22', 3.4);
   sc.box(g.obj, X0 - 2, y - R.d - 2, 0, 64, 2 * R.d + 4, 4, T.stone);             /* đế bể */
-  sc.box(g.obj, X1 + 2, y - 9, 0, 20, 18, BELT, T.dark);            /* ống ra */
-  sc.box(g.obj, 182, y - 9, 0, 80, 18, BELT, T.blue);               /* băng tải UART */
-  sc.box(g.obj, 264, y - 22, 0, 44, 44, 14, T.stone);               /* PC */
-  sc.box(g.obj, 280, y - 18, 14, 6, 36, 30, T.dark);
-  [[18, 7], [10, 12], [2, 9]].forEach(function (b) { face(g.obj, [[286, y - 16 + b[0], 20], [286, y - 12 + b[0], 20], [286, y - 12 + b[0], 20 + b[1]], [286, y - 16 + b[0], 20 + b[1]]], '#7fd4a8', 'none', 0); });
+  sc.box(g.obj, X1 + 2, y - 11, 0, 20, 22, BELT, T.dark);            /* ống ra */
+  sc.box(g.obj, 182, y - 11, 0, PCX - 182, 22, BELT, T.blue);               /* băng tải UART */
+  sc.box(g.obj, PCX, y - 22, 0, 44, 44, 14, T.stone);               /* PC */
+  sc.box(g.obj, PCX + 16, y - 18, 14, 6, 36, 30, T.dark);
+  [[18, 7], [10, 12], [2, 9]].forEach(function (b) { face(g.obj, [[PCX + 22, y - 16 + b[0], 20], [PCX + 22, y - 12 + b[0], 20], [PCX + 22, y - 12 + b[0], 20 + b[1]], [PCX + 22, y - 16 + b[0], 20 + b[1]]], '#7fd4a8', 'none', 0); });
   /* bể: thành sau (kính) */
   var y0 = y - R.d, y1 = y + R.d, H = R.Ht;
   face(g.back, [[X0, y0, 4], [X0, y1, 4], [X0, y1, H], [X0, y0, H]], 'rgba(120,150,190,.16)');
@@ -1744,7 +1757,7 @@ RIGS.forEach(function (R) {
   /* bể: thành trước (kính), vạch mức, miệng ra, viền miệng */
   face(g.front, [[X1, y0, 4], [X1, y1, 4], [X1, y1, H], [X1, y0, H]], 'rgba(255,255,255,.2)');
   face(g.front, [[X0, y1, 4], [X1, y1, 4], [X1, y1, H], [X0, y1, H]], 'rgba(255,255,255,.16)');
-  face(g.front, [[X1, y - 8, 4], [X1, y + 8, 4], [X1, y + 8, 10], [X1, y - 8, 10]], '#181d22');
+  face(g.front, [[X1, y - 10, 4], [X1, y + 10, 4], [X1, y + 10, 11], [X1, y - 10, 11]], '#181d22');
   for (var m = 1; m <= 3; m++) { var zz = 4 + (H - 6) * m / 4; sc.line(g.front, [X0 + 2, y1, zz], [X0 + 12, y1, zz], 'rgba(12,42,68,.55)', 1.1); }
   sc.path(g.front, [[X0, y0, H], [X1, y0, H], [X1, y1, H], [X0, y1, H], [X0, y0, H]], H, '#0c2a44', 1.8);
   [[X1, y1], [X1, y0], [X0, y1]].forEach(function (c) { sc.line(g.front, [c[0], c[1], 4], [c[0], c[1], H], 'rgba(12,42,68,.7)', 1.4); });
@@ -1759,8 +1772,8 @@ RIGS.forEach(function (R) {
 /* kết quả (hiện từ bước 1): uartDrop + thanh độ trễ tỉ lệ đúng */
 RIGS.forEach(function (R) {
   var g = R.res = sc.g(), y = R.yc;
-  var a = R.dir < 0 ? P(X0 - 26, y - R.pd, 0) : P(TX, y + R.pd, 0);
-  R.dropT = R.dir < 0 ? sc.text(g, a[0], a[1] - 8, 'uartDrop ' + R.drop, 17, 700, 'end', R.col, 'mo') : sc.text(g, a[0], a[1] + 22, 'uartDrop ' + R.drop, 17, 700, 'middle', R.col, 'mo');
+  var a = y < 0 ? P(X0 - 40, y - R.pd, 0) : P(TX, y + R.pd, 0);
+  R.dropT = y < 0 ? sc.text(g, a[0], a[1] - 14, 'uartDrop ' + R.drop, 17, 700, 'end', R.col, 'mo') : sc.text(g, a[0], a[1] + 24, 'uartDrop ' + R.drop, 17, 700, 'middle', R.col, 'mo');
   var h = P(-14, y, 0);
   R.latL = sc.text(g, 4, h[1] + 42, 'độ trễ TB', 14, 500, 'start', '#456470', 'mo');
   R.latV = sc.text(g, 4, h[1] + 66, R.lat, 25, 700, 'start', R.col, 'sf');
@@ -1788,7 +1801,7 @@ function frameItem(cx, cy, z, hh, t, lo, hi) {
   var zt = z + hh + .04, y0 = cy - FD / 2;
   if (hh > FH * .6) {
     topRect(it.deco, x0 + 2, x1 - 2, y0 + 2, y0 + FD - 2, zt, '#f1f8f4', vx0, vx1);           /* hình */
-    topRect(it.deco, x0 + 4.5, x0 + 9, y0 + 4.5, y0 + 9, zt + .02, '#232a30', vx0, vx1);       /* chi tiết nhỏ trong hình */
+    topRect(it.deco, x0 + 5, x0 + 11, y0 + 5, y0 + 10, zt + .02, '#232a30', vx0, vx1);       /* chi tiết nhỏ trong hình */
   }
   return it;
 }
@@ -1811,7 +1824,7 @@ function drawRig(R, tau) {
   var hl = Ld / R.cap * (H - 6);
   if (hl > .1) sc.box(g.liq, X0 + 2, y - R.d + 2, 4, 56, 2 * R.d - 4, hl, LQ);
   var surf = 4 + hl;
-  for (m = 0; m < 8; m++) { var ux = 182 + ((m * 10 + tau * 40) % 80); sc.line(g.out, [ux, y - 8, BELT + .1], [ux, y + 8, BELT + .1], 'rgba(255,255,255,.3)', 1.4); }
+  for (m = 0; m < 6; m++) { var ux = 182 + ((m * 10 + tau * 40) % (PCX - 182)); sc.line(g.out, [ux, y - 10, BELT + .1], [ux, y + 10, BELT + .1], 'rgba(255,255,255,.3)', 1.4); }
   /* khung ghép xong: từ khối ghép -> ray -> miệng bể */
   for (j = 0; j < NF; j++) {
     var age = tau - (A0 + j * DA), leaf = I.LEAF[j % 3], x, z, yy = y, hh = FH, tt = leaf, tgt = items, op = 1;
@@ -1826,7 +1839,7 @@ function drawRig(R, tau) {
         tt = DEAD;
         if (u < .25) { var q = ease(u / .25); yy = y + R.dir * R.off * q; z = ZT + 8 * Math.sin(Math.PI * q); }
         else if (u < .6) { var f2 = (u - .25) / .35; yy = y + R.dir * R.off; z = I.lerp(ZT, 0, f2 * f2); }
-        else if (u < 1.2) { yy = y + R.dir * R.off; z = 0; op = 1 - (u - .6) / .6; }
+        else if (u < 2.6) { yy = y + R.dir * R.off; z = 0; op = u < 1.8 ? 1 : 1 - (u - 1.8) / .8; }
         else continue;
       }
     }
@@ -1837,8 +1850,8 @@ function drawRig(R, tau) {
   /* khung rút ra theo UART tới PC (khớp thứ tự FIFO), trượt ra khỏi miệng bể và vào khe của PC */
   s.emits.forEach(function (te) {
     var a = tau - te; if (a < 0) a += PER; if (a >= EXIT) return;
-    var xf = I.lerp(X1 + 2, 264 + FW, a / EXIT);
-    var it = frameItem(xf - FW / 2, y, BELT, FH, I.LEAF[s.order[s.emits.indexOf(te)] % 3], X1, 264);
+    var xf = I.lerp(X1 + 2, PCX + FW, a / EXIT);
+    var it = frameItem(xf - FW / 2, y, BELT, FH, I.LEAF[s.order[s.emits.indexOf(te)] % 3], X1, PCX);
     if (it) items.push(it);
   });
   drawItems(g.inn, inner); drawItems(g.out, items);
@@ -1859,11 +1872,12 @@ Deck.frames.s14 = function (t) {
 /* 15-test22.js */
 ;(function(){
 /* Slide 15: chuỗi 3 chặng (1 Root + 3 Leaf; Leaf cũng là node chuyển tiếp, không thêm node).
-   Chunk từ mỗi Leaf đi lần lượt qua từng chặng về Root; cột sau mỗi Leaf cao tỉ lệ ĐÚNG với độ trễ trung vị 148 / 350 / 576 ms,
-   thanh trên sàn dài tỉ lệ với |RSSI| 45,8 / 54,5 / 67,3 dBm. Thời gian cảnh tỉ lệ với trung vị (1 ms = 0,008 s). */
+   Chunk từ mỗi Leaf đi lần lượt qua từng chặng về Root; cột sau mỗi Leaf cao tỉ lệ ĐÚNG với độ trễ trung vị 148 / 350 / 576 ms.
+   Thời gian cảnh tỉ lệ với trung vị (1 ms = 0,008 s: hình động làm chậm). Cột mọc một lần rồi GIỮ NGUYÊN (cột và số không tắt/lặp);
+   chỉ chunk còn chạy lặp để minh họa. Không vẽ thanh RSSI: RSSI chỉ ghi bằng chữ ở nhãn từng chặng. */
 var svg = document.getElementById('s15fig'), I = window.Iso, T = I.T;
 var HZ = 176, MSMAX = 576;                         /* cột 576 ms cao 176 đơn vị -> 1 ms = 176/576 đơn vị */
-var NODES = [{ x: 0 }, { x: 165, ms: 148, rssi: 45.8 }, { x: 330, ms: 350, rssi: 54.5 }, { x: 495, ms: 576, rssi: 67.3 }];
+var NODES = [{ x: 0 }, { x: 165, ms: 148 }, { x: 330, ms: 350 }, { x: 495, ms: 576 }];
 var sc = I.scene(svg, { az: 14, el: 34, rect: [0, 12, 612, 388],
   pts: [[-60, -72, -10], [560, -72, -10], [-60, 92, -10], [560, 92, -10], [-60, -72, 190], [560, -72, 190], [-60, 92, -52], [495, 92, -52]] });
 var P = sc.pt, S = sc.S, C = sc.C;
@@ -1887,12 +1901,8 @@ function rootBoard(cx) {
   sc.box(objG, cx - 36, y - 26, 10, 14, 16, 8, T.dark);
   sc.cyl(objG, cx + 26, y + 18, 10, 16, 5, '#2f3941', '#576978', '#739491');
 }
-/* cột độ trễ + thanh RSSI (tĩnh), vẽ từ xa tới gần */
+/* bo mạch, vẽ từ xa tới gần */
 rootBoard(0); [1, 2, 3].forEach(function (i) { leafBoard(NODES[i].x, i); });
-[1, 2, 3].forEach(function (i) {
-  var n = NODES[i], len = n.rssi * 1.05, q = [P(n.x - 30, 74, .2), P(n.x - 30 + len, 74, .2), P(n.x - 30 + len, 85, .2), P(n.x - 30, 85, .2)];
-  sc.poly(plateG, q, '#d8402b', 'rgba(10,32,48,.6)', 1);
-});
 /* nhãn */
 function place(id, x, y, z, dx, dy, anchor, fill) { var t = document.getElementById(id), q = P(x, y, z); t.setAttribute('x', (q[0] + dx).toFixed(1)); t.setAttribute('y', (q[1] + dy).toFixed(1)); t.setAttribute('text-anchor', anchor || 'start'); if (fill) t.setAttribute('fill', fill); svg.appendChild(t); return t; }
 place('s15n0', 0, 92, 0, 0, 28, 'middle');
@@ -1920,15 +1930,15 @@ function frame(t) {
     for (var u = 0; u <= 14; u++) { var f = u / 14; pp.push([I.lerp(a, b, f), YB, 14 + 12 * Math.sin(Math.PI * f)]); }
     var e = sc.path(linkG, pp, 0, '#d8402b', 1.6); e.setAttribute('stroke-dasharray', '4 4'); e.setAttribute('stroke-dashoffset', (-t * 14) % 16);
   }
-  var items = [], reset = I.clamp((tau - 6.3) / .5), k;
+  var items = [], k, still = Deck.still || document.documentElement.classList.contains('static');
   for (k = 1; k <= 3; k++) {
-    var s = tau - T0, full = HZ * NODES[k].ms / MSMAX, p = I.clamp(s / TD[k]), h = full * p * (1 - ease(reset));
+    var s = tau - T0, full = HZ * NODES[k].ms / MSMAX, sp = (still ? 99 : t) - T0;              /* sp: thời gian từ lần chạy đầu (không lặp) */
+    var p = I.clamp(sp / TD[k]), h = full * p, al = ease((sp - TD[k]) / .3);
     sc.clear(pillG[k - 1]);
     if (h > .3) sc.box(pillG[k - 1], NODES[k].x - 19, -62, 0, 38, 38, h, I.LEAF[k - 1]);
-    var done = tau >= T0 + TD[k] && tau < 6.3, al = done ? ease((tau - T0 - TD[k]) / .3) : 0;
-    vEl[k - 1].setAttribute('opacity', (Deck.still || document.documentElement.classList.contains('static')) ? 1 : al.toFixed(2));
-    var q = P(NODES[k].x, -43, full + 12); vEl[k - 1].setAttribute('x', q[0].toFixed(1)); vEl[k - 1].setAttribute('y', q[1].toFixed(1));
-    if (s >= 0 && s < TD[k]) { var c = posOn(k, s); items.push({ x: c[0] - 7, y: c[1] - 7, z: c[2], w: 14, d: 14, h: 14, t: I.LEAF[k - 1] }); }
+    vEl[k - 1].setAttribute('opacity', still ? 1 : al.toFixed(2));
+    var q = P(NODES[k].x, -43, full + 24); vEl[k - 1].setAttribute('x', q[0].toFixed(1)); vEl[k - 1].setAttribute('y', q[1].toFixed(1));
+    if (s >= 0 && s < TD[k] && (still || t >= T0)) { var c = posOn(k, s); items.push({ x: c[0] - 7, y: c[1] - 7, z: c[2], w: 14, d: 14, h: 14, t: I.LEAF[k - 1] }); }
   }
   sc.items(dyn, items);
 }
@@ -1942,6 +1952,28 @@ var sl = document.getElementById('s16'), dots = sl.querySelectorAll('.cl');
 Deck.steps.s16 = function (s) {
   var all = document.documentElement.classList.contains('static');
   Array.prototype.forEach.call(dots, function (c, i) { c.style.setProperty('--on', (all || s >= i) ? 1 : .35); c.querySelector('.dot').style.opacity = (all || s >= i) ? 1 : .35; });
+};
+
+/* Hình nhỏ cạnh cột "Đạt được": chuỗi chụp → phân mảnh → mesh → ghép → UART CRC → middleware → dashboard.
+   Một gói nhỏ chạy dọc chuỗi, khối nào gói đi qua thì sáng lên (đỏ = mesh, lam = UART, lục = PC). Chỉ dùng chữ đã có trong gạch đầu dòng. */
+var chain = document.getElementById('s16chain'), pk = document.getElementById('s16pk'), I = window.Iso;
+var bks = Array.prototype.slice.call(chain.querySelectorAll('.bk')).map(function (g) {
+  var r = g.querySelector('rect'), x = +r.getAttribute('x'), y = +r.getAttribute('y'), w = +r.getAttribute('width'), h = +r.getAttribute('height');
+  return { g: g, c: [x + w / 2, y + h / 2, 0], w: w };
+});
+var wp = [bks[0].c, bks[1].c, bks[2].c, bks[3].c, [bks[3].c[0], 43, 0], [bks[4].c[0], 43, 0], bks[4].c, bks[5].c, bks[6].c], cum = [0], tot = 0;
+for (var q = 1; q < wp.length; q++) { tot += Math.hypot(wp[q][0] - wp[q - 1][0], wp[q][1] - wp[q - 1][1]); cum.push(tot); }
+var sIdx = [0, cum[1], cum[2], cum[3], cum[6], cum[7], cum[8]];       /* vị trí (độ dài cung) của từng khối trên đường đi */
+var PERIOD = 7.5, RUN = 5.8;
+Deck.frames.s16 = function (t) {
+  var all = Deck.still || document.documentElement.classList.contains('static');
+  var ph = (t % PERIOD) / RUN, u = I.clamp(ph), s = u * tot, p = I.along(wp, u);
+  pk.setAttribute('x', (p[0] - 4.5).toFixed(1)); pk.setAttribute('y', (p[1] - 4.5).toFixed(1));
+  pk.setAttribute('opacity', all ? 0 : (ph > 1.0 && ph < 1.01 ? 0 : 1));
+  bks.forEach(function (b, i) {
+    var on = all || (ph <= 1.12 && s >= sIdx[i] - b.w * .35 && ph > 0 && (ph < 1 || s >= sIdx[i]));
+    b.g.classList.toggle('on', on);
+  });
 };
 
 })();

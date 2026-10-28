@@ -1,8 +1,15 @@
 #s7 .fig-wrap{position:relative}
 #s7 .fig{position:absolute;inset:0}
-#s7 .co{position:absolute;width:262px;background:var(--paper)}
+#s7 .co{position:absolute;background:var(--paper)}
 #s7 .co h3{font-size:22px;margin:2px 0 4px}
-#s7 .c1{left:0;bottom:6px}
-#s7 .c2{left:300px;bottom:6px}
-#s7 .c3{right:250px;top:0;width:290px}
-#s7 .c4{right:0;top:0;width:236px}
+#s7 .co .lab{font-size:14px}
+#s7 .co .tg{font-size:17px}
+#s7 .co p{line-height:1.4}
+#s7 .co code{font-size:17px}
+#s7 .co .fr{font-size:17px;line-height:1.3;margin:4px 0;white-space:nowrap}   /* khung AA 55 | … | CRC16 luôn nằm trên một dòng, CRC16 không rơi xuống dòng riêng */
+#s7 .c1{left:0;bottom:0;width:330px}
+#s7 .c2{left:346px;bottom:0;width:292px}
+#s7 .c3{right:354px;top:0;width:392px}
+#s7 .c4{right:0;top:0;width:330px}
+/* chú thích cố định ở góc dưới phải khung hình (cùng kiểu ở mọi slide có hình động chậm hơn thực tế) */
+#s7 .slow{position:absolute;right:0;bottom:0;font:500 13px var(--mono);letter-spacing:.04em;color:var(--muted)}

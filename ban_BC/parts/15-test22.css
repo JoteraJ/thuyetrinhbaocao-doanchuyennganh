@@ -6,8 +6,8 @@
 #s15 .stat .n small{font-size:17px;margin-left:4px}
 #s15 .stat p{font-size:16px;max-width:none}
 #s15 ul.l{gap:11px;font-size:17px;line-height:1.45}
-#s15 .fl{display:flex;flex-wrap:wrap;column-gap:.35em;align-items:baseline}
-#s15 .fl b{color:var(--red)}
+#s15 ul.l b.rd{color:var(--red)}
+#s15 .fig-wrap .slow{position:absolute;left:0;top:0;font:500 13px var(--mono);letter-spacing:.04em;color:var(--muted)}
 #s15 svg text.v{fill:var(--ink);font-family:var(--serif)}
 #s15 svg text.n{font-family:var(--serif)}
 #s15 svg text.h{fill:var(--muted)}

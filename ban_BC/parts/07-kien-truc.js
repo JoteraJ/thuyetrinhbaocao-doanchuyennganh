@@ -1,6 +1,7 @@
 /* Slide 7: kiến trúc. Chỉ có 1 Root + 3 Leaf; Leaf cũng là node chuyển tiếp; mạng là cây (1 chặng ↔ 3 chặng). */
 var svg = document.getElementById('s7fig'), I = window.Iso, T = I.T;
-var sc = I.scene(svg, { az: 22, el: 30, rect: [0, 30, 1136, 400],
+/* viewBox 1136×448 = đúng cỡ khung hình (1136×448 px) nên 1 đơn vị = 1 px, nhãn 13 là 13 px thật */
+var sc = I.scene(svg, { az: 22, el: 30, rect: [26, 29, 1084, 382],
   pts: [[-50, -120, -10], [990, -120, -10], [-50, 120, -10], [990, 120, -10], [910, -4, 130], [850, -4, 130], [970, -4, 130]] });
 var P = sc.pt, tx = sc.text;
 var plateG = sc.g(), linkG = sc.g(), objG = sc.g(), lb = sc.g(), dyn = sc.g();
@@ -38,15 +39,19 @@ for (var g2 = 0; g2 < 5; g2++) sc.line(objG, [726, 48.2, 8 + g2 * 5], [798, 48.2
 sc.box(objG, 730, -40, 48, 60, 80, 3, T.white);
 sc.box(objG, 870, -20, 0, 60, 40, 5, T.stone); sc.box(objG, 892, -6, 5, 16, 12, 34, T.stone); sc.box(objG, 850, -5, 34, 120, 10, 84, T.dark);
 /* nhãn tĩnh */
-function name(x, y, z, a, b, up) { var q = P(x, y, z); tx(lb, q[0], q[1] - up, a, 20, 700, 'middle', '#26231c', 'sf'); tx(lb, q[0], q[1] - up + 17, b, 13, 500, 'middle', '#6b6455', 'mo'); }
-[0, 1, 2].forEach(function (i) { var q = P(N.L[i][0] - 32, N.L[i][1] + 26, 4); tx(lb, q[0] - 10, q[1] + 4, 'Leaf ' + (i + 1), 18, 700, 'end', '#26231c', 'sf'); tx(lb, q[0] - 10, q[1] + 21, 'ESP32-CAM', 13, 500, 'end', '#6b6455', 'mo'); });
+function name(x, y, z, a, b, up) { var q = P(x, y, z); tx(lb, q[0], q[1] - up, a, 20, 700, 'middle', '#26231c', 'sf'); tx(lb, q[0], q[1] - up + 18, b, 14, 500, 'middle', '#6b6455', 'mo'); }
+/* tên Leaf nằm phía trước bo mạch (dưới góc thấp nhất của bo), không đè lên bo hay dây nối */
+[0, 1, 2].forEach(function (i) {
+  var cx = N.L[i][0], cy = N.L[i][1], low = P(cx + 32, cy + 26, 0), mid = P(cx, cy, 0);
+  tx(lb, mid[0] + 6, low[1] + 22, 'Leaf ' + (i + 1), 18, 700, 'middle', '#26231c', 'sf'); tx(lb, mid[0] + 6, low[1] + 40, 'ESP32-CAM', 14, 500, 'middle', '#6b6455', 'mo');
+});
 name(545, -52, 14, 'Root', 'ESP32 DevKitC', 60);
 name(760, -48, 48, 'Middleware', 'Node.js', 36);
 name(930, -5, 118, 'Dashboard', 'React', 36);
 [['LỚP 1 · MESH', 275, 120], ['LỚP 2', 656, 120], ['LỚP 3 · PC', 851, 120]].forEach(function (l, i) { var q = P(l[1], l[2], -10); tx(lb, q[0] + 6, q[1] + 24, l[0], 14, 500, 'middle', ['#d9432b', '#1f4e9c', '#1b7f5c'][i], 'mo').setAttribute('letter-spacing', '1.5'); });
 var uart = P(660, 0, 3), ws = P(826, 0, 3);
-tx(lb, uart[0], uart[1] + 38, 'UART', 13, 500, 'middle', '#1f4e9c', 'mo'); tx(lb, uart[0], uart[1] + 53, '921600', 13, 500, 'middle', '#1f4e9c', 'mo');
-tx(lb, ws[0], ws[1] + 38, 'Socket.IO', 13, 500, 'middle', '#1b7f5c', 'mo'); tx(lb, ws[0], ws[1] + 53, 'WebSocket', 13, 500, 'middle', '#1b7f5c', 'mo');
+tx(lb, uart[0], uart[1] + 38, 'UART', 14, 500, 'middle', '#1f4e9c', 'mo'); tx(lb, uart[0], uart[1] + 54, '921600', 14, 500, 'middle', '#1f4e9c', 'mo');
+tx(lb, ws[0], ws[1] + 38, 'Socket.IO', 14, 500, 'middle', '#1b7f5c', 'mo'); tx(lb, ws[0], ws[1] + 54, 'WebSocket', 14, 500, 'middle', '#1b7f5c', 'mo');
 tx(lb, 0, 22, 'chuyển tiếp đa chặng (đã thử 1 và 3 chặng)', 14, 500, 'start', '#d9432b', 'mo');
 var modeTxt = tx(lb, 0, 42, '', 14, 700, 'start', '#26231c', 'mo');
 
@@ -90,7 +95,7 @@ function frame(t) {
     var e = sc.path(linkG, pp, 0, '#d9432b', 1.6); e.setAttribute('stroke-dasharray', '4 4'); e.setAttribute('stroke-dashoffset', (-t * 14) % 16);
   });
   modeTxt.textContent = mode === 1 ? 'đang hiện: 1 chặng' : 'đang hiện: 3 chặng';
-  var scr = -1, scrA = 0, mwOn = false, newest = -1e9;
+  var scr = -1, scrA = 0, mwOn = false, mwCol = T.red, newest = -1e9;
   for (var i = 0; i < 3; i++) {
     var n0 = Math.floor((t - i * STAG) / PERIOD);
     for (var nn = n0 - 3; nn <= n0; nn++) {
@@ -107,17 +112,17 @@ function frame(t) {
       var td = arr + .1;
       if (lt >= td && lt < td + 3.4) {
         var p = (lt - td) / 3.4, q = I.along(tilePath, p);
-        if (q[0] >= 722 && q[0] <= 798) mwOn = true;
+        if (q[0] >= 722 && q[0] <= 798) { mwOn = true; mwCol = I.LEAF[i]; }
         else items.push({ x: q[0] - 9, y: -9, z: q[2], w: 18, d: 18, h: 4, t: I.LEAF[i] });
       }
       if (lt >= td + 3.4 && ts > newest) { newest = ts; scr = i; scrA = I.clamp((lt - td - 3.4) / .25); }
     }
   }
   for (var j = 0; j < 3; j++) {
-    items.push({ x: 630 + ((t * 60 + j * 28) % 82) - 3, y: -1.5, z: 3, w: 6, d: 3, h: 3, t: T.red });
-    items.push({ x: 798 + ((t * 50 + j * 20) % 60) - 2, y: -1.5, z: 3, w: 4, d: 3, h: 3, t: T.red });
+    items.push({ x: 630 + ((t * 60 + j * 28) % 82) - 4, y: -2.5, z: 3, w: 8, d: 5, h: 4, t: T.blue });    /* cáp UART = Lớp 2 = xanh dương */
+    items.push({ x: 798 + ((t * 50 + j * 20) % 60) - 3, y: -2.5, z: 3, w: 7, d: 5, h: 4, t: T.green });   /* dây Socket.IO = Lớp 3 = xanh lá */
   }
-  if (mwOn) items.push({ x: 758, y: -6, z: 51, w: 14, d: 12, h: 2.5, t: T.red });
+  if (mwOn) items.push({ x: 758, y: -6, z: 51, w: 14, d: 12, h: 2.5, t: mwCol });
   sc.items(dyn, items);
   var g = I.el('g', { transform: cellMat }, dyn);
   I.el('rect', { x: 7, y: 7, width: 106, height: 70, fill: '#1d2a25' }, g);

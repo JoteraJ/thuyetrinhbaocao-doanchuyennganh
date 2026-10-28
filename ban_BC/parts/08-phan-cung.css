@@ -14,3 +14,4 @@
 #s8 .pw{position:absolute;inset:0;pointer-events:none}
 #s8 .pw span{position:absolute;white-space:nowrap;font:500 17px/1.25 var(--sans);text-align:center;transform:translateX(-50%)}
 #s8 .pw .lg0{transform:none;left:0;top:-10px;text-align:left}
+#s8 .slow{position:absolute;transform:translateX(-50%);white-space:nowrap;font:500 13px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);border:1.5px dashed var(--muted);padding:1px 8px}

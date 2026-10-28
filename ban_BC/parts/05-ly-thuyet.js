@@ -68,7 +68,7 @@ function frameA(t) {
 
 /* ============ b) giao thức định tuyến ============ */
 var Bm = mk('s5b', 0, 30, 240, 26, 56, [4, 36, 544, 78]);   /* svg 5b cao 138 (cao hơn 20 so với các hình khác) để tên giao thức nằm trên khối kể cả lúc nhảy */
-var PB_X = [-206, -122, -38], PB_NAME = ['AODV', 'OLSR/DSDV', 'B.A.T.M.A.N'], PB = 10.5, GATE = 64;
+var PB_X = [-206, -126, -46], PB_NAME = ['AODV', 'OLSR/DSDV', 'B.A.T.M.A.N'], PB = 10.5, GATE = 64;
 label(Bm, -116, 25, 0, 'Linux/tầng IP', '#645f52', 18, 'middle', 13);
 label(Bm, 165, 25, 0, 'ESP32', '#645f52', 18, 'middle', 13);
 label(Bm, 182, 0, 32, 'painlessMesh', '#d9432b', -6, 'middle', 14);
@@ -97,8 +97,9 @@ function frameB(t) {
   });
   flush(bl);
   /* tên giao thức nằm ngay trên khối của nó (đi theo khi khối nhảy), không đè lên khối */
-  names.forEach(function (n) { var q = sc.pt(n[0], -16, n[1] + 26); sc.text(Bm.top, q[0], q[1] - 5, PB_NAME[n[2]], 13, 500, 'middle', null, 'mo').style.fill = '#26231c'; });
-  if (hit) cross(Bm, GATE + 2, 0, 40);
+  names.forEach(function (n) { var hw = PB_NAME[n[2]].length * 7.8 / 2 / sc.K, q = sc.pt(Math.min(n[0], GATE - 9 - hw), -16, n[1] + 26);   /* không cho nhãn dài chạm cột rào */
+    sc.text(Bm.top, q[0], q[1] - 5, PB_NAME[n[2]], 13, 500, 'middle', null, 'mo').style.fill = '#26231c'; });
+  if (hit) cross(Bm, GATE + 2, 0, 16);
 }
 
 /* ============ c) painlessMesh: cây động, Leaf di chuyển thì đổi cha ============ */

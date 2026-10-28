@@ -116,6 +116,7 @@ sc.box(objG2, SCR.x, -5, SCR.z, SCR.w, 10, SCR.h, T.dark);
   put('.lg4', 400, 56, -8, 6);
   put('.lg5', 530, 56, -8, 6);
   put('.lg6', 140, 56, -8, 6, 150);
+  put('.slow', SCR.x + SCR.w / 2, 56, -8, 6);
 })();
 
 /* ---- mô hình thời gian: các đợt phát WiFi (dòng đỉnh) ---- */
@@ -175,7 +176,7 @@ function frame(t) {
   var M = sc.faceMatrix(SCR.x, 5, SCR.z), g = I.el('g', { transform: M + ' translate(0,' + SCR.h + ') scale(1,-1)' }, dyn);
   I.el('rect', { x: 5, y: 5, width: SCR.w - 10, height: SCR.h - 10, fill: '#1d2a25' }, g);
   I.el('line', { x1: 8, y1: 28, x2: SCR.w - 8, y2: 28, stroke: '#6f8379', 'stroke-width': .7, 'stroke-dasharray': '3 3' }, g);
-  var FS = Math.ceil(14 / (0.96 * sc.K) * 10) / 10;
+  var FS = Math.ceil(14.5 / (CE * sc.K) * 10) / 10;   /* cao thực tế >= 14 px (mặt đứng co theo cos(el)) */
   tx(g, 9, 21, '5 V', FS, 500, 'start', '#cfc8b6', 'mo');
   var W0 = 7.2, u0 = 10, u1 = SCR.w - 10, pa = [], pb = [], tt;
   for (i = 0; i <= 90; i++) {
@@ -184,10 +185,10 @@ function frame(t) {
   }
   if (step >= 2) {
     I.el('polyline', { points: pa.join(' '), fill: 'none', stroke: '#ff8a70', 'stroke-width': 1.5, 'stroke-dasharray': '4 2.5', 'stroke-linejoin': 'round' }, g);
-    tx(g, 9, SCR.h - 6, 'sụt áp', FS, 500, 'start', '#ff8a70', 'mo');
+    tx(g, 8, SCR.h - 7, 'sụt áp', FS, 500, 'start', '#ff8a70', 'mo');
   }
   I.el('polyline', { points: pb.join(' '), fill: 'none', stroke: '#7fd4a8', 'stroke-width': 1.8, 'stroke-linejoin': 'round' }, g);
-  tx(g, 70, SCR.h - 6, 'Tụ 470 µF', FS, 500, 'start', '#7fd4a8', 'mo');
+  tx(g, SCR.w - 7, SCR.h - 7, 'Tụ 470 µF', FS, 500, 'end', '#7fd4a8', 'mo');
   /* tụ nhấp nháy khi xả */
   if (step >= 2 && rel < BLEN + .3) { var gl = sc.circle(dyn, CAP[0], CAP[1], 34.4, 7.5, 24, '#ffd75e', 'none', 0); gl.setAttribute('opacity', (.9 * dip(rel)).toFixed(2)); }
 }

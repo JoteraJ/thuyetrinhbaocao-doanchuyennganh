@@ -1,9 +1,10 @@
 /* Slide 15: chuỗi 3 chặng (1 Root + 3 Leaf; Leaf cũng là node chuyển tiếp, không thêm node).
-   Chunk từ mỗi Leaf đi lần lượt qua từng chặng về Root; cột sau mỗi Leaf cao tỉ lệ ĐÚNG với độ trễ trung vị 148 / 350 / 576 ms,
-   thanh trên sàn dài tỉ lệ với |RSSI| 45,8 / 54,5 / 67,3 dBm. Thời gian cảnh tỉ lệ với trung vị (1 ms = 0,008 s). */
+   Chunk từ mỗi Leaf đi lần lượt qua từng chặng về Root; cột sau mỗi Leaf cao tỉ lệ ĐÚNG với độ trễ trung vị 148 / 350 / 576 ms.
+   Thời gian cảnh tỉ lệ với trung vị (1 ms = 0,008 s: hình động làm chậm). Cột mọc một lần rồi GIỮ NGUYÊN (cột và số không tắt/lặp);
+   chỉ chunk còn chạy lặp để minh họa. Không vẽ thanh RSSI: RSSI chỉ ghi bằng chữ ở nhãn từng chặng. */
 var svg = document.getElementById('s15fig'), I = window.Iso, T = I.T;
 var HZ = 176, MSMAX = 576;                         /* cột 576 ms cao 176 đơn vị -> 1 ms = 176/576 đơn vị */
-var NODES = [{ x: 0 }, { x: 165, ms: 148, rssi: 45.8 }, { x: 330, ms: 350, rssi: 54.5 }, { x: 495, ms: 576, rssi: 67.3 }];
+var NODES = [{ x: 0 }, { x: 165, ms: 148 }, { x: 330, ms: 350 }, { x: 495, ms: 576 }];
 var sc = I.scene(svg, { az: 14, el: 34, rect: [0, 12, 612, 388],
   pts: [[-60, -72, -10], [560, -72, -10], [-60, 92, -10], [560, 92, -10], [-60, -72, 190], [560, -72, 190], [-60, 92, -52], [495, 92, -52]] });
 var P = sc.pt, S = sc.S, C = sc.C;
@@ -27,12 +28,8 @@ function rootBoard(cx) {
   sc.box(objG, cx - 36, y - 26, 10, 14, 16, 8, T.dark);
   sc.cyl(objG, cx + 26, y + 18, 10, 16, 5, '#3b3a35', '#6d6b62', '#8b887c');
 }
-/* cột độ trễ + thanh RSSI (tĩnh), vẽ từ xa tới gần */
+/* bo mạch, vẽ từ xa tới gần */
 rootBoard(0); [1, 2, 3].forEach(function (i) { leafBoard(NODES[i].x, i); });
-[1, 2, 3].forEach(function (i) {
-  var n = NODES[i], len = n.rssi * 1.05, q = [P(n.x - 30, 74, .2), P(n.x - 30 + len, 74, .2), P(n.x - 30 + len, 85, .2), P(n.x - 30, 85, .2)];
-  sc.poly(plateG, q, '#d9432b', 'rgba(45,38,28,.6)', 1);
-});
 /* nhãn */
 function place(id, x, y, z, dx, dy, anchor, fill) { var t = document.getElementById(id), q = P(x, y, z); t.setAttribute('x', (q[0] + dx).toFixed(1)); t.setAttribute('y', (q[1] + dy).toFixed(1)); t.setAttribute('text-anchor', anchor || 'start'); if (fill) t.setAttribute('fill', fill); svg.appendChild(t); return t; }
 place('s15n0', 0, 92, 0, 0, 28, 'middle');
@@ -60,15 +57,15 @@ function frame(t) {
     for (var u = 0; u <= 14; u++) { var f = u / 14; pp.push([I.lerp(a, b, f), YB, 14 + 12 * Math.sin(Math.PI * f)]); }
     var e = sc.path(linkG, pp, 0, '#d9432b', 1.6); e.setAttribute('stroke-dasharray', '4 4'); e.setAttribute('stroke-dashoffset', (-t * 14) % 16);
   }
-  var items = [], reset = I.clamp((tau - 6.3) / .5), k;
+  var items = [], k, still = Deck.still || document.documentElement.classList.contains('static');
   for (k = 1; k <= 3; k++) {
-    var s = tau - T0, full = HZ * NODES[k].ms / MSMAX, p = I.clamp(s / TD[k]), h = full * p * (1 - ease(reset));
+    var s = tau - T0, full = HZ * NODES[k].ms / MSMAX, sp = (still ? 99 : t) - T0;              /* sp: thời gian từ lần chạy đầu (không lặp) */
+    var p = I.clamp(sp / TD[k]), h = full * p, al = ease((sp - TD[k]) / .3);
     sc.clear(pillG[k - 1]);
     if (h > .3) sc.box(pillG[k - 1], NODES[k].x - 19, -62, 0, 38, 38, h, I.LEAF[k - 1]);
-    var done = tau >= T0 + TD[k] && tau < 6.3, al = done ? ease((tau - T0 - TD[k]) / .3) : 0;
-    vEl[k - 1].setAttribute('opacity', (Deck.still || document.documentElement.classList.contains('static')) ? 1 : al.toFixed(2));
-    var q = P(NODES[k].x, -43, full + 12); vEl[k - 1].setAttribute('x', q[0].toFixed(1)); vEl[k - 1].setAttribute('y', q[1].toFixed(1));
-    if (s >= 0 && s < TD[k]) { var c = posOn(k, s); items.push({ x: c[0] - 7, y: c[1] - 7, z: c[2], w: 14, d: 14, h: 14, t: I.LEAF[k - 1] }); }
+    vEl[k - 1].setAttribute('opacity', still ? 1 : al.toFixed(2));
+    var q = P(NODES[k].x, -43, full + 24); vEl[k - 1].setAttribute('x', q[0].toFixed(1)); vEl[k - 1].setAttribute('y', q[1].toFixed(1));
+    if (s >= 0 && s < TD[k] && (still || t >= T0)) { var c = posOn(k, s); items.push({ x: c[0] - 7, y: c[1] - 7, z: c[2], w: 14, d: 14, h: 14, t: I.LEAF[k - 1] }); }
   }
   sc.items(dyn, items);
 }

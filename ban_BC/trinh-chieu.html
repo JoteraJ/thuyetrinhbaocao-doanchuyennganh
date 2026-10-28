@@ -180,10 +180,11 @@
   <h2 class="t">Kiến trúc 3 lớp: <em>Mesh – UART – PC</em></h2>
   <div class="body">
     <div class="fig-wrap">
-      <svg class="fig" id="s7fig" viewBox="0 0 1136 470" role="img" aria-label="Sơ đồ cơ cấu: ba Leaf đẩy chunk qua mesh dạng cây tới Root, qua UART lên PC"></svg>
-      <div class="co c1 ru r st" data-s="1"><div class="lab r">Lớp 1 — Mesh</div><h3>Leaf × 3</h3><span class="tg">ESP32-CAM OV3660 · pin 18650</span><p class="xs">Gói phân mảnh 1024 B + header 16 B, Base64, <code>sendSingle</code></p></div>
-      <div class="co c2 ru st" data-s="2"><div class="lab">Root</div><h3>Ghép ảnh</h3><span class="tg">ESP32 DevKitC</span><p class="xs">Ghép 4 khung song song, chỉ gửi lên PC ảnh đã hoàn chỉnh</p></div>
-      <div class="co c3 ru b st" data-s="3"><div class="lab b">Lớp 2 — UART 921600 bps</div><div class="mono" style="font-size:15px;line-height:1.3;margin-top:4px">AA 55 | TYPE | LEN | PAYLOAD | CRC16</div><p class="xs">Khung nhị phân, có kiểm CRC</p></div>
+      <svg class="fig" id="s7fig" viewBox="0 0 1136 448" role="img" aria-label="Sơ đồ cơ cấu: ba Leaf đẩy chunk qua mesh dạng cây tới Root, qua UART lên PC"></svg>
+      <span class="slow">hình động làm chậm</span>
+      <div class="co c1 ru r st" data-s="1"><div class="lab r">Lớp 1 — Mesh</div><h3>Leaf × 3</h3><span class="tg">ESP32-CAM OV3660 · pin 18650</span><p class="sm">Gói phân mảnh 1024&nbsp;B + header 16&nbsp;B, Base64, <code>sendSingle</code></p></div>
+      <div class="co c2 ru st" data-s="2"><div class="lab">Root</div><h3>Ghép ảnh</h3><span class="tg">ESP32 DevKitC</span><p class="sm">Ghép 4 khung song song, chỉ gửi lên PC ảnh đã hoàn chỉnh</p></div>
+      <div class="co c3 ru b st" data-s="3"><div class="lab b">Lớp 2 — UART 921600&nbsp;bps</div><div class="mono fr">AA 55 | TYPE | LEN | PAYLOAD&nbsp;| CRC16</div><p class="sm">Khung nhị phân, có kiểm CRC</p></div>
       <div class="co c4 ru g st" data-s="4"><div class="lab g">Lớp 3 — PC</div><p class="sm" style="font-weight:700">Middleware Node.js (serialport) → Socket.IO → Web Dashboard (React)</p></div>
     </div>
     <p class="note st" data-s="4"><b>Ý chính:</b> Root chỉ gửi lên PC ảnh đã ghép → middleware và dashboard không xử lý mất gói trên mesh. Tách truyền vô tuyến khỏi hiển thị.</p>
@@ -213,6 +214,7 @@
     <div class="strip">
       <svg class="fig" id="s8fig" viewBox="0 0 1136 262" role="img" aria-label="Chuỗi nguồn của Leaf: pin 18650 trong đế, tụ song song tại chân vào của mạch tăng áp, cáp Micro-USB tới board ESP32-CAM; màn hình đo điện áp khi phát WiFi"></svg>
       <p class="pw"><span class="lg0 lab r">Khối nguồn Leaf:</span><span class="lg lg1">pin 18650 2000 mAh</span><span class="lg lg2">đế pin</span><span class="lg lg3">tăng áp 0,9–5 V ra 5 V USB</span><span class="lg lg4">Micro-USB</span><span class="lg lg5">board</span><span class="lg lg6">Tụ 470 µF song song tại chân IN.</span></p>
+      <span class="slow">minh họa</span>
     </div>
   </div>
   <span class="src">chuong3.tex, Bảng 3.1, 3.2</span>
@@ -235,7 +237,7 @@
       </div>
       <p class="offs"><span class="o o0">offset 0</span><span class="o o4">4</span><span class="o o6">6</span><span class="o o8">8</span><span class="o o10">10</span><span class="o o12">12</span></p>
     </div>
-    <div class="fig-wrap"><svg class="fig" id="s9fig" viewBox="0 0 1136 240" role="img" aria-label="Sơ đồ: một khung JPEG bị cắt thành các chunk, mỗi chunk gắn header 16 byte, đi qua mesh tới Root và được ghép lại"></svg></div>
+    <div class="fig-wrap"><svg class="fig" id="s9fig" viewBox="0 0 1136 240" role="img" aria-label="Sơ đồ: một khung JPEG bị cắt thành các chunk, mỗi chunk gắn header 16 byte, đi qua mesh tới Root và được ghép lại"></svg><span class="slow">hình động làm chậm</span></div>
     <ul class="l g4">
       <li><span class="st" data-s="1">Payload tối đa <b>1024 B</b>; (16 + 1024) B mã hóa Base64 → tối đa <b>1388 ký tự</b>, vừa giới hạn ~1400 B của painlessMesh.</span></li>
       <li><span class="st" data-s="2">Vì sao không nhỏ hơn 1024: giảm kích thước gói không giảm đụng độ trên kênh dùng chung, chỉ tăng số bản tin và overhead.</span></li>
@@ -309,19 +311,20 @@
         <div class="blk b">
           <h3>Middleware Node.js</h3>
           <div class="scn">
-            <svg class="fig" id="s11fig" viewBox="0 0 734 150" role="img" aria-label="Bộ đệm UART ở Root bỏ khung ảnh khi còn dưới một nửa; khung đi qua cáp UART tới middleware, qua ba cổng kiểm MAGIC, LEN, CRC rồi Socket.IO tới dashboard"></svg>
+            <svg class="fig" id="s11fig" viewBox="0 0 704 232" role="img" aria-label="Bộ đệm UART ở Root bỏ khung ảnh khi còn dưới một nửa; khung đi qua cáp UART tới middleware, qua ba cổng kiểm MAGIC, LEN, CRC rồi Socket.IO tới dashboard"></svg>
             <p class="gl"><span class="g1">Tìm MAGIC</span><span class="g2">kiểm LEN (≤&nbsp;131072)</span><span class="g3">kiểm CRC</span><span class="g4">Socket.IO</span></p>
+            <p class="bd"><span class="slow">hình động làm chậm</span><span class="slow st" data-s="2">kịch bản test 7/7</span></p>
           </div>
           <p class="bt st" data-s="2">Lỗi chỉ bỏ phần hỏng. Bộ test <code>test_protocol.js</code> đạt <b class="good">7/7</b> kịch bản.<span class="lamps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
         </div>
+      </div>
+      <div class="col rc">
+        <figure class="shot"><div class="cr"><img class="i1" src="assets/dashboardtab1.png" alt="Dashboard tab Live"></div><figcaption>Tab Live</figcaption></figure>
+        <figure class="shot"><div class="cr"><img class="i2" src="assets/dashboardtab2.png" alt="Dashboard tab So sánh"></div><figcaption>Tab So sánh</figcaption></figure>
         <div class="blk c st" data-s="3">
           <h3>Dashboard (React 18 + Tailwind)</h3>
           <p>Tab Live: ảnh từng Leaf, cây topology theo RSSI. Tab So sánh: FPS, thông lượng, tỉ lệ hủy, heap, tự phục hồi; xuất CSV.</p>
         </div>
-      </div>
-      <div class="col rc">
-        <figure class="shot"><img src="assets/dashboardtab1.png" alt="Dashboard tab Live"><figcaption>Tab Live</figcaption></figure>
-        <figure class="shot"><img src="assets/dashboardtab2.png" alt="Dashboard tab So sánh"><figcaption>Tab So sánh</figcaption></figure>
       </div>
     </div>
   </div>
@@ -507,22 +510,22 @@
           <text class="n" id="s15n1" font-size="19" font-weight="700">…449329</text>
           <text class="n" id="s15n2" font-size="19" font-weight="700">…433521</text>
           <text class="n" id="s15n3" font-size="19" font-weight="700">…369673</text>
-          <text class="mo h" id="s15h1" font-size="13.5" font-weight="500">Hop 1 · −45,8 dBm</text>
-          <text class="mo h" id="s15h2" font-size="13.5" font-weight="500">Hop 2 · −54,5</text>
-          <text class="mo h" id="s15h3" font-size="13.5" font-weight="500">Hop 3 · −67,3</text>
-        </svg></div>
+          <text class="mo h" id="s15h1" font-size="14" font-weight="500">Hop 1 · −45,8 dBm</text>
+          <text class="mo h" id="s15h2" font-size="14" font-weight="500">Hop 2 · −54,5</text>
+          <text class="mo h" id="s15h3" font-size="14" font-weight="500">Hop 3 · −67,3</text>
+        </svg><span class="slow">hình động làm chậm</span></div>
       </div>
       <div class="col f1" style="gap:14px;min-width:0">
-        <p class="sm muted">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16 phút (490 mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</p>
+        <p class="sm muted">Root → …449329 → …433521 → …369673 (ID rút gọn), giữ ~16&nbsp;phút (490&nbsp;mẫu). Root FW 10-06a, Leaf FW 10-01b, bật stagger.</p>
         <div class="stats">
           <div class="stat"><div class="n">4,94</div><p>FPS tổng</p></div>
           <div class="stat"><div class="n">20,6<small>KB/s</small></div><p>thông lượng</p></div>
           <div class="stat g"><div class="n">0,56<small>%</small></div><p>hủy; uartDrop 0</p></div>
         </div>
         <ul class="l b3">
-          <li class="fl st" data-s="1"><span style="order:1;flex-basis:100%">FPS gần như không đổi so với test21:</span><span style="order:2">tải bị giới hạn bởi chu kỳ chụp,</span><span style="order:4;flex-basis:100%">→ chưa đo suy giảm thông lượng theo hop</span><b style="order:3">chưa ép tới bão hòa</b></li>
-          <li class="st" data-s="2">~6,5 % mẫu trễ &gt; 1 s, cao nhất 4,3 s</li>
-          <li class="st" data-s="3"><b>Tự phục hồi:</b> 5 sự kiện, 1530–23225 ms; node mới gia nhập làm toàn mạng gián đoạn ~16 s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</li>
+          <li class="st" data-s="1">FPS gần như không đổi so với test21: tải bị giới hạn bởi chu kỳ chụp, <b class="rd">chưa ép tới bão hòa</b> → chưa đo suy giảm thông lượng theo hop</li>
+          <li class="st" data-s="2">~6,5&nbsp;% mẫu trễ &gt; 1&nbsp;s, cao nhất 4,3&nbsp;s</li>
+          <li class="st" data-s="3"><b>Tự phục hồi:</b> 5 sự kiện, 1530–23225&nbsp;ms; node mới gia nhập làm toàn mạng gián đoạn ~16&nbsp;s. Chưa ghi thao tác thực tế → chưa phân loại kịch bản</li>
         </ul>
       </div>
     </div>
@@ -542,26 +545,42 @@
         <h3 class="good">Đạt được</h3>
         <ul class="l g">
           <li>Chuỗi hoàn chỉnh trên phần cứng thật: chụp → phân mảnh → mesh → ghép → UART CRC → middleware → dashboard</li>
-          <li>Xác định bằng đo đạc 2 nút thắt: số slot ghép, tải ghi UART</li>
+          <li>Xác định bằng đo đạc 2&nbsp;nút&nbsp;thắt: số slot ghép, tải ghi UART</li>
           <li>Watchdog, bảo vệ heap, theo dõi node im lặng, ghi UART không chặn, gửi lệch pha, đo độ trễ và tự phục hồi</li>
         </ul>
+<svg class="chain" id="s16chain" viewBox="0 0 349 88" role="img" aria-label="Chuỗi: chụp, phân mảnh, mesh, ghép, UART CRC, middleware, dashboard">
+  <g class="bk r" data-i="0"><rect x="1" y="4" width="50" height="30"/><text class="mo" x="26.0" y="24" text-anchor="middle" font-size="14" font-weight="500">chụp</text></g>
+  <g class="bk r" data-i="1"><rect x="77" y="4" width="90" height="30"/><text class="mo" x="122.0" y="24" text-anchor="middle" font-size="14" font-weight="500">phân mảnh</text></g>
+  <g class="bk r" data-i="2"><rect x="193" y="4" width="50" height="30"/><text class="mo" x="218.0" y="24" text-anchor="middle" font-size="14" font-weight="500">mesh</text></g>
+  <g class="bk r" data-i="3"><rect x="269" y="4" width="50" height="30"/><text class="mo" x="294.0" y="24" text-anchor="middle" font-size="14" font-weight="500">ghép</text></g>
+  <g class="bk b" data-i="4"><rect x="1" y="52" width="81" height="30"/><text class="mo" x="41.5" y="72" text-anchor="middle" font-size="14" font-weight="500">UART CRC</text></g>
+  <g class="bk g" data-i="5"><rect x="108" y="52" width="98" height="30"/><text class="mo" x="157.0" y="72" text-anchor="middle" font-size="14" font-weight="500">middleware</text></g>
+  <g class="bk g" data-i="6"><rect x="232" y="52" width="90" height="30"/><text class="mo" x="277.0" y="72" text-anchor="middle" font-size="14" font-weight="500">dashboard</text></g>
+  <path class="ar" d="M55 19.0H70"/><path class="ah" d="M68 15.0L74 19.0L68 23.0z"/>
+  <path class="ar" d="M171 19.0H186"/><path class="ah" d="M184 15.0L190 19.0L184 23.0z"/>
+  <path class="ar" d="M247 19.0H262"/><path class="ah" d="M260 15.0L266 19.0L260 23.0z"/>
+  <path class="ar" d="M86 67.0H101"/><path class="ah" d="M99 63.0L105 67.0L99 71.0z"/>
+  <path class="ar" d="M210 67.0H225"/><path class="ah" d="M223 63.0L229 67.0L223 71.0z"/>
+  <path class="ar" d="M294.0 35V43H41.5V46"/><path class="ah" d="M37.5 45L41.5 51L45.5 45z"/>
+  <rect class="pk" id="s16pk" x="0" y="0" width="9" height="9"/>
+</svg>
       </div>
       <div class="cl c2">
         <span class="dot"></span>
         <h3 class="wc">Hạn chế (nói trước)</h3>
         <ul class="l a lim st" data-s="1">
-          <li>Chưa gửi lại: mất 1 chunk là mất cả khung</li>
-          <li>Tự phục hồi phân tán (885–32528 ms; test22: 1530–23225 ms, cách đo mới), chưa đủ mẫu từng kịch bản</li>
+          <li>Chưa gửi lại: mất 1&nbsp;chunk là mất cả khung</li>
+          <li>Tự phục hồi phân tán (<span class="nw">885–32528&nbsp;ms</span>; test22: <span class="nw">1530–23225&nbsp;ms</span>, cách đo mới), chưa đủ mẫu từng kịch bản</li>
           <li>Chưa đo thông lượng bão hòa theo chặng, chưa đo dòng tiêu thụ / thời gian chạy pin</li>
-          <li>Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 +33 %) không thiết kế cho nhiều luồng ảnh</li>
+          <li>Node đặt tĩnh; painlessMesh (JSON/TCP/Base64 <span class="nw">+33&nbsp;%</span>) không thiết kế cho nhiều luồng ảnh</li>
         </ul>
       </div>
       <div class="cl c3">
         <span class="dot"></span>
         <h3>Hướng phát triển</h3>
         <ul class="l b st" data-s="2">
-          <li><b>Ngắn hạn:</b> ghi UART sang task FreeRTOS riêng; đo tự phục hồi 5–10 lần; đo bão hòa 1/2/3 chặng và dòng Leaf; NACK gộp</li>
-          <li><b>Dài hạn:</b> ESP-WIFI-MESH (đã dựng một phần); định tuyến theo vị trí (GPS/UWB); ESP-NOW</li>
+          <li><b>Ngắn hạn:</b> ghi UART sang task FreeRTOS riêng; đo tự phục hồi <span class="nw">5–10&nbsp;lần</span>; đo bão hòa <span class="nw">1/2/3&nbsp;chặng</span> và dòng Leaf; NACK gộp</li>
+          <li><b>Dài hạn:</b> <span class="nw">ESP-WIFI-MESH</span> (đã dựng một phần); định tuyến theo vị trí <span class="nw">(GPS/UWB)</span>; <span class="nw">ESP-NOW</span></li>
         </ul>
       </div>
     </div>
@@ -580,7 +599,7 @@
       <ul class="l bk" style="flex:0 0 650px">
         <li class="st" data-s="1">Danh sách nhiệm vụ đề tài đã chỉ định painlessMesh; chốt ngày 29/09/2026.</li>
         <li class="st" data-s="2">Chạy trên Arduino, nhanh dựng mẫu; gói board esp32 hạ từ 3.3.11 về 2.0.17 theo khuyến nghị thư viện; dùng fork Alteriom/painlessMesh 2.0.3.</li>
-        <li class="fl st" data-s="3"><span style="order:1">Bản ESP-IDF được giữ trong</span><span style="order:3">đưa vào hướng phát triển.</span><code style="order:2">data/esp_idf_migration/,</code></li>
+        <li class="st" data-s="3">Bản ESP-IDF được giữ trong <code class="nw">data/esp_idf_migration/</code>, đưa vào hướng phát triển.</li>
       </ul>
       <div class="fig-wrap f1"><svg class="fig" id="b1fig" viewBox="0 0 492 440" role="img" aria-label="Hiện tại: painlessMesh trên Arduino. Hướng phát triển: ESP-WIFI-MESH trên ESP-IDF, bản đã dựng một phần giữ trong thư mục lưu trữ">
         <text class="mo t1" id="b1t1" font-size="15.5" font-weight="500">Arduino</text>

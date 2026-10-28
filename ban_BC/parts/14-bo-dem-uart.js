@@ -5,19 +5,19 @@
    Chỉ có các số của bảng gốc được hiển thị; kích thước khung/mức nước trong mô hình chỉ để minh họa (không in ra).
    Hai bể giữ đúng tỉ lệ 1 : 2 (cùng chiều cao, diện tích đáy gấp đôi). */
 var svg = document.getElementById('s14fig'), I = window.Iso, T = I.T;
-var sc = I.scene(svg, { az: 10, el: 38, rect: [112, 14, 468, 326],
-  pts: [[-14, -132, -10], [322, -132, -10], [-14, 156, -10], [322, 156, -10], [130, 86, 80], [130, -82, 80], [130, -142, 0]] });
+var sc = I.scene(svg, { az: 10, el: 38, rect: [106, 10, 474, 330],
+  pts: [[-14, -132, -10], [296, -132, -10], [-14, 162, -10], [296, 162, -10], [130, 92, 80], [130, -82, 80], [130, -142, 0]] });
 var P = sc.pt;
 var PER = 6.4, NF = 3, A0 = .3, DA = .25, TBT = 1.1, RATE = 4.5, EXIT = 1.0, FS = 5;   /* FS: kích thước khung (đơn vị mô hình); bể 8 -> cap 8, bể 16 -> cap 16 */
-var FW = 20, FD = 14, FH = 3;                                       /* khung ảnh: dài (x) × rộng (y) × dày */
+var FW = 26, FD = 18, FH = 3.5;                                       /* khung ảnh: dài (x) × rộng (y) × dày */
 var RIGS = [
-  { yc: -82, cap: 8, Ht: 46, d: 20, pd: 50, name: 'test19', kb: '8 KB', drop: '137 → 480', lat: '280 ms', ms: 280, col: '#d9432b', dir: -1, off: 40 },
-  { yc: 86, cap: 16, Ht: 46, d: 40, pd: 70, name: 'test21', kb: '16 KB', drop: '0', lat: '199 ms', ms: 199, col: '#1b7f5c', dir: 1, off: 54 }
+  { yc: -82, cap: 8, Ht: 46, d: 20, pd: 50, name: 'test19', kb: '8 KB', drop: '137 → 480', lat: '280 ms', ms: 280, col: '#d9432b', dir: 1, off: 38 },
+  { yc: 92, cap: 16, Ht: 46, d: 40, pd: 70, name: 'test21', kb: '16 KB', drop: '0', lat: '199 ms', ms: 199, col: '#1b7f5c', dir: 1, off: 54 }
 ];
 var LQ = { top: '#b9d0f0', y: '#4a82cf', x: '#2d5a99' };
 var DEAD = { top: '#f3b9ad', y: '#d9432b', x: '#a8301c' };
-var LATK = .4;                                                    /* 1 ms = 0,4 đơn vị dài: độ dài thanh tỉ lệ đúng 280 : 199 */
-var X0 = 100, X1 = 160, TX = 130, BX = 66;                        /* thành bể theo x; TX = tâm bể; BX = tâm khối ghép */
+var LATK = .36;                                                   /* 1 ms = 0,4 đơn vị dài: độ dài thanh tỉ lệ đúng 280 : 199 */
+var X0 = 100, X1 = 160, TX = 130, BX = 68, PCX = 238;                        /* thành bể theo x; TX = tâm bể; BX = tâm khối ghép */
 var BELT = 4.5;
 
 /* ---- mô hình: cùng một dòng khung, bể có dung lượng khác nhau; khung chỉ vào bể khi còn đủ chỗ cho CẢ khung ---- */
@@ -41,22 +41,22 @@ function ease(x) { x = I.clamp(x); return x * x * (3 - 2 * x); }
 function face(g, pts, fill, stroke, sw) { sc.poly(g, pts.map(function (q) { return P(q[0], q[1], q[2]); }), fill, stroke || 'rgba(45,38,28,.55)', sw == null ? .9 : sw); }
 RIGS.forEach(function (R) {
   var y = R.yc, g = R.g = { plate: sc.g(), obj: sc.g(), back: sc.g(), liq: sc.g(), inn: sc.g(), front: sc.g(), out: sc.g() };
-  sc.box(g.plate, -14, y - R.pd, -10, 336, 2 * R.pd, 10, T.plate);
-  [[-6, y - R.pd + 8], [314, y - R.pd + 8], [-6, y + R.pd - 8], [314, y + R.pd - 8]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#8c8470' }, g.plate); });
+  sc.box(g.plate, -14, y - R.pd, -10, 310, 2 * R.pd, 10, T.plate);
+  [[-6, y - R.pd + 8], [288, y - R.pd + 8], [-6, y + R.pd - 8], [288, y + R.pd - 8]].forEach(function (c) { var q = P(c[0], c[1], 0); I.el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2.4, fill: '#8c8470' }, g.plate); });
   /* Root: bo mạch + chip + ăng-ten */
   sc.box(g.obj, 0, y - 22, 0, 44, 44, 7, T.pcb); sc.box(g.obj, 5, y - 15, 7, 16, 14, 3, T.chip);
   sc.cyl(g.obj, 31, y, 7, 9, 9, '#3b3a35', '#6d6b62', '#8b887c'); sc.cyl(g.obj, 31, y, 16, 2, 6.5, '#222', '#444', '#101010');
   /* khối ghép của Root: khay đá có 4 slot; khung ghép xong từ đây đi ra */
-  sc.box(g.obj, 46, y - 19, 0, 40, 38, 10, T.stone);
-  for (var k = 0; k < 4; k++) sc.box(g.obj, BX - 15, y - 16 + k * 8.6, 10, 30, 7, .6, T.dark);
+  sc.box(g.obj, 46, y - 21, 0, 44, 42, 10, T.stone);
+  for (var k = 0; k < 4; k++) sc.box(g.obj, BX - 17, y - 18 + k * 9.4, 10, 34, 7.6, .6, T.dark);
   /* đường ra từ khối ghép: ray dốc lên rồi chạy phẳng tới miệng bể */
-  sc.path(g.obj, [[BX + 18, y, 10.5], [96, y, R.Ht + 9], [TX + 14, y, R.Ht + 9]], 0, '#1f1e1b', 3.4);
+  sc.path(g.obj, [[BX + 22, y, 10.5], [96, y, R.Ht + 9], [TX + 16, y, R.Ht + 9]], 0, '#1f1e1b', 3.4);
   sc.box(g.obj, X0 - 2, y - R.d - 2, 0, 64, 2 * R.d + 4, 4, T.stone);             /* đế bể */
-  sc.box(g.obj, X1 + 2, y - 9, 0, 20, 18, BELT, T.dark);            /* ống ra */
-  sc.box(g.obj, 182, y - 9, 0, 80, 18, BELT, T.blue);               /* băng tải UART */
-  sc.box(g.obj, 264, y - 22, 0, 44, 44, 14, T.stone);               /* PC */
-  sc.box(g.obj, 280, y - 18, 14, 6, 36, 30, T.dark);
-  [[18, 7], [10, 12], [2, 9]].forEach(function (b) { face(g.obj, [[286, y - 16 + b[0], 20], [286, y - 12 + b[0], 20], [286, y - 12 + b[0], 20 + b[1]], [286, y - 16 + b[0], 20 + b[1]]], '#7fd4a8', 'none', 0); });
+  sc.box(g.obj, X1 + 2, y - 11, 0, 20, 22, BELT, T.dark);            /* ống ra */
+  sc.box(g.obj, 182, y - 11, 0, PCX - 182, 22, BELT, T.blue);               /* băng tải UART */
+  sc.box(g.obj, PCX, y - 22, 0, 44, 44, 14, T.stone);               /* PC */
+  sc.box(g.obj, PCX + 16, y - 18, 14, 6, 36, 30, T.dark);
+  [[18, 7], [10, 12], [2, 9]].forEach(function (b) { face(g.obj, [[PCX + 22, y - 16 + b[0], 20], [PCX + 22, y - 12 + b[0], 20], [PCX + 22, y - 12 + b[0], 20 + b[1]], [PCX + 22, y - 16 + b[0], 20 + b[1]]], '#7fd4a8', 'none', 0); });
   /* bể: thành sau (kính) */
   var y0 = y - R.d, y1 = y + R.d, H = R.Ht;
   face(g.back, [[X0, y0, 4], [X0, y1, 4], [X0, y1, H], [X0, y0, H]], 'rgba(120,150,190,.16)');
@@ -64,7 +64,7 @@ RIGS.forEach(function (R) {
   /* bể: thành trước (kính), vạch mức, miệng ra, viền miệng */
   face(g.front, [[X1, y0, 4], [X1, y1, 4], [X1, y1, H], [X1, y0, H]], 'rgba(255,255,255,.2)');
   face(g.front, [[X0, y1, 4], [X1, y1, 4], [X1, y1, H], [X0, y1, H]], 'rgba(255,255,255,.16)');
-  face(g.front, [[X1, y - 8, 4], [X1, y + 8, 4], [X1, y + 8, 10], [X1, y - 8, 10]], '#1f1e1b');
+  face(g.front, [[X1, y - 10, 4], [X1, y + 10, 4], [X1, y + 10, 11], [X1, y - 10, 11]], '#1f1e1b');
   for (var m = 1; m <= 3; m++) { var zz = 4 + (H - 6) * m / 4; sc.line(g.front, [X0 + 2, y1, zz], [X0 + 12, y1, zz], 'rgba(28,27,25,.55)', 1.1); }
   sc.path(g.front, [[X0, y0, H], [X1, y0, H], [X1, y1, H], [X0, y1, H], [X0, y0, H]], H, '#1c1b19', 1.8);
   [[X1, y1], [X1, y0], [X0, y1]].forEach(function (c) { sc.line(g.front, [c[0], c[1], 4], [c[0], c[1], H], 'rgba(28,27,25,.7)', 1.4); });
@@ -79,8 +79,8 @@ RIGS.forEach(function (R) {
 /* kết quả (hiện từ bước 1): uartDrop + thanh độ trễ tỉ lệ đúng */
 RIGS.forEach(function (R) {
   var g = R.res = sc.g(), y = R.yc;
-  var a = R.dir < 0 ? P(X0 - 26, y - R.pd, 0) : P(TX, y + R.pd, 0);
-  R.dropT = R.dir < 0 ? sc.text(g, a[0], a[1] - 8, 'uartDrop ' + R.drop, 17, 700, 'end', R.col, 'mo') : sc.text(g, a[0], a[1] + 22, 'uartDrop ' + R.drop, 17, 700, 'middle', R.col, 'mo');
+  var a = y < 0 ? P(X0 - 40, y - R.pd, 0) : P(TX, y + R.pd, 0);
+  R.dropT = y < 0 ? sc.text(g, a[0], a[1] - 14, 'uartDrop ' + R.drop, 17, 700, 'end', R.col, 'mo') : sc.text(g, a[0], a[1] + 24, 'uartDrop ' + R.drop, 17, 700, 'middle', R.col, 'mo');
   var h = P(-14, y, 0);
   R.latL = sc.text(g, 4, h[1] + 42, 'độ trễ TB', 14, 500, 'start', '#645f52', 'mo');
   R.latV = sc.text(g, 4, h[1] + 66, R.lat, 25, 700, 'start', R.col, 'sf');
@@ -108,7 +108,7 @@ function frameItem(cx, cy, z, hh, t, lo, hi) {
   var zt = z + hh + .04, y0 = cy - FD / 2;
   if (hh > FH * .6) {
     topRect(it.deco, x0 + 2, x1 - 2, y0 + 2, y0 + FD - 2, zt, '#f1f8f4', vx0, vx1);           /* hình */
-    topRect(it.deco, x0 + 4.5, x0 + 9, y0 + 4.5, y0 + 9, zt + .02, '#232a30', vx0, vx1);       /* chi tiết nhỏ trong hình */
+    topRect(it.deco, x0 + 5, x0 + 11, y0 + 5, y0 + 10, zt + .02, '#232a30', vx0, vx1);       /* chi tiết nhỏ trong hình */
   }
   return it;
 }
@@ -131,7 +131,7 @@ function drawRig(R, tau) {
   var hl = Ld / R.cap * (H - 6);
   if (hl > .1) sc.box(g.liq, X0 + 2, y - R.d + 2, 4, 56, 2 * R.d - 4, hl, LQ);
   var surf = 4 + hl;
-  for (m = 0; m < 8; m++) { var ux = 182 + ((m * 10 + tau * 40) % 80); sc.line(g.out, [ux, y - 8, BELT + .1], [ux, y + 8, BELT + .1], 'rgba(255,255,255,.3)', 1.4); }
+  for (m = 0; m < 6; m++) { var ux = 182 + ((m * 10 + tau * 40) % (PCX - 182)); sc.line(g.out, [ux, y - 10, BELT + .1], [ux, y + 10, BELT + .1], 'rgba(255,255,255,.3)', 1.4); }
   /* khung ghép xong: từ khối ghép -> ray -> miệng bể */
   for (j = 0; j < NF; j++) {
     var age = tau - (A0 + j * DA), leaf = I.LEAF[j % 3], x, z, yy = y, hh = FH, tt = leaf, tgt = items, op = 1;
@@ -146,7 +146,7 @@ function drawRig(R, tau) {
         tt = DEAD;
         if (u < .25) { var q = ease(u / .25); yy = y + R.dir * R.off * q; z = ZT + 8 * Math.sin(Math.PI * q); }
         else if (u < .6) { var f2 = (u - .25) / .35; yy = y + R.dir * R.off; z = I.lerp(ZT, 0, f2 * f2); }
-        else if (u < 1.2) { yy = y + R.dir * R.off; z = 0; op = 1 - (u - .6) / .6; }
+        else if (u < 2.6) { yy = y + R.dir * R.off; z = 0; op = u < 1.8 ? 1 : 1 - (u - 1.8) / .8; }
         else continue;
       }
     }
@@ -157,8 +157,8 @@ function drawRig(R, tau) {
   /* khung rút ra theo UART tới PC (khớp thứ tự FIFO), trượt ra khỏi miệng bể và vào khe của PC */
   s.emits.forEach(function (te) {
     var a = tau - te; if (a < 0) a += PER; if (a >= EXIT) return;
-    var xf = I.lerp(X1 + 2, 264 + FW, a / EXIT);
-    var it = frameItem(xf - FW / 2, y, BELT, FH, I.LEAF[s.order[s.emits.indexOf(te)] % 3], X1, 264);
+    var xf = I.lerp(X1 + 2, PCX + FW, a / EXIT);
+    var it = frameItem(xf - FW / 2, y, BELT, FH, I.LEAF[s.order[s.emits.indexOf(te)] % 3], X1, PCX);
     if (it) items.push(it);
   });
   drawItems(g.inn, inner); drawItems(g.out, items);

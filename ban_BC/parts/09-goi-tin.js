@@ -79,18 +79,21 @@ function header(g, x, z, glow) {                          /* header 16 B: 6 ô t
   }
 }
 
-/* ---- mô hình thời gian (chu kỳ 12 s) ---- */
-var PER = 12, CUT = [1.0, 1.6, 2.2, 2.8, 3.2], DUR = [3.0, 3.0, 3.9, 3.0, 3.0], ZF = [36, 36, 36, 52, 36];
+/* ---- mô hình thời gian (chu kỳ 10,2 s; hình động làm chậm so với thực tế) ----
+   Lưỡi cắt quét từ đầu khung về cuối, mỗi 0,9 s cắt một chunk. Chunk k+1 chỉ bị cắt sau khi chunk k đã nhấc lên xong,
+   nên header vừa gắn không bao giờ chạm chunk đứng trước; lưỡi cắt không quay lại mà nâng lên rồi mờ đi.
+   Khi đủ 5 chunk, Root sáng đèn rồi nhấc khung đã ghép đi tiếp. Luôn có ít nhất một vật chuyển động có nghĩa. */
+var PER = 10.2, CUT = [0.9, 1.8, 2.7, 3.6, 4.5], DUR = [3, 3, 3, 3, 3], ZF = [36, 36, 36, 36, 36];
 var X0 = [], SLOT = [];
 for (var kk = 0; kk < NS; kk++) { X0.push(XP - W * (kk + 1)); SLOT.push(630 - W * (kk + 1)); }
-function launch(k) { return CUT[k] + .8; }
+function launch(k) { return CUT[k] + .6; }
 function arrive(k) { return launch(k) + DUR[k]; }
 function ease(u) { u = I.clamp(u); return u * u * (3 - 2 * u); }
-var DONE = Math.max.apply(null, [0, 1, 2, 3, 4].map(arrive));
+var DONE = Math.max.apply(null, [0, 1, 2, 3, 4].map(arrive)), SHIP0 = DONE + .5, SHIP = 1.1;
 function bladeX(t) {                                   /* lưỡi cắt quét từ đầu khung (x lớn) về cuối */
-  var kx = [[.5, 262], [CUT[0], 220], [CUT[1], 190], [CUT[2], 160], [CUT[3], 130], [CUT[4], 100], [4.4, 100], [5.2, 262]];
+  var kx = [[.4, 262], [CUT[0], X0[0]], [CUT[1], X0[1]], [CUT[2], X0[2]], [CUT[3], X0[3]], [CUT[4], X0[4]]];
   for (var i = 0; i < kx.length - 1; i++) if (t < kx[i + 1][0]) return I.lerp(kx[i][1], kx[i + 1][1], I.clamp((t - kx[i][0]) / (kx[i + 1][0] - kx[i][0])));
-  return 262;
+  return X0[4];
 }
 
 function frame(t) {
@@ -100,7 +103,7 @@ function frame(t) {
   var dr = [];                                          /* các vật động, sắp theo độ sâu */
   function add(x, y, z, w, d, fn, op) { dr.push({ key: (x + w / 2) * S + (y + d / 2) * C + z * .0001, fn: fn, op: op }); }
   var glow = step === 3 ? .5 + .5 * Math.sin(t * 6) : 0;
-  var fin = ease(t / .5), fout = t > 11.3 ? 1 - ease((t - 11.3) / .6) : 1;   /* khung mới hiện; Root xóa khung cũ */
+  var fin = ease(t / .5), shp = I.clamp((t - SHIP0) / SHIP), fout = 1 - ease(shp);   /* khung mới hiện; khung đã ghép được nhấc đi */
   var landed = 0, cruise = [];
 
   /* liên kết mesh (đường đứt) */
@@ -122,7 +125,7 @@ function frame(t) {
       }
     } else { x = SLOT[k]; z = 14.4; onRoot = true; landed++; }
     var xs = x, zs = z;
-    if (onRoot) { add(xs, Y0, zs, W, D, (function (xx, zz2, kq) { return function (g) { strip(g, kq, xx, zz2); }; })(xs, zs, k), fout); }
+    if (onRoot) { xs = x + 30 * ease(shp); zs = z + 30 * ease(shp); add(xs, Y0, zs, W, D, (function (xx, zz2, kq) { return function (g) { strip(g, kq, xx, zz2); }; })(xs, zs, k), fout); }
     else add(xs, Y0, zs, W, D, (function (xx, zz2, kq) { return function (g) { strip(g, kq, xx, zz2); }; })(xs, zs, k), t < ct ? fin : 1);
     if (showH && !onRoot) {
       var hxx = xs + W, hzz = zs + (hz || 0) + 16 * hop, hop2 = hop;
@@ -132,18 +135,19 @@ function frame(t) {
   dr.sort(function (a, b) { return a.key - b.key; });
   dr.forEach(function (o) { var g = I.el('g', {}, dyn); if (o.op < 1) g.setAttribute('opacity', o.op.toFixed(2)); o.fn(g); });
 
-  /* lưỡi cắt: cổng trượt trên hai ray (xanh lá ở bước 4: phân mảnh tự viết ở tầng ứng dụng) */
-  if (t < 5.2) {
+  /* lưỡi cắt: cổng trượt trên hai ray (xanh lá ở bước 4: phân mảnh tự viết ở tầng ứng dụng); cắt xong thì nâng lên và mờ đi */
+  if (t < 5.4) {
     var bx = bladeX(t), g4 = step === 4, bt = g4 ? { top: '#6fcf9f', y: '#1b7f5c', x: '#12583f' } : T.dark;
-    var gb = I.el('g', { opacity: (t < .5 ? fin : I.clamp(1 - (t - 4.6) / .6)).toFixed(2) }, dyn);
-    sc.box(gb, bx - 3, -60, 3, 6, 6, 40, bt);
-    sc.poly(gb, [P(bx, -54, 3), P(bx, 54, 3), P(bx, 54, 36), P(bx, -54, 36)], g4 ? 'rgba(27,127,92,.22)' : 'rgba(28,27,25,.14)', g4 ? '#1b7f5c' : '#1c1b19', 1.2);
-    sc.box(gb, bx - 3, 54, 3, 6, 6, 40, bt);
-    sc.box(gb, bx - 3, -60, 41, 6, 120, 4, bt);
+    var up = 50 * ease((t - (CUT[4] + .3)) / .6);
+    var gb = I.el('g', { opacity: (t < .4 ? fin : I.clamp(1 - (t - (CUT[4] + .3)) / .6)).toFixed(2) }, dyn);
+    sc.box(gb, bx - 3, -60, 3 + up, 6, 6, 40, bt);
+    sc.poly(gb, [P(bx, -54, 3 + up), P(bx, 54, 3 + up), P(bx, 54, 36 + up), P(bx, -54, 36 + up)], g4 ? 'rgba(27,127,92,.22)' : 'rgba(28,27,25,.14)', g4 ? '#1b7f5c' : '#1c1b19', 1.2);
+    sc.box(gb, bx - 3, 54, 3 + up, 6, 6, 40, bt);
+    sc.box(gb, bx - 3, -60, 41 + up, 6, 120, 4, bt);
   }
 
   /* đèn báo Root: sáng khi đủ khung */
-  if (landed === NS && t < 11.3) sc.box(dyn, 450, 50, 10, 5, 5, 3, { top: '#e9ffe9', y: '#7ee0a8', x: '#4fb77f' });
+  if (landed === NS && shp < 1) sc.box(dyn, 450, 50, 10, 5, 5, 3, { top: '#e9ffe9', y: '#7ee0a8', x: '#4fb77f' });
 
   /* nhãn header/payload đi theo chunk đang bay gần giữa đường */
   if (cruise.length) {
